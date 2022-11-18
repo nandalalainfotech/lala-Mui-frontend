@@ -1,4 +1,10 @@
-import React, { useEffect } from "react";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { deepPurple, red } from "@material-ui/core/colors";
+import Box from "@mui/material/Box";
+import { alpha, styled } from "@mui/material/styles";
+import { DataGrid, gridClasses } from "@mui/x-data-grid";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { deleteOrder, listOrders } from "../actions/orderActions";
@@ -7,6 +13,9 @@ import MessageBox from "../components/MessageBox";
 import { ORDER_DELETE_RESET } from "../constants/orderConstants";
 
 export default function OrderListScreen(props) {
+
+  const [pageSize, setPageSize] = useState(10);
+
   const { pathname } = useLocation();
   const sellerMode = pathname.indexOf('/seller') >= 0;
   const navigate = useNavigate();
@@ -22,16 +31,144 @@ export default function OrderListScreen(props) {
   const { userInfo } = userSignin;
   // const userAdminin = useSelector((state) => state.userAdminin);
   // const { useInfo } = userAdminin;
+  
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({ type: ORDER_DELETE_RESET });
     dispatch(listOrders({ seller: sellerMode ? userInfo._id : '' }));
   }, [dispatch, sellerMode, successDelete, userInfo._id]);
+
   const deleteHandler = (order) => {
     if (window.confirm('Are you sure to delete?')) {
-      dispatch(deleteOrder(order._id));
+      dispatch(deleteOrder(order.row._id));
     }
   };
+
+  const editHandler = (order) => {
+    navigate(`/order/${order.row._id}`);
+  };
+
+  function getDate(orders) {
+    return `${orders.row.createdAt.substring(0, 10) || ''}`;
+  }
+
+  function getUserName(orders) {
+    return `${orders.row.user.name || ''}`;
+  }
+
+  function getTotal(orders) {
+    return `${orders.row.totalPrice.toFixed(2) || ''}`;
+  }
+
+  function getPaid(orders) {
+    return `${orders.row.isPaid ? orders.row.paidAt.substring(0, 10) : "No" || ''}`;
+  }
+
+  function getDelivered(orders) {
+    return `${orders.row.isDelivered ? orders.row.deliveredAt.substring(0, 10): "No" || ''}`;
+  }
+
+
+
+  const columns = [
+    {
+      field: "_id",
+      headerName: "ID",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "user",
+      headerName: "USER",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+      valueGetter: getUserName,
+    },
+    {
+      field: "createdAt",
+      headerName: "DATE",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+      valueGetter: getDate,
+    },
+    {
+      field: "totalPrice",
+      headerName: "TOTAL",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+      valueGetter: getTotal,
+    },
+    {
+      field: "isPaid",
+      headerName: "PAID",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+      valueGetter: getPaid,
+    },
+    {
+      field: "isDelivered",
+      headerName: "DELIVERED",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+      valueGetter: getDelivered,
+    },
+    {
+      field: "actions",
+      headerName: "ACTIONS",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+      renderCell: (orders) => (
+        <>
+          <EditIcon
+            onClick={() => editHandler(orders)}
+            style={{ color: deepPurple[500], fontSize: 15, margin:20, cursor: "pointer" }}
+          />
+
+          <DeleteIcon
+            onClick={() => deleteHandler(orders)}
+            style={{ color: red[500], fontSize: 15, cursor: "pointer"}}
+          />
+        </>
+      ),
+    },
+  ];
+
+  const ODD_OPACITY = 0.2;
+
+  const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
+    [`& .${gridClasses.row}.even`]: {
+      backgroundColor: theme.palette.grey[200],
+      "&:hover, &.Mui-hovered": {
+        backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY),
+        "@media (hover: none)": {
+          backgroundColor: "transparent",
+        },
+      },
+      "&.Mui-selected": {
+        backgroundColor: alpha(
+          theme.palette.primary.main,
+          ODD_OPACITY + theme.palette.action.selectedOpacity
+        ),
+        "&:hover, &.Mui-hovered": {
+          backgroundColor: alpha(
+            theme.palette.primary.main,
+            ODD_OPACITY +
+              theme.palette.action.selectedOpacity +
+              theme.palette.action.hoverOpacity
+          ),
+          // Reset on touch devices, it doesn't add specificity
+          "@media (hover: none)": {
+            backgroundColor: alpha(
+              theme.palette.primary.main,
+              ODD_OPACITY + theme.palette.action.selectedOpacity
+            ),
+          },
+        },
+      },
+    },
+  }));
+
+
   return (
     <div>
       <h1>Orders</h1>
@@ -42,53 +179,50 @@ export default function OrderListScreen(props) {
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
-        <table className="table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>USER</th>
-              <th>DATE</th>
-              <th>TOTAL</th>
-              <th>PAID</th>
-              <th>DELIVERED</th>
-              <th>ACTIONS</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orders.map((order) => (
-            <tr key={order._id}>
-              <td>{order._id}</td>
-              <td>{order.user?.name}</td>
-              <td>{order.createdAt.substring(0, 10)}</td>
-              <td>{order.totalPrice.toFixed(2)}</td>
-              <td>{order.isPaid ? order.paidAt.substring(0, 10) : "No"}</td>
-              <td>
-                {order.isDelivered
-                  ? order.deliveredAt.substring(0, 10)
-                  : "No"}
-              </td>
-              <td>
-                <button
-                  type="button"
-                  className="small"
-                  onClick={() => {
-                    navigate(`/order/${order._id}`);
-                  }}
-                >
-                  Details
-                </button>
-                <button
-                  type="button"
-                  className="small"
-                  onClick={() => deleteHandler(order)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-            ))}
-          </tbody>
-        </table>
+        <Box
+          sx={{
+            height: 460,
+            width: "100%",
+            "& .super-app-theme--header": {
+              backgroundColor: "#808080",
+              color: "#ffffff",
+            },
+            "& .css-1jbbcbn-MuiDataGrid-columnHeaderTitle": {
+              fontSize: 16,
+            },
+            ".css-o8hwua-MuiDataGrid-root .MuiDataGrid-cellContent": {
+              fontSize: 13,
+            },
+            ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
+              {
+                backgroundColor: "#330033",
+                color: "#ffffff",
+              },
+            ".css-h4y409-MuiList-root": {
+              display: "grid",
+            },
+          }}
+        >
+          <StripedDataGrid
+            sx={{
+              boxShadow: 10,
+              borderRadius: 0,
+              m: 2,
+            }}
+            columns={columns}
+            rows={orders}
+            getRowId={(rows) => rows._id}
+            VerticalAlignment="Center"
+            rowHeight={34}
+            getRowClassName={(params) =>
+              params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
+            }
+            pageSize={pageSize}
+            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+            rowsPerPageOptions={[5, 10, 20]}
+            pagination
+          />
+        </Box>
       )}
     </div>
   );

@@ -1,4 +1,10 @@
-import React, { useEffect } from 'react';
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { deepPurple, red } from "@material-ui/core/colors";
+import Box from "@mui/material/Box";
+import { alpha, styled } from "@mui/material/styles";
+import { DataGrid, gridClasses } from "@mui/x-data-grid";
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { deleteUser, listUsers } from '../actions/userAction';
@@ -6,10 +12,14 @@ import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { USER_DETAILS_RESET } from '../constants/userConstants';
 
-export default function UserListScreen(props) {
+export default function UserListScreen() {
+
+  const [pageSize, setPageSize] = useState(10);
+
   const navigate = useNavigate();
   const userList = useSelector((state) => state.userList);
   const { loading, error, users } = userList;
+
 
   const userDelete = useSelector((state) => state.userDelete);
   const {
@@ -27,9 +37,115 @@ export default function UserListScreen(props) {
   }, [dispatch, successDelete]);
   const deleteHandler = (user) => {
     if (window.confirm('Are you sure?')) {
-      dispatch(deleteUser(user._id));
+      dispatch(deleteUser(user.row._id));
     }
   };
+
+  const editHandler = (user) => {
+    navigate(`/user/${user.row._id}/edit`);
+  };
+
+
+  function getIsAdmin(users) {
+    return `${users.row.userisAdmin ? 'YES' : 'NO' || ''}`;
+  }
+
+  function getISselller(users) {
+    return `${users.row.isSeller ? 'YES' : ' NO' || ''}`;
+  }
+
+
+  const columns = [
+    {
+      field: "_id",
+      headerName: "ID",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "name",
+      headerName: "NAME",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "email",
+      headerName: "EMAIL",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "isSeller",
+      headerName: "IS SELLER",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+      valueGetter: getISselller,
+    },
+    {
+      field: "isAdmin",
+      headerName: "IS ADMIN",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+      valueGetter: getIsAdmin,
+    },
+    {
+      field: "actions",
+      headerName: "ACTIONS",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+      renderCell: (users) => (
+        <>
+          <EditIcon
+            onClick={() => editHandler(users)}
+            style={{ color: deepPurple[500], fontSize: 15, margin:20, cursor: "pointer" }}
+          />
+
+          <DeleteIcon
+            onClick={() => deleteHandler(users)}
+            style={{ color: red[500], fontSize: 15, cursor: "pointer"}}
+          />
+        </>
+      ),
+    },
+  ];
+
+  const ODD_OPACITY = 0.2;
+
+  const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
+    [`& .${gridClasses.row}.even`]: {
+      backgroundColor: theme.palette.grey[200],
+      "&:hover, &.Mui-hovered": {
+        backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY),
+        "@media (hover: none)": {
+          backgroundColor: "transparent",
+        },
+      },
+      "&.Mui-selected": {
+        backgroundColor: alpha(
+          theme.palette.primary.main,
+          ODD_OPACITY + theme.palette.action.selectedOpacity
+        ),
+        "&:hover, &.Mui-hovered": {
+          backgroundColor: alpha(
+            theme.palette.primary.main,
+            ODD_OPACITY +
+              theme.palette.action.selectedOpacity +
+              theme.palette.action.hoverOpacity
+          ),
+          // Reset on touch devices, it doesn't add specificity
+          "@media (hover: none)": {
+            backgroundColor: alpha(
+              theme.palette.primary.main,
+              ODD_OPACITY + theme.palette.action.selectedOpacity
+            ),
+          },
+        },
+      },
+    },
+  }));
+
+
+  
   return (
     <div>
       <h1>Users</h1>
@@ -43,45 +159,50 @@ export default function UserListScreen(props) {
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
-        <table className="table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>NAME</th>
-              <th>EMAIL</th>
-              <th>IS SELLER</th>
-              <th>IS ADMIN</th>
-              <th>ACTIONS</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user._id}>
-                <td>{user._id}</td>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.isSeller ? 'YES' : ' NO'}</td>
-                <td>{user.isAdmin ? 'YES' : 'NO'}</td>
-                <td>
-                  <button
-                    type="button"
-                    className="small"
-                    onClick={() => navigate(`/user/${user._id}/edit`)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    type="button"
-                    className="small"
-                    onClick={() => deleteHandler(user)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <Box
+          sx={{
+            height: 460,
+            width: "100%",
+            "& .super-app-theme--header": {
+              backgroundColor: "#808080",
+              color: "#ffffff",
+            },
+            "& .css-1jbbcbn-MuiDataGrid-columnHeaderTitle": {
+              fontSize: 16,
+            },
+            ".css-18cq9do-MuiDataGrid-root .MuiDataGrid-cellContent": {
+              fontSize: 13,
+            },
+            ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
+              {
+                backgroundColor: "#330033",
+                color: "#ffffff",
+              },
+            ".css-h4y409-MuiList-root": {
+              display: "grid",
+            },
+          }}
+        >
+          <StripedDataGrid
+            sx={{
+              boxShadow: 10,
+              m: 2,
+              borderRadius: 0,
+            }}
+            columns={columns}
+            rows={users}
+            getRowId={(rows) => rows._id}
+            VerticalAlignment="Center"
+            rowHeight={34}
+            getRowClassName={(params) =>
+              params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
+            }
+            pageSize={pageSize}
+            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+            rowsPerPageOptions={[5, 10, 20]}
+            pagination
+          />
+        </Box>
       )}
     </div>
   );
