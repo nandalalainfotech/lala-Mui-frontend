@@ -564,7 +564,7 @@ function App() {
                          textDecoration: "none",
                          color: "#263238",
                          paddingRight: { sm: "0px" },
-                         fontFamily: "Amazon Ember', Arial, sans-serif",
+                         fontFamily: "Amazon Ember, Arial, sans-serif",
                        },
                      }}
                    >
@@ -1075,7 +1075,7 @@ function App() {
                          textDecoration: "none",
                          color: "#263238",
                          paddingRight: { sm: "0px" },
-                         fontFamily: "Amazon Ember', Arial, sans-serif",
+                         fontFamily: "Amazon Ember, Arial, sans-serif",
                        },
                      }}
                    >

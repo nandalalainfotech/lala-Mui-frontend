@@ -1,10 +1,10 @@
-.rec-dot_active {
-    background-color: var(--blue) !important;
-    box-shadow: 0 0 1px 3px var(--blue) !important;
+.new2  .rec-dot_active {
+    /* background-color: var(--blue) !important;
+    box-shadow: 0 0 1px 3px var(--blue) !important; */
 }
-.rec-dot:focus,
-.rec-dot:hover {
-    box-shadow: 0 0 1px 3px var(--blue) !important;
+.new2 .rec-dot:focus,
+.new2 .rec-dot:hover {
+    display: block;
 }
 .rec-dot_active:focus,
 .rec-dot_active:hover {
@@ -28,4 +28,33 @@
 
 .rec-arrow:hover:not(:disabled) {
     transform: scale(1.2);
+}
+.new1 .rec-arrow{
+    display: block;
+    background-color: red;
+    transition: all 0.3s ease;
+    font-size: 1.1rem !important;
+    color: white !important;
+    width: 1.7rem !important;
+    height: 1.7rem !important;
+    min-width: 1.7rem !important;
+    line-height: 1.7rem !important;
+}
+.new1 .rec-arrow:hover:not(:disabled) {
+    transform: scale(1.2);
+}
+
+.new2 .rec-arrow{
+display: block;
+transition: all 0.3s ease;
+font-size: 1.1rem !important;
+color: white !important;
+width: 1.7rem !important;
+height: 1.7rem !important;
+min-width: 1.7rem !important;
+line-height: 1.7rem !important;
+
+}
+.new2 .rec-arrow:hover:not(:disabled) {
+transform: scale(1.2);
 }
