@@ -1,0 +1,31 @@
+.rec-dot_active {
+    background-color: var(--blue) !important;
+    box-shadow: 0 0 1px 3px var(--blue) !important;
+}
+.rec-dot:focus,
+.rec-dot:hover {
+    box-shadow: 0 0 1px 3px var(--blue) !important;
+}
+.rec-dot_active:focus,
+.rec-dot_active:hover {
+    background-color: var(--blue) !important;
+    box-shadow: 0 0 1px 3px var(--blue) !important;
+}
+
+.rec-arrow {
+    
+    /* background-color: var(--blue) !important;
+    transition: all 0.3s ease;
+    font-size: 1.1rem !important;
+    color: white !important;
+    width: 1.7rem !important;
+    height: 1.7rem !important;
+    min-width: 1.7rem !important;
+    line-height: 1.7rem !important; */
+    display:none;
+   
+}
+
+.rec-arrow:hover:not(:disabled) {
+    transform: scale(1.2);
+}
