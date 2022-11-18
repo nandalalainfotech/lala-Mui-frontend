@@ -3360,6 +3360,11 @@ function App() {
                   }
                 />
                 <Route
+                path="/products/new"
+              element={<ProductEditScreen />}
+              exact
+                ></Route>
+                <Route
                   path="/product/:id/edit"
                   element={<ProductEditScreen />}
                   exact

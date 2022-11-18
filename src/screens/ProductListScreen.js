@@ -2,15 +2,15 @@ import { deepPurple, red } from "@material-ui/core/colors";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import Box from "@mui/material/Box";
+import Button from '@mui/material/Button';
 import { alpha, styled } from "@mui/material/styles";
 import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { createProduct, deleteProduct, listProducts } from "../actions/productAction";
+import { deleteProduct, listProducts } from "../actions/productAction";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import Button from '@mui/material/Button';
 import { PRODUCT_CREATE_RESET, PRODUCT_DELETE_RESET, PRODUCT_DETAILS_RESET, PRODUCT_UPDATE_RESET } from "../constants/productConstants";
 
 
@@ -82,9 +82,10 @@ export default function ProductListScreen() {
     }
   };
 
-   const createHandler = () => {
-    dispatch(createProduct());
+  const createHandler = () => {
+    navigate(`/products/new`);
   };
+
 
   const editHandler = (product) => {
     console.log("product", product);
