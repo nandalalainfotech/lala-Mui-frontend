@@ -112,13 +112,13 @@ export const detailsProduct = (productId) => async (dispatch) => {
     });
   }
 };
-export const createProduct = () => async (dispatch, getState) => {
+export const createProduct = (product) => async (dispatch, getState) => {
   dispatch({ type: PRODUCT_CREATE_REQUEST });
   const {
     userSignin: { userInfo },
   } = getState();
   try {
-    const { data } = await Axios.post('/api/products',{},
+    const { data } = await Axios.post('/api/products',product,
       {
         headers: { Authorization: `Bearer ${userInfo.token}` },
       }
@@ -161,7 +161,11 @@ export const deleteProduct = (productId) => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState();
   try {
+   
     await Axios.delete(`/api/products/${productId}`, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    await Axios.delete(`/api/uploads/${productId}`, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
     dispatch({ type: PRODUCT_DELETE_SUCCESS });

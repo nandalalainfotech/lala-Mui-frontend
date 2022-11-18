@@ -32,6 +32,7 @@ const {
   PRODUCT_REVIEW_CREATE_SUCCESS,
   PRODUCT_REVIEW_CREATE_FAIL,
   PRODUCT_REVIEW_CREATE_RESET,
+  PRODUCT_DETAILS_RESET,
 } = require("../constants/productConstants");
 
 export const productListReducer = (
@@ -111,6 +112,8 @@ export const productDetailsReducer = (state = { loading: true }, action) => {
       return { loading: false, product: action.payload };
     case PRODUCT_DETAILS_FAIL:
       return { loading: false, error: action.payload };
+      case PRODUCT_DETAILS_RESET:
+        return {};
     default:
       return state;
   }
