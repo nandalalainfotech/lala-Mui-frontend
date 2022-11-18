@@ -88,7 +88,6 @@ export default function ProductListScreen() {
 
 
   const editHandler = (product) => {
-    console.log("product", product);
     navigate(`/product/${product.row._id}/edit`);
   };
 
