@@ -3515,8 +3515,28 @@ function App() {
               </Routes>
             </Typography>
           </Box>
-        
-         
+          <footer>
+          <AppBar position='fixed' sx={{ top: 'auto', bottom: 0,height:"40px",alignItems:"center" }}>
+            <Grid container direction='column'>
+                {/* <Grid item container>
+                    <Grid item xs={0} sm={1} />
+                    <Grid item xs={12} sm={10}>
+                        <h1>All right reserved</h1>
+                    </Grid>
+                    <Grid item xs={0} sm={1} />
+                </Grid> */}
+                <Grid item container>
+                    <Grid item xs={0} sm={1} />
+                    <Grid item xs={12} sm={10} lg={12} xl={12} sx={{marginLeft:"800px",marginTop:"-10px"}}>
+                        <Toolbar disableGutters={true}>
+                            <h4>All right reserved</h4>
+                        </Toolbar>
+                    </Grid>
+                    <Grid item xs={0} sm={1} />
+                </Grid>
+            </Grid>
+        </AppBar>
+        </footer>
         </Box>
 
         {/* <main></main>
