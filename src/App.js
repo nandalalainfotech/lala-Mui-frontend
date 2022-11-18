@@ -880,7 +880,17 @@ function App() {
                          </Link>
                        </MenuItem>
                        <MenuItem onClick={handleClose}>
-                         <Link to="search/categorygroup/gadgets">
+   <Link
+                            style={{
+                              lineHeight: "25px",
+                              fontWeight: "bold",
+                              fontFamily: "Amazon Ember, Arial, sans-serif",
+                              color: "#ee5f73",
+                              textDecoration: "none",
+                            }}
+                            to="search/categorygroup/gadgets"
+                          >
+                       
                            gadgets
                          </Link>
                        </MenuItem>
@@ -1686,7 +1696,7 @@ function App() {
                      <div className="row">
                        <MenuItem onClick={handleClose}>
                          <Link
-                           to="search/category/kids-Western-Wear"
+                              to="search/category/kids-girls-clothing"
                            style={{
                              lineHeight: "25px",
                              fontWeight: "bold",
@@ -1694,7 +1704,7 @@ function App() {
                              textDecoration: "none",
                            }}
                          >
-                           Western-Wear
+                            girls-clothing
                          </Link>
                        </MenuItem>
                        <MenuItem onClick={handleClose}>

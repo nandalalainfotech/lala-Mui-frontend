@@ -58,3 +58,7 @@ line-height: 1.7rem !important;
 .new2 .rec-arrow:hover:not(:disabled) {
 transform: scale(1.2);
 }
+
+*{
+    font-family: "Amazon Ember, Arial, sans-serif" !important;
+}
