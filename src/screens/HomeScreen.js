@@ -74,48 +74,7 @@ export default function HomeScreen() {
     dispatch(listTopSellers());
   }, [dispatch]);
 
-  var settings = {
-    autoplay: false,
-    autoplaySpeed: 1300,
-    pauseOnFocus: true,
-    pauseOnHover: true,
-    dots: false,
-    arrows: true,
-    infinite: false,
-    speed: 800,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    draggable: true,
-    swipeToSlide: true,
-    variableWidth: true,
-    cssEase: "linear",
-    // responsive: [
-    //   {
-    //     breakpoint: 1024,
-    //     settings: {
-    //       slidesToShow: 4,
-    //       slidesToScroll: 4,
-    //       infinite: true,
-    //       dots: true,
-    //     },
-    //   },
-    //   {
-    //     breakpoint: 600,
-    //     settings: {
-    //       slidesToShow: 2,
-    //       slidesToScroll: 2,
-    //       initialSlide: 2,
-    //     },
-    //   },
-    //   {
-    //     breakpoint: 480,
-    //     settings: {
-    //       slidesToShow: 1,
-    //       slidesToScroll: 1,
-    //     },
-    //   },
-    // ],
-  };
+  
 
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -139,51 +98,16 @@ export default function HomeScreen() {
     { width: 600, itemsToShow: 2 },
     { width: 768, itemsToShow: 3 },
     { width: 900, itemsToShow: 5 },
-    { width: 1200, itemsToShow: 8 },
+    { width: 1200, itemsToShow: 5},
     { width: 1500, itemsToShow: 8 },
   ];
 
-  const items = [
-    { id: 1, title: "item #1" },
-    { id: 2, title: "item #2" },
-    { id: 3, title: "item #3" },
-    { id: 4, title: "item #4" },
-    { id: 5, title: "item #5" },
-    { id: 1, title: "item #1" },
-    { id: 2, title: "item #2" },
-    { id: 3, title: "item #3" },
-    { id: 4, title: "item #4" },
-    { id: 5, title: "item #5" },
-    { id: 1, title: "item #1" },
-    { id: 2, title: "item #2" },
-    { id: 3, title: "item #3" },
-    { id: 4, title: "item #4" },
-    { id: 5, title: "item #5" },
-    { id: 1, title: "item #1" },
-    { id: 2, title: "item #2" },
-    { id: 3, title: "item #3" },
-    { id: 4, title: "item #4" },
-    { id: 5, title: "item #5" },
-  ];
-
+ 
   return (
     <div>
       <div className="convey">
-        <Box sx={{ flexGrow: 1, marginTop: "40px" }}>
-          <h2>Top Sellers</h2>
-          <Paper
-            square
-            elevation={0}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              height: 50,
-              pl: 2,
-              bgcolor: "background.default",
-            }}
-          >
-            <Typography>{images[activeStep].label}</Typography>
-          </Paper>
+      <h2>Top Sellers</h2>
+        <Box sx={{ flexGrow: 1, }}>
           <AutoPlaySwipeableViews
             axis={theme.direction === "rtl" ? "x-reverse" : "x"}
             index={activeStep}
@@ -226,17 +150,16 @@ export default function HomeScreen() {
       ) : (
         <>
           <Carousel
-            mouseTracking
-            enableAutoPlay
-            easing="cubic-bezier(1,.15,.55,1.54)"
-            tiltEasing="cubic-bezier(0.110, 1, 1.000, 0.210)"
-            transitionMs={800}
-            autoPlaySpeed={1500}
-            enableSwipe={true}
-            pagination={false}
-            breakPoints={breakPoints}
-            kXteup={false}
-          >
+               mouseTracking
+               enableAutoPlay
+               easing="cubic-bezier(1,.15,.55,1.54)"
+               tiltEasing="cubic-bezier(0.110, 1, 1.000, 0.210)"
+               transitionMs={800}
+               autoPlaySpeed={1500}
+               enableSwipe={true}
+               pagination={false}
+               breakPoints={breakPoints}
+             >
             {products?.map((menProduct) => (
               <div>
                 <Product key={menProduct._id} product={menProduct}></Product>
@@ -254,19 +177,16 @@ export default function HomeScreen() {
       ) : (
         <>
          <Carousel
-            // mouseTracking
-            // enableAutoPlay
-            // easing="cubic-bezier(1,.15,.55,1.54)"
-            // tiltEasing="cubic-bezier(0.110, 1, 1.000, 0.210)"
-            // transitionMs={800}
-            // autoPlaySpeed={1500}
-            // enableSwipe={true}
+         className="new1"
+            mouseTracking
+            enableAutoPlay
+            easing="cubic-bezier(1,.15,.55,1.54)"
+            tiltEasing="cubic-bezier(0.110, 1, 1.000, 0.210)"
+            transitionMs={800}
+            autoPlaySpeed={1500}
+            enableSwipe={true}
             pagination={false}
             breakPoints={breakPoints}
-            renderArrow={({ type, onClick }) => {
-              const pointer = type === consts.PREV ? '👈' : '👉'
-              return <button onClick={onClick}>{pointer}</button>
-            }}
           >
             {products?.filter((menProduct) => {
                 return menProduct.category=== "men";
@@ -287,7 +207,7 @@ export default function HomeScreen() {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <>
-          <Carousel
+          <Carousel className="new2"
             mouseTracking
             enableAutoPlay
             easing="cubic-bezier(1,.15,.55,1.54)"
@@ -319,7 +239,7 @@ export default function HomeScreen() {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <>
-         <Carousel
+         <Carousel className="new3"
             mouseTracking
             enableAutoPlay
             easing="cubic-bezier(1,.15,.55,1.54)"
