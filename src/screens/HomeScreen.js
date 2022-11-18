@@ -152,11 +152,8 @@ export default function HomeScreen() {
           <Carousel
                mouseTracking
                enableAutoPlay
-               easing="cubic-bezier(1,.15,.55,1.54)"
-               tiltEasing="cubic-bezier(0.110, 1, 1.000, 0.210)"
-               transitionMs={800}
-               autoPlaySpeed={1500}
-               enableSwipe={true}
+               autoPlaySpeed={100}
+              //  enableSwipe={true}
                pagination={false}
                breakPoints={breakPoints}
              >
@@ -179,11 +176,8 @@ export default function HomeScreen() {
          <Carousel
          className="new1"
             mouseTracking
-            enableAutoPlay
-            easing="cubic-bezier(1,.15,.55,1.54)"
-            tiltEasing="cubic-bezier(0.110, 1, 1.000, 0.210)"
-            transitionMs={800}
-            autoPlaySpeed={1500}
+            // enableAutoPlay
+            // autoPlaySpeed={800}
             enableSwipe={true}
             pagination={false}
             breakPoints={breakPoints}
@@ -207,13 +201,10 @@ export default function HomeScreen() {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <>
-          <Carousel className="new2"
+          <Carousel className="new1"
             mouseTracking
-            enableAutoPlay
-            easing="cubic-bezier(1,.15,.55,1.54)"
-            tiltEasing="cubic-bezier(0.110, 1, 1.000, 0.210)"
-            transitionMs={800}
-            autoPlaySpeed={1500}
+            // enableAutoPlay
+            // autoPlaySpeed={800}
             enableSwipe={true}
             pagination={false}
             breakPoints={breakPoints}
@@ -242,10 +233,7 @@ export default function HomeScreen() {
          <Carousel className="new3"
             mouseTracking
             enableAutoPlay
-            easing="cubic-bezier(1,.15,.55,1.54)"
-            tiltEasing="cubic-bezier(0.110, 1, 1.000, 0.210)"
-            transitionMs={800}
-            autoPlaySpeed={1500}
+            autoPlaySpeed={800}
             enableSwipe={true}
             pagination={false}
             breakPoints={breakPoints}

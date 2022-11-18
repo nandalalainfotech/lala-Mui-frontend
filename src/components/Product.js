@@ -7,20 +7,7 @@ import { useEffect, useState,} from 'react';
 import { Link } from 'react-router-dom';
 import Rating from './Rating';
 
-const styles = theme => ({
-  cart: {
-    padding: "6px 16px",
-    borderRadius: 0,
-    border: "2px solid #000",
-    backgroundColor: "white",
-    color: "black",
-    transition: "background 1s, color 1s",
-    "&:hover": {
-      backgroundColor: "#000",
-      color: "#fff"
-    }
-  }
-});
+
 
 export default function Product(props) {
   const { product } = props;
