@@ -12,27 +12,38 @@ const Search = styled('div')(({ theme }) => ({
   '&:hover': {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
-  marginRight: theme.spacing(2),
+  cursor:"pointer",
+  marginRight: theme.spacing(1),
   marginLeft: 0,
   width: '100%',
+  justifyContent: 'flex-start',
   [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
+    marginLeft: theme.spacing(5),
+    width: 'auto',
+  },
+  [theme.breakpoints.up('md')]: {
+    marginRight: theme.spacing(15),
+    width: 'auto',
+  },
+  [theme.breakpoints.up('lg')]: {
+    marginRight: theme.spacing(15),
     width: 'auto',
   },
   [theme.breakpoints.up('xl')]: {
-    marginLeft: theme.spacing(10),
+    marginRight: theme.spacing(15),
     width: 'auto',
   },
 }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
+  padding: theme.spacing(0, 1),
   height: '100%',
   position: 'absolute',
   pointerEvents: 'none',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  cursor:"pointer"
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -43,30 +54,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
-  
-    [theme.breakpoints.up('sm')]: {
-      width: '25ch',
-      padding: theme.spacing(1, 1, 1, 0),
-      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-      transition: theme.transitions.create('width'),
-    },
     [theme.breakpoints.up('md')]: {
-      width: '50ch',
-      padding: theme.spacing(1, 1, 1, 0),
-      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-      transition: theme.transitions.create('width'),
+      width: '40ch',
     },
     [theme.breakpoints.up('lg')]: {
-      width: '80ch',
-      padding: theme.spacing(1, 1, 1, 0),
-      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-      transition: theme.transitions.create('width'),
+      width: '65ch',
     },
     [theme.breakpoints.up('xl')]: {
-      width: '100ch',
-      padding: theme.spacing(1, 1, 1, 0),
-      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-      transition: theme.transitions.create('width'),
+      width: '95ch',
     },
   },
 }));
@@ -89,7 +84,7 @@ export default function SearchBox(props) {
     //     </div>
     //   </div>
     // </form>
-    <form className="search" onSubmit={submitHandler} >
+    <form onSubmit={submitHandler} >
     <Search>
     <SearchIconWrapper>
       <SearchIcon />

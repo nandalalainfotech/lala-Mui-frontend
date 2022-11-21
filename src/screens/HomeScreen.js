@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Slider from "react-slick";
@@ -47,7 +47,7 @@ const images = [
     imgPath: "/image/lala5.jpg",
   },
   {
-    imgPath: "/image/lala6.jpg",
+    imgPath: "/image/lala7.jpg",
   },
 ];
 
@@ -75,7 +75,7 @@ export default function HomeScreen() {
   }, [dispatch]);
 
   
-
+  const carouselRef = useRef(null);
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = images.length;
@@ -114,6 +114,7 @@ export default function HomeScreen() {
             onChangeIndex={handleStepChange}
             enableMouseEvents
           >
+          
             {images.map((step, index) => (
               <div key={step.label}>
                 {Math.abs(activeStep - index) <= 2 ? (
@@ -122,7 +123,7 @@ export default function HomeScreen() {
                     sx={{
                       height: { xs: 255, sm: 330, md: 430, lg: 470, xl: 470 },
                       display: "block",
-                      Width: { xs: 400, sm: 400, lg: 1800, xl: 1800 },
+                      width: { xs: 400, sm: 400, lg: 1800, xl: 1800 },
                       overflow: "hidden",
                       width: "100%",
                     }}
@@ -150,12 +151,16 @@ export default function HomeScreen() {
       ) : (
         <>
           <Carousel
+             className="new1"
                mouseTracking
-               enableAutoPlay
-               autoPlaySpeed={100}
+              //  enableAutoPlay
+              //  autoPlaySpeed={100}
               //  enableSwipe={true}
                pagination={false}
                breakPoints={breakPoints}
+               enableMouseSwipe={true}
+               pauseOnFocus={true}
+               pauseOnHover={true}
              >
             {products?.map((menProduct) => (
               <div>
@@ -181,6 +186,7 @@ export default function HomeScreen() {
             enableSwipe={true}
             pagination={false}
             breakPoints={breakPoints}
+            //  showArrows={false}
           >
             {products?.filter((menProduct) => {
                 return menProduct.category=== "men";
@@ -208,7 +214,7 @@ export default function HomeScreen() {
             enableSwipe={true}
             pagination={false}
             breakPoints={breakPoints}
-            kXteup={false}
+            disableArrowsOnEnd={false}
           >
             {products
               ?.filter((product) => {
