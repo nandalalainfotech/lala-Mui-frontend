@@ -17,7 +17,10 @@ const Search = styled('div')(({ theme }) => ({
   marginLeft: 0,
   width: '100%',
   justifyContent: 'flex-start',
-  [theme.breakpoints.up('sm')]: {
+  // [theme.breakpoints.only('xs')]: {
+  //  display:"none"
+  // },
+  [theme.breakpoints.between('sm','md')]: {
     marginLeft: theme.spacing(5),
     width: 'auto',
   },
