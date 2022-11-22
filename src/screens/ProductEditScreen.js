@@ -529,7 +529,7 @@ export default function ProductEditScreen(props) {
           borderRadius:'5px',
           
         }}>
-             <TextField style={{margin:"30px 0px"}}
+             <TextField style={{margin:"10px 0px"}}
             inputProps={{style: {fontSize: 14}}}
              size="small"
               fullWidth   
@@ -759,7 +759,7 @@ export default function ProductEditScreen(props) {
           borderRadius:'5px',
           
         }}>
-             <TextField style={{margin:"30px 0px"}}
+             <TextField style={{margin:"10px 0px"}}
             inputProps={{style: {fontSize: 14}}}
              size="small"
               fullWidth   
