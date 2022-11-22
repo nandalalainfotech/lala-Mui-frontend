@@ -19,8 +19,15 @@ import { createTheme, ThemeProvider} from '@mui/material/styles';
 import {makeStyles} from "@material-ui/core";
 import { PRODUCT_DETAILS_RESET } from "../constants/productConstants";
 
+import { useForm } from "react-hook-form";
+
 
 export default function ProductEditScreen(props) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm();
   const [activeStep, setActiveStep] = useState(0);
   const navigate = useNavigate();
   const params = useParams();
@@ -49,29 +56,108 @@ export default function ProductEditScreen(props) {
     product: createdProduct,
   } = productCreate;
 
+  const [nameError, setNameError] = useState("");
   const [priceError, setPriceError] = useState("");
+  const [categoryError, setCategoryError] = useState("");
+  const [categorygroupError, setCategorygroupError] = useState("");
+  const [categorytypeError, setCategorytypeError] = useState("");
   const [countInStockError, setCountInStockError] = useState("");
+  const [brandError, setBrandError] = useState("");
+  const [descriptionError, setDescriptionError] = useState("");
+
+    const validateName = (e) => {
+        setName(e.target.value);
+        if (e.target.value.length === 0){
+            setNameError("Name is required");
+        }else {
+            setNameError('');
+            setName(e.target.value);
+        }
+    }
 
   const validatePrice = (e) => {
     var pattern = new RegExp(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/i);
-    if (!pattern.test(e.target.value)) {
-      setPriceError("Please enter number only");
-    } else {
+    setPrice(e.target.value);
+    
+     if (e.target.value.length === 0){
+      setPriceError("Price is required");
+    }else if (!pattern.test(e.target.value)) {
+      setPriceError("Please Enter Number Only");
+
+    }
+    else {
       setPriceError('');
       setPrice(e.target.value);
     }
   }
 
+  const validateCategory = (e) => {
+    setCategory(e.target.value);
+    if (e.target.value.length === 0){
+      setCategoryError("Category is required");
+   }
+   else {
+    setCategoryError('');
+    setCategory(e.target.value);
+   }
+  }
+
+  const validateCategorygroup = (e) => {
+    setCategorygroup(e.target.value);
+    if (e.target.value.length === 0){
+      setCategorygroupError("Category Group is required");
+   }
+   else {
+    setCategorygroupError('');
+    setCategorygroup(e.target.value);
+   } 
+  }
+
+  const validateCategorytype = (e) => {
+    setCategorytype(e.target.value);
+    if (e.target.value.length === 0){
+      setCategorytypeError("Category Type is required");
+   }
+   else {
+    setCategorytypeError('');
+    setCategorytype(e.target.value);
+   } 
+  }
+
+  const validateBrand = (e) => {
+    setBrand(e.target.value);
+    if (e.target.value.length === 0){
+      setBrandError("Category Brand is required");
+   }
+   else {
+    setBrandError('');
+    setBrand(e.target.value);
+   } 
+
+  }
   const validateCountInStock = (e) => {
     var pattern = new RegExp(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/i);
-    if (!pattern.test(e.target.value)) {
-      setCountInStockError("Please enter number only");
+    setCountInStock(e.target.value);
+    if (e.target.value.length === 0){
+      setCountInStockError("CountInStock is required");
+   }else if (!pattern.test(e.target.value)) {
+      setCountInStockError("Please Enter Number Only");
     } else {
       setCountInStockError('');
       setCountInStock(e.target.value);
     }
   }
-  
+  const validateDescription = (e) => {
+    setDescription(e.target.value);
+    if (e.target.value.length === 0){
+      setDescriptionError("Description is required");
+   }
+   else {
+    setDescriptionError('');
+    setDescription(e.target.value);
+   } 
+  }
+
   const dispatch = useDispatch();
 
   const createSteps = [
@@ -102,7 +188,7 @@ export default function ProductEditScreen(props) {
 
   const updateHandler = (e) => {
     e.preventDefault();
-    if(!priceError && !countInStockError){
+    if(!nameError && !priceError && !categoryError && !categorygroupError && !categorytypeError && !countInStockError && !brandError && !descriptionError ){
       dispatch(
         updateProduct({
           _id: productId,
@@ -120,29 +206,21 @@ export default function ProductEditScreen(props) {
       dispatch({ type: PRODUCT_DETAILS_RESET });
         setActiveStep(activeStep + 1);
        
-    }else{
-      alert('Please enter correct values');
     }
   };
   const createHandler = (e) => {
-    e.preventDefault();
-    if(!priceError && !countInStockError){
       dispatch(createProduct({
-        name,
-        price,
-        category,
-        categorygroup,
-        categorytype,
-        brand,
-        countInStock,
-        description,
+        name:e.name,
+        price:e.price,
+        category:e.category,
+        categorygroup:e.categorygroup,
+        categorytype:e.categorytext,
+        brand:e.categorybrand,
+        countInStock:e.countInStock,
+        description:e.description,
       })
     );
       setActiveStep(activeStep + 1);
-    }else{
-      alert('Please enter correct values');
-    }
-    
   }
 
   // const [loadingUpload, setLoadingUpload] = useState(false);
@@ -156,7 +234,7 @@ export default function ProductEditScreen(props) {
   }
   const uploadFileHandler = async (e) => {
     const bodyFormData = new FormData();
-    bodyFormData.append('image', imageFile);
+    bodyFormData.append('image', e.imageFile[0]);
    
     try {
       if(!product && !productId){
@@ -166,7 +244,7 @@ export default function ProductEditScreen(props) {
           Authorization: `Bearer ${userInfo.token}`,
           Product: `Bearer ${product}`,
         },
-       });         
+       });   
        dispatch(
         updateProduct({
           _id: createdProduct._id,
@@ -249,7 +327,7 @@ export default function ProductEditScreen(props) {
      
      {!product && !productId ?(
       activeStep === 0 ?(
-       <Box component="form" onSubmit={createHandler} sx={{
+       <Box component="form" onSubmit={handleSubmit(createHandler)} sx={{
         display: 'flex',
         width:'80%',
         flexDirection: 'column',
@@ -268,14 +346,19 @@ export default function ProductEditScreen(props) {
           }}
            size="small"
             margin="normal"
-            required
+            // required
             fullWidth
             id="name"
             label="Name"
             name="name"
             autoComplete="off"
             onChange={(e) => setName(e.target.value)}
+            // helperText="Incorrect entry."
+            {...register("name", { required: true })}
+            error={(errors.name)}
+            
           />
+          {errors.name && <span className="formError">Name is required</span>}
           <TextField
           InputLabelProps={{
             classes: {
@@ -283,21 +366,20 @@ export default function ProductEditScreen(props) {
               focused: classes.cssFocused
             }
           }}
-           inputProps={{style: {fontSize: 14}}}
            size="small"
             margin="normal"
-            required
             fullWidth   
             id="price"
             label="Price"
             name="price"
             autoComplete="off"
-            onChange={(e) => validatePrice(e)}
-          />
-            <span style={{
-              fontSize:"14px",
-              color: 'red',
-            }}>{priceError}</span> 
+            // onChange={(e) => validatePrice(e)}
+            onChange={(e) => setPrice(e.target.value)}
+            {...register("price", {required: true, pattern:/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/i })}
+            error={errors.price}
+           />
+          {(errors?.price?.type === "required" && <span className="formError">Price is required</span>)}
+          {errors?.price?.type === "pattern" && (<span className="formError">Please Enter Number Only</span>)}
            <TextField
           InputLabelProps={{
             classes: {
@@ -308,14 +390,17 @@ export default function ProductEditScreen(props) {
            inputProps={{style: {fontSize: 14}}}
            size="small"
             margin="normal"
-            required
             fullWidth   
             id="category"
             label="Category"
             name="category"
             autoComplete="off"
             onChange={(e) => setCategory(e.target.value)}
+            {...register("category", { required: true })}
+            error={(errors.category)}
+            
           />
+          {errors.category && <span className="formError">Category is required</span>}
           <TextField
           InputLabelProps={{
             classes: {
@@ -326,14 +411,17 @@ export default function ProductEditScreen(props) {
            inputProps={{style: {fontSize: 14}}}
            size="small"
             margin="normal"
-            required
             fullWidth   
             id="category group"
             label="Category group"
             name="category group"
             autoComplete="off"
             onChange={(e) => setCategorygroup(e.target.value)}
+            {...register("categorygroup", { required: true })}
+            error={(errors.categorygroup)}
+            
           />
+          {errors.categorygroup && <span className="formError">Category group is required</span>}
           <TextField
           InputLabelProps={{
             classes: {
@@ -344,14 +432,17 @@ export default function ProductEditScreen(props) {
           inputProps={{style: {fontSize: 14}}}
            size="small"
             margin="normal"
-            required
             fullWidth
             id="category text"
             label="Category text"
             name="category text"
             autoComplete="off"
             onChange={(e) => setCategorytype(e.target.value)}
+            {...register("categorytext", { required: true })}
+            error={(errors.categorytext)}
+            
           />
+          {errors.categorytext && <span className="formError">Category text is required</span>}
           <TextField
           InputLabelProps={{
             classes: {
@@ -362,14 +453,17 @@ export default function ProductEditScreen(props) {
            inputProps={{style: {fontSize: 14}}}
            size="small"
             margin="normal"
-            required
             fullWidth   
             id="brand"
             label="Brand"
             name="brand"
             autoComplete="off"
             onChange={(e) => setBrand(e.target.value)}
+            {...register("categorybrand", { required: true })}
+            error={(errors.categorybrand)}
+            
           />
+          {errors.categorybrand && <span className="formError">Category brand is required</span>}
 
            <TextField
           InputLabelProps={{
@@ -382,18 +476,18 @@ export default function ProductEditScreen(props) {
            size="small"
            variant="outlined"
             margin="normal"
-            required
             fullWidth   
             id="countInStock"
             label="CountInStock"
             name="countInStock"
             autoComplete="off"
-            onChange={(e) => validateCountInStock(e)}
-            />
-              <span style={{
-                fontSize:"14px",
-                color: 'red',
-              }}>{countInStockError}</span> 
+            // onChange={(e) => validateCountInStock(e)}
+            onChange={(e) => setCountInStock(e.target.value)}
+            {...register("countInStock", {required: true, pattern:/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/i })}
+            error={errors.countInStock}
+           />
+          {(errors?.countInStock?.type === "required" && <span className="formError">CountInStock is required</span>)}
+          {errors?.countInStock?.type === "pattern" && (<span className="formError">Please Enter Number Only</span>)}
           <TextField
           InputLabelProps={{
             classes: {
@@ -404,14 +498,17 @@ export default function ProductEditScreen(props) {
           inputProps={{style: {fontSize: 14}}}
            size="small"
             margin="normal"
-            required
             fullWidth
             id="description"
             label="Description"
             name="description"
             autoComplete="off"
             onChange={(e) => setDescription(e.target.value)}
+            {...register("description", { required: true })}
+            error={(errors.description)}
+            
           />
+          {errors.description && <span className="formError">Description is required</span>}
 
           <Button
             fullWidth
@@ -423,7 +520,7 @@ export default function ProductEditScreen(props) {
           </Button>
        </Box>
       ):(
-        <Box component="form" sx={{
+        <Box component="form" onSubmit={handleSubmit(uploadFileHandler)} sx={{
           display: 'flex',
           width:'80%',
           flexDirection: 'column',
@@ -435,20 +532,23 @@ export default function ProductEditScreen(props) {
              <TextField style={{margin:"30px 0px"}}
             inputProps={{style: {fontSize: 14}}}
              size="small"
-              required
               fullWidth   
               type="file"
               id="imageFile"
               name="imageFile"
               autoComplete="off"
-              autoFocus
               onChange={(e)=>onSelectFile(e)}
-            />           
+              {...register("imageFile", { required: true })}
+              error={(errors.imageFile)}
+              
+            />
+            {(errors?.imageFile?.type === "required" && <span className="formError">File is required</span>)}
             <Button
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick={uploadFileHandler}
+              // onClick={uploadFileHandler}
+              type="submit"
             >
               Upload 
          </Button>
@@ -476,15 +576,17 @@ export default function ProductEditScreen(props) {
             }}
             size="small"
              margin="normal"
-             required
              fullWidth
              id="name"
              label="Name"
              name="name"
              autoComplete="off"
              value={name}
-             onChange={(e) => setName(e.target.value)}
-           />
+            //  onChange={(e) => setName(e.target.value)}
+            onChange={(e) => validateName(e)}
+            error={nameError}
+            />
+            <span className="formError">{nameError}</span>
            <TextField
           InputLabelProps={{
             classes: {
@@ -495,16 +597,17 @@ export default function ProductEditScreen(props) {
             inputProps={{style: {fontSize: 14}}}
             size="small"
              margin="normal"
-             required
              fullWidth   
              id="price"
              label="Price"
              name="price"
              autoComplete="off"
              value={price}
-             onChange={(e) => setPrice(e.target.value)}
+            //  onChange={(e) => setPrice(e.target.value)}
+            onChange={(e) => validatePrice(e)}
+            error={priceError}
            />
- 
+           <span className="formError">{priceError}</span>
             <TextField
             InputLabelProps={{
               classes: {
@@ -515,15 +618,17 @@ export default function ProductEditScreen(props) {
             inputProps={{style: {fontSize: 14}}}
             size="small"
              margin="normal"
-             required
              fullWidth   
              id="category"
              label="Category"
              name="category"
              autoComplete="off"
              value={category}
-             onChange={(e) => setCategory(e.target.value)}
-           />
+            //  onChange={(e) => setCategory(e.target.value)}
+            onChange={(e) => validateCategory(e)}
+            error={categoryError}
+            />
+            <span className="formError">{categoryError}</span>
            <TextField
             InputLabelProps={{
               classes: {
@@ -534,15 +639,17 @@ export default function ProductEditScreen(props) {
             inputProps={{style: {fontSize: 14}}}
             size="small"
              margin="normal"
-             required
              fullWidth   
              id="category group"
              label="Category group"
              name="category group"
              autoComplete="off"
              value={categorygroup}
-             onChange={(e) => setCategorygroup(e.target.value)}
-           />
+            //  onChange={(e) => setCategorygroup(e.target.value)}
+            onChange={(e) => validateCategorygroup(e)}
+            error={categorygroupError}
+            />
+            <span className="formError">{categorygroupError}</span>
            <TextField
           InputLabelProps={{
             classes: {
@@ -560,8 +667,11 @@ export default function ProductEditScreen(props) {
              name="category text"
              autoComplete="off"
              value={categorytype}
-             onChange={(e) => setCategorytype(e.target.value)}
-           />
+            //  onChange={(e) => setCategorytype(e.target.value)}
+            onChange={(e) => validateCategorytype(e)}
+            error={categorytypeError}
+            />
+            <span className="formError">{categorytypeError}</span>
            <TextField
             InputLabelProps={{
               classes: {
@@ -579,8 +689,11 @@ export default function ProductEditScreen(props) {
              name="brand"
              autoComplete="off"
              value={brand}
-             onChange={(e) => setBrand(e.target.value)}
-           />
+            //  onChange={(e) => setBrand(e.target.value)}
+            onChange={(e) => validateBrand(e)}
+            error={brandError}
+            />
+            <span className="formError">{brandError}</span>
  
             <TextField
           InputLabelProps={{
@@ -599,8 +712,11 @@ export default function ProductEditScreen(props) {
              name="countInStock"
              autoComplete="off"
              value={countInStock}
-             onChange={(e) => setCountInStock(e.target.value)}
-           />
+            //  onChange={(e) => setCountInStock(e.target.value)}
+            onChange={(e) => validateCountInStock(e)}
+            error={countInStockError}
+            />
+            <span className="formError">{countInStockError}</span>
            <TextField
           InputLabelProps={{
             classes: {
@@ -618,8 +734,11 @@ export default function ProductEditScreen(props) {
              name="description"
              autoComplete="off"
              value={description}
-             onChange={(e) => setDescription(e.target.value)}
-           />
+            //  onChange={(e) => setDescription(e.target.value)}
+            onChange={(e) => validateDescription(e)}
+            error={descriptionError}
+            />
+            <span className="formError">{descriptionError}</span>
  
            <Button
              fullWidth
@@ -631,37 +750,40 @@ export default function ProductEditScreen(props) {
            </Button>
         </Box>
        ):(
-         <Box component="form" onSubmit={uploadFileHandler} sx={{
-           display: 'flex',
-           width:'80%',
-           flexDirection: 'column',
-           alignItems: 'center',
-           margin:'0px 10%',
-           borderRadius:'5px',
-           
-         }}>
-              <TextField style={{margin:"30px 0px"}}
-             inputProps={{style: {fontSize: 14}}}
-              size="small"
-               required
-               fullWidth   
-               type="file"
-               id="imageFile"
-               name="imageFile"
-               autoComplete="off"
-               autoFocus
-               onChange={(e)=>onSelectFile(e)}
-             />           
-             <Button
-               fullWidth
-               variant="contained"
-               sx={{ mt: 3, mb: 2 }}
-               onClick={uploadFileHandler}
-             >
-               Upload 
-          </Button>
-             
-          </Box>
+        <Box component="form" onSubmit={handleSubmit(uploadFileHandler)} sx={{
+          display: 'flex',
+          width:'80%',
+          flexDirection: 'column',
+          alignItems: 'center',
+          margin:'0px 10%',
+          borderRadius:'5px',
+          
+        }}>
+             <TextField style={{margin:"30px 0px"}}
+            inputProps={{style: {fontSize: 14}}}
+             size="small"
+              fullWidth   
+              type="file"
+              id="imageFile"
+              name="imageFile"
+              autoComplete="off"
+              onChange={(e)=>onSelectFile(e)}
+              {...register("imageFile", { required: true })}
+              error={(errors.imageFile)}
+              
+            />
+            {(errors?.imageFile?.type === "required" && <span className="formError">File is required</span>)}
+            <Button
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              // onClick={uploadFileHandler}
+              type="submit"
+            >
+              Upload 
+         </Button>
+            
+         </Box>
        )
   
      ):<div><LoadingBox></LoadingBox></div>
