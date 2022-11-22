@@ -10,7 +10,6 @@
     "@material-ui/core": "^4.12.4",
     "@material-ui/styles": "^4.11.5",
     "@mui/icons-material": "^5.10.14",
-    "@mui/joy": "^5.0.0-alpha.54",
     "@mui/material": "^5.10.14",
     "@mui/styled-engine-sc": "^5.10.6",
     "@mui/styles": "^5.10.14",
@@ -34,7 +33,9 @@
     "react-bootstrap": "^2.5.0",
     "react-dom": "^18.2.0",
     "react-elastic-carousel": "^0.11.5",
+    "react-form-validation-context": "^2.1.6",
     "react-google-charts": "^4.0.0",
+    "react-hook-form": "^7.39.4",
     "react-hover-animation": "^2.1.1",
     "react-image-magnify": "^2.7.4",
     "react-magnifier": "^3.0.4",
@@ -57,7 +58,8 @@
     "slick-carousel": "^1.8.1",
     "socket.io-client": "^4.5.1",
     "styled-components": "^5.3.6",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",

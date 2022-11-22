@@ -64,3 +64,8 @@ transform: scale(1.2);
 *{
     font-family: "Amazon Ember" !important;
 }
+.formError {
+    width: 100%;
+    color: red;
+    font-size: 12px;
+  }
