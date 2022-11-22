@@ -78,7 +78,10 @@ import { styled, useTheme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import Paper from "@mui/material/Paper";
+// import Image from "/image/logo.png";
 // Side bar section start*************************************
 const drawerWidth = 240;
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -102,6 +105,39 @@ const styles = (theme) => ({
     },
   },
 });
+
+// ************************ footer******************
+const useStyles = makeStyles((theme) => ({
+  rootBox: {
+    [theme.breakpoints.down('md')]: {
+      justifyContent: 'center'
+    }
+    
+  },
+  footerNav: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    marginRight: 'auto',
+    marginLeft: theme.spacing(3),
+    marginBottom: theme.spacing(0),
+   
+
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+      marginLeft: 'auto',
+      marginTop: theme.spacing(3),
+      marginBottom: theme.spacing(2),
+    }
+  },
+  footerLink: {
+    marginLeft: theme.spacing(3),
+    marginRight: theme.spacing(3),
+    [theme.breakpoints.down('md')]: {
+      marginBottom: theme.spacing(2),
+    }
+  },
+}));
 
 function App() {
   const cart = useSelector((state) => state.cart);
@@ -171,7 +207,25 @@ function App() {
     setAnchorEl8(null);
   };
   // navbar dropdowns section End************************************************
-  console.log("userInfo", userInfo);
+  const classes = useStyles();
+
+  const content = {
+    'brand': { image: 'nereus-assets/img/nereus-light.png', width: 110 },
+    'copy': '© 2020 Nereus All rights reserved.',
+    'link1': 'First Link',
+    'link2': 'Second Link',
+    'link3': 'Third Link',
+    'link4': 'Fourth Link',
+    // ...props.content
+  };
+
+  let brand;
+
+  if (content.brand.image) {
+    brand = <img src={ content.brand.image } alt="" width={ content.brand.width } />;
+  } else {
+    brand = content.brand.text || '';
+  }
   return (
     <BrowserRouter>
       <div className="grid-container">
@@ -225,7 +279,7 @@ function App() {
                 <Grid item xs={2}>
                   <div className="grid-elements">
                   <Box sx={{ flexGrow: 0 }}>
-                  <Stack direction="row" spacing={2} sx={{justifyContent:"flex-end",}}>
+                  <Stack direction="row" spacing={{xs:0,sm:1,md:2,lg:2,xl:2}} sx={{justifyContent:"flex-end",}}>
                 <Box>
                   <Tooltip title="Cart" arrow placement="top">
                     <IconButton  sx={{ p:0,"&:hover": { color: "#ff7519" }}}
@@ -3547,43 +3601,42 @@ function App() {
               </Routes>
             </Typography>
           </Box>
-          <footer>
-            <AppBar
-              position="fixed"
-              sx={{
-                top: "auto",
-                bottom: 0,
-                height: "40px",
-                alignItems: "center",
-              }}
-            >
-              <Grid container direction="column">
-                {/* <Grid item container>
-                    <Grid item xs={0} sm={1} />
-                    <Grid item xs={12} sm={10}>
-                        <h1>All right reserved</h1>
-                    </Grid>
-                    <Grid item xs={0} sm={1} />
-                </Grid> */}
-                <Grid item container>
-                  <Grid item xs={0} sm={1} />
-                  <Grid
-                    item
-                    xs={12}
-                    sm={10}
-                    lg={12}
-                    xl={12}
-                    sx={{ marginLeft: "800px", marginTop: "-10px" }}
-                  >
-                    <Toolbar disableGutters={true}>
-                      <h4>All right reserved</h4>
-                    </Toolbar>
-                  </Grid>
-                  <Grid item xs={0} sm={1} />
-                </Grid>
-              </Grid>
-            </AppBar>
-          </footer>
+          <footer style={{backgroundColor:"aqua"}}>
+          <Paper sx={{marginTop: 'calc(10% + 60px)',backgroundColor:"aqua",
+    width: '100%',
+    position: 'fixed',
+    bottom: 0,
+    marginLeft:"-10px"
+    }} component="footer" square variant="outlined">
+      <Container maxWidth="xl">
+        <Box
+          sx={{
+            flexGrow: 1,
+            justifyContent: "center",
+            display: "flex",
+            my:1
+          }}
+        >
+            <div>
+            {/* <Image priority src="/Logo.svg" width={75} height={30} alt="Logo" /> */}
+            </div>
+        </Box>
+
+        <Box
+          sx={{
+            flexGrow: 1,
+            justifyContent: "center",
+            display: "flex",
+            mb: 2,
+          }}
+        >
+          <Typography variant="caption" color="initial" sx={{fontSize:"16px"}}>
+            Copyright ©2022.All right reserved
+          </Typography>
+        </Box>
+      </Container>
+    </Paper>
+    </footer>
         </Box>
 
         {/* <main></main>
