@@ -78,9 +78,12 @@ import { styled, useTheme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
 import Paper from "@mui/material/Paper";
+import BottomNavigation from "@mui/material/BottomNavigation";
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+
 // import Image from "/image/logo.png";
 // Side bar section start*************************************
 const drawerWidth = 240;
@@ -109,33 +112,31 @@ const styles = (theme) => ({
 // ************************ footer******************
 const useStyles = makeStyles((theme) => ({
   rootBox: {
-    [theme.breakpoints.down('md')]: {
-      justifyContent: 'center'
-    }
-    
+    [theme.breakpoints.down("md")]: {
+      justifyContent: "center",
+    },
   },
   footerNav: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    marginRight: 'auto',
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    marginRight: "auto",
     marginLeft: theme.spacing(3),
     marginBottom: theme.spacing(0),
-   
 
-    [theme.breakpoints.down('md')]: {
-      width: '100%',
-      marginLeft: 'auto',
+    [theme.breakpoints.down("md")]: {
+      width: "100%",
+      marginLeft: "auto",
       marginTop: theme.spacing(3),
       marginBottom: theme.spacing(2),
-    }
+    },
   },
   footerLink: {
     marginLeft: theme.spacing(3),
     marginRight: theme.spacing(3),
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down("md")]: {
       marginBottom: theme.spacing(2),
-    }
+    },
   },
 }));
 
@@ -210,21 +211,23 @@ function App() {
   const classes = useStyles();
 
   const content = {
-    'brand': { image: 'nereus-assets/img/nereus-light.png', width: 110 },
-    'copy': '© 2020 Nereus All rights reserved.',
-    'link1': 'First Link',
-    'link2': 'Second Link',
-    'link3': 'Third Link',
-    'link4': 'Fourth Link',
+    brand: { image: "nereus-assets/img/nereus-light.png", width: 110 },
+    copy: "© 2020 Nereus All rights reserved.",
+    link1: "First Link",
+    link2: "Second Link",
+    link3: "Third Link",
+    link4: "Fourth Link",
     // ...props.content
   };
 
   let brand;
 
   if (content.brand.image) {
-    brand = <img src={ content.brand.image } alt="" width={ content.brand.width } />;
+    brand = (
+      <img src={content.brand.image} alt="" width={content.brand.width} />
+    );
   } else {
-    brand = content.brand.text || '';
+    brand = content.brand.text || "";
   }
   return (
     <BrowserRouter>
@@ -233,367 +236,387 @@ function App() {
           <AppBar position="fixed" style={{ zIndex: "100" }}>
             <Toolbar>
               <Grid container spacing={3}>
-                <Grid item xs={2} >
-                
-                <div className="grid-elements" style={{display:"flex"}}>
+                <Grid item xs={2}>
+                  <div className="grid-elements" style={{ display: "flex" }}>
                     <IconButton
                       color="inherit"
                       aria-label="open drawer"
                       onClick={handleDrawerOpen}
                       edge="start"
                       sx={{
-                        mr: 2,
+                        color: "inherit",
+                        mr: 0,
                         ...(open && { display: "none" }),
                         "&:hover": { color: "#ff7519" },
                       }}
                     >
                       <MenuIcon />
                     </IconButton>
-                 
-                   
+
                     <Link
-                  style={{ color: "inherit", textDecoration: "none" }}
-                  to="/"
-                >
-                  <Stack direction="row" spacing={1}>
-                    <Avatar alt="Remy Sharp" src="/image/logo.png" />
-                    <Typography
-                      variant="h4"
-                      noWrap
-                      component="div"
-                      sx={{
-                        display: { xs: "none", sm: "block", md: "block" },
-                        "&:hover": { color: "#ff7519" },
-                      }}
+                      style={{ color: "inherit", textDecoration: "none" }}
+                      to="/"
                     >
-                      Lala
-                    </Typography>
-                  </Stack>
-                </Link>
-                </div>
-                  
+                      <Stack direction="row">
+                        <Avatar alt="Remy Sharp" src="/image/logo.png" />
+                        <Typography
+                          variant="h4"
+                          noWrap
+                          component="div"
+                          sx={{
+                            display: { xs: "block", sm: "block", md: "block" },
+                            "&:hover": { color: "#ff7519" },
+                          }}
+                        >
+                          Lala
+                        </Typography>
+                      </Stack>
+                    </Link>
+                  </div>
                 </Grid>
                 <Grid item xs={8}>
-                  <div className="grid-elements"> <Box style={{justifyContent:"center"}}>{userInfo && userInfo.isAdmin && <SearchBox />}</Box></div>
+                  <div className="grid-elements">
+                    {" "}
+                    <Box style={{ justifyContent: "center" }} sx={{ display: {
+                  xs: "none",
+                  sm: "block",
+                    md: "block",
+                    lg: "block",
+                    xl: "block",
+                },}}>
+                      {userInfo && userInfo.isAdmin && <SearchBox />}
+                    </Box>
+                  </div>
                 </Grid>
                 <Grid item xs={2}>
                   <div className="grid-elements">
-                  <Box sx={{ flexGrow: 0 }}>
-                  <Stack direction="row" spacing={{xs:0,sm:1,md:2,lg:2,xl:2}} sx={{justifyContent:"flex-end",}}>
-                <Box>
-                  <Tooltip title="Cart" arrow placement="top">
-                    <IconButton  sx={{ p:0,"&:hover": { color: "#ff7519" }}}
-                      // aria-label="show 4 new mails"
-                      color="inherit"
-                    >
-                      <Link
-                        style={{ color: "inherit", }}
-                        to="/cart"
+                    <Box sx={{ flexGrow: 0 }}>
+                      <Stack
+                        direction="row"
+                        spacing={{ xs: 3, sm: 2, md: 2, lg: 2, xl: 2 }}
+                        sx={{ justifyContent: "flex-end" }}
                       >
-                        <Avatar
-                          sx={{
-                            bgcolor: "Orange",
-                            "&:hover": { color: "black" },
-                          }}
-                          alt="Remy Sharp"
-                        >
-                          <ShoppingCartCheckoutIcon />
-                        </Avatar>
-                        {cartItems.length > 0 && (
-                          <span className="badge">{cartItems.length}</span>
-                        )}
-                      </Link>
-                    </IconButton>
-                  </Tooltip>
-                </Box>
-                <Box sx={{ display: { xs: "none", sm: "none", md: "flex" } }}>
-                  {userInfo && userInfo.isSeller && (
-                    <div>
-                      <Tooltip title="Seller" arrow>
-                      <IconButton  sx={{ p:0,"&:hover": { color: "#ff7519" }}}
-                          aria-controls="simple-menu2"
-                          aria-haspopup="true"
-                          onClick={(e) => setAnchorEl2(e.currentTarget)} // Here you have to set target to `anchorEl2`
-                          color="inherit"
-                        >
-                          <Link
-                            style={{ color: "inherit", size: "large" }}
-                            to="#admin"
-                          >
-                             <Avatar
-                          sx={{
-                            bgcolor: "Orange",
-                            "&:hover": { color: "black" },
-                          }}
-                          alt="Remy Sharp"
-                        >
-                              <StorefrontIcon />
-                            </Avatar>
-                          </Link>
-                        </IconButton>
-                      </Tooltip>
-                      <Menu
-                        id="simple-menu2"
-                        anchorEl={anchorEl2}
-                        keepMounted
-                        open={Boolean(anchorEl2)}
-                        onClose={handleClose}
-                        MenuListProps={{ onMouseLeave: handleClose }}
-                        style={{ marginTop: "13px" }}
-                      >
-                        <MenuItem onClick={handleClose}>
-                          <Link
-                            style={{
-                              fontSize: "16px",
-                              color: "#263238",
-                              textDecoration: "none",
-                            }}
-                            to="/productlist/seller"
-                          >
-                            Products
-                          </Link>
-                        </MenuItem>
-                        <MenuItem onClick={handleClose}>
-                          {" "}
-                          <Link
-                            style={{
-                              fontSize: "16px",
-                              color: "#263238",
-                              textDecoration: "none",
-                            }}
-                            to="/orderlist/seller"
-                          >
-                            Orders
-                          </Link>
-                        </MenuItem>
-                      </Menu>
-                    </div>
-                  )}
-                </Box>
-                <Box sx={{ display: { xs: "none", sm: "none", md: "flex" } }}>
-                  {userInfo && userInfo.isAdmin && (
-                    <div>
-                      <Tooltip title="Admin" arrow>
-                      <IconButton  sx={{ p:0,"&:hover": { color: "#ff7519" }}}
-                          aria-controls="simple-menu3"
-                          aria-haspopup="true"
-                          onClick={(e) => setAnchorEl3(e.currentTarget)} // Here you have to set target to `anchorEl2`
-                          color="inherit"
-                        >
-                          <Link
-                            style={{ color: "inherit", size: "large" }}
-                            to="#admin"
-                          >
-                            <Avatar
-                              sx={{
-                                bgcolor: "Orange",
-                                "&:hover": { color: "black" },
-                              }}
-                              alt="Remy Sharp"
+                        <Box>
+                          <Tooltip title="Cart" arrow placement="top">
+                            <IconButton
+                              sx={{ p: 0, "&:hover": { color: "#ff7519" } }}
+                              // aria-label="show 4 new mails"
+                              color="inherit"
                             >
-                              <AdminPanelSettingsIcon />
-                            </Avatar>
-                          </Link>
-                        </IconButton>
-                      </Tooltip>
+                              <Link style={{ color: "inherit" }} to="/cart">
+                                <Avatar
+                                  sx={{
+                                    bgcolor: "inherit",
+                                    "&:hover": { color: "#ff7519" },
+                                  }}
+                                >
+                                  <ShoppingCartCheckoutIcon />
+                                </Avatar>
+                                {cartItems.length > 0 && (
+                                  <span className="badge">
+                                    {cartItems.length}
+                                  </span>
+                                )}
+                              </Link>
+                            </IconButton>
+                          </Tooltip>
+                        </Box>
+                        <Box
+                          sx={{
+                            display: { xs: "none", sm: "none", md: "flex" },
+                          }}
+                        >
+                          {userInfo && userInfo.isSeller && (
+                            <div>
+                              <Tooltip title="Seller" arrow>
+                                <IconButton
+                                  sx={{ p: 0, "&:hover": { color: "#ff7519" } }}
+                                  aria-controls="simple-menu2"
+                                  aria-haspopup="true"
+                                  onClick={(e) => setAnchorEl2(e.currentTarget)} // Here you have to set target to `anchorEl2`
+                                  color="inherit"
+                                >
+                                  <Link
+                                    style={{ color: "inherit", size: "larger" }}
+                                    to="#admin"
+                                  >
+                                     <Avatar
+                                  sx={{
+                                    bgcolor: "inherit",
+                                    "&:hover": { color: "#ff7519" },
+                                  }}
+                                >
+                                    <StorefrontIcon /></Avatar>
+                                  </Link>
+                                </IconButton>
+                              </Tooltip>
+                              <Menu
+                                id="simple-menu2"
+                                anchorEl={anchorEl2}
+                                keepMounted
+                                open={Boolean(anchorEl2)}
+                                onClose={handleClose}
+                                MenuListProps={{ onMouseLeave: handleClose }}
+                                style={{ marginTop: "13px" }}
+                              >
+                                <MenuItem onClick={handleClose}>
+                                  <Link
+                                    style={{
+                                      fontSize: "16px",
+                                      color: "#263238",
+                                      textDecoration: "none",
+                                    }}
+                                    to="/productlist/seller"
+                                  >
+                                    Products
+                                  </Link>
+                                </MenuItem>
+                                <MenuItem onClick={handleClose}>
+                                  {" "}
+                                  <Link
+                                    style={{
+                                      fontSize: "16px",
+                                      color: "#263238",
+                                      textDecoration: "none",
+                                    }}
+                                    to="/orderlist/seller"
+                                  >
+                                    Orders
+                                  </Link>
+                                </MenuItem>
+                              </Menu>
+                            </div>
+                          )}
+                        </Box>
+                        <Box
+                          sx={{
+                            display: { xs: "none", sm: "none", md: "flex" },
+                          }}
+                        >
+                          {userInfo && userInfo.isAdmin && (
+                            <div>
+                              <Tooltip title="Admin" arrow>
+                                <IconButton
+                                  sx={{ p: 0, "&:hover": { color: "#ff7519" } }}
+                                  aria-controls="simple-menu3"
+                                  aria-haspopup="true"
+                                  onClick={(e) => setAnchorEl3(e.currentTarget)} // Here you have to set target to `anchorEl2`
+                                  color="inherit"
+                                >
+                                  <Link
+                                    style={{ color: "inherit", size: "large" }}
+                                    to="#admin"
+                                  >
+                                    <Avatar
+                                  sx={{
+                                    bgcolor: "inherit",
+                                    "&:hover": { color: "#ff7519" },
+                                  }}
+                                >
+                                    <AdminPanelSettingsIcon /></Avatar>
+                                  </Link>
+                                </IconButton>
+                              </Tooltip>
 
-                      <Menu
-                        id="simple-menu3"
-                        anchorEl={anchorEl3}
-                        keepMounted
-                        open={Boolean(anchorEl3)}
-                        onClose={handleClose}
-                        MenuListProps={{ onMouseLeave: handleClose }}
-                        style={{ marginTop: "13px" }}
-                      >
-                        <MenuItem onClick={handleClose} data-id="3">
-                          <Link
-                            style={{
-                              fontSize: "16px",
-                              color: "#263238",
-                              textDecoration: "none",
-                            }}
-                            to="/dashboard"
-                          >
-                            Dashboard
-                          </Link>
-                        </MenuItem>
-                        <MenuItem onClick={handleClose}>
-                          {" "}
-                          <Link
-                            style={{
-                              fontSize: "16px",
-                              color: "#263238",
-                              textDecoration: "none",
-                            }}
-                            to="/productlist"
-                          >
-                            Products
-                          </Link>
-                        </MenuItem>
-                        <MenuItem onClick={handleClose}>
-                          {" "}
-                          <Link
-                            style={{
-                              fontSize: "16px",
-                              color: "#263238",
-                              textDecoration: "none",
-                            }}
-                            to="/orderlist"
-                          >
-                            Orders
-                          </Link>
-                        </MenuItem>
-                        <MenuItem onClick={handleClose}>
-                          {" "}
-                          <Link
-                            style={{
-                              fontSize: "16px",
-                              color: "#263238",
-                              textDecoration: "none",
-                            }}
-                            to="/userlist"
-                          >
-                            Users
-                          </Link>
-                        </MenuItem>
-                        <MenuItem onClick={handleClose}>
-                          {" "}
-                          <Link
-                            style={{
-                              fontSize: "16px",
-                              color: "#263238",
-                              textDecoration: "none",
-                            }}
-                            o="/support"
-                          >
-                            Support
-                          </Link>
-                        </MenuItem>
-                      </Menu>
-                    </div>
-                  )}
-                </Box>
-                <Box sx={{ display: { xs: "none", sm: "none", md: "flex" } }}>
-                  {userInfo ? (
-                    <div>
-                      <Tooltip title={userInfo.name} arrow placement="top">
-                      <IconButton  sx={{ p:0,"&:hover": { color: "#ff7519" }}}
-                          aria-controls="simple-menu"
-                          aria-haspopup="true"
-                          onClick={(e) => setAnchorEl(e.currentTarget)}
-                          color="inherit"
-                       
+                              <Menu
+                                id="simple-menu3"
+                                anchorEl={anchorEl3}
+                                keepMounted
+                                open={Boolean(anchorEl3)}
+                                onClose={handleClose}
+                                MenuListProps={{ onMouseLeave: handleClose }}
+                                style={{ marginTop: "13px" }}
+                              >
+                                <MenuItem onClick={handleClose} data-id="3">
+                                  <Link
+                                    style={{
+                                      fontSize: "16px",
+                                      color: "#263238",
+                                      textDecoration: "none",
+                                    }}
+                                    to="/dashboard"
+                                  >
+                                    Dashboard
+                                  </Link>
+                                </MenuItem>
+                                <MenuItem onClick={handleClose}>
+                                  {" "}
+                                  <Link
+                                    style={{
+                                      fontSize: "16px",
+                                      color: "#263238",
+                                      textDecoration: "none",
+                                    }}
+                                    to="/productlist"
+                                  >
+                                    Products
+                                  </Link>
+                                </MenuItem>
+                                <MenuItem onClick={handleClose}>
+                                  {" "}
+                                  <Link
+                                    style={{
+                                      fontSize: "16px",
+                                      color: "#263238",
+                                      textDecoration: "none",
+                                    }}
+                                    to="/orderlist"
+                                  >
+                                    Orders
+                                  </Link>
+                                </MenuItem>
+                                <MenuItem onClick={handleClose}>
+                                  {" "}
+                                  <Link
+                                    style={{
+                                      fontSize: "16px",
+                                      color: "#263238",
+                                      textDecoration: "none",
+                                    }}
+                                    to="/userlist"
+                                  >
+                                    Users
+                                  </Link>
+                                </MenuItem>
+                                <MenuItem onClick={handleClose}>
+                                  {" "}
+                                  <Link
+                                    style={{
+                                      fontSize: "16px",
+                                      color: "#263238",
+                                      textDecoration: "none",
+                                    }}
+                                    o="/support"
+                                  >
+                                    Support
+                                  </Link>
+                                </MenuItem>
+                              </Menu>
+                            </div>
+                          )}
+                        </Box>
+                        <Box
+                          
                         >
-                          <Link
-                            style={{
-                              color: "inherit",
-                              size: "large",
-                              textDecoration: "none",
-                            }}
-                            to="#"
-                          >
-                            <Avatar
-                              sx={{
-                                bgcolor: "Orange",
-                                "&:hover": { color: "black" },
-                              }}
-                              alt="Remy Sharp"
-                            >
-                              {userInfo.name.charAt(0)}
-                              {/* {userInfo.name} */}
-                            </Avatar>
-                          </Link>
-                        </IconButton>
-                      </Tooltip>
-                      <Menu
-                        id="simple-menu"
-                        anchorEl={anchorEl}
-                        keepMounted
-                        open={Boolean(anchorEl)}
-                        onClose={handleClose}
-                        MenuListProps={{ onMouseLeave: handleClose }}
-                        style={{ marginTop: "13px" }}
-                      >
-                        <MenuItem onClick={handleClose} data-id="1">
-                          <Link
-                            style={{
-                              fontSize: "16px",
-                              color: "#263238",
-                              textDecoration: "none",
-                            }}
-                            to="/profile"
-                          >
-                            User Profile
-                          </Link>
-                        </MenuItem>
-                        <MenuItem onClick={handleClose}>
-                          {" "}
-                          <Link
-                            style={{
-                              fontSize: "16px",
-                              color: "#263238",
-                              textDecoration: "none",
-                            }}
-                            to="/orderhistory"
-                          >
-                            OrderHistory
-                          </Link>
-                        </MenuItem>
-                      </Menu>
-                    </div>
-                  ) : (
-                    <Tooltip title="signIn" arrow>
-                  <IconButton  sx={{ p:0,"&:hover": { color: "#ff7519" }}}
-                       
-                        color="inherit"
-                       
-                      >
-                         
-                        <Link style={{ color: "inherit" }} to="/signin">
-                        <Avatar
-                          sx={{
-                            bgcolor: "Orange",
-                            "&:hover": { color: "black" },
-                          }}
-                          alt="Remy Sharp"
-                        >
-                          <AccountCircle />
-                          </Avatar>
-                        </Link>
-                      </IconButton>
-                    </Tooltip>
-                  )}
-                </Box>
-                <Box sx={{ display: { xs: "flex" } }}>
-                  {userInfo && userInfo.isAdmin && (
-                    <Tooltip title="Log Out" arrow>
-                      <IconButton  sx={{ p:0,"&:hover": { color: "#ff7519" }}}
-                        aria-label="show 4 new mails"
-                        color="inherit"
-                    
-                      >
-                        <Link
-                          style={{ color: "inherit" }}
-                          to="#signout"
-                          onClick={signoutHandler}
-                        >
-                          <Avatar
-                            sx={{
-                              bgcolor: "Orange",
-                              "&:hover": { color: "black" },
-                            }}
-                            alt="Remy Sharp"
-                          >
-                            <ExitToAppIcon />
-                          </Avatar>
-                        </Link>
-                      </IconButton>
-                    </Tooltip>
-                  )}
-                </Box>
-              </Stack>
-              </Box>
+                          {userInfo ? (
+                            <div >
+                              <Box sx={{
+                              display: { xs: "none", sm: "none", md: "flex" },
+                            }}>
+                              <Tooltip
+                                title={userInfo.name}
+                                arrow
+                                placement="top"
+                              >
+                                <IconButton
+                                  sx={{ p: 0, "&:hover": { color: "#ff7519" } }}
+                                  aria-controls="simple-menu"
+                                  aria-haspopup="true"
+                                  onClick={(e) => setAnchorEl(e.currentTarget)}
+                                  color="black"
+                                >
+                                  <Link
+                                    style={{
+                                      color: "black",
+                                      textDecoration: "none",
+                                    }}
+                                    to="#"
+                                  >
+                                    <Avatar
+                                  sx={{
+                                    bgcolor: "inherit",
+                                    "&:hover": { color: "#ff7519" },
+                                  }}
+                                >
+                                      {userInfo.name.charAt(0)}
+                                    </Avatar>
+                                    {/* <AccountCircle /> */}
+                                  </Link>
+                                </IconButton>
+                              </Tooltip>
+                              <Menu
+                                id="simple-menu"
+                                anchorEl={anchorEl}
+                                keepMounted
+                                open={Boolean(anchorEl)}
+                                onClose={handleClose}
+                                MenuListProps={{ onMouseLeave: handleClose }}
+                                style={{ marginTop: "13px" }}
+                              >
+                                <MenuItem onClick={handleClose} data-id="1">
+                                  <Link
+                                    style={{
+                                      fontSize: "16px",
+                                      color: "#263238",
+                                      textDecoration: "none",
+                                    }}
+                                    to="/profile"
+                                  >
+                                    User Profile
+                                  </Link>
+                                </MenuItem>
+                                <MenuItem onClick={handleClose}>
+                                  {" "}
+                                  <Link
+                                    style={{
+                                      fontSize: "16px",
+                                      color: "#263238",
+                                      textDecoration: "none",
+                                    }}
+                                    to="/orderhistory"
+                                  >
+                                    OrderHistory
+                                  </Link>
+                                </MenuItem>
+                              </Menu>
+                              </Box>
+                            </div>
+                            
+                          ) : (
+                            <Tooltip title="signIn" arrow>
+                              <IconButton
+                                sx={{ p: 0, "&:hover": { color: "#ff7519" } }}
+                                color="inherit"
+                              >
+                                <Link style={{ color: "inherit" }} to="/signin">
+                                <Avatar
+                                  sx={{
+                                    bgcolor: "inherit",
+                                    "&:hover": { color: "#ff7519" },
+                                  }}
+                                >
+                                  <AccountCircle /></Avatar>
+                                </Link>
+                              </IconButton>
+                            </Tooltip>
+                          )}
+                        </Box>
+                        <Box sx={{ display: { xs: "flex" } }}>
+                          {userInfo && userInfo.isAdmin && (
+                            <Tooltip title="Log Out" arrow>
+                              <IconButton
+                                sx={{ p: 0, "&:hover": { color: "#ff7519" } }}
+                                aria-label="show 4 new mails"
+                                color="inherit"
+                              >
+                                <Link
+                                  style={{ color: "inherit" }}
+                                  to="#signout"
+                                  onClick={signoutHandler}
+                                ><Avatar
+                                sx={{
+                                  bgcolor: "inherit",
+                                  "&:hover": { color: "#ff7519" },
+                                }}
+                              >
+                                  <ExitToAppIcon /></Avatar>
+                                </Link>
+                              </IconButton>
+                            </Tooltip>
+                          )}
+                        </Box>
+                      </Stack>
+                    </Box>
                   </div>
                 </Grid>
               </Grid>
@@ -605,7 +628,7 @@ function App() {
               sx={{
                 position: "absolute",
                 display: {
-                  xs: "none",
+                  xs: "block",
                   sm: "block",
                   md: "block",
                   lg: "block",
@@ -615,13 +638,35 @@ function App() {
               style={{
                 marginTop: "50px",
                 zIndex: "99",
-                background: "#00CCFF",
+                background: "#37474f",
                 height: "60px",
               }}
             >
-              <Toolbar>
+              <Toolbar >
                 <Grid container spacing={2}>
+                <Grid item xs={12} sx={{ display: {
+                  xs: "block",
+                  sm: "none",
+                    md: "none",
+                    lg: "none",
+                    xl: "none",
+                    marginTop:"10px"
+                },}}>
+                  <div className="grid-elements">
+                    {" "}
+                    <Box style={{ justifyContent: "center" }}>
+                      {userInfo && userInfo.isAdmin && <SearchBox />}
+                    </Box>
+                  </div>
+                </Grid>
                   <Grid
+                  sx={{ display: {
+                    xs: "none",
+                    sm: "block",
+                    md: "block",
+                    lg: "block",
+                    xl: "block",
+                  },}}
                     item
                     xs={10}
                     style={{
@@ -3210,6 +3255,28 @@ function App() {
                 )}
               </IconButton>
             </DrawerHeader>
+            <Link
+                    style={{
+                      color: "#263238",
+                      fontSize: "16px",
+                      textDecoration: "none",
+                      marginLeft: "50px",
+                    }}>
+                      <Stack direction="row">
+                       
+                        <Typography
+                       variant="h5"
+                          noWrap
+                          component="div"
+                          sx={{
+                            display: { xs: "block", sm: "block", md: "block" },
+                            "&:hover": { color: "#ff7519" },
+                          }}
+                        >
+                         {userInfo.name}
+                        </Typography>
+                      </Stack>
+                    </Link>
             <Divider />
             <strong
               style={{
@@ -3601,49 +3668,23 @@ function App() {
               </Routes>
             </Typography>
           </Box>
-          <footer style={{backgroundColor:"aqua"}}>
-          <Paper sx={{marginTop: 'calc(10% + 60px)',backgroundColor:"aqua",
-    width: '100%',
-    position: 'fixed',
-    bottom: 0,
-    marginLeft:"-10px"
-    }} component="footer" square variant="outlined">
-      <Container maxWidth="xl">
-        <Box
-          sx={{
-            flexGrow: 1,
-            justifyContent: "center",
-            display: "flex",
-            my:1
-          }}
-        >
-            <div>
-            {/* <Image priority src="/Logo.svg" width={75} height={30} alt="Logo" /> */}
-            </div>
+          <Paper
+            sx={{
+              position: "fixed",
+              bottom: 0,
+              left: 0,
+              right: 0,
+              color: "#f4f4f4",
+              alignItems: "center",
+            }}
+            elevation={3}
+          >
+            <BottomNavigation sx={{ backgroundColor: "#37474f" }}>
+              {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
+              <h3>All right reserved</h3>
+            </BottomNavigation>
+          </Paper>
         </Box>
-
-        <Box
-          sx={{
-            flexGrow: 1,
-            justifyContent: "center",
-            display: "flex",
-            mb: 2,
-          }}
-        >
-          <Typography variant="caption" color="initial" sx={{fontSize:"16px"}}>
-            Copyright ©2022.All right reserved
-          </Typography>
-        </Box>
-      </Container>
-    </Paper>
-    </footer>
-        </Box>
-
-        {/* <main></main>
-        <footer className="row center">
-          {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
-          <div>All right reserved</div>{" "}
-        </footer> */}
       </div>
     </BrowserRouter>
   );

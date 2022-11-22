@@ -45,7 +45,7 @@ export default function Product(props) {
          {product.name}
         </Typography>
         <Rating
-          rating={product.rating}
+          defaultValue={product.rating}
           numReviews={product.numReviews}
         ></Rating>
         <Typography gutterBottom variant="h6" component="div">
