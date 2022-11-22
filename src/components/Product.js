@@ -5,7 +5,8 @@ import Typography from '@mui/material/Typography';
 import Axios from 'axios';
 import { useEffect, useState,} from 'react';
 import { Link } from 'react-router-dom';
-import Rating from './Rating';
+import Rating from "@mui/material/Rating";
+import Box from '@mui/material/Box';
 
 
 
@@ -24,10 +25,9 @@ export default function Product(props) {
 
 
   return (
-     <Card key={product._id} sx={{ maxWidth: 345, margin:1 ,  transition: "transform .5s ease",
-     "&:hover": {
-      transform: "scale(1.1)"
-     }}}
+
+     <Card key={product._id} sx={{ minWidth: 200, margin:1 
+     }}
     >
       <Link to={`/product/${product._id}`}><CardMedia
         sx={{transition: "transform .5s ease",
@@ -35,7 +35,7 @@ export default function Product(props) {
           transform: "scale(1.1)"
         }}}
         component="img"
-        height="180"
+        height="200"
         image={image}
         alt={product.name}
       /></Link>

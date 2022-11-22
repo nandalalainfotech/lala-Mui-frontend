@@ -27,7 +27,7 @@ import Card from "@mui/material/Card";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Button } from "../../node_modules/@material-ui/core/index";
-
+import CircularProgress from '@mui/material/CircularProgress';
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const images = [
@@ -40,15 +40,15 @@ const images = [
   {
     imgPath: "/image/lala3.jpg",
   },
-  {
-    imgPath: "/image/lala4.jpg",
-  },
-  {
-    imgPath: "/image/lala5.jpg",
-  },
-  {
-    imgPath: "/image/lala7.jpg",
-  },
+  // {
+  //   imgPath: "/image/lala4.jpg",
+  // },
+  // {
+  //   imgPath: "/image/lala5.jpg",
+  // },
+  // {
+  //   imgPath: "/image/lala7.jpg",
+  // },
 ];
 
 
@@ -99,7 +99,7 @@ export default function HomeScreen() {
     { width: 768, itemsToShow: 3 },
     { width: 900, itemsToShow: 5 },
     { width: 1200, itemsToShow: 5},
-    { width: 1500, itemsToShow: 8 },
+    { width: 1500, itemsToShow: 8},
   ];
 
  
@@ -145,7 +145,7 @@ export default function HomeScreen() {
 
       <h2 className="product">Product's Collection</h2>
       {loading ? (
-        <LoadingBox></LoadingBox>
+        <CircularProgress></CircularProgress>
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
@@ -173,7 +173,7 @@ export default function HomeScreen() {
 
       <h2>Men's collection</h2>
       {loading ? (
-        <LoadingBox></LoadingBox>
+        <CircularProgress></CircularProgress>
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
@@ -202,7 +202,7 @@ export default function HomeScreen() {
 
       <h2>Women collection</h2>
       {loading ? (
-        <LoadingBox></LoadingBox>
+        <CircularProgress></CircularProgress>
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
@@ -231,7 +231,7 @@ export default function HomeScreen() {
 
       <h2>Kids collection</h2>
       {loading ? (
-        <LoadingBox></LoadingBox>
+        <CircularProgress></CircularProgress>
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
@@ -239,7 +239,7 @@ export default function HomeScreen() {
          <Carousel className="new3"
             mouseTracking
             enableAutoPlay
-            autoPlaySpeed={800}
+            autoPlaySpeed={1500}
             enableSwipe={true}
             pagination={false}
             breakPoints={breakPoints}
