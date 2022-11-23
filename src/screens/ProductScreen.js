@@ -1,14 +1,24 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { createReview, detailsProduct } from "../actions/productAction";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import Rating from "../components/Rating";
-import { createReview, detailsProduct } from "../actions/productAction";
 import { PRODUCT_REVIEW_CREATE_RESET } from "../constants/productConstants";
 // import ModalImage from "react-modal-image";
-import ReactImageMagnify from "react-image-magnify";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import FormControl from "@mui/material/FormControl";
+import Grid from "@mui/material/Grid";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Rating from "@mui/material/Rating";
+import Select from "@mui/material/Select";
+import TextareaAutosize from "@mui/material/TextareaAutosize";
+import Typography from "@mui/material/Typography";
 import Axios from "axios";
+import ReactImageMagnify from "react-image-magnify";
 
 export default function ProductScreen(props) {
   const dispatch = useDispatch();
@@ -41,17 +51,22 @@ export default function ProductScreen(props) {
       setComment("");
       dispatch({ type: PRODUCT_REVIEW_CREATE_RESET });
     }
-      dispatch(detailsProduct(productId));
-      const fetchBusinesses = async () => {
-        const img = await Axios.get(`/api/uploads/show/${productId}`, { responseType: 'blob' });
-        setImage(URL.createObjectURL(img.data));
-      };
-      fetchBusinesses();
-    
-  },[dispatch, productId, successReviewCreate]);
+    dispatch(detailsProduct(productId));
+    const fetchBusinesses = async () => {
+      const img = await Axios.get(`/api/uploads/show/${productId}`, {
+        responseType: "blob",
+      });
+      setImage(URL.createObjectURL(img.data));
+    };
+    fetchBusinesses();
+  }, [dispatch, productId, successReviewCreate]);
 
   const addToCartHandler = () => {
     navigate(`/cart/${productId}?qty=${qty}`);
+  };
+
+  const addToHandler = () => {
+    navigate(`/signin`);
   };
 
   const submitHandler = (e) => {
@@ -65,236 +80,327 @@ export default function ProductScreen(props) {
     }
   };
 
+  const handleChange = (event) => {
+    setRating(event.target.value);
+  };
+
   return (
-    <div className="container-fluid">
+    <Box sx={{ flexGrow: 1, m: 1 }}>
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
-        <div>
-          <div className="row top" style={{ marginTop: "40px" }}>
-            <div className="cards" style={{ position: "sticky", top: "80px" }}>
-              <div className="col-2">
-                <ReactImageMagnify
-                  {...{
-                    smallImage: {
-                      className: "large",
-                      src: `${image}`,
-                      width: 380,
-                      height: 480,
-                    },
-                    largeImage: {
-                      className: "small",
-                      src: `${image}`,
-                      width: 600,
-                      height: 600,
-                    },
-                  }}
-                />
-              </div>
-            </div>
-            <div className="col-md-4">
-              <label>
-                {" "}
-                Filter Size
-                <select
-                  className="form-control"
-                  value={this?.props.size}
-                  onChange={(event) => {
-                    this?.props.filterProducts(
-                      this?.props.products,
-                      event.target.value
-                    );
-                  }}
-                >
-                  <option value="">ALL</option>
-                  <option value="x">XS</option>
-                  <option value="s">S</option>
-                  <option value="m">M</option>
-                  <option value="l">L</option>
-                  <option value="xl">XL</option>
-                  <option value="xxl">XXL</option>
-                </select>
-              </label>
-            </div>
-            <div className="col-1">
-              {/* <Link to="/">
-                <h2>Back to result</h2>
-              </Link> */}
-              <div className="card card-body">
-                <div className="step1">
-                  <ul>
-                    <li>
-                      <h1 style={{ textTransform: "uppercase" }}>
-                        {product.name}
-                      </h1>
-                    </li>
-                    <li>
-                      <Rating
-                        rating={product.rating}
-                        numReviews={product.numReviews}
-                      ></Rating>
-                    </li>
-                    <li>Price : ₹{product.price}</li>
-                    <li>
-                      Category:
-                      <span> {product.category}</span>
-                    </li>
-                    <li>
-   categorygroup:
-                    <span> {product.categorygroup}</span>
-                  </li>
-                  <li>
-                    categorytype:
-                    <span> {product.categorytype}</span>
-                  </li>
-                  <li>
-                      Brand:
-                      <span> {product.brand}</span>
-                    </li>
-                    <li>
-                      Description:
-                      <span> {product.description}</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+        <Grid container spacing={2}>
+          <Grid item sx={{ zIndex: 1,display: {xs: "none",md: "block",sm: "block",lg: "block",xl: "block",},}}>
+            <Box
+              sx={{
+                borderRadius: 0,
+                width: "auto",
+                m: 3,
+                boxShadow:
+                  "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+              }}
+            >
+              <ReactImageMagnify
+                {...{
+                  smallImage: {
+                    className: "large",
+                    src: `${image}`,
+                    width: 380,
+                    height: 490,
+                  },
+                  largeImage: {
+                    className: "small",
+                    src: `${image}`,
+                    width: 600,
+                    height: 600,
+                  },
+                }}
+              />
+            </Box>
+          </Grid>
 
-              <div className="step2">
-                <div className="card card-body" style={{ margin: "30px" }}>
-                  <ul>
-                    <li>
-                      <div className="row">
-                        <div>Price</div>
-                        <div className="price">₹{product.price}</div>
-                      </div>
-                    </li>
-                    <li>
-                      <div className="row">
-                        <div>Status</div>
-                        <div>
-                          {product.countInStock > 0 ? (
-                            <span className="success">In Stock</span>
-                          ) : (
-                            <span className="danger">Unavailable</span>
-                          )}
-                        </div>
-                      </div>
-                    </li>
-                    {product.countInStock > 0 && (
-                      <>
-                        <li>
-                          <div className="row">
-                            <div>Qty</div>
-                            <div>
-                              <select
-                                value={qty}
-                                onChange={(e) => setQty(e.target.value)}
-                              >
-                                {[...Array(product.countInStock).keys()].map(
-                                  (x) => (
-                                    <option key={x + 1} value={x + 1}>
-                                      {x + 1}
-                                    </option>
-                                  )
-                                )}
-                              </select>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
-                          <button
-                            onClick={addToCartHandler}
-                            className="primary block"
-                          >
-                            Add to Cart
-                          </button>
-                        </li>
-                      </>
+          <Grid item sx={{display: { xs: "block", md: "none", sm: "none", lg: "none", xl: "none",},}}>
+          <Box>
+              <Card
+                style={{
+                  margin: 20,
+                  borderRadius: 0,
+                  width: "100%",
+                  height: "100%",
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                }}
+                component="img"
+                src = {image}
+              >
+              </Card>
+            </Box>
+          </Grid>
+
+          <Grid item xs sx={{ zIndex: 0 }}>
+            <Box>
+              <Card
+                style={{
+                  padding: 30,
+                  borderRadius: 0,
+                  margin: 20,
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                }}
+              >
+                <Box>
+                  <Typography
+                    variant="h5"
+                    gutterBottom
+                    style={{ textTransform: "uppercase", color: "#A02020" }}
+                  >
+                    {product.name}
+                  </Typography>
+
+                  <Typography variant="body1" gutterBottom>
+                    <Rating
+                      defaultValue={product.rating}
+                      numReviews={product.numReviews}
+                    ></Rating>
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    style={{ color: "#A02020" }}
+                    gutterBottom
+                  >
+                    Price : ₹{product.price}
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    style={{ color: "#A02020" }}
+                    gutterBottom
+                  >
+                    Brand: {product.brand}
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    style={{ color: "#A02020" }}
+                    gutterBottom
+                  >
+                    Category: {product.category}
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    style={{ color: "#A02020" }}
+                    gutterBottom
+                  >
+                    Description: {product.description}
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    style={{ color: "#A02020" }}
+                    gutterBottom
+                  >
+                    Category Group: {product.categorygroup}
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    style={{ color: "#A02020" }}
+                    gutterBottom
+                  >
+                    Category Type: {product.categorytype}
+                  </Typography>
+
+                  
+                </Box>
+              </Card>
+            </Box>
+
+            <Box>
+              <Card
+                style={{
+                  padding: 30,
+                  borderRadius: 0,
+                  margin: 20,
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                }}
+              >
+                <Box>
+                  <Typography
+                    variant="body1"
+                    style={{ color: "#A02020" }}
+                    gutterBottom
+                  >
+                    Price: ₹{product.price}
+                  </Typography>
+
+                  <Typography
+                    variant="body1"
+                    style={{ color: "#A02020" }}
+                    gutterBottom
+                  >
+                    Status:{" "}
+                    {product.countInStock > 0 ? (
+                      <span style={{ color: "green" }}>In Stock</span>
+                    ) : (
+                      <span style={{ color: "red" }}>Unavailable</span>
                     )}
-                  </ul>
-                </div>
-              </div>
+                  </Typography>
 
-              <div className="card card-body" style={{ marginTop: "40px" }}>
-                <div className="step3">
-                  <h2 style={{ marginLeft: "20px" }}>Reviews & Ratings</h2>
-                  {product.reviews.length === 0 && (
-                    <MessageBox>There is no review</MessageBox>
+                  {product.countInStock > 0 && (
+                    <>
+                      <Typography variant="body1" style={{ color: "#A02020" }}>
+                        Qty:
+                        <FormControl
+                          sx={{ marginLeft: 2, width: "60%" }}
+                          size="small"
+                        >
+                          <Select
+                            value={qty}
+                            onChange={(e) => setQty(e.target.value)}
+                          >
+                            {[...Array(product.countInStock).keys()].map(
+                              (x) => (
+                                <MenuItem key={x + 1} value={x + 1}>
+                                  {x + 1}
+                                </MenuItem>
+                              )
+                            )}
+                          </Select>
+                        </FormControl>
+                      </Typography>
+                      {userInfo ? (
+                        <Button
+                          variant="contained"
+                          onClick={addToCartHandler}
+                          sx={{ marginTop: 2, width: "100%" }}
+                        >
+                          {" "}
+                          Add to Cart
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="contained"
+                          onClick={addToHandler}
+                          sx={{ marginTop: 2, width: "23%" }}
+                        >
+                          {" "}
+                          Add to Cart
+                        </Button>
+                      )}
+                    </>
                   )}
-                </div>
+                </Box>
+              </Card>
+            </Box>
 
-                <div className="step3">
-                  <ul>
+            <Box>
+              <Card
+                style={{
+                  padding: 30,
+                  borderRadius: 0,
+                  margin: 20,
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                }}
+              >
+                <Box>
+                  <Typography
+                    variant="h6"
+                    gutterBottom
+                    style={{ color: "#A02020" }}
+                  >
+                    Ratings & Reviews
+                    {product.reviews.length === 0 && (
+                      <span style={{ fontSize: 17 }}>
+                        <MessageBox>There is no review</MessageBox>
+                      </span>
+                    )}
+                  </Typography>
+
+                  <div>
                     {product.reviews.map((review) => (
-                      <li key={review._id}>
+                      <Typography variant="body1" gutterBottom key={review._id}>
                         <strong>{review.name}</strong>
                         <p>
-                          <Rating rating={review.rating} caption=" "></Rating>
+                          <Rating
+                            defaultValue={review.rating}
+                            caption=" "
+                          ></Rating>
                         </p>
                         <p>{review.createdAt.substring(0, 10)}</p>
                         <p>{review.comment}</p>
-                      </li>
+                      </Typography>
                     ))}
-                    <li>
-                      {userInfo ? (
-                        <form className="form" onSubmit={submitHandler}>
-                          <div>
-                            <h2>Write a customer review</h2>
-                          </div>
-                          <div>
-                            <label htmlFor="rating">Rating</label>
-                            <select
+
+                    {userInfo ? (
+                      <Box
+                        sx={{ display: "flex", flexDirection: "column" }}
+                        component="form"
+                        onSubmit={submitHandler}
+                      >
+                        <Typography variant="h5" style={{ color: "#A02020" }}>
+                          Write a customer review
+                        </Typography>
+
+                        <Box sx={{ minWidth: 120 }}>
+                          <FormControl fullWidth sx={{ m: 3, width: "94%" }}>
+                            <InputLabel id="demo-simple-select-label">
+                              Rating
+                            </InputLabel>
+                            <Select
                               id="rating"
                               value={rating}
-                              onChange={(e) => setRating(e.target.value)}
+                              label="rating"
+                              onChange={handleChange}
                             >
-                              <option value="">Select...</option>
-                              <option value="1">1- Poor</option>
-                              <option value="2">2- Fair</option>
-                              <option value="3">3- Good</option>
-                              <option value="4">4- Very good</option>
-                              <option value="5">5- Excelent</option>
-                            </select>
-                          </div>
-                          <div>
-                            <label htmlFor="comment">Comment</label>
-                            <textarea
-                              id="comment"
-                              value={comment}
-                              onChange={(e) => setComment(e.target.value)}
-                            ></textarea>
-                          </div>
-                          <div>
-                            <label />
-                            <button className="primary" type="submit">
-                              Submit
-                            </button>
-                          </div>
-                          <div>
-                            {loadingReviewCreate && <LoadingBox></LoadingBox>}
-                            {errorReviewCreate && (
-                              <MessageBox variant="danger">
-                                {errorReviewCreate}
-                              </MessageBox>
-                            )}
-                          </div>
-                        </form>
-                      ) : (
-                        <MessageBox>
-                          Please <Link to="/signin">Sign In</Link> to write a
-                          review
-                        </MessageBox>
-                      )}
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+                              <MenuItem value="">
+                                <em>None</em>
+                              </MenuItem>
+                              <MenuItem value={1}>1- Poor</MenuItem>
+                              <MenuItem value={2}>2- Fair</MenuItem>
+                              <MenuItem value={3}>3- Good</MenuItem>
+                              <MenuItem value={4}>4- Very good</MenuItem>
+                              <MenuItem value={5}>5- Excelent</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </Box>
+
+                        <Box sx={{ m: 3 }}>
+                          <TextareaAutosize
+                            minRows={5}
+                            placeholder="Comment"
+                            id="comment"
+                            style={{ width: "100%" }}
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                          />
+                        </Box>
+
+                        <Button variant="contained" type="submit" sx={{ m: 3 }}>
+                          Submit
+                        </Button>
+
+                        <div>
+                          {loadingReviewCreate && <LoadingBox></LoadingBox>}
+                          {errorReviewCreate && (
+                            <MessageBox variant="danger">
+                              {errorReviewCreate}
+                            </MessageBox>
+                          )}
+                        </div>
+                      </Box>
+                    ) : (
+                      <MessageBox>
+                        Please <Link to="/signin">Sign In</Link> to write a
+                        review
+                      </MessageBox>
+                    )}
+                  </div>
+                </Box>
+              </Card>
+            </Box>
+          </Grid>
+        </Grid>
       )}
-    </div>
+    </Box>
   );
 }

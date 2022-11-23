@@ -3676,10 +3676,11 @@ function App() {
               right: 0,
               color: "#f4f4f4",
               alignItems: "center",
+              zIndex: 999
             }}
             elevation={3}
           >
-            <BottomNavigation sx={{ backgroundColor: "#37474f" }}>
+            <BottomNavigation sx={{ backgroundColor: "#37474f",  }}>
               {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
               <h3>All right reserved</h3>
             </BottomNavigation>
