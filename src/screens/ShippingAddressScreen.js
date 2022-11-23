@@ -1,10 +1,24 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector} from "react-redux";
-import {  useNavigate } from "react-router-dom";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { saveShippingAddress } from "../actions/cartAction";
-import CheckoutSteps from "../components/CheckoutSteps";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import { makeStyles } from "@material-ui/core";
 
-export default function ShippingAddressScreen(props) {
+export default function ShippingAddressScreen() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   const navigate = useNavigate();
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
@@ -17,13 +31,16 @@ export default function ShippingAddressScreen(props) {
   if (!userInfo) {
     navigate("/signin");
   }
-  const [fullName, setFullName] = useState(saveShippingAddress.fullName || '');
-  const [address, setAddress] = useState(saveShippingAddress.address || '');
-  const [city, setCity] = useState(saveShippingAddress.city || '');
-  const [postalCode, setPostalCode] = useState(saveShippingAddress.postalCode || '');
-  const [country, setCountry] = useState(saveShippingAddress.country || '');
+  const [fullName, setFullName] = useState(saveShippingAddress.fullName || "");
+  const [address, setAddress] = useState(saveShippingAddress.address || "");
+  const [city, setCity] = useState(saveShippingAddress.city || "");
+  const [postalCode, setPostalCode] = useState(
+    saveShippingAddress.postalCode || ""
+  );
+  const [country, setCountry] = useState(saveShippingAddress.country || "");
   const dispatch = useDispatch();
   const submitHandler = (e) => {
+    console.log("e", e.fullname);
     navigate("/payment");
     e.preventDefault();
     const newLat = addressMap ? addressMap.lat : lat;
@@ -35,22 +52,23 @@ export default function ShippingAddressScreen(props) {
     let moveOn = true;
     if (!newLat || !newLng) {
       moveOn = window.confirm(
-        'You did not set your location on map. Continue?'
+        "You did not set your location on map. Continue?"
       );
     }
     if (moveOn) {
+      console.log("111");
       dispatch(
         saveShippingAddress({
-          fullName,
-          address,
-          city,
-          postalCode,
-          country,
+          fullName: e.fullName,
+          address: e.address,
+          city: e.city,
+          postalCode: e.postalCode,
+          country: e.country,
           lat: newLat,
           lng: newLng,
         })
       );
-      navigate('/payment');
+      navigate("/payment");
     }
   };
   const chooseOnMap = () => {
@@ -65,84 +83,198 @@ export default function ShippingAddressScreen(props) {
         lng,
       })
     );
-    navigate('/map');
+    navigate("/map");
   };
-  
+
+  const theme = createTheme();
+
+  // const useStyles = makeStyles(() => ({
+  //   label: {
+  //     "& .css-1hv8oq8-MuiStepLabel-label.Mui-active": { fontSize: "16px" },
+  //     "& .css-1hv8oq8-MuiStepLabel-label.Mui-disabled": { fontSize: "16px" },
+  //     "& .Mui-disabled .MuiStepIcon-root": { fontSize: "30px" },
+  //     "& .Mui-active .MuiStepIcon-root": { fontSize: "30px" },
+  //     "& .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed": {
+  //       fontSize: "30px",
+  //       color: "green",
+  //     },
+  //     "& .css-1hv8oq8-MuiStepLabel-label.Mui-completed": { fontSize: "16px" },
+  //   },
+  //   cssLabel: {
+  //     "&.css-1pysi21-MuiFormLabel-root-MuiInputLabel-root": {
+  //       fontSize: "16px",
+  //     },
+  //     "& .css-1pysi21-MuiFormLabel-root-MuiInputLabel-root.Mui-focused": {
+  //       fontSize: "16px",
+  //     },
+  //   },
+  //   cssFocused: {
+  //     "& .css-1pysi21-MuiFormLabel-root-MuiInputLabel-root.Mui-focused": {
+  //       fontSize: "16px",
+  //     },
+  //   },
+  // }));
+
+  // const classes = useStyles();
+
   return (
-    <div>
-      <CheckoutSteps step1 step2></CheckoutSteps>
-      <form className="form" onSubmit={submitHandler}>
-        <div>
-          <h1>Shipping Address</h1>
-        </div>
-        <div>
-          <label htmlFor="fullName">Full Name</label>
-          <input
-            type="text"
+    <ThemeProvider theme={theme}>
+      <Container
+        component="main"
+        maxWidth="sm"
+        sx={{ my: { xs: 3, md: 6, lg: 10 }, p: { xs: 2, md: 1 } }}
+      >
+        <CssBaseline />
+        <Box
+          component="form"
+          // onSubmit={submitHandler}
+          onSubmit={handleSubmit(submitHandler)}
+          sx={{
+            display: "flex",
+            width: "100%",
+            flexDirection: "column",
+            alignItems: "center",
+            borderRadius: "0px",
+            p: 5,
+            boxShadow:
+              "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+          }}
+        >
+          <Typography variant="h4">Shipping Address</Typography>
+
+          <TextField
+            inputProps={{ style: { fontSize: 14 } }}
+            size="small"
+            // InputLabelProps={{
+            //   classes: {
+            //     root: classes.cssLabel,
+            //     focused: classes.cssFocused,
+            //   },
+            // }}
+            margin="normal"
+            fullWidth
             id="fullName"
-            placeholder="Enter full name"
-            value={fullName}
+            label="Enter FullName"
+            name="fullName"
+            autoComplete="off"
             onChange={(e) => setFullName(e.target.value)}
-            required
-          ></input>
-        </div>
-        <div>
-          <label htmlFor="address">Address</label>
-          <input
-            type="text"
+            {...register("fullName", { required: true })}
+            error={errors.fullName}
+          />
+          {errors.fullName && (
+            <span className="formError">Full Name is required</span>
+          )}
+
+          <TextField
+            inputProps={{ style: { fontSize: 14 } }}
+            size="small"
+            // InputLabelProps={{
+            //   classes: {
+            //     root: classes.cssLabel,
+            //     focused: classes.cssFocused,
+            //   },
+            // }}
+            margin="normal"
+            fullWidth
             id="address"
-            placeholder="Enter address"
-            value={address}
+            label="Enter address"
+            name="address"
+            autoComplete="off"
             onChange={(e) => setAddress(e.target.value)}
-            required
-          ></input>
-        </div>
-        <div>
-          <label htmlFor="city">City</label>
-          <input
-            type="text"
+            {...register("address", { required: true })}
+            error={errors.address}
+          />
+          {errors.address && (
+            <span className="formError">Address is required</span>
+          )}
+
+          <TextField
+            inputProps={{ style: { fontSize: 14 } }}
+            size="small"
+            margin="normal"
+            // InputLabelProps={{
+            //   classes: {
+            //     root: classes.cssLabel,
+            //     focused: classes.cssFocused,
+            //   },
+            // }}
+            fullWidth
             id="city"
-            placeholder="Enter city"
-            value={city}
+            label="Enter city"
+            name="city"
+            autoComplete="off"
             onChange={(e) => setCity(e.target.value)}
-            required
-          ></input>
-        </div>
-        <div>
-          <label htmlFor="postalCode">Postal Code</label>
-          <input
-            type="text"
+            {...register("city", { required: true })}
+            error={errors.city}
+          />
+          {errors.city && <span className="formError">City is required</span>}
+
+          <TextField
+            inputProps={{ style: { fontSize: 14 } }}
+            size="small"
+            margin="normal"
+            // InputLabelProps={{
+            //   classes: {
+            //     root: classes.cssLabel,
+            //     focused: classes.cssFocused,
+            //   },
+            // }}
+            fullWidth
             id="postalCode"
-            placeholder="Enter postal code"
-            value={postalCode}
+            label="Enter postal code"
+            name="postalCode"
+            autoComplete="off"
             onChange={(e) => setPostalCode(e.target.value)}
-            required
-          ></input>
-        </div>
-        <div>
-          <label htmlFor="country">Country</label>
-          <input
-            type="text"
+            {...register("postalCode", { required: true })}
+            error={errors.postalCode}
+          />
+          {errors.postalCode && (
+            <span className="formError">PostalCode is required</span>
+          )}
+
+          <TextField
+            inputProps={{ style: { fontSize: 14 } }}
+            size="small"
+            margin="normal"
+            // InputLabelProps={{
+            //   classes: {
+            //     root: classes.cssLabel,
+            //     focused: classes.cssFocused,
+            //   },
+            // }}
+            fullWidth
             id="country"
-            placeholder="Enter country"
-            value={country}
+            label="Enter country"
+            name="country"
+            autoComplete="off"
             onChange={(e) => setCountry(e.target.value)}
-            required
-          ></input>
-        </div>
-        <div>
-          <label htmlFor="chooseOnMap">Location</label>
-          <button type="button" onClick={chooseOnMap}>
+            {...register("country", { required: true })}
+            error={errors.country}
+          />
+          {errors.country && (
+            <span className="formError">Country is required</span>
+          )}
+
+          <Button
+            fullWidth
+            variant="contained"
+            onClick={chooseOnMap}
+            sx={{ mt: 3, mb: 2 }}
+            type="submit"
+          >
             Choose On Map
-          </button>
-        </div>
-        <div>
-          <label />
-          <button className="primary" type="submit">
-          Continue
-          </button>
-        </div>
-      </form>
-    </div>
+          </Button>
+
+          <Button
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            type="submit"
+          >
+            Continue
+          </Button>
+        </Box>
+      </Container>
+    </ThemeProvider>
   );
 }
