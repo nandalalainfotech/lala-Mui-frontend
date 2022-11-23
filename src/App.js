@@ -262,7 +262,7 @@ function App() {
                         <Typography
                           variant="h4"
                           noWrap
-                          component="div"
+                          component="span"
                           sx={{
                             display: { xs: "block", sm: "block", md: "block" },
                             "&:hover": { color: "#ff7519" },
@@ -512,7 +512,7 @@ function App() {
                                   sx={{ p: 0, "&:hover": { color: "#ff7519" } }}
                                   aria-controls="simple-menu"
                                   aria-haspopup="true"
-                                  onClick={(e) => setAnchorEl(e.currentTarget)}
+                                  
                                   color="black"
                                 >
                                   <Link
@@ -522,7 +522,7 @@ function App() {
                                     }}
                                     to="#"
                                   >
-                                    <Avatar
+                                    <Avatar onClick={(e) => setAnchorEl(e.currentTarget)}
                                   sx={{
                                     bgcolor: "inherit",
                                     "&:hover": { color: "#ff7519" },
@@ -602,14 +602,14 @@ function App() {
                                 <Link
                                   style={{ color: "inherit" }}
                                   to="#signout"
-                                  onClick={signoutHandler}
+                                  
                                 ><Avatar
                                 sx={{
                                   bgcolor: "inherit",
                                   "&:hover": { color: "#ff7519" },
                                 }}
                               >
-                                  <ExitToAppIcon /></Avatar>
+                                  <ExitToAppIcon onClick={signoutHandler}/></Avatar>
                                 </Link>
                               </IconButton>
                             </Tooltip>
@@ -3267,7 +3267,7 @@ function App() {
                         <Typography
                        variant="h5"
                           noWrap
-                          component="div"
+                          component="span"
                           sx={{
                             display: { xs: "block", sm: "block", md: "block" },
                             "&:hover": { color: "#ff7519" },
@@ -3293,8 +3293,8 @@ function App() {
             ) : errorCategories ? (
               <MessageBox variant="danger">{errorCategories}</MessageBox>
             ) : (
-              categories.map((c) => (
-                <List key={c}>
+              categories.map((c, i) => (
+                <List key={i}>
                   <Link
                     style={{
                       color: "#263238",
@@ -3313,7 +3313,7 @@ function App() {
           </Drawer>
           <Box component="main" sx={{ p: 3 }}>
             <Toolbar />
-            <Typography>
+            {/* <Typography> */}
               <Routes>
                 <Route path="/seller/:id" element={<SellerScreen />}></Route>
                 <Route path="/cart/:id" element={<CartScreen />}></Route>
@@ -3666,7 +3666,7 @@ function App() {
                 ></Route>
                 <Route path="/" element={<HomeScreen />} exact></Route>
               </Routes>
-            </Typography>
+            {/* </Typography> */}
           </Box>
           <Paper
             sx={{
