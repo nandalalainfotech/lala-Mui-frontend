@@ -170,42 +170,42 @@ export default function ProductScreen(props) {
                     style={{ color: "#A02020" }}
                     gutterBottom
                   >
-                    Price : ₹{product.price}
+                     <strong>Price :</strong> ₹{product.price}
                   </Typography>
                   <Typography
                     variant="body1"
                     style={{ color: "#A02020" }}
                     gutterBottom
                   >
-                    Brand: {product.brand}
+                    <strong>Brand :</strong> {product.brand}
                   </Typography>
                   <Typography
                     variant="body1"
                     style={{ color: "#A02020" }}
                     gutterBottom
                   >
-                    Category: {product.category}
+                    <strong>Category :</strong> {product.category}
                   </Typography>
                   <Typography
                     variant="body1"
                     style={{ color: "#A02020" }}
                     gutterBottom
                   >
-                    Description: {product.description}
+                    <strong>Description :</strong> {product.description}
                   </Typography>
                   <Typography
                     variant="body1"
                     style={{ color: "#A02020" }}
                     gutterBottom
                   >
-                    Category Group: {product.categorygroup}
+                    <strong> Category Group :</strong> {product.categorygroup}
                   </Typography>
                   <Typography
                     variant="body1"
                     style={{ color: "#A02020" }}
                     gutterBottom
                   >
-                    Category Type: {product.categorytype}
+                    <strong>Category Type :</strong> {product.categorytype}
                   </Typography>
 
                   
@@ -229,7 +229,7 @@ export default function ProductScreen(props) {
                     style={{ color: "#A02020" }}
                     gutterBottom
                   >
-                    Price: ₹{product.price}
+                    <strong>Price :</strong> ₹{product.price}
                   </Typography>
 
                   <Typography
@@ -237,7 +237,7 @@ export default function ProductScreen(props) {
                     style={{ color: "#A02020" }}
                     gutterBottom
                   >
-                    Status:{" "}
+                    <strong>Status :</strong>{" "}
                     {product.countInStock > 0 ? (
                       <span style={{ color: "green" }}>In Stock</span>
                     ) : (
@@ -248,7 +248,7 @@ export default function ProductScreen(props) {
                   {product.countInStock > 0 && (
                     <>
                       <Typography variant="body1" style={{ color: "#A02020" }}>
-                        Qty:
+                        <strong>Qty:</strong>
                         <FormControl
                           sx={{ marginLeft: 2, width: "60%" }}
                           size="small"
