@@ -161,13 +161,15 @@ export const deleteProduct = (productId) => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState();
   try {
+
+    await Axios.delete(`/api/uploads/${productId}`, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
    
     await Axios.delete(`/api/products/${productId}`, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
-    await Axios.delete(`/api/uploads/${productId}`, {
-      headers: { Authorization: `Bearer ${userInfo.token}` },
-    });
+    
     dispatch({ type: PRODUCT_DELETE_SUCCESS });
   } catch (error) {
     const message =
