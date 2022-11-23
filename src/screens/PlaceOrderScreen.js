@@ -7,10 +7,13 @@ import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 export default function PlaceOrderScreen() {
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
+  console.log("cart", cart);
   if (!cart.paymentMethod) {
     navigate("/payment");
   }
@@ -40,38 +43,38 @@ export default function PlaceOrderScreen() {
           <Box>
             <Box
               sx={{
-                p:4,
+                p: 4,
+                m: 2,
                 boxShadow:
                   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
               }}
             >
-              <h2>Shipping</h2>
-              <p>
+              <Typography variant="h4">Shipping</Typography>
+              <Typography variant="subtitle1" sx={{ marginTop: 3 }}>
                 <strong>Name:</strong> {cart.shippingAddress.fullName} <br />
                 <strong>Address: </strong> {cart.shippingAddress.address},
                 {cart.shippingAddress.city}, {cart.shippingAddress.postalCode},
                 {cart.shippingAddress.country}
-              </p>
+              </Typography>
             </Box>
 
             <Box
               sx={{
-                p:4,
+                p: 4,
+                m: 2,
                 boxShadow:
                   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
               }}
             >
-              <div className="card card-body">
-                <h2>Payment</h2>
-                <p>
-                  <strong>Method:</strong> {cart.paymentMethod}
-                </p>
-              </div>
+              <Typography variant="h4">Payment</Typography>
+              <Typography variant="subtitle1" sx={{ marginTop: 3 }}>
+                <strong>Method:</strong> {cart.paymentMethod}
+              </Typography>
             </Box>
 
             <Box
               sx={{
-                p:4,
+                p: 4,
                 boxShadow:
                   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
               }}
@@ -109,52 +112,40 @@ export default function PlaceOrderScreen() {
         <Grid xs>
           <Box
             sx={{
-              p:4,
+              p: 4,
               boxShadow:
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
           >
-            <Box>
-              <h2>Order Summarysssssssssssssss</h2>
-            </Box>
-            <Box>
-              <div className="row">
-                <div>Items</div>
-                <div>${cart.itemsPrice.toFixed(2)}</div>
-              </div>
-            </Box>
-            <Box>
-              <div className="row">
-                <div>Shipping</div>
-                <div>${cart.shippingPrice.toFixed(2)}</div>
-              </div>
-            </Box>
-            <Box>
-              <div className="row">
-                <div>Tax</div>
-                <div>${cart.taxPrice.toFixed(2)}</div>
-              </div>
-            </Box>
-            <Box>
-              <div className="row">
-                <div>
-                  <strong> Order Total</strong>
-                </div>
-                <div>
-                  <strong>${cart.totalPrice.toFixed(2)}</strong>
-                </div>
-              </div>
-            </Box>
-            <Box>
-              <button
-                type="button"
-                onClick={placeOrderHandler}
-                className="primary block"
-                disabled={cart.cartItems.length === 0}
-              >
-                Place Order
-              </button>
-            </Box>
+            <Typography variant="h4">Order Summary</Typography>
+
+            <Typography variant="subtitle1">
+              <strong>Items:</strong>${cart.itemsPrice.toFixed(2)}
+            </Typography>
+
+            <Typography variant="subtitle1">
+              <strong>Shipping:</strong>${cart.shippingPrice.toFixed(2)}
+            </Typography>
+
+            <Typography variant="subtitle1">
+              <strong>Tax:</strong>${cart.taxPrice.toFixed(2)}
+            </Typography>
+
+            <Typography variant="subtitle1">
+              <strong> Order Total:</strong>${cart.totalPrice.toFixed(2)}
+            </Typography>
+
+            <Button
+              fullWidth
+              variant="contained"
+              onClick={placeOrderHandler}
+              disabled={cart.cartItems.length === 0}
+              sx={{ mt: 3, mb: 2 }}
+              type="submit"
+            >
+              Place Order
+            </Button>
+
             {loading && <LoadingBox></LoadingBox>}
             {error && <MessageBox variant="danger">{error}</MessageBox>}
           </Box>
