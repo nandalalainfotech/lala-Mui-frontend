@@ -36,10 +36,11 @@ export default function PlaceOrderScreen() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
-        <Grid item xs="auto">
+        <Grid xs="auto">
           <Box>
             <Box
               sx={{
+                p:4,
                 boxShadow:
                   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
               }}
@@ -55,6 +56,7 @@ export default function PlaceOrderScreen() {
 
             <Box
               sx={{
+                p:4,
                 boxShadow:
                   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
               }}
@@ -69,6 +71,7 @@ export default function PlaceOrderScreen() {
 
             <Box
               sx={{
+                p:4,
                 boxShadow:
                   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
               }}
@@ -103,35 +106,36 @@ export default function PlaceOrderScreen() {
             </Box>
           </Box>
         </Grid>
-        <Grid item xs>
+        <Grid xs>
           <Box
             sx={{
+              p:4,
               boxShadow:
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
           >
-            <li>
-              <h2>Order Summary</h2>
-            </li>
-            <li>
+            <Box>
+              <h2>Order Summarysssssssssssssss</h2>
+            </Box>
+            <Box>
               <div className="row">
                 <div>Items</div>
                 <div>${cart.itemsPrice.toFixed(2)}</div>
               </div>
-            </li>
-            <li>
+            </Box>
+            <Box>
               <div className="row">
                 <div>Shipping</div>
                 <div>${cart.shippingPrice.toFixed(2)}</div>
               </div>
-            </li>
-            <li>
+            </Box>
+            <Box>
               <div className="row">
                 <div>Tax</div>
                 <div>${cart.taxPrice.toFixed(2)}</div>
               </div>
-            </li>
-            <li>
+            </Box>
+            <Box>
               <div className="row">
                 <div>
                   <strong> Order Total</strong>
@@ -140,8 +144,8 @@ export default function PlaceOrderScreen() {
                   <strong>${cart.totalPrice.toFixed(2)}</strong>
                 </div>
               </div>
-            </li>
-            <li>
+            </Box>
+            <Box>
               <button
                 type="button"
                 onClick={placeOrderHandler}
@@ -150,7 +154,7 @@ export default function PlaceOrderScreen() {
               >
                 Place Order
               </button>
-            </li>
+            </Box>
             {loading && <LoadingBox></LoadingBox>}
             {error && <MessageBox variant="danger">{error}</MessageBox>}
           </Box>
