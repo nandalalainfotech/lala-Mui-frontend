@@ -504,7 +504,7 @@ function App() {
                               display: { xs: "none", sm: "none", md: "flex" },
                             }}>
                               <Tooltip
-                                title={userInfo.name}
+                                title={userInfo?.name}
                                 arrow
                                 placement="top"
                               >
@@ -528,7 +528,7 @@ function App() {
                                     "&:hover": { color: "#ff7519" },
                                   }}
                                 >
-                                      {userInfo.name.charAt(0)}
+                                      {userInfo?.name?.charAt(0)}
                                     </Avatar>
                                     {/* <AccountCircle /> */}
                                   </Link>
@@ -3273,7 +3273,7 @@ function App() {
                             "&:hover": { color: "#ff7519" },
                           }}
                         >
-                         {userInfo.name}
+                         {userInfo?.name}
                         </Typography>
                       </Stack>
                     </Link>
