@@ -1,19 +1,19 @@
-import React, { useEffect } from "react";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Unstable_Grid2";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { createOrder } from "../actions/orderActions";
-import { ORDER_CREATE_RESET } from "../constants/orderConstants";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Unstable_Grid2";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import { ORDER_CREATE_RESET } from "../constants/orderConstants";
 
 export default function PlaceOrderScreen() {
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
-  console.log("cart", cart);
   if (!cart.paymentMethod) {
     navigate("/payment");
   }
@@ -37,13 +37,13 @@ export default function PlaceOrderScreen() {
     }
   }, [dispatch, order, navigate, success]);
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, m: 2 }}>
       <Grid container spacing={2}>
-        <Grid xs="auto">
+        <Grid sm>
           <Box>
             <Box
               sx={{
-                p: 4,
+                p: 5,
                 m: 2,
                 boxShadow:
                   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
@@ -60,7 +60,7 @@ export default function PlaceOrderScreen() {
 
             <Box
               sx={{
-                p: 4,
+                p: 5,
                 m: 2,
                 boxShadow:
                   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
@@ -74,45 +74,101 @@ export default function PlaceOrderScreen() {
 
             <Box
               sx={{
-                p: 4,
+                p: 5,
+                m: 2,
                 boxShadow:
                   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                display: {
+                  xs: "none",
+                  md: "block",
+                  sm: "block",
+                  lg: "block",
+                  xl: "block",
+                },
               }}
             >
-              <div className="card card-body">
-                <h2>Order Items</h2>
-                <ul>
-                  {cart.cartItems.map((item) => (
-                    <li key={item.product}>
-                      <div className="row">
-                        <div>
-                          <img
-                            src={item.image}
-                            alt={item.name}
-                            className="small"
-                          ></img>
-                        </div>
-                        <div className="min-30">
-                          <Link to={`/product/${item.product}`}>
-                            {item.name}
-                          </Link>
-                        </div>
+              <Typography variant="h4">Order Items</Typography>
 
-                        <div>
-                          {item.qty} x ${item.price} = ${item.qty * item.price}
-                        </div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {cart.cartItems.map((item) => (
+                <Box
+                  key={item.product}
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    marginTop: 2,
+                  }}
+                >
+                  <CardMedia
+                    component="img"
+                    sx={{ width: 151 }}
+                    src={item.image}
+                    alt={item.name}
+                  />
+
+                  <Typography variant="subtitle1">
+                    <Link to={`/product/${item.product}`}>{item.name}</Link>
+                  </Typography>
+
+                  <Typography variant="subtitle1">
+                    {item.qty} x ${item.price} = ${item.qty * item.price}
+                  </Typography>
+                </Box>
+              ))}
             </Box>
+
+            <Box
+              sx={{
+                p: 5,
+                m: 2,
+                boxShadow:
+                  "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                display: {
+                  xs: "block",
+                  md: "none",
+                  sm: "none",
+                  lg: "none",
+                  xl: "none",
+                },
+              }}
+            >
+              <Typography variant="h4">Order Items</Typography>
+
+              {cart.cartItems.map((item) => (
+                <Box
+                  key={item.product}
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    marginTop: 2,
+                  }}
+                >
+                  <CardMedia
+                    component="img"
+                    sx={{ width: 151 }}
+                    src={item.image}
+                    alt={item.name}
+                  />
+
+                  <Typography variant="subtitle1">
+                    <Link to={`/product/${item.product}`}>{item.name}</Link>
+                  </Typography>
+
+                  <Typography variant="subtitle1">
+                    {item.qty} x ${item.price} = ${item.qty * item.price}
+                  </Typography>
+                </Box>
+              ))}
+            </Box>
+
           </Box>
         </Grid>
-        <Grid xs>
+        <Grid xs sm md lg xl>
           <Box
             sx={{
-              p: 4,
+              p: 5,
+              m: 2,
               boxShadow:
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
