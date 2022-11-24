@@ -81,7 +81,7 @@ export default function PlaceOrderScreen() {
                 display: {
                   xs: "none",
                   md: "block",
-                  sm: "block",
+                  sm: "none",
                   lg: "block",
                   xl: "block",
                 },
@@ -126,7 +126,7 @@ export default function PlaceOrderScreen() {
                 display: {
                   xs: "block",
                   md: "none",
-                  sm: "none",
+                  sm: "block",
                   lg: "none",
                   xl: "none",
                 },
