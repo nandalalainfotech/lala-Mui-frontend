@@ -31,28 +31,21 @@ import SearchBox from "./components/SearchBox";
 import SellerRoute from "./components/SellerRoute";
 import AccountCreation from "./screens/AccountCreation";
 import AdmininScreen from "./screens/AdmininScreen";
-import BookScreen from "./screens/BookScreen";
-import CartKidScreen from "./screens/CartKidScreen";
-import CartWomenScreen from "./screens/CartWomenScreen";
+
 import DashboardScreen from "./screens/DashboardScreen";
-import KidEditScreen from "./screens/KidEditScreen";
-import KidListScreen from "./screens/KidListScreen";
-import KidScreen from "./screens/KidsScreen";
+
 import MapScreen from "./screens/MapScreen";
 import OrderListScreen from "./screens/OrderListScreen";
 import ProductEditScreen from "./screens/ProductEditScreen";
 import ProductListScreen from "./screens/ProductListScreen";
-import SareeEditScreen from "./screens/SareeEditScreen";
-import SareeListScreen from "./screens/SareeListScreen";
-import SareeScreen from "./screens/SareeScreen";
+
 import SearchScreen from "./screens/SearchScreen";
 import SellerScreen from "./screens/SellerScreen";
 import SupportScreen from "./screens/SupportScreen";
 import UserEditScreen from "./screens/UserEditScreen";
 import UserListScreen from "./screens/UserListScreen";
-import WomenEditScreen from "./screens/WomenEditScreen";
-import WomenListScreen from "./screens/WomenListScreen";
-import WomenScreen from "./screens/WomenScreen";
+
+
 
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
@@ -3317,11 +3310,7 @@ function App() {
               <Routes>
                 <Route path="/seller/:id" element={<SellerScreen />}></Route>
                 <Route path="/cart/:id" element={<CartScreen />}></Route>
-                <Route
-                  path="/cartwomen/:id"
-                  element={<CartWomenScreen />}
-                ></Route>
-                <Route path="/cartkid/:id" element={<CartKidScreen />}></Route>
+                
                 <Route path="/carttshirt/:id" element={<CartScreen />}></Route>
                 <Route
                   path="/search/name"
@@ -3330,8 +3319,6 @@ function App() {
                 ></Route>
 
                 <Route path="/cart" element={<CartScreen />}></Route>
-                <Route path="/cartwomen" element={<CartWomenScreen />}></Route>
-                <Route path="/cartkid" element={<CartKidScreen />}></Route>
 
                 <Route path="/signin" element={<SigninScreen />}></Route>
                 <Route path="/account" element={<AccountScreen />}></Route>
@@ -3369,15 +3356,7 @@ function App() {
                   exact
                 ></Route>
 
-                <Route
-                  path="/Sareelist/seller"
-                  element={
-                    <SellerRoute>
-                      <SareeListScreen />
-                    </SellerRoute>
-                  }
-                  exact
-                ></Route>
+              
                 <Route
                   path="/OrderList/seller"
                   element={
@@ -3404,24 +3383,8 @@ function App() {
                   }
                   exact
                 />
-                <Route
-                  path="/womenlist"
-                  element={
-                    <AdminRoute>
-                      <WomenListScreen />
-                    </AdminRoute>
-                  }
-                  exact
-                />
-                <Route
-                  path="/kidlist"
-                  element={
-                    <AdminRoute>
-                      <KidListScreen />
-                    </AdminRoute>
-                  }
-                  exact
-                />
+              
+             
 
                 <Route
                   path="/orderlist"
@@ -3432,15 +3395,7 @@ function App() {
                   }
                   exact
                 />
-                <Route
-                  path="/Sareelist"
-                  element={
-                    <AdminRoute>
-                      <SareeListScreen />
-                    </AdminRoute>
-                  }
-                  exact
-                />
+                
                 <Route
                   path="/search/name/:name"
                   element={<SearchScreen />}
@@ -3476,34 +3431,6 @@ function App() {
                     </SellerRoute>
                   }
                 />
-
-                <Route
-                  path="/womenlist/seller"
-                  element={
-                    <SellerRoute>
-                      <WomenListScreen />
-                    </SellerRoute>
-                  }
-                  exact
-                ></Route>
-                <Route
-                  path="/kidlist/seller"
-                  element={
-                    <SellerRoute>
-                      <KidListScreen />
-                    </SellerRoute>
-                  }
-                  exact
-                ></Route>
-
-                <Route
-                  path="/sareelist/seller"
-                  element={
-                    <SellerRoute>
-                      <SareeListScreen />
-                    </SellerRoute>
-                  }
-                />
                 <Route
                   path="/orderlist/seller"
                   element={
@@ -3522,23 +3449,7 @@ function App() {
                   element={<ProductEditScreen />}
                   exact
                 ></Route>
-
-                <Route
-                  path="/women/:id/edit"
-                  element={<WomenEditScreen />}
-                  exact
-                ></Route>
-                <Route
-                  path="/kid/:id/edit"
-                  element={<KidEditScreen />}
-                  exact
-                ></Route>
-
-                <Route
-                  path="/saree/:id/edit"
-                  element={<SareeEditScreen />}
-                  exact
-                ></Route>
+   
                 <Route
                   path="/user/:id/edit"
                   element={
@@ -3563,36 +3474,8 @@ function App() {
                     </AdminRoute>
                   }
                 />
-                {/* <Route
-              path="/Saree/:id"
-              element={<SareeScreen />}
-              exact
-            ></Route> */}
-                <Route
-                  path="/Saree"
-                  element={
-                    <AdminRoute>
-                      <SareeScreen />
-                      exact
-                    </AdminRoute>
-                  }
-                />
-                <Route
-                  path="/sareelist/pageNumber/:pageNumber"
-                  element={
-                    <AdminRoute>
-                      <SareeListScreen />
-                    </AdminRoute>
-                  }
-                />
-                <Route
-                  path="/book"
-                  element={
-                    <AdminRoute>
-                      <BookScreen />
-                    </AdminRoute>
-                  }
-                />
+               
+           
                 <Route
                   path="/productlist/pageNumber/:pageNumber"
                   element={
@@ -3642,23 +3525,14 @@ function App() {
                   }
                 />
 
-                <Route
-                  path="/saree/:id"
-                  element={<SareeScreen />}
-                  exact
-                ></Route>
+               
                 <Route
                   path="/product/:id"
                   element={<ProductScreen />}
                   exact
                 ></Route>
 
-                <Route
-                  path="/women/:id"
-                  element={<WomenScreen />}
-                  exact
-                ></Route>
-                <Route path="/kid/:id" element={<KidScreen />} exact></Route>
+           
 
                 <Route
                   path="/orderhistory"
