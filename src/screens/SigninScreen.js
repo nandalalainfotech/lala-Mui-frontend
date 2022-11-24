@@ -5,6 +5,7 @@ import { signin } from '../actions/userAction';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 // import validator from 'validator'
+import CircularProgress from '@mui/material/CircularProgress';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -18,6 +19,9 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+
+
 export default function SigninScreen(props) {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -72,7 +76,7 @@ export default function SigninScreen(props) {
         <Typography component="h1" variant="h5">
           Sign In
         </Typography>
-         {loading && <LoadingBox></LoadingBox>}
+         {loading && <CircularProgress></CircularProgress>}
           {error && <MessageBox variant="danger">{error}</MessageBox>}
         <Box component="form" onSubmit={submitHandler}  sx={{ mt: 1 }}>
           <TextField
