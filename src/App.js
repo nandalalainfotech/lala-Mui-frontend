@@ -233,7 +233,7 @@ function App() {
     <BrowserRouter>
       <div className="grid-container">
         <Box sx={{ flexGrow: 1 }}>
-          <AppBar position="fixed" style={{ zIndex: "100" }}>
+          <AppBar position="fixed" style={{ zIndex: 999 }}>
             <Toolbar>
               <Grid container spacing={3}>
                 <Grid item xs={2}>

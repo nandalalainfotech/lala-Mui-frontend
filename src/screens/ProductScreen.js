@@ -19,6 +19,7 @@ import TextareaAutosize from "@mui/material/TextareaAutosize";
 import Typography from "@mui/material/Typography";
 import Axios from "axios";
 import ReactImageMagnify from "react-image-magnify";
+import CardMedia from "@mui/material/CardMedia";
 
 export default function ProductScreen(props) {
   const dispatch = useDispatch();
@@ -123,11 +124,11 @@ export default function ProductScreen(props) {
 
           <Grid item sx={{display: { xs: "block", md: "none", sm: "none", lg: "none", xl: "none",},}}>
           <Box>
-              <Card
-                style={{
-                  margin: 20,
+              <CardMedia
+                sx={{
                   borderRadius: 0,
                   width: "100%",
+                  marginTop: 3,
                   height: "100%",
                   boxShadow:
                     "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
@@ -135,7 +136,7 @@ export default function ProductScreen(props) {
                 component="img"
                 src = {image}
               >
-              </Card>
+              </CardMedia>
             </Box>
           </Grid>
 
