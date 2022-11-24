@@ -18,12 +18,19 @@ export default function PaymentMethodScreen(props) {
   //   if (!shippingAddress.address) {
   //     navigate('/shipping');
   //   }
-  const [paymentMethod, setPaymentMethod] = useState("PayPal");
+  const [paymentMethod, setPaymentMethod] = useState("");
   const dispatch = useDispatch();
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(savePaymentMethod(paymentMethod));
-    navigate("/placeorder");
+    
+    if (paymentMethod) {
+      dispatch(savePaymentMethod(paymentMethod));
+      navigate("/placeorder");
+    } else {
+      window.confirm(
+        "Please Choose any one Payment Method?"
+      );
+    }
   };
 
   const theme = createTheme();

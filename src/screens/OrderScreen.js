@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Axios from 'axios';
-import { PayPalButton } from 'react-paypal-button-v2';
+import Axios from "axios";
+import { PayPalButton } from "react-paypal-button-v2";
+import Box from "@mui/material/Box";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Unstable_Grid2";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { deliverOrder, detailsOrder, payOrder } from "../actions/orderActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import { ORDER_DELIVER_RESET, ORDER_PAY_RESET } from "../constants/orderConstants";
+import Button from "@mui/material/Button";
+import {
+  ORDER_DELIVER_RESET,
+  ORDER_PAY_RESET,
+} from "../constants/orderConstants";
 
 export default function OrderScreen(props) {
   const navigate = useNavigate();
@@ -32,9 +40,9 @@ export default function OrderScreen(props) {
   const dispatch = useDispatch();
   useEffect(() => {
     const addPayPalScript = async () => {
-      const { data } = await Axios.get('/api/config/paypal');
-      const script = document.createElement('script');
-      script.type = 'text/javascript';
+      const { data } = await Axios.get("/api/config/paypal");
+      const script = document.createElement("script");
+      script.type = "text/javascript";
       script.src = `https://www.paypal.com/sdk/js?client-id=${data}`;
       script.async = true;
       script.onload = () => {
@@ -60,7 +68,15 @@ export default function OrderScreen(props) {
         }
       }
     }
-  }, [dispatch, navigate, sdkReady, orderId,  successPay,  successDeliver ,order]);
+  }, [
+    dispatch,
+    navigate,
+    sdkReady,
+    orderId,
+    successPay,
+    successDeliver,
+    order,
+  ]);
 
   const successPaymentHandler = (paymentResult) => {
     dispatch(payOrder(order, paymentResult));
@@ -69,27 +85,30 @@ export default function OrderScreen(props) {
   const deliverHandler = () => {
     dispatch(deliverOrder(order._id));
   };
-  
+
   return loading ? (
     <LoadingBox></LoadingBox>
   ) : error ? (
     <MessageBox variant="danger">{error}</MessageBox>
   ) : (
-    <div>
-      <h1>Order {order._id}</h1>
-      <div className="row top">
-        <div className="col-2">
-          <ul>
-            <li>
-              <div className="card card-body">
-                <h2>Shipping</h2>
-                <p>
-                  <strong>Name:</strong> {order.shippingAddress.fullName}, <br />
-                  <strong>Address: </strong> {order.shippingAddress.address},
-                  {order.shippingAddress.city},{" "}
-                  {order.shippingAddress.postalCode},
-                  {order.shippingAddress.country},
-                </p>
+    <Box sx={{ flexGrow: 1, m: 2 }}>
+      <Grid container spacing={2}>
+        <Grid sm>
+          <Box>
+            <Box
+              sx={{
+                p: 5,
+                m: 2,
+                boxShadow:
+                  "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+              }}
+            >
+              <Typography variant="h4">Shipping</Typography>
+              <Typography variant="subtitle1" sx={{ marginTop: 3 }}>
+                <strong>Name:</strong> {order.shippingAddress.fullName} <br />
+                <strong>Address: </strong> {order.shippingAddress.address},
+                {order.shippingAddress.city}, {order.shippingAddress.postalCode}
+                ,{order.shippingAddress.country}
                 {order.isDelivered ? (
                   <MessageBox variant="success">
                     Delivered at {order.deliveredAt}
@@ -97,14 +116,20 @@ export default function OrderScreen(props) {
                 ) : (
                   <MessageBox variant="danger">Not Delivered</MessageBox>
                 )}
-              </div>
-            </li>
-            <li>
-              <div className="card card-body">
-                <h2>Payment</h2>
-                <p>
-                  <strong>Method:</strong> {order.paymentMethod}
-                </p>
+              </Typography>
+            </Box>
+
+            <Box
+              sx={{
+                p: 5,
+                m: 2,
+                boxShadow:
+                  "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+              }}
+            >
+              <Typography variant="h4">Payment</Typography>
+              <Typography variant="subtitle1" sx={{ marginTop: 3 }}>
+                <strong>Method:</strong> {order.paymentMethod}
                 {order.isPaid ? (
                   <MessageBox variant="success">
                     Paid at {order.paidAt}
@@ -112,160 +137,134 @@ export default function OrderScreen(props) {
                 ) : (
                   <MessageBox variant="danger">Not Paid</MessageBox>
                 )}
-              </div>
-            </li>
-            <li>
-              <div className="card card-body">
-                <h2>Order Items</h2>
-                <ul>
-                  {order.orderItems.map((item) => (
-                    <li key={item.product}>
-                      <div className="row">
-                        <div>
-                          <img
-                            src={item.image}
-                            alt={item.name}
-                            className="small"
-                          ></img>
-                        </div>
-                        <div className="min-30">
-                          <Link to={`/product/${item.product}`}>
-                            {item.name}
-                          </Link>
-                        </div>
+              </Typography>
+            </Box>
 
-                        <div>
-                          ${item.qty} x ${item.price} = ${item.qty * item.price}
-                        </div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+            <Box
+              sx={{
+                p: 5,
+                m: 2,
+                boxShadow:
+                  "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                display: {
+                  xs: "none",
+                  md: "block",
+                  sm: "none",
+                  lg: "block",
+                  xl: "block",
+                },
+              }}
+            >
+              <Typography variant="h4">Order Items</Typography>
 
+              {order.orderItems.map((item) => (
+                <Box
+                  key={item.product}
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    marginTop: 2,
+                  }}
+                >
+                  <CardMedia
+                    component="img"
+                    sx={{ width: 151 }}
+                    src={item.image}
+                    alt={item.name}
+                  />
 
-              <div className="card card-body">
-                <h2>Order Items</h2>
-                <ul>
-                  {order.orderItems.map((item) => (
-                    <li key={item.women}>
-                      <div className="row">
-                        <div>
-                          <img
-                            src={item.image}
-                            alt={item.name}
-                            className="small"
-                          ></img>
-                        </div>
-                        <div className="min-30">
-                          <Link to={`/women/${item.women}`}>
-                            {item.name}
-                          </Link>
-                        </div>
-                        <div>
-                          ${item.qty} x ${item.price} = ${item.qty * item.price}
-                        </div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="card card-body">
-                <h2>Order Items</h2>
-                <ul>
-                  {order.orderItems.map((item) => (
-                    <li key={item.kid}>
-                      <div className="row">
-                        <div>
-                          <img
-                            src={item.image}
-                            alt={item.name}
-                            className="small"
-                          ></img>
-                        </div>
-                        <div className="min-30">
-                          <Link to={`/kid/${item.kid}`}>
-                            {item.name}
-                          </Link>
-                        </div>
-                        <div>
-                          ${item.qty} x ${item.price} = ${item.qty * item.price}
-                        </div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                  <Typography variant="subtitle1">
+                    <Link to={`/product/${item.product}`}>{item.name}</Link>
+                  </Typography>
 
-              <div className="card card-body">
-                <h2>Order Items</h2>
-                <ul>
-                  {order.orderItems.map((item) => (
-                    <li key={item.tshirt}>
-                      <div className="row">
-                        <div>
-                          <img
-                            src={item.image}
-                            alt={item.name}
-                            className="small"
-                          ></img>
-                        </div>
-                        <div className="min-30">
-                          <Link to={`/tshirt/${item.tshirt}`}>
-                            {item.name}
-                          </Link>
-                        </div>
-                        <div>
-                          ${item.qty} x ${item.price} = ${item.qty * item.price}
-                        </div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div className="col-1">
-          <div className="card card-body">
-            <ul>
-              <li>
-                <h2>Order Summary</h2>
-              </li>
-              <li>
-                <div className="row">
-                  <div>Items</div>
-                  <div>${order.itemsPrice.toFixed(2)}</div>
-                </div>
-              </li>
-              <li>
-                <div className="row">
-                  <div>Shipping</div>
-                  <div>${order.shippingPrice.toFixed(2)}</div>
-                </div>
-              </li>
-              <li>
-                <div className="row">
-                  <div>Tax</div>
-                  <div>${order.taxPrice.toFixed(2)}</div>
-                </div>
-              </li>
-              <li>
-                <div className="row">
-                  <div>
-                    <strong> Order Total</strong>
-                  </div>
-                  <div>
-                    <strong>${order.totalPrice.toFixed(2)}</strong>
-                  </div>
-                </div>
-              </li>
-              {!order.isPaid && (
-                <li>
-                  {!sdkReady ? (
-                    <LoadingBox></LoadingBox>
-                  ) : (
-                    <>
+                  <Typography variant="subtitle1">
+                    {item.qty} x ${item.price} = ${item.qty * item.price}
+                  </Typography>
+                </Box>
+              ))}
+            </Box>
+
+            <Box
+              sx={{
+                p: 5,
+                m: 2,
+                boxShadow:
+                  "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                display: {
+                  xs: "block",
+                  md: "none",
+                  sm: "block",
+                  lg: "none",
+                  xl: "none",
+                },
+              }}
+            >
+              <Typography variant="h4">Order Items</Typography>
+
+              {order.orderItems.map((item) => (
+                <Box
+                  key={item.product}
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    marginTop: 2,
+                  }}
+                >
+                  <CardMedia
+                    component="img"
+                    sx={{ width: 151 }}
+                    src={item.image}
+                    alt={item.name}
+                  />
+
+                  <Typography variant="subtitle1">
+                    <Link to={`/product/${item.product}`}>{item.name}</Link>
+                  </Typography>
+
+                  <Typography variant="subtitle1">
+                    {item.qty} x ${item.price} = ${item.qty * item.price}
+                  </Typography>
+                </Box>
+              ))}
+            </Box>
+          </Box>
+        </Grid>
+        <Grid xs sm md lg xl>
+          <Box
+            sx={{
+              p: 5,
+              m: 2,
+              marginTop: 2,
+              boxShadow:
+                "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+            }}
+          >
+            <Typography variant="h4">Order Summary</Typography>
+
+            <Typography variant="subtitle1">
+              <strong>Items:</strong>${order.itemsPrice.toFixed(2)}
+            </Typography>
+
+            <Typography variant="subtitle1">
+              <strong>Shipping:</strong>${order.shippingPrice.toFixed(2)}
+            </Typography>
+
+            <Typography variant="subtitle1">
+              <strong>Tax:</strong>${order.taxPrice.toFixed(2)}
+            </Typography>
+
+            <Typography variant="subtitle1">
+              <strong> Order Total:</strong>${order.totalPrice.toFixed(2)}
+            </Typography>
+
+            {!order.isPaid && (
+              <Box sx={{marginTop: 2}}>
+                {!sdkReady ? (
+                  <LoadingBox></LoadingBox>
+                ) : (
+                  <>
                     {errorPay && (
                       <MessageBox variant="danger">{errorPay}</MessageBox>
                     )}
@@ -276,28 +275,29 @@ export default function OrderScreen(props) {
                       onSuccess={successPaymentHandler}
                     ></PayPalButton>
                   </>
-                  )}
-                </li>
-              )}
-                {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
-                <li>
-                  {loadingDeliver && <LoadingBox></LoadingBox>}
-                  {errorDeliver && (
-                    <MessageBox variant="danger">{errorDeliver}</MessageBox>
-                  )}
-                  <button
-                    type="button"
-                    className="primary block"
-                    onClick={deliverHandler}
-                  >
-                    Delivery Order
-                  </button>
-                </li>
-              )}
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
+                )}
+              </Box>
+            )}
+            {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+              <Box>
+                {loadingDeliver && <LoadingBox></LoadingBox>}
+                {errorDeliver && (
+                  <MessageBox variant="danger">{errorDeliver}</MessageBox>
+                )}
+                <Button
+                  fullWidth
+                  variant="contained"
+                  onClick={deliverHandler}
+                  sx={{ mt: 3, mb: 2 }}
+                  type="button"
+                >
+                  Delivery Order
+                </Button>
+              </Box>
+            )}
+          </Box>
+        </Grid>
+      </Grid>
+    </Box>
   );
 }
