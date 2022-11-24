@@ -303,20 +303,20 @@ function App() {
                               // aria-label="show 4 new mails"
                               color="inherit"
                             >
-                              <Link style={{ color: "inherit" }} to="/cart">
+                              <Link style={{ color: "inherit",textDecoration:"none" }} to="/cart">
                                 <Avatar
                                   sx={{
                                     bgcolor: "inherit",
                                     "&:hover": { color: "#ff7519" },
                                   }}
-                                >
-                                  <ShoppingCartCheckoutIcon />
-                                </Avatar>
-                                {cartItems.length > 0 && (
+                                > {cartItems.length > 0 && (
                                   <span className="badge">
                                     {cartItems.length}
                                   </span>
                                 )}
+                                  <ShoppingCartCheckoutIcon />
+                                </Avatar>
+                               
                               </Link>
                             </IconButton>
                           </Tooltip>

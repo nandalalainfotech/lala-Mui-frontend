@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { listOrderMine } from '../actions/orderActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function OrderHistoryScreen(props) {
 
@@ -135,7 +136,7 @@ export default function OrderHistoryScreen(props) {
     <div>
       <h1>Order History</h1>
       {loading ? (
-        <LoadingBox></LoadingBox>
+        <CircularProgress></CircularProgress>
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
