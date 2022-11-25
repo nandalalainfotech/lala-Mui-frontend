@@ -12,9 +12,9 @@ import Card from "@mui/material/Card";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
 import InputLabel from "@mui/material/InputLabel";
-// import TextField from '@mui/material/TextField';
 import MenuItem from "@mui/material/MenuItem";
 import Rating from "@mui/material/Rating";
+// import Reviews from "@mui/material/Reviews";
 import Select from "@mui/material/Select";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import Typography from "@mui/material/Typography";
@@ -87,14 +87,14 @@ export default function ProductScreen(props) {
   };
 
   return (
-    <Box sx={{ flexGrow: 1, marginTop: 3}}>
+    <Box sx={{ flexGrow: 1, marginTop: 3 }}>
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <Grid container spacing={2}>
-          <Grid item sx={{ zIndex: 1,display: {xs: "none",md: "block",sm: "block",lg: "block",xl: "block",},}}>
+          <Grid item sx={{ zIndex: 1, display: { xs: "none", md: "block", sm: "block", lg: "block", xl: "block", }, }}>
             <Box
               sx={{
                 borderRadius: 0,
@@ -123,7 +123,7 @@ export default function ProductScreen(props) {
             </Box>
           </Grid>
 
-          <Grid item sx={{display: { xs: "block", md: "none", sm: "none", lg: "none", xl: "none",},}}>
+          <Grid item sx={{ display: { xs: "block", md: "none", sm: "none", lg: "none", xl: "none", }, }}>
             <Box>
               <CardMedia
                 sx={{
@@ -135,7 +135,7 @@ export default function ProductScreen(props) {
                     "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 }}
                 component="img"
-                src = {image}
+                src={image}
               >
               </CardMedia>
             </Box>
@@ -162,11 +162,15 @@ export default function ProductScreen(props) {
                   </Typography>
 
                   <Typography variant="body1" gutterBottom>
-                    <Rating
-                      defaultValue={product.rating}
-                      numReviews={product.numReviews}
-                    ></Rating>
+                    <Rating>
+                      Value={product.rating}
+                      {/* numReviews={product.numReviews} */}
+                    </Rating>
                   </Typography>
+                  <Typography variant="body1" gutterBottom>
+                    {product.numReviews + "reviews"}
+                  </Typography>
+
                   <Typography
                     variant="body1"
                     style={{ color: "#A02020" }}
@@ -359,7 +363,7 @@ export default function ProductScreen(props) {
                               <MenuItem value={3}>3- Good</MenuItem>
                               <MenuItem value={4}>4- Very good</MenuItem>
                               <MenuItem value={5}>5- Excelent</MenuItem>
-                              
+
                             </Select>
 
                           </FormControl>
