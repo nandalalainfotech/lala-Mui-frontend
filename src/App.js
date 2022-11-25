@@ -131,9 +131,13 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: theme.spacing(2),
     },
   },
+  popOverRoot: {
+    pointerEvents: "none"
+  }
 }));
 
 function App() {
+  let currentlyHovering = false;
   const cart = useSelector((state) => state.cart);
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const { cartItems } = cart;
@@ -187,9 +191,10 @@ function App() {
   const [anchorEl6, setAnchorEl6] = React.useState(null);
   const [anchorEl7, setAnchorEl7] = React.useState(null);
   const [anchorEl8, setAnchorEl8] = React.useState(null);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+
+  function handleHover() {
+    currentlyHovering = true;
+  }
   const handleClose = () => {
     setAnchorEl(null);
     setAnchorEl2(null);
@@ -200,8 +205,17 @@ function App() {
     setAnchorEl7(null);
     setAnchorEl8(null);
   };
+
+  function handleCloseHover() {
+    currentlyHovering = false;
+    setTimeout(() => {
+      if (!currentlyHovering) {
+        handleClose();
+      }
+    },0);
+  }
   // navbar dropdowns section End************************************************
-  const classes = useStyles();
+  const styles = useStyles();
 
   const content = {
     brand: { image: "nereus-assets/img/nereus-light.png", width: 110 },
@@ -673,6 +687,8 @@ function App() {
                       aria-controls="simple-menu4"
                       aria-haspopup="true"
                       onMouseOver={(e) => setAnchorEl4(e.currentTarget)}
+                      // onMouseOver={handleClick1}
+                      onMouseLeave={handleCloseHover}
                       color="inherit"
                       sx={{
                         "&:hover": { color: "#ff7519" },
@@ -688,7 +704,16 @@ function App() {
                       anchorEl={anchorEl4}
                       open={Boolean(anchorEl4)}
                       onClose={handleClose}
-                      MenuListProps={{ onMouseLeave: handleClose }}
+                      MenuListProps={{
+                        onMouseEnter: handleHover,
+                        onMouseLeave: handleClose,
+                        style: { pointerEvents: "auto" }
+                      }}
+                      getcontentanchorel={null}
+                      anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
+                      PopoverClasses={{
+                        root: styles.popOverRoot
+                      }}
                       sx={{
                         "& .MuiList-root": {
                           display: "flex",
@@ -1183,13 +1208,14 @@ function App() {
                       aria-controls="simple-menu5"
                       aria-haspopup="true"
                       onMouseOver={(e) => setAnchorEl5(e.currentTarget)}
+                      // onMouseOver={handleClick2}
+                     onMouseLeave={handleCloseHover}
                       color="inherit"
                       sx={{
                         "&:hover": { color: "#ff7519" },
                         fontSize: { sm: "14px", md: "16px", lg: "16px" },
                         marginRight: { lg: "20px", xl: "20px" },
                         cursor: "pointer",
-                        pointerEvents: "auto",
                       }}
                     >
                       Women
@@ -1199,7 +1225,16 @@ function App() {
                       anchorEl={anchorEl5}
                       open={Boolean(anchorEl5)}
                       onClose={handleClose}
-                      MenuListProps={{ onMouseLeave: handleClose }}
+                      MenuListProps={{
+                        onMouseEnter: handleHover,
+                        onMouseLeave: handleClose,
+                        style: { pointerEvents: "auto" }
+                      }}
+                      getcontentanchorel={null}
+                      anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
+                      PopoverClasses={{
+                        root: styles.popOverRoot
+                      }}
                       sx={{
                         "& .MuiList-root": {
                           display: "flex",
@@ -1700,6 +1735,7 @@ function App() {
                       aria-controls="simple-menu6"
                       aria-haspopup="true"
                       onMouseOver={(e) => setAnchorEl6(e.currentTarget)}
+                      onMouseLeave={handleCloseHover}
                       color="inherit"
                       sx={{
                         "&:hover": { color: "#ff7519" },
@@ -1713,10 +1749,19 @@ function App() {
                     <Menu
                       id="simple-menu6"
                       anchorEl={anchorEl6}
-                      keepMounted
+                      // keepMounted
                       open={Boolean(anchorEl6)}
                       onClose={handleClose}
-                      MenuListProps={{ onMouseLeave: handleClose }}
+                      MenuListProps={{
+                        onMouseEnter: handleHover,
+                        onMouseLeave: handleClose,
+                        style: { pointerEvents: "auto" }
+                      }}
+                      getcontentanchorel={null}
+                      anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
+                      PopoverClasses={{
+                        root: styles.popOverRoot
+                      }}
                       sx={{
                         "& .MuiList-root": {
                           display: "flex",
@@ -2181,6 +2226,7 @@ function App() {
                       aria-haspopup="true"
                       //  onClick={(e) => setAnchorEl7(e.currentTarget)}
                       onMouseOver={(e) => setAnchorEl7(e.currentTarget)}
+                      onMouseLeave={handleCloseHover}
                       color="inherit"
                       sx={{
                         "&:hover": { color: "#ff7519" },
@@ -2194,10 +2240,19 @@ function App() {
                     <Menu
                       id="simple-menu7"
                       anchorEl={anchorEl7}
-                      keepMounted
+                      // keepMounted
                       open={Boolean(anchorEl7)}
                       onClose={handleClose}
-                      MenuListProps={{ onMouseLeave: handleClose }}
+                      MenuListProps={{
+                        onMouseEnter: handleHover,
+                        onMouseLeave: handleClose,
+                        style: { pointerEvents: "auto" }
+                      }}
+                      getcontentanchorel={null}
+                      anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
+                      PopoverClasses={{
+                        root: styles.popOverRoot
+                      }}
                       sx={{
                         "& .MuiList-root": {
                           display: "flex",
@@ -2714,6 +2769,7 @@ function App() {
                       aria-haspopup="true"
                       //  onClick={(e) => setAnchorEl8(e.currentTarget)}
                       onMouseOver={(e) => setAnchorEl8(e.currentTarget)}
+                      onMouseLeave={handleCloseHover}
                       color="inherit"
                       sx={{
                         "&:hover": { color: "#ff7519" },
@@ -2727,10 +2783,19 @@ function App() {
                     <Menu
                       id="simple-menu8"
                       anchorEl={anchorEl8}
-                      keepMounted
+                      // keepMounted
                       open={Boolean(anchorEl8)}
                       onClose={handleClose}
-                      MenuListProps={{ onMouseLeave: handleClose }}
+                      MenuListProps={{
+                        onMouseEnter: handleHover,
+                        onMouseLeave: handleClose,
+                        style: { pointerEvents: "auto" }
+                      }}
+                      getcontentanchorel={null}
+                      anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
+                      PopoverClasses={{
+                        root: styles.popOverRoot
+                      }}
                       sx={{
                         "& .MuiList-root": {
                           display: "flex",
