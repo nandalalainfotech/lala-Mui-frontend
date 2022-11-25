@@ -4,25 +4,24 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { signin } from '../actions/userAction';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-// import validator from 'validator'
-import CircularProgress from '@mui/material/CircularProgress';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-// import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-
-
+import { makeStyles } from "@material-ui/core";
+import { useForm } from "react-hook-form";
 export default function SigninScreen(props) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -32,109 +31,132 @@ export default function SigninScreen(props) {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo, loading, error } = userSignin;
   const dispatch = useDispatch();
-  const submitHandler = (e) => {
-    e.preventDefault();
-    dispatch(signin(email, password));
-  };
+
   useEffect(() => {
     if (userInfo) {
       navigate(redirect);
     }
   }, [navigate, redirect, userInfo]);
-  function Copyright(props) {
-    return (
-      <Typography variant="body2" color="text.secondary" align="center" {...props}>
-        {'Copyright © '}
-        <Link color="inherit" href="https://mui.com/">
-          Your Website
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-      </Typography>
+
+  const submitHandler = (e) => {
+    dispatch(signin({
+      email: e.email,
+      password: e.password,
+    })
     );
   }
+
   let theme = createTheme();
+
+  const useStyles = makeStyles(() => ({
+    label: {
+      "& .css-1hv8oq8-MuiStepLabel-label.Mui-active": { fontSize: "14px" },
+      "& .css-1hv8oq8-MuiStepLabel-label.Mui-disabled": { fontSize: "14px" },
+      "& .Mui-disabled .MuiStepIcon-root": { fontSize: "30px" },
+      "& .Mui-active .MuiStepIcon-root": { fontSize: "30px" },
+      "& .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed": { fontSize: "30px", color: "green" },
+      "& .css-1hv8oq8-MuiStepLabel-label.Mui-completed": { fontSize: "14px" },
+    },
+    cssLabel: {
+      "&.css-1pysi21-MuiFormLabel-root-MuiInputLabel-root": { fontSize: "14px" },
+      "& .css-1pysi21-MuiFormLabel-root-MuiInputLabel-root.Mui-focused": { fontSize: "14px" },
+    },
+    cssFocused: {
+      "& .css-1pysi21-MuiFormLabel-root-MuiInputLabel-root.Mui-focused": { fontSize: "14px" },
+    },
+  }));
+
+  const classes = useStyles();
   return (
     <ThemeProvider theme={theme}>
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Box
-        sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          border: '1px solid #ddd',
-          padding:'0px 30px 30px 30px',
-          // backgroundColor:'lightblue',
-          borderRadius:'5px',
-        }}
-      >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          {/* <LockOutlinedIcon /> */}
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign In
-        </Typography>
-         {loading && <CircularProgress></CircularProgress>}
-          {error && <MessageBox variant="danger">{error}</MessageBox>}
-        <Box component="form" onSubmit={submitHandler}  sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            size="small"
-            required
-            fullWidth
-            id="outlined-error-helper-text"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            value={email}
-            autoFocus
-            inputProps={{style: {fontSize: 14}}}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <TextField
-          inputProps={{style: {fontSize: 14}}}
-            margin="normal"
-            size="small"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            value={password}
-            id="password"
-            autoComplete="current-password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            border: '1px solid #ddd',
+            padding: '0px 30px 30px 30px',
+            borderRadius: '5px',
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          </Avatar>
+          <Typography component="h1" variant="h5">
             Sign In
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
+          </Typography>
+          {loading && <LoadingBox></LoadingBox>}
+          {error && <MessageBox variant="danger">{error}</MessageBox>}
+          <Box component="form" onSubmit={handleSubmit(submitHandler)} >
+            <TextField
+              InputLabelProps={{
+                classes: {
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused
+                }
+              }}
+              margin="normal"
+              size="small"
+              fullWidth
+              id="outlined-error-helper-text"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              inputProps={{ style: { fontSize: 14 } }}
+              onChange={(e) => setEmail(e.target.value)}
+              {...register('email', { required: true, pattern: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i })}
+              error={(errors.email)}
+            />
+            {(errors?.email?.type === "required" && <span className="formError">Email is required</span>)}
+            {errors?.email?.type === "pattern" && (<span className="formError">Email is invalid</span>)}
+            <TextField
+              InputLabelProps={{
+                classes: {
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused
+                }
+              }}
+              inputProps={{ style: { fontSize: 14 } }}
+              margin="normal"
+              size="small"
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={(e) => setPassword(e.target.value)}
+              {...register("password", { required: true })}
+              error={(errors.password)}
+            />
+            {errors.password && <span className="formError">Password is required</span>}
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign In
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="#" onClick={() => navigate("/register")} variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Link href="#" onClick={() => navigate("/register")} variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
+          </Box>
         </Box>
-      </Box>
-      {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
-    </Container>
-  </ThemeProvider>
+      </Container>
+    </ThemeProvider>
   );
 }

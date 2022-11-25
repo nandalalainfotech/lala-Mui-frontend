@@ -291,7 +291,7 @@ function App() {
                     lg: "block",
                     xl: "block",
                 },}}>
-                      {userInfo && userInfo.isAdmin && <SearchBox />}
+                      {userInfo && <SearchBox />}
                     </Box>
                   </div>
                 </Grid>
@@ -400,7 +400,7 @@ function App() {
                             display: { xs: "none", sm: "none", md: "flex" },
                           }}
                         >
-                          {userInfo && userInfo.isAdmin && (
+                          {userInfo && (
                             <div>
                               <Tooltip title="Admin" arrow>
                                 <IconButton
@@ -599,7 +599,7 @@ function App() {
                           )}
                         </Box>
                         <Box sx={{ display: { xs: "flex" } }}>
-                          {userInfo && userInfo.isAdmin && (
+                          {userInfo &&  (
                             <Tooltip title="Log Out" arrow>
                               <IconButton
                                 sx={{ p: 0, "&:hover": { color: "#ff7519" } }}
@@ -630,7 +630,7 @@ function App() {
             </Toolbar>
           </AppBar>
 
-          {userInfo && userInfo.isAdmin && (
+          {userInfo &&  (
             <AppBar
               sx={{
                 position: "absolute",

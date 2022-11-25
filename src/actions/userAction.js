@@ -40,17 +40,13 @@ import {
   USER_TOPSELLERS_LIST_FAIL,
 } from '../constants/userConstants';
 
-export const register = (name, email, password) => async (dispatch) => {
-  dispatch({ type: USER_REGISTER_REQUEST, payload: { email, password } });
+export const registers = (regInfo) => async (dispatch) => {
+  dispatch({ type: USER_REGISTER_REQUEST});
   try {
-    const { data } = await Axios.post('/api/users/register', {
-      name,
-      email,
-      password,
-    });
+    const { data } = await Axios.post('/api/users/register', regInfo);
     dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
-    localStorage.setItem('userInfo', JSON.stringify(data));
+    localStorage.setItem('userInfo', JSON.stringify(data?data:''));
   } catch (error) {
     dispatch({
       type: USER_REGISTER_FAIL,
@@ -63,10 +59,10 @@ export const register = (name, email, password) => async (dispatch) => {
 };
 
 
-export const signin = (email, password) => async (dispatch) => {
-  dispatch({ type: USER_SIGNIN_REQUEST, payload: { email, password } });
+export const signin = (signInfo) => async (dispatch) => {
+  dispatch({ type: USER_SIGNIN_REQUEST,});
   try {
-    const { data } = await Axios.post('/api/users/signin', { email, password });
+    const { data } = await Axios.post('/api/users/signin',signInfo);
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
     localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
