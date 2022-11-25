@@ -3619,9 +3619,9 @@ function App() {
             }}
             elevation={3}
           >
-            <BottomNavigation sx={{ backgroundColor: "#37474f",  }}>
+             <BottomNavigation sx={{ backgroundColor: "#37474f" }} showLabels>
               {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
-              <h3>All right reserved</h3>
+              <BottomNavigationAction label="All right reserved" />
             </BottomNavigation>
           </Paper>
         </Box>

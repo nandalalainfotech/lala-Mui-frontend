@@ -106,7 +106,7 @@ export default function HomeScreen() {
           >
 
             {images?.map((step, index) => (
-              <Box>
+              <Box key={index}>
                 {Math.abs(activeStep - index) <= 2 ? (
                   <Box
                     component="img"
@@ -154,8 +154,8 @@ export default function HomeScreen() {
             pauseOnHover={true}
           >
             {products?.map((menProduct) => (
-              <Box>
-                <Product  product={menProduct}></Product>
+              <Box key={menProduct._id}>
+                <Product product={menProduct}></Product>
               </Box>
             ))}
           </Carousel>
@@ -183,9 +183,9 @@ export default function HomeScreen() {
                 return menProduct.category=== "men";
               })
               .map((menProduct) => (
-                <div>
-                  <Product key={menProduct._id} product={menProduct}></Product>
-                </div>
+                <Box key={menProduct._id}>
+                  <Product product={menProduct}></Product>
+                </Box>
               ))}
           </Carousel>
         </>
@@ -212,9 +212,9 @@ export default function HomeScreen() {
                 return product.category === "women";
               })
               .map((product) => (
-                <div>
-                  <Product key={product._id} product={product}></Product>
-                </div>
+                <Box key={product._id}>
+                  <Product product={product}></Product>
+                </Box>
               ))}
           </Carousel>
         </>
@@ -241,9 +241,9 @@ export default function HomeScreen() {
                 return kidProduct?.category === "kids";
               })
               .map((kidProduct) => (
-                <div>
-                  <Product key={kidProduct._id} product={kidProduct}></Product>
-                </div>
+                <Box key={kidProduct._id}>
+                  <Product product={kidProduct}></Product>
+                </Box>
               ))}
           </Carousel>
         </>

@@ -105,10 +105,11 @@ export default function OrderScreen(props) {
             >
               <Typography variant="h4">Shipping</Typography>
               <Typography variant="subtitle1" sx={{ marginTop: 3 }}>
-                <strong>Name:</strong> {order.shippingAddress.fullName} <br />
-                <strong>Address: </strong> {order.shippingAddress.address},
-                {order.shippingAddress.city}, {order.shippingAddress.postalCode}
-                ,{order.shippingAddress.country}
+                <strong>Name:</strong> {order.shippingAddress.fullName}<br />
+                <strong>Address:</strong> {order.shippingAddress.address}<br />
+                <strong>City:</strong> {order.shippingAddress.city}<br />
+                <strong>PostalCode:</strong>{order.shippingAddress.postalCode}<br />
+                <strong>Country:</strong>{order.shippingAddress.country}
                 {order.isDelivered ? (
                   <MessageBox variant="success">
                     Delivered at {order.deliveredAt}
@@ -260,7 +261,7 @@ export default function OrderScreen(props) {
             </Typography>
 
             {!order.isPaid && (
-              <Box sx={{marginTop: 2}}>
+              <Box sx={{ marginTop: 2 }}>
                 {!sdkReady ? (
                   <LoadingBox></LoadingBox>
                 ) : (

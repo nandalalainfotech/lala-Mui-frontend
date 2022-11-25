@@ -71,3 +71,7 @@ transform: scale(1.2);
     background-color: #d6d6d6 !important;
 
   }
+  .css-imwso6-MuiBottomNavigationAction-label{
+    font-size: 1rem !important;
+    color: white;
+  }

@@ -51,10 +51,11 @@ export default function PlaceOrderScreen() {
             >
               <Typography variant="h4">Shipping</Typography>
               <Typography variant="subtitle1" sx={{ marginTop: 3 }}>
-                <strong>Name:</strong> {cart.shippingAddress.fullName} <br />
-                <strong>Address: </strong> {cart.shippingAddress.address},
-                {cart.shippingAddress.city}, {cart.shippingAddress.postalCode},
-                {cart.shippingAddress.country}
+                <strong>Name:</strong> {cart.shippingAddress.fullName}<br />
+                <strong>Address:</strong> {cart.shippingAddress.address}<br />
+                <strong>City:</strong> {cart.shippingAddress.city}<br />
+                <strong>PostalCode:</strong>{cart.shippingAddress.postalCode}<br />
+                <strong>Country:</strong>{cart.shippingAddress.country}
               </Typography>
             </Box>
 

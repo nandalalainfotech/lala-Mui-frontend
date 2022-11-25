@@ -253,7 +253,7 @@ export default function ProductScreen(props) {
 
                   {product.countInStock > 0 && (
                     <>
-                      <Typography variant="body1" style={{ color: "#A02020" }}>
+                      <Typography variant="body1" style={{ color: "#A02020" }} component="span">
                         <strong>Qty:</strong>
                         <FormControl
                           sx={{ marginLeft: 2, width: "60%" }}
@@ -324,7 +324,7 @@ export default function ProductScreen(props) {
 
                   <div>
                     {product.reviews.map((review) => (
-                      <Typography variant="body1" gutterBottom key={review._id}>
+                      <Typography variant="body1" gutterBottom key={review._id} component="span">
                         <strong>{review.name}</strong>
                         <p>
                           <Rating
