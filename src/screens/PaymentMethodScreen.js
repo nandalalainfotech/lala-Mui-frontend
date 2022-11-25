@@ -5,8 +5,10 @@ import { savePaymentMethod } from "../actions/cartAction";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
 import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -19,17 +21,16 @@ export default function PaymentMethodScreen(props) {
   //     navigate('/shipping');
   //   }
   const [paymentMethod, setPaymentMethod] = useState("");
+
   const dispatch = useDispatch();
   const submitHandler = (e) => {
     e.preventDefault();
-    
+
     if (paymentMethod) {
       dispatch(savePaymentMethod(paymentMethod));
       navigate("/placeorder");
     } else {
-      window.confirm(
-        "Please Choose any one Payment Method?"
-      );
+      window.confirm("Please Choose any one Payment Method?");
     }
   };
 
@@ -58,19 +59,30 @@ export default function PaymentMethodScreen(props) {
           }}
         >
           <Typography variant="h4">Payment Method</Typography>
-          <FormControlLabel
-            value="PayPal"
-            sx={{ marginTop: 5 }}
-            onChange={(e) => setPaymentMethod(e.target.value)}
-            control={<Radio />}
-            label="PayPal"
-          />
-          <FormControlLabel
-            value="Stripe"
-            onChange={(e) => setPaymentMethod(e.target.value)}
-            control={<Radio />}
-            label="Stripe"
-          />
+
+          <FormControl>
+            <RadioGroup
+              aria-labelledby="demo-radio-buttons-group-label"
+              name="radio-buttons-group"
+            >
+              <FormControlLabel
+                value="PayPal"
+                sx={{ marginTop: 5 }}
+                onChange={(e) => setPaymentMethod(e.target.value)}
+                control={<Radio />}
+                label="PayPal"
+              />
+              <FormControlLabel
+                value="Stripe"
+                control={<Radio />}
+                type="radio"
+                onChange={(e) => setPaymentMethod(e.target.value)}
+                label="Stripe"
+              />
+            </RadioGroup>
+          </FormControl>
+
+          
 
           <Button
             fullWidth
