@@ -60,6 +60,7 @@ transform: scale(1.2);
 
 *{
     font-family: "Amazon Ember" !important;
+    text-transform: capitalize!important;
 }
 .formError {
     width: 100%;

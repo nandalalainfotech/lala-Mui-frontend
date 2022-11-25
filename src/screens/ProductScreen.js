@@ -12,6 +12,7 @@ import Card from "@mui/material/Card";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
 import InputLabel from "@mui/material/InputLabel";
+// import TextField from '@mui/material/TextField';
 import MenuItem from "@mui/material/MenuItem";
 import Rating from "@mui/material/Rating";
 import Select from "@mui/material/Select";
@@ -86,7 +87,7 @@ export default function ProductScreen(props) {
   };
 
   return (
-    <Box sx={{ flexGrow: 1, m: 1 }}>
+    <Box sx={{ flexGrow: 1, marginTop: 3}}>
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
@@ -123,7 +124,7 @@ export default function ProductScreen(props) {
           </Grid>
 
           <Grid item sx={{display: { xs: "block", md: "none", sm: "none", lg: "none", xl: "none",},}}>
-          <Box>
+            <Box>
               <CardMedia
                 sx={{
                   borderRadius: 0,
@@ -171,7 +172,7 @@ export default function ProductScreen(props) {
                     style={{ color: "#A02020" }}
                     gutterBottom
                   >
-                     <strong>Price :</strong> ₹{product.price}
+                    <strong>Price :</strong> ₹{product.price}
                   </Typography>
                   <Typography
                     variant="body1"
@@ -209,7 +210,7 @@ export default function ProductScreen(props) {
                     <strong>Category Type :</strong> {product.categorytype}
                   </Typography>
 
-                  
+
                 </Box>
               </Card>
             </Box>
@@ -344,24 +345,23 @@ export default function ProductScreen(props) {
 
                         <Box sx={{ minWidth: 120 }}>
                           <FormControl fullWidth sx={{ m: 3, width: "94%" }}>
-                            <InputLabel id="demo-simple-select-label">
-                              Rating
-                            </InputLabel>
+
+                            <InputLabel id="demo-simple-select-label">Rating</InputLabel>
                             <Select
-                              id="rating"
-                              value={rating}
-                              label="rating"
+                              id="demo-simple-select-label"
+                              // id="demo-simple-select"
+                              // value={Rating}
+                              label="Rating"
                               onChange={handleChange}
                             >
-                              <MenuItem value="">
-                                <em>None</em>
-                              </MenuItem>
                               <MenuItem value={1}>1- Poor</MenuItem>
                               <MenuItem value={2}>2- Fair</MenuItem>
                               <MenuItem value={3}>3- Good</MenuItem>
                               <MenuItem value={4}>4- Very good</MenuItem>
                               <MenuItem value={5}>5- Excelent</MenuItem>
+                              
                             </Select>
+
                           </FormControl>
                         </Box>
 
