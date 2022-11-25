@@ -1,7 +1,4 @@
-.new2  .rec-dot_active {
-    /* background-color: var(--blue) !important;
-    box-shadow: 0 0 1px 3px var(--blue) !important; */
-}
+
 .new2 .rec-dot:focus,
 .new2 .rec-dot:hover {
     display: block;
@@ -68,4 +65,8 @@ transform: scale(1.2);
     width: 100%;
     color: red;
     font-size: 12px;
+  }
+  .MuiDataGrid-row:nth-child(even){
+    background-color: #d6d6d6 !important;
+
   }
