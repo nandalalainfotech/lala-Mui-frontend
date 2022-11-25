@@ -291,7 +291,7 @@ function App() {
                     lg: "block",
                     xl: "block",
                 },}}>
-                      {userInfo && <SearchBox />}
+                      <SearchBox />
                     </Box>
                   </div>
                 </Grid>
@@ -630,7 +630,7 @@ function App() {
             </Toolbar>
           </AppBar>
 
-          {userInfo &&  (
+          {/* {userInfo &&  ( */}
             <AppBar
               sx={{
                 position: "absolute",
@@ -3289,7 +3289,7 @@ function App() {
                 </Grid>
               </Toolbar>
             </AppBar>
-          )}
+          {/* )} */}
 
           <Drawer
             sx={{
