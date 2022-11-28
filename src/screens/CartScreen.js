@@ -13,12 +13,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { addToCart, removeFromCart } from "../actions/cartAction";
 import MessageBox from "../components/MessageBox";
+import { makeStyles } from "@material-ui/core/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import Container from "@mui/material/Container";
 
 export default function CartScreen(props) {
   const navigate = useNavigate();
+  const theme = createTheme();
   const params = useParams();
   const productId = params.id;
-  // const tshirtId = params.id;
   const { search } = useLocation();
   const qtyInUrl = new URLSearchParams(search).get("qty");
   const qty = qtyInUrl ? Number(qtyInUrl) : 1;
@@ -31,9 +35,6 @@ export default function CartScreen(props) {
     if (productId) {
       dispatch(addToCart(productId, qty));
     }
-    // else if (tshirtId) {
-    //   dispatch(addToCart(tshirtId, qty));
-    // }
   }, [dispatch, productId, qty]);
   const removeFromCartHandler = (id) => {
     // delete action
@@ -47,14 +48,25 @@ export default function CartScreen(props) {
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2} item={true}>
         <Grid item={true} xs sx={{ marginTop: 3 }}>
-          <Typography
-            gutterBottom
-            variant="h5"
-            component="div"
-            textAlign="center"
-          >
-            Shopping Cart
-          </Typography>
+          {userInfo ? (
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="div"
+              justifyContent="left"
+            >
+              Shopping Cart
+            </Typography>
+          ) : (
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="div"
+              justifyContent="left"
+            >
+              Shopping Cart
+            </Typography>
+          )}
           {error && <MessageBox variant="danger">{error}</MessageBox>}
           {cartItems.length === 0 ? (
             <Box>
@@ -84,43 +96,70 @@ export default function CartScreen(props) {
                   </CardContent>
                 </Box>
               ) : (
-                <Card sx={{ maxWidth: 600, hieght: 600, marginLeft: 80 }}>
-                  <CardMedia
-                    component="img"
-                    image="/image/carts.jpg"
-                    alt="green iguana"
-                  />
-                  <CardContent>
-                    <Typography
-                      gutterBottom
-                      variant="h5"
-                      component="div"
-                      style={{ color: "red" }}
-                    >
-                      <MessageBox>Cart is empty.</MessageBox>
-                    </Typography>
-                    <Typography gutterBottom variant="h5" component="div">
-                      <Link to="/signin" style={{ textDecoration: "none" }}>
-                        <Button variant="contained">Sign In</Button>{" "}
-                      </Link>
-                      <Link to="/register" style={{ textDecoration: "none" }}>
-                        <Button variant="contained">Register</Button>
-                      </Link>
-                    </Typography>
-                  </CardContent>
-                </Card>
+                <ThemeProvider theme={theme}>
+                  <Container
+                    component="main"
+                    maxWidth="sm"
+                    sx={{ my: { xs: 13,} ,justifyContent: "center" }}
+                  >
+                    <CssBaseline />
+                    <Box sx={{marginLeft: "70%"}}>
+                      <Card sx={{ justifyContent:"center!important", height: 550, width: 500,  }}>
+                        <CardMedia
+                          component="img"
+                          image="/image/carts.jpg"
+                          alt="green iguana"
+                        />
+                        <CardContent>
+                          <Typography
+                            gutterBottom
+                            variant="h5"
+                            component="div"
+                            style={{ color: "red" }}
+                          >
+                            <MessageBox>Cart is empty.</MessageBox>
+                          </Typography>
+                          <Typography
+                            sx={{ marginLeft: 32 }}
+                            gutterBottom
+                            variant="h5"
+                            component="div"
+                          >
+                            <Link
+                              to="/signin"
+                              style={{ textDecoration: "none" }}
+                            >
+                              <Button variant="contained">Sign In</Button>{" "}
+                            </Link>
+                            <Link
+                              to="/register"
+                              style={{ textDecoration: "none" }}
+                            >
+                              <Button variant="contained">Register</Button>
+                            </Link>
+                          </Typography>
+                        </CardContent>
+                      </Card>
+                    </Box>
+                  </Container>
+                </ThemeProvider>
               )}
             </Box>
           ) : (
             <>
-              <Grid xs sx={{ display: { xs: "none", sm: "block" } }} item={true}>
+              <Grid
+                xs
+                sx={{ display: { xs: "none", sm: "block" } }}
+                item={true}
+              >
                 <Box
                   sx={{
                     flexGrow: 1,
                   }}
                 >
                   {cartItems.map((item) => (
-                    <Card key={item}
+                    <Card
+                      key={item}
                       sx={{
                         display: "flex",
                         marginLeft: 10,
@@ -140,15 +179,6 @@ export default function CartScreen(props) {
                         image={item.image}
                         alt={item.name}
                       />
-                      {/* <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent:"space-between",
-                            backgroundColor:"red"
-                          }}
-                        > */}
                       <Box>
                         <Typography gutterBottom variant="h5" component="div">
                           <Link
@@ -172,10 +202,7 @@ export default function CartScreen(props) {
                             value={item.qty}
                             onChange={(e) =>
                               dispatch(
-                                addToCart(
-                                  item.product,
-                                  Number(e.target.value)
-                                )
+                                addToCart(item.product, Number(e.target.value))
                               )
                             }
                           >
@@ -207,10 +234,15 @@ export default function CartScreen(props) {
                 </Box>
               </Grid>
 
-              <Grid xs sx={{ display: { xs: "block", sm: "none" } }} item={true}>
+              <Grid
+                xs
+                sx={{ display: { xs: "block", sm: "none" } }}
+                item={true}
+              >
                 <Box sx={{ flexGrow: 1, justifyContent: "center" }}>
                   {cartItems.map((item) => (
-                    <Card key={item}
+                    <Card
+                      key={item}
                       sx={{
                         minWidth: 200,
                         marginLeft: 10,
@@ -250,10 +282,7 @@ export default function CartScreen(props) {
                             value={item.qty}
                             onChange={(e) =>
                               dispatch(
-                                addToCart(
-                                  item.product,
-                                  Number(e.target.value)
-                                )
+                                addToCart(item.product, Number(e.target.value))
                               )
                             }
                           >
@@ -279,7 +308,6 @@ export default function CartScreen(props) {
                           Delete
                         </Button>
                       </Box>
-                      {/* </Box> */}
                     </Card>
                   ))}
                 </Box>
