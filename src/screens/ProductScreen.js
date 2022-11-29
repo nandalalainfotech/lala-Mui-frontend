@@ -21,6 +21,8 @@ import Typography from "@mui/material/Typography";
 import Axios from "axios";
 import ReactImageMagnify from "react-image-magnify";
 import CardMedia from "@mui/material/CardMedia";
+import { DialogContent } from "../../node_modules/@material-ui/core/index";
+import { CenterFocusStrong } from "../../node_modules/@mui/icons-material/index";
 
 export default function ProductScreen(props) {
   const dispatch = useDispatch();
@@ -94,7 +96,19 @@ export default function ProductScreen(props) {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <Grid container spacing={2}>
-          <Grid item sx={{ zIndex: 1, display: { xs: "none", md: "block", sm: "block", lg: "block", xl: "block", }, }}>
+          <Grid
+            item
+            sx={{
+              zIndex: 1,
+              display: {
+                xs: "none",
+                md: "block",
+                sm: "block",
+                lg: "block",
+                xl: "block",
+              },
+            }}
+          >
             <Box
               sx={{
                 borderRadius: 0,
@@ -123,7 +137,18 @@ export default function ProductScreen(props) {
             </Box>
           </Grid>
 
-          <Grid item sx={{ display: { xs: "block", md: "none", sm: "none", lg: "none", xl: "none", }, }}>
+          <Grid
+            item
+            sx={{
+              display: {
+                xs: "block",
+                md: "none",
+                sm: "none",
+                lg: "none",
+                xl: "none",
+              },
+            }}
+          >
             <Box>
               <CardMedia
                 sx={{
@@ -136,8 +161,7 @@ export default function ProductScreen(props) {
                 }}
                 component="img"
                 src={image}
-              >
-              </CardMedia>
+              ></CardMedia>
             </Box>
           </Grid>
 
@@ -213,8 +237,6 @@ export default function ProductScreen(props) {
                   >
                     <strong>Category Type :</strong> {product.categorytype}
                   </Typography>
-
-
                 </Box>
               </Card>
             </Box>
@@ -253,7 +275,11 @@ export default function ProductScreen(props) {
 
                   {product.countInStock > 0 && (
                     <>
-                      <Typography variant="body1" style={{ color: "#A02020" }} component="span">
+                      <Typography
+                        variant="body1"
+                        style={{ color: "#A02020" }}
+                        component="span"
+                      >
                         <strong>Qty:</strong>
                         <FormControl
                           sx={{ marginLeft: 2, width: "60%" }}
@@ -286,7 +312,7 @@ export default function ProductScreen(props) {
                         <Button
                           variant="contained"
                           onClick={addToHandler}
-                          sx={{ marginTop: 2, width: "23%" }}
+                          sx={{ marginTop: 2, width: "100%" }}
                         >
                           {" "}
                           Add to Cart
@@ -308,7 +334,7 @@ export default function ProductScreen(props) {
                     "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 }}
               >
-                <Box>
+                <Box >
                   <Typography
                     variant="h6"
                     gutterBottom
@@ -324,7 +350,12 @@ export default function ProductScreen(props) {
 
                   <div>
                     {product.reviews.map((review) => (
-                      <Typography variant="body1" gutterBottom key={review._id} component="span">
+                      <Typography
+                        variant="body1"
+                        gutterBottom
+                        key={review._id}
+                        component="span"
+                      >
                         <strong>{review.name}</strong>
                         <p>
                           <Rating
@@ -349,8 +380,9 @@ export default function ProductScreen(props) {
 
                         <Box sx={{ minWidth: 120 }}>
                           <FormControl fullWidth sx={{ m: 3, width: "94%" }}>
-
-                            <InputLabel id="demo-simple-select-label">Rating</InputLabel>
+                            <InputLabel id="demo-simple-select-label">
+                              Rating
+                            </InputLabel>
                             <Select
                               id="demo-simple-select-label"
                               // id="demo-simple-select"
@@ -363,9 +395,7 @@ export default function ProductScreen(props) {
                               <MenuItem value={3}>3- Good</MenuItem>
                               <MenuItem value={4}>4- Very good</MenuItem>
                               <MenuItem value={5}>5- Excelent</MenuItem>
-
                             </Select>
-
                           </FormControl>
                         </Box>
 
@@ -394,10 +424,15 @@ export default function ProductScreen(props) {
                         </div>
                       </Box>
                     ) : (
-                      <MessageBox>
-                        Please <Link to="/signin">Sign In</Link> to write a
-                        review
-                      </MessageBox>
+                      <Box sx={{ fontWeight: 500, fontSize: 20, textAlign: 'center' }}> 
+                        <DialogContent>
+                          Please{" "}
+                          <Button color="secondary" href="/signin">
+                            Sign In
+                          </Button>{" "}
+                          to write a review
+                        </DialogContent>
+                      </Box>
                     )}
                   </div>
                 </Box>
