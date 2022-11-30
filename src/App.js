@@ -327,6 +327,7 @@ function App() {
                                 {userInfo ? (
                                   <Avatar
                                     sx={{
+                                     mr: -5,
                                       bgcolor: "inherit",
                                       "&:hover": { color: "#ff7519" },
                                     }}

@@ -379,7 +379,7 @@ export default function ProductScreen(props) {
                         </Typography>
 
                         <Box sx={{ minWidth: 120 }}>
-                          <FormControl fullWidth sx={{ m: 3, width: "94%" }}>
+                          <FormControl fullWidth sx={{ m: 3, width: "85%", justifycontent: 'center' }}>
                             <InputLabel id="demo-simple-select-label">
                               Rating
                             </InputLabel>
@@ -399,7 +399,7 @@ export default function ProductScreen(props) {
                           </FormControl>
                         </Box>
 
-                        <Box sx={{ m: 3 }}>
+                        <Box sx={{ m: 3, width: "83%", justifycontent: 'center' }}>
                           <TextareaAutosize
                             minRows={5}
                             placeholder="Comment"

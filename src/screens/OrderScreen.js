@@ -105,11 +105,17 @@ export default function OrderScreen(props) {
             >
               <Typography variant="h4">Shipping</Typography>
               <Typography variant="subtitle1" sx={{ marginTop: 3 }}>
-                <strong>Name:</strong> {order.shippingAddress.fullName}<br />
-                <strong>Address:</strong> {order.shippingAddress.address}<br />
-                <strong>City:</strong> {order.shippingAddress.city}<br />
-                <strong>PostalCode:</strong>{order.shippingAddress.postalCode}<br />
-                <strong>Country:</strong>{order.shippingAddress.country}
+                <strong>Name:</strong> {order.shippingAddress.fullName}
+                <br />
+                <strong>Address:</strong> {order.shippingAddress.address}
+                <br />
+                <strong>City:</strong> {order.shippingAddress.city}
+                <br />
+                <strong>PostalCode:</strong>
+                {order.shippingAddress.postalCode}
+                <br />
+                <strong>Country:</strong>
+                {order.shippingAddress.country}
                 {order.isDelivered ? (
                   <MessageBox variant="success">
                     Delivered at {order.deliveredAt}
@@ -231,72 +237,73 @@ export default function OrderScreen(props) {
               ))}
             </Box>
           </Box>
-        </Grid>
-        <Grid xs sm md lg xl>
-          <Box
-            sx={{
-              p: 5,
-              m: 2,
-              marginTop: 2,
-              boxShadow:
-                "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-            }}
-          >
-            <Typography variant="h4">Order Summary</Typography>
 
-            <Typography variant="subtitle1">
-              <strong>Items:</strong>${order.itemsPrice.toFixed(2)}
-            </Typography>
+          <Grid xs sm md lg xl>
+            <Box
+              sx={{
+                p: 5,
+                m: 2,
+                marginTop: 2,
+                boxShadow:
+                  "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+              }}
+            >
+              <Typography variant="h4">Order Summary</Typography>
 
-            <Typography variant="subtitle1">
-              <strong>Shipping:</strong>${order.shippingPrice.toFixed(2)}
-            </Typography>
+              <Typography variant="subtitle1">
+                <strong>Items:</strong>${order.itemsPrice.toFixed(2)}
+              </Typography>
 
-            <Typography variant="subtitle1">
-              <strong>Tax:</strong>${order.taxPrice.toFixed(2)}
-            </Typography>
+              <Typography variant="subtitle1">
+                <strong>Shipping:</strong>${order.shippingPrice.toFixed(2)}
+              </Typography>
 
-            <Typography variant="subtitle1">
-              <strong> Order Total:</strong>${order.totalPrice.toFixed(2)}
-            </Typography>
+              <Typography variant="subtitle1">
+                <strong>Tax:</strong>${order.taxPrice.toFixed(2)}
+              </Typography>
 
-            {!order.isPaid && (
-              <Box sx={{ marginTop: 2 }}>
-                {!sdkReady ? (
-                  <LoadingBox></LoadingBox>
-                ) : (
-                  <>
-                    {errorPay && (
-                      <MessageBox variant="danger">{errorPay}</MessageBox>
-                    )}
-                    {loadingPay && <LoadingBox></LoadingBox>}
+              <Typography variant="subtitle1">
+                <strong> Order Total:</strong>${order.totalPrice.toFixed(2)}
+              </Typography>
 
-                    <PayPalButton
-                      amount={order.totalPrice}
-                      onSuccess={successPaymentHandler}
-                    ></PayPalButton>
-                  </>
-                )}
-              </Box>
-            )}
-            {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
-              <Box>
-                {loadingDeliver && <LoadingBox></LoadingBox>}
-                {errorDeliver && (
-                  <MessageBox variant="danger">{errorDeliver}</MessageBox>
-                )}
-                <Button
-                  fullWidth
-                  variant="contained"
-                  onClick={deliverHandler}
-                  sx={{ mt: 3, mb: 2 }}
-                  type="button"
-                >
-                  Delivery Order
-                </Button>
-              </Box>
-            )}
-          </Box>
+              {!order.isPaid && (
+                <Box sx={{ marginTop: 2 }}>
+                  {!sdkReady ? (
+                    <LoadingBox></LoadingBox>
+                  ) : (
+                    <>
+                      {errorPay && (
+                        <MessageBox variant="danger">{errorPay}</MessageBox>
+                      )}
+                      {loadingPay && <LoadingBox></LoadingBox>}
+
+                      <PayPalButton
+                        amount={order.totalPrice}
+                        onSuccess={successPaymentHandler}
+                      ></PayPalButton>
+                    </>
+                  )}
+                </Box>
+              )}
+              {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                <Box>
+                  {loadingDeliver && <LoadingBox></LoadingBox>}
+                  {errorDeliver && (
+                    <MessageBox variant="danger">{errorDeliver}</MessageBox>
+                  )}
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    onClick={deliverHandler}
+                    sx={{ mt: 3, mb: 2 }}
+                    type="button"
+                  >
+                    Delivery Order
+                  </Button>
+                </Box>
+              )}
+            </Box>
+          </Grid>
         </Grid>
       </Grid>
     </Box>

@@ -100,11 +100,17 @@ export default function CartScreen(props) {
                   <Container
                     component="main"
                     maxWidth="sm"
-                    sx={{ my: { xs: 13,} ,justifyContent: "center" }}
+                    sx={{ my: { xs: 13 }, justifyContent: "center" }}
                   >
                     <CssBaseline />
-                    <Box sx={{marginLeft: "70%"}}>
-                      <Card sx={{ justifyContent:"center!important", height: 550, width: 500,  }}>
+                    <Box sx={{ marginLeft: "70%" }}>
+                      <Card
+                        sx={{
+                          justifyContent: "center!important",
+                          height: 550,
+                          width: 500,
+                        }}
+                      >
                         <CardMedia
                           component="img"
                           image="/image/carts.jpg"
@@ -251,15 +257,17 @@ export default function CartScreen(props) {
                           "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                       }}
                     >
-                      <CardMedia
-                        key={item.product}
-                        component="img"
-                        sx={{ width: 150, marginLeft: 13 }}
-                        image={item.image}
-                        alt={item.name}
-                      />
-
                       <Box sx={{ textAlign: "center" }}>
+                        <CardMedia
+                          key={item.product}
+                          component="img"
+                          sx={{
+                            width: '100%'
+                          }}
+                          image={item.image}
+                          alt={item.name}
+                        />
+
                         <Typography gutterBottom variant="h6" component="div">
                           <Link
                             to={`/product/${item.product}`}
@@ -316,7 +324,7 @@ export default function CartScreen(props) {
           )}
         </Grid>
 
-        <Grid xs sx={{ marginTop: 11 }} item={true}>
+        <Grid xs sx={{ marginTop: 7 }} item={true}>
           {userInfo ? (
             <Grid item xs>
               <Box
