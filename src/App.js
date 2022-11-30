@@ -16,6 +16,7 @@ import ProfileScreen from "./screens/ProfileScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import ShippingAddressScreen from "./screens/ShippingAddressScreen";
 import SigninScreen from "./screens/SigninScreen";
+// import PersonIcon from '@mui/icons-material/Person';
 // import HomeScreens from "./screens/HomeScreens";
 import {
   listProductCategories,
@@ -82,6 +83,9 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   padding: theme.spacing(0, 1),
+  marginTop: theme.spacing(-6),
+  color: "white",
+  
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
   justifyContent: "flex-end",
@@ -92,13 +96,16 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 //   padding: theme.spacing(1),
 //   textAlign: 'center',
 // }));
+
+
 const styles = (theme) => ({
   hover: {
     "&:hover": {
       backgroundColor: "red",
     },
   },
-});
+
+  });
 
 // ************************ footer******************
 const useStyles = makeStyles((theme) => ({
@@ -130,8 +137,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   popOverRoot: {
-    pointerEvents: "none",
-  },
+    pointerEvents: "none"
+  }
 }));
 
 function App() {
@@ -282,18 +289,15 @@ function App() {
                 <Grid item xs={8}>
                   <div className="grid-elements">
                     {" "}
-                    <Box
-                      style={{ justifyContent: "center" }}
-                      sx={{
-                        display: {
-                          xs: "none",
-                          sm: "block",
-                          md: "block",
-                          lg: "block",
-                          xl: "block",
-                        },
-                      }}
-                    >
+                    <Box style={{ justifyContent: "center" }} sx={{
+                      display: {
+                        xs: "none",
+                        sm: "block",
+                        md: "block",
+                        lg: "block",
+                        xl: "block",
+                      },
+                    }}>
                       <SearchBox />
                     </Box>
                   </div>
@@ -384,8 +388,7 @@ function App() {
                                         "&:hover": { color: "#ff7519" },
                                       }}
                                     >
-                                      <StorefrontIcon />
-                                    </Avatar>
+                                      <StorefrontIcon /></Avatar>
                                   </Link>
                                 </IconButton>
                               </Tooltip>
@@ -452,8 +455,7 @@ function App() {
                                         "&:hover": { color: "#ff7519" },
                                       }}
                                     >
-                                      <AdminPanelSettingsIcon />
-                                    </Avatar>
+                                      <AdminPanelSettingsIcon /></Avatar>
                                   </Link>
                                 </IconButton>
                               </Tooltip>
@@ -535,18 +537,14 @@ function App() {
                             </div>
                           )}
                         </Box>
-                        <Box>
+                        <Box
+
+                        >
                           {userInfo ? (
-                            <div>
-                              <Box
-                                sx={{
-                                  display: {
-                                    xs: "none",
-                                    sm: "none",
-                                    md: "flex",
-                                  },
-                                }}
-                              >
+                            <div >
+                              <Box sx={{
+                                display: { xs: "none", sm: "none", md: "flex" },
+                              }}>
                                 <Tooltip
                                   title={userInfo?.name}
                                   arrow
@@ -3309,10 +3307,13 @@ function App() {
           <Drawer
             sx={{
               width: drawerWidth,
+
               flexShrink: 0,
               "& .MuiDrawer-paper": {
                 width: drawerWidth,
                 boxSizing: "border-box",
+                backgroundColor: "#13265C",
+
               },
             }}
             variant="persistent"
@@ -3320,69 +3321,108 @@ function App() {
             open={open}
           >
             <DrawerHeader>
-              <IconButton onClick={handleDrawerClose}>
-                {theme.direction === "ltr" ? (
-                  <ChevronLeftIcon />
-                ) : (
-                  <ChevronRightIcon />
-                )}
-              </IconButton>
+
+
+
             </DrawerHeader>
-            <Link
-              style={{
-                color: "#263238",
-                fontSize: "16px",
-                textDecoration: "none",
-                marginLeft: "50px",
-              }}
-            >
-              <Stack direction="row">
-                <Typography
-                  variant="h5"
-                  noWrap
-                  component="span"
+
+            <Stack direction="row" >
+              <Typography
+                variant="h5"
+                noWrap
+
+                component="span"
+                sx={{
+                  fontSize: "20px",
+                  color: '#F0FFF0',
+                  marginBottom: "15px",
+                  display: { xs: "block", sm: "block", md: "block" },
+                  "&:hover": { color: "#ff7519" },
+                  fontWeight: "700",
+                  textAlign: 'center',
+                  marginLeft: "50px",
+
+                }}
+              >
+
+
+                {/* <Avatar
                   sx={{
-                    display: { xs: "block", sm: "block", md: "block" },
+                    bgcolor: "inherit",
+                    marginLeft: "50px",
+                    textAlign: 'center',
                     "&:hover": { color: "#ff7519" },
+                    // marginTop:"-5px",
                   }}
                 >
-                  {userInfo?.name}
-                </Typography>
-              </Stack>
-            </Link>
-            <Divider />
-            <strong
-              style={{
-                color: "#263238",
-                fontSize: "16px",
+                  <PersonIcon sx={{ fontSize: 60 }} /></Avatar> */}
+
+
+
+                {userInfo?.name}
+                <IconButton onClick={handleDrawerClose}>
+                  {theme.direction === "ltr" ? (
+                    <ChevronLeftIcon sx={{ color: "white", marginTop: "-10px", marginLeft: "15px" }} />
+                  ) : (
+                    <ChevronRightIcon />
+                  )}
+                </IconButton>
+              </Typography>
+            </Stack>
+
+            <Divider sx={{ backgroundColor: "#FFFFFF" }} showLabels/>
+            <Typography
+              sx={{
+                color: "#F0FFF0",
+                // color: "#263238",
+                fontSize: "18px",
                 textDecoration: "none",
-                marginLeft: "50px",
+                textAlign: 'center',
+                textTransform: 'capitalize',
+                padding: " 10px",
+                fontWeight: "700",
+                "&:hover": { color: "#ff7519" },
+                cursor: "pointer",
+                // backgroundColor: "#FDF2F0",
+
               }}
+
             >
               Categories
-            </strong>
+            </Typography>
             {loadingCategories ? (
               <LoadingBox></LoadingBox>
             ) : errorCategories ? (
               <MessageBox variant="danger">{errorCategories}</MessageBox>
             ) : (
-              categories.map((c, i) => (
-                <List key={i}>
-                  <Link
-                    style={{
-                      color: "#263238",
-                      fontSize: "16px",
-                      textDecoration: "none",
-                      marginLeft: "50px",
-                    }}
+              categories?.map((c, i) => (
+                <Box key={i}>
+
+                  <List
+
                     to={`/search/category/${c}`}
                   >
-                    {c}
-                  </Link>
-                </List>
+                    <Typography variant="h4" sx={{
+                      color: "	#F0FFF0",
+                      paddingTop: "-55px",
+                      marginTop: "-2px",
+                      // color: "#263238",
+                      textAlign: 'center',
+                      fontSize: "16px",
+                      textDecoration: "none",
+                      // marginLeft: "50px",
+                      textTransform: 'capitalize',
+                      opacity: "1",
+                      fontWeight: "600",
+
+                      "&:hover": { color: "#ff7519" },
+
+                    }} InputProps={{ disableUnderline: true }}>{c}</Typography>
+                  </List>
+                </Box>
               ))
             )}
-            <Divider />
+            <Divider sx={{ backgroundColor: "#FFFFFF" }} showLabels/>
           </Drawer>
           <Box component="main" sx={{ p: 3 }}>
             <Toolbar />
