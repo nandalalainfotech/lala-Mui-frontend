@@ -85,7 +85,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 1),
   marginTop: theme.spacing(-6),
   color: "white",
-  
+
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
   justifyContent: "flex-end",
@@ -97,15 +97,13 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 //   textAlign: 'center',
 // }));
 
-
 const styles = (theme) => ({
   hover: {
     "&:hover": {
       backgroundColor: "red",
     },
   },
-
-  });
+});
 
 // ************************ footer******************
 const useStyles = makeStyles((theme) => ({
@@ -137,8 +135,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   popOverRoot: {
-    pointerEvents: "none"
-  }
+    pointerEvents: "none",
+  },
 }));
 
 function App() {
@@ -289,15 +287,19 @@ function App() {
                 <Grid item xs={8}>
                   <div className="grid-elements">
                     {" "}
-                    <Box style={{ justifyContent: "center" }} sx={{
-                      display: {
-                        xs: "none",
-                        sm: "block",
-                        md: "block",
-                        lg: "block",
-                        xl: "block",
-                      },
-                    }}>
+                    <Box
+                      style={{ justifyContent: "center" }}
+                      sx={{
+                        mt: 1,
+                        display: {
+                          xs: "none",
+                          sm: "block",
+                          md: "block",
+                          lg: "block",
+                          xl: "block",
+                        },
+                      }}
+                    >
                       <SearchBox />
                     </Box>
                   </div>
@@ -310,60 +312,6 @@ function App() {
                         spacing={{ xs: 3, sm: 2, md: 2, lg: 2, xl: 2 }}
                         sx={{ justifyContent: "flex-end" }}
                       >
-                        <Box>
-                          <Tooltip title="Cart" arrow placement="top">
-                            <IconButton
-                              sx={{ p: 0, "&:hover": { color: "#ff7519" } }}
-                              // aria-label="show 4 new mails"
-                              color="inherit"
-                            >
-                              <Link
-                                style={{
-                                  color: "inherit",
-                                  textDecoration: "none",
-                                }}
-                                to="/cart"
-                              >
-                                {userInfo ? (
-                                  <Avatar
-                                    sx={{
-                                     mr: -5,
-                                      bgcolor: "inherit",
-                                      "&:hover": { color: "#ff7519" },
-                                    }}
-                                  >
-                                    {" "}
-                                    {cartItems.length > 0 && (
-                                      <span className="badge">
-                                        {cartItems.length}
-                                      </span>
-                                    )}
-                                    <ShoppingCartCheckoutIcon />
-                                  </Avatar>
-                                ) : (
-                                  <Box>
-                                    <Avatar
-                                      sx={{
-                                        bgcolor: "inherit",
-                                        "&:hover": { color: "#ff7519" },
-                                        mr: -20,
-                                        display: 'flex'
-                                      }}
-                                    >
-                                      {" "}
-                                      {cartItems.length > 0 && (
-                                        <span className="badge">
-                                          {cartItems.length}
-                                        </span>
-                                      )}
-                                      <ShoppingCartCheckoutIcon />
-                                    </Avatar>
-                                  </Box>
-                                )}
-                              </Link>
-                            </IconButton>
-                          </Tooltip>
-                        </Box>
                         <Box
                           sx={{
                             display: { xs: "none", sm: "none", md: "flex" },
@@ -389,7 +337,8 @@ function App() {
                                         "&:hover": { color: "#ff7519" },
                                       }}
                                     >
-                                      <StorefrontIcon /></Avatar>
+                                      <StorefrontIcon />
+                                    </Avatar>
                                   </Link>
                                 </IconButton>
                               </Tooltip>
@@ -456,7 +405,8 @@ function App() {
                                         "&:hover": { color: "#ff7519" },
                                       }}
                                     >
-                                      <AdminPanelSettingsIcon /></Avatar>
+                                      <AdminPanelSettingsIcon />
+                                    </Avatar>
                                   </Link>
                                 </IconButton>
                               </Tooltip>
@@ -538,14 +488,18 @@ function App() {
                             </div>
                           )}
                         </Box>
-                        <Box
-
-                        >
+                        <Box>
                           {userInfo ? (
-                            <div >
-                              <Box sx={{
-                                display: { xs: "none", sm: "none", md: "flex" },
-                              }}>
+                            <div>
+                              <Box
+                                sx={{
+                                  display: {
+                                    xs: "none",
+                                    sm: "none",
+                                    md: "flex",
+                                  },
+                                }}
+                              >
                                 <Tooltip
                                   title={userInfo?.name}
                                   arrow
@@ -663,6 +617,60 @@ function App() {
                               </IconButton>
                             </Tooltip>
                           )}
+                        </Box>
+                        <Box>
+                          <Tooltip title="Cart" arrow placement="top">
+                            <IconButton
+                              sx={{ p: 0, "&:hover": { color: "#ff7519" } }}
+                              color="inherit"
+                            >
+                              <Link
+                                style={{
+                                  color: "inherit",
+                                  textDecoration: "none",
+                                }}
+                                to="/cart"
+                              >
+                                {userInfo ? (
+                                  <Avatar
+                                    sx={{
+                                      justifyContent: "center",
+                                      bgcolor: "inherit",
+                                      "&:hover": { color: "#ff7519" },
+                                      display: {},
+                                    }}
+                                  >
+                                    {" "}
+                                    {cartItems.length > 0 && (
+                                      <span className="badge">
+                                        {cartItems.length}
+                                      </span>
+                                    )}
+                                    <ShoppingCartCheckoutIcon />
+                                  </Avatar>
+                                ) : (
+                                  <Box>
+                                    <Avatar
+                                      sx={{
+                                        bgcolor: "inherit",
+                                        "&:hover": { color: "#ff7519" },
+                                        mr: -20,
+                                        display: "flex",
+                                      }}
+                                    >
+                                      {" "}
+                                      {cartItems.length > 0 && (
+                                        <span className="badge">
+                                          {cartItems.length}
+                                        </span>
+                                      )}
+                                      <ShoppingCartCheckoutIcon />
+                                    </Avatar>
+                                  </Box>
+                                )}
+                              </Link>
+                            </IconButton>
+                          </Tooltip>
                         </Box>
                       </Stack>
                     </Box>
@@ -3314,39 +3322,30 @@ function App() {
                 width: drawerWidth,
                 boxSizing: "border-box",
                 backgroundColor: "#13265C",
-
               },
             }}
             variant="persistent"
             anchor="left"
             open={open}
           >
-            <DrawerHeader>
+            <DrawerHeader></DrawerHeader>
 
-
-
-            </DrawerHeader>
-
-            <Stack direction="row" >
+            <Stack direction="row">
               <Typography
                 variant="h5"
                 noWrap
-
                 component="span"
                 sx={{
                   fontSize: "20px",
-                  color: '#F0FFF0',
+                  color: "#F0FFF0",
                   marginBottom: "15px",
                   display: { xs: "block", sm: "block", md: "block" },
                   "&:hover": { color: "#ff7519" },
                   fontWeight: "700",
-                  textAlign: 'center',
+                  textAlign: "center",
                   marginLeft: "50px",
-
                 }}
               >
-
-
                 {/* <Avatar
                   sx={{
                     bgcolor: "inherit",
@@ -3358,12 +3357,16 @@ function App() {
                 >
                   <PersonIcon sx={{ fontSize: 60 }} /></Avatar> */}
 
-
-
                 {userInfo?.name}
                 <IconButton onClick={handleDrawerClose}>
                   {theme.direction === "ltr" ? (
-                    <ChevronLeftIcon sx={{ color: "white", marginTop: "-10px", marginLeft: "15px" }} />
+                    <ChevronLeftIcon
+                      sx={{
+                        color: "white",
+                        marginTop: "-10px",
+                        marginLeft: "15px",
+                      }}
+                    />
                   ) : (
                     <ChevronRightIcon />
                   )}
@@ -3371,23 +3374,21 @@ function App() {
               </Typography>
             </Stack>
 
-            <Divider sx={{ backgroundColor: "#FFFFFF" }} showLabels/>
+            <Divider sx={{ backgroundColor: "#FFFFFF" }} showLabels />
             <Typography
               sx={{
                 color: "#F0FFF0",
                 // color: "#263238",
                 fontSize: "18px",
                 textDecoration: "none",
-                textAlign: 'center',
-                textTransform: 'capitalize',
+                textAlign: "center",
+                textTransform: "capitalize",
                 padding: " 10px",
                 fontWeight: "700",
                 "&:hover": { color: "#ff7519" },
                 cursor: "pointer",
                 // backgroundColor: "#FDF2F0",
-
               }}
-
             >
               Categories
             </Typography>
@@ -3398,32 +3399,33 @@ function App() {
             ) : (
               categories?.map((c, i) => (
                 <Box key={i}>
+                  <List to={`/search/category/${c}`}>
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        color: "	#F0FFF0",
+                        paddingTop: "-55px",
+                        marginTop: "-2px",
+                        // color: "#263238",
+                        textAlign: "center",
+                        fontSize: "16px",
+                        textDecoration: "none",
+                        // marginLeft: "50px",
+                        textTransform: "capitalize",
+                        opacity: "1",
+                        fontWeight: "600",
 
-                  <List
-
-                    to={`/search/category/${c}`}
-                  >
-                    <Typography variant="h4" sx={{
-                      color: "	#F0FFF0",
-                      paddingTop: "-55px",
-                      marginTop: "-2px",
-                      // color: "#263238",
-                      textAlign: 'center',
-                      fontSize: "16px",
-                      textDecoration: "none",
-                      // marginLeft: "50px",
-                      textTransform: 'capitalize',
-                      opacity: "1",
-                      fontWeight: "600",
-
-                      "&:hover": { color: "#ff7519" },
-
-                    }} InputProps={{ disableUnderline: true }}>{c}</Typography>
+                        "&:hover": { color: "#ff7519" },
+                      }}
+                      InputProps={{ disableUnderline: true }}
+                    >
+                      {c}
+                    </Typography>
                   </List>
                 </Box>
               ))
             )}
-            <Divider sx={{ backgroundColor: "#FFFFFF" }} showLabels/>
+            <Divider sx={{ backgroundColor: "#FFFFFF" }} showLabels />
           </Drawer>
           <Box component="main" sx={{ p: 3 }}>
             <Toolbar />
