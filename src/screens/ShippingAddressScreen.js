@@ -40,25 +40,20 @@ export default function ShippingAddressScreen() {
   const dispatch = useDispatch();
 
   const submitHandler = (e) => {
-    console.log("e", e.fullName);
-    // e.preventDefault();
     const newLat = addressMap ? addressMap.lat : lat;
     const newLng = addressMap ? addressMap.lng : lng;
     
     if (addressMap) {
-      console.log("111");
       setLat(addressMap.lat);
       setLng(addressMap.lng);
     }
     let moveOn = true;
     if (!newLat || !newLng) {
-      console.log("222");
       moveOn = window.confirm(
         "You did not set your location on map. Continue?"
       );
     }
     if (moveOn) {
-      console.log("333");
       dispatch(
         saveShippingAddress({
           fullName: e.fullName,
