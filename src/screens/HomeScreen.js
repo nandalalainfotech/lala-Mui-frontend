@@ -8,7 +8,6 @@ import { listTopSellers } from "../actions/userAction";
 import MessageBox from "../components/MessageBox";
 import Product from "../components/Product";
 
-
 // materieal ui******************
 import Box from "@mui/material/Box";
 import { useTheme } from "@mui/material/styles";
@@ -16,8 +15,7 @@ import Carousel from "react-elastic-carousel";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
 import CircularProgress from "@mui/material/CircularProgress";
-// eslint-disable-next-line no-unused-vars
-import { Typography } from "../../node_modules/@material-ui/core/index";
+import { useNavigate } from "react-router-dom";
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const images = [
@@ -29,6 +27,15 @@ const images = [
   },
   {
     imgPath: "/image/lala3.jpg",
+  },
+  {
+    imgPath: "/image/max.jpg",
+  },
+  {
+    imgPath: "/image/iphone.jpg",
+  },
+  {
+    imgPath: "/image/furniture.jpg",
   },
 ];
 
@@ -53,10 +60,13 @@ export default function HomeScreen() {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
 
-
   const handleStepChange = (step) => {
     setActiveStep(step);
   };
+  const navigate = useNavigate();
+  const Open = () => {
+    navigate('/cart')
+  }
 
   const breakPoints = [
     { width: 400, itemsToShow: 1 },
@@ -81,31 +91,32 @@ export default function HomeScreen() {
             index={activeStep}
             onChangeIndex={handleStepChange}
             enableMouseEvents
+            onClick={Open}
           >
-            {images?.map((step, index) => (
-              <Box key={index}>
-                {Math.abs(activeStep - index) <= 2 ? (
-                  <Box
-                    component="img"
-                    sx={{
-                      height: { xs: 255, sm: 330, md: 430, lg: 470, xl: 470 },
-                      display: "block",
-                      width: { xs: 400, sm: 400, lg: 1800, xl: 1800 },
-                      overflow: "hidden",
-                      // eslint-disable-next-line no-dupe-keys
-                      width: "100%",
-                    }}
-                    src={step.imgPath}
-                    alt={step.label}
-                  />
-                ) : null}
-              </Box>
-            ))}
+              {images?.map((step, index) => (
+                <Box key={index}>
+                  {Math.abs(activeStep - index) <= 2 ? (
+                    <Box
+                      component="img"
+                      sx={{
+                        height: { xs: 255, sm: 330, md: 430, lg: 470, xl: 470 },
+                        display: "block",
+                        width: { xs: 400, sm: 400, lg: 1800, xl: 1800 },
+                        overflow: "hidden",
+                        cursor: "pointer",
+                        // eslint-disable-next-line no-dupe-keys
+                        width: "100%",
+                      }}
+                      src={step.imgPath}
+                      alt={step.label}
+                    />
+                  ) : null}
+                </Box>
+              ))}
           </AutoPlaySwipeableViews>
         </Box>
       </Box>
 
-    
       <h2>Product's Collection</h2>
       {loading ? (
         <CircularProgress></CircularProgress>
