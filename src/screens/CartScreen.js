@@ -348,7 +348,7 @@ export default function CartScreen(props) {
                 </Box>
                 <Box>
                   <Typography gutterBottom variant="h6" component="div">
-                    Discount: ₹-100
+                    Discount: 0 %
                   </Typography>
                 </Box>
                 <Box>
