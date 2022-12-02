@@ -671,7 +671,7 @@ function App() {
                             </Tooltip>
                           )}
                         </Box>
-                        <Box>
+                        {/* <Box>
                           <Tooltip title="Cart" arrow placement="top">
                             <IconButton
                               sx={{ p: 0, "&:hover": { color: "#ff7519" } }}
@@ -724,7 +724,7 @@ function App() {
                               </Link>
                             </IconButton>
                           </Tooltip>
-                        </Box>
+                        </Box> */}
                       </Stack>
                     </Box>
                   </div>
