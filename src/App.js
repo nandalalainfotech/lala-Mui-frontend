@@ -71,7 +71,6 @@ import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
 import Paper from "@mui/material/Paper";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
@@ -97,6 +96,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 //   textAlign: 'center',
 // }));
 
+// eslint-disable-next-line no-unused-vars
 const styles = (theme) => ({
   hover: {
     "&:hover": {
@@ -142,6 +142,7 @@ const useStyles = makeStyles((theme) => ({
 function App() {
   let currentlyHovering = false;
   const cart = useSelector((state) => state.cart);
+  // eslint-disable-next-line no-unused-vars
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const { cartItems } = cart;
   const userSignin = useSelector((state) => state.userSignin);
@@ -150,9 +151,11 @@ function App() {
   const signoutHandler = () => {
     dispatch(signout());
   };
+  // eslint-disable-next-line no-unused-vars
   const accountoutHandler = () => {
     dispatch(accountout());
   };
+  // eslint-disable-next-line no-unused-vars
   const registeroutHandler = () => {
     dispatch(registerout());
   };
@@ -237,6 +240,7 @@ function App() {
       <img src={content.brand.image} alt="" width={content.brand.width} />
     );
   } else {
+    // eslint-disable-next-line no-unused-vars
     brand = content.brand.text || "";
   }
   return (
@@ -290,7 +294,6 @@ function App() {
                     <Box
                       style={{ justifyContent: "center" }}
                       sx={{
-                        mt: 1,
                         display: {
                           xs: "none",
                           sm: "block",
@@ -654,7 +657,6 @@ function App() {
                                       sx={{
                                         bgcolor: "inherit",
                                         "&:hover": { color: "#ff7519" },
-                                        mr: -20,
                                         display: "flex",
                                       }}
                                     >
@@ -3374,7 +3376,7 @@ function App() {
               </Typography>
             </Stack>
 
-            <Divider sx={{ backgroundColor: "#FFFFFF" }} showLabels />
+            <Divider sx={{ backgroundColor: "#FFFFFF" }} showlabels="true" />
             <Typography
               sx={{
                 color: "#F0FFF0",
@@ -3406,18 +3408,15 @@ function App() {
                         color: "	#F0FFF0",
                         paddingTop: "-55px",
                         marginTop: "-2px",
-                        // color: "#263238",
                         textAlign: "center",
                         fontSize: "16px",
                         textDecoration: "none",
-                        // marginLeft: "50px",
                         textTransform: "capitalize",
                         opacity: "1",
                         fontWeight: "600",
-
                         "&:hover": { color: "#ff7519" },
                       }}
-                      InputProps={{ disableUnderline: true }}
+                      inputprops={{ disableUnderline: true }}
                     >
                       {c}
                     </Typography>
@@ -3425,7 +3424,7 @@ function App() {
                 </Box>
               ))
             )}
-            <Divider sx={{ backgroundColor: "#FFFFFF" }} showLabels />
+            <Divider sx={{ backgroundColor: "#FFFFFF" }} showlabels="true" />
           </Drawer>
           <Box component="main" sx={{ p: 3 }}>
             <Toolbar />
@@ -3664,7 +3663,7 @@ function App() {
             }}
             elevation={3}
           >
-            <BottomNavigation sx={{ backgroundColor: "#37474f" }} showLabels>
+            <BottomNavigation sx={{ backgroundColor: "#37474f" }} showlabels="true">
               {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
               <BottomNavigationAction label="All right reserved" />
             </BottomNavigation>

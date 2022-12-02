@@ -22,7 +22,7 @@ import Axios from "axios";
 import ReactImageMagnify from "react-image-magnify";
 import CardMedia from "@mui/material/CardMedia";
 import { DialogContent } from "../../node_modules/@material-ui/core/index";
-import { CenterFocusStrong } from "../../node_modules/@mui/icons-material/index";
+// import { CenterFocusStrong } from "../../node_modules/@mui/icons-material/index";
 
 export default function ProductScreen(props) {
   const dispatch = useDispatch();
@@ -379,7 +379,7 @@ export default function ProductScreen(props) {
                         </Typography>
 
                         <Box sx={{ minWidth: 120 }}>
-                          <FormControl fullWidth sx={{ m: 3, width: "85%", justifycontent: 'center' }}>
+                          <FormControl fullWidth sx={{ m: 3, width: "83.5%", justifycontent: 'center' }}>
                             <InputLabel id="demo-simple-select-label">
                               Rating
                             </InputLabel>
@@ -410,7 +410,7 @@ export default function ProductScreen(props) {
                           />
                         </Box>
 
-                        <Button variant="contained" type="submit" sx={{ m: 3 }}>
+                        <Button variant="contained" type="submit" sx={{ m: 3,width: '83.5%' }}>
                           Submit
                         </Button>
 
