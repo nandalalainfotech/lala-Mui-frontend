@@ -514,19 +514,23 @@ function App() {
                                     Orders
                                   </Link>
                                 </MenuItem>
-                                <MenuItem onClick={handleClose}>
-                                  {" "}
-                                  <Link
-                                    style={{
-                                      fontSize: "16px",
-                                      color: "#263238",
-                                      textDecoration: "none",
-                                    }}
-                                    to="/userlist"
-                                  >
-                                    Users
-                                  </Link>
-                                </MenuItem>
+                                {userInfo.isAdmin ? (
+                                  <MenuItem onClick={handleClose}>
+                                    {" "}
+                                    <Link
+                                      style={{
+                                        fontSize: "16px",
+                                        color: "#263238",
+                                        textDecoration: "none",
+                                      }}
+                                      to="/userlist"
+                                    >
+                                      Users
+                                    </Link>
+                                  </MenuItem>
+                                ) : (
+                                  <></>
+                                )}
                                 <MenuItem onClick={handleClose}>
                                   {" "}
                                   <Link
