@@ -312,6 +312,59 @@ function App() {
                         spacing={{ xs: 3, sm: 2, md: 2, lg: 2, xl: 2 }}
                         sx={{ justifyContent: "flex-end" }}
                       >
+                        <Box>
+                          <Tooltip title="Cart" arrow placement="top">
+                            <IconButton
+                              sx={{ p: 0, "&:hover": { color: "#ff7519" } }}
+                              // aria-label="show 4 new mails"
+                              color="inherit"
+                            >
+                              <Link
+                                style={{
+                                  color: "inherit",
+                                  textDecoration: "none",
+                                }}
+                                to="/cart"
+                              >
+                                {userInfo ? (
+                                  <Avatar
+                                    sx={{
+                                      bgcolor: "inherit",
+                                      "&:hover": { color: "#ff7519" },
+                                    }}
+                                  >
+                                    {" "}
+                                    {cartItems.length > 0 && (
+                                      <span className="badge">
+                                        {cartItems.length}
+                                      </span>
+                                    )}
+                                    <ShoppingCartCheckoutIcon />
+                                  </Avatar>
+                                ) : (
+                                  <Box>
+                                    <Avatar
+                                      sx={{
+                                        bgcolor: "inherit",
+                                        "&:hover": { color: "#ff7519" },
+                                        mr: -20,
+                                        display: 'flex'
+                                      }}
+                                    >
+                                      {" "}
+                                      {cartItems.length > 0 && (
+                                        <span className="badge">
+                                          {cartItems.length}
+                                        </span>
+                                      )}
+                                      <ShoppingCartCheckoutIcon />
+                                    </Avatar>
+                                  </Box>
+                                )}
+                              </Link>
+                            </IconButton>
+                          </Tooltip>
+                        </Box>
                         <Box
                           sx={{
                             display: { xs: "none", sm: "none", md: "flex" },
@@ -3414,6 +3467,8 @@ function App() {
                         textTransform: "capitalize",
                         opacity: "1",
                         fontWeight: "600",
+cursor:"pointer",
+                      lineHeight:"2",
 
                         "&:hover": { color: "#ff7519" },
                       }}
