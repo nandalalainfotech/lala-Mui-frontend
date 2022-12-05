@@ -514,7 +514,7 @@ function App() {
                                     Orders
                                   </Link>
                                 </MenuItem>
-                                {userInfo.isAdmin ? (
+                                {userInfo && userInfo.isSeller ? (
                                   <MenuItem onClick={handleClose}>
                                     {" "}
                                     <Link
