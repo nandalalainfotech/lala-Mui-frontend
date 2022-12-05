@@ -441,7 +441,7 @@ function App() {
                             display: { xs: "none", sm: "none", md: "flex" },
                           }}
                         >
-                          {userInfo && (
+                          {userInfo && userInfo.isAdmin && (
                             <div>
                               <Tooltip title="Admin" arrow>
                                 <IconButton
@@ -514,7 +514,6 @@ function App() {
                                     Orders
                                   </Link>
                                 </MenuItem>
-                                {userInfo && userInfo.isSeller ? (
                                   <MenuItem onClick={handleClose}>
                                     {" "}
                                     <Link
@@ -528,9 +527,6 @@ function App() {
                                       Users
                                     </Link>
                                   </MenuItem>
-                                ) : (
-                                  <></>
-                                )}
                                 <MenuItem onClick={handleClose}>
                                   {" "}
                                   <Link
@@ -539,7 +535,7 @@ function App() {
                                       color: "#263238",
                                       textDecoration: "none",
                                     }}
-                                    o="/support"
+                                    to="/support"
                                   >
                                     Support
                                   </Link>
