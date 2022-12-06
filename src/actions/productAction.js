@@ -27,6 +27,16 @@ import {
   PRODUCT_REVIEW_CREATE_REQUEST,
   PRODUCT_REVIEW_CREATE_SUCCESS,
   PRODUCT_REVIEW_CREATE_FAIL,
+  PRODUCT_MEN_LIST_REQUEST,
+  PRODUCT_MEN_LIST_SUCCESS,
+  PRODUCT_MEN_LIST_FAIL,
+  PRODUCT_WOMEN_LIST_REQUEST,
+  PRODUCT_WOMEN_LIST_SUCCESS,
+  PRODUCT_WOMEN_LIST_FAIL,
+  PRODUCT_KIDS_LIST_REQUEST,
+  PRODUCT_KIDS_LIST_SUCCESS,
+  PRODUCT_KIDS_LIST_FAIL,
+ 
 } from '../constants/productConstants';
 
 export const listProducts =
@@ -54,6 +64,45 @@ export const listProducts =
       dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
     } catch (error) {
       dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message });
+    }
+  };
+
+  export const menProductList = () => async (dispatch) => {
+    dispatch({
+      type: PRODUCT_MEN_LIST_REQUEST,
+    });
+    try {
+      const { data } = await Axios.get(`/api/products/menList`);
+      dispatch({ type: PRODUCT_MEN_LIST_SUCCESS, payload: data });
+     
+    } catch (error) {
+      dispatch({ type: PRODUCT_MEN_LIST_FAIL, payload: error.message });
+    }
+  };
+
+  export const womenProductList = () => async (dispatch) => {
+    dispatch({
+      type: PRODUCT_WOMEN_LIST_REQUEST,
+    });
+    try {
+      const { data } = await Axios.get(`/api/products/womenList`);
+      dispatch({ type: PRODUCT_WOMEN_LIST_SUCCESS, payload: data });
+     
+    } catch (error) {
+      dispatch({ type: PRODUCT_WOMEN_LIST_FAIL, payload: error.message });
+    }
+  };
+
+  export const kidsProductList = () => async (dispatch) => {
+    dispatch({
+      type: PRODUCT_KIDS_LIST_REQUEST,
+    });
+    try {
+      const { data } = await Axios.get(`/api/products/kidsList`);
+      dispatch({ type: PRODUCT_KIDS_LIST_SUCCESS, payload: data });
+     
+    } catch (error) {
+      dispatch({ type: PRODUCT_KIDS_LIST_FAIL, payload: error.message });
     }
   };
 
@@ -162,9 +211,9 @@ export const deleteProduct = (productId) => async (dispatch, getState) => {
   } = getState();
   try {
 
-    await Axios.delete(`/api/uploads/${productId}`, {
-      headers: { Authorization: `Bearer ${userInfo.token}` },
-    });
+    // await Axios.delete(`/api/uploads/${productId}`, {
+    //   headers: { Authorization: `Bearer ${userInfo.token}` },
+    // });
    
     await Axios.delete(`/api/products/${productId}`, {
       headers: { Authorization: `Bearer ${userInfo.token}` },

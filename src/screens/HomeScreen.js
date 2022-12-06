@@ -1,12 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import { listProducts } from "../actions/productAction";
+import { listKids } from "../actions/kidAction";
+import { kidsProductList, listMensProducts, listProducts, menProductList, womenProductList } from "../actions/productAction";
 import { listTopSellers } from "../actions/userAction";
 import MessageBox from "../components/MessageBox";
 import Product from "../components/Product";
+import InfiniteScroll from "react-infinite-scroll-component";
+// import LeftArrow from "../assets/left-arrow.svg"
+// import RightArrow from "../assets/right-arrow.svg"
 
 // materieal ui******************
 import Box from "@mui/material/Box";
@@ -43,6 +47,12 @@ export default function HomeScreen() {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
+  const productMenList = useSelector((state) => state.productMenList);
+  const { menProducts } = productMenList;
+  const productWomenList = useSelector((state) => state.productWomenList);
+  const { womenProducts } = productWomenList;
+  const productKidsList = useSelector((state) => state.productKidsList);
+  const { kidProducts } = productKidsList;
   const userTopSellersList = useSelector((state) => state.userTopSellersList);
   const {
     // eslint-disable-next-line no-unused-vars
@@ -54,6 +64,9 @@ export default function HomeScreen() {
   } = userTopSellersList;
   useEffect(() => {
     dispatch(listProducts({}));
+    dispatch(menProductList());
+    dispatch(womenProductList());
+    dispatch(kidsProductList());
     dispatch(listTopSellers());
   }, [dispatch]);
 
@@ -77,6 +90,19 @@ export default function HomeScreen() {
     { width: 1200, itemsToShow: 5 },
     { width: 1500, itemsToShow: 8 },
   ];
+  
+  const [allKidProducts, setAllKidProducts] = useState(kidProducts);
+  const [hasMore, setHasmore] = useState(true);
+  const [lastPosition, setLastPosition] = useState(0);
+  const perPage = 4;
+
+  const loadProducts = () => {
+    setTimeout(() => {
+      setAllKidProducts((prev) => [...prev, ...prev]);
+    }, 1000);
+
+    setLastPosition(lastPosition + perPage);
+  };
 
   return (
     <Box>
@@ -117,7 +143,9 @@ export default function HomeScreen() {
         </Box>
       </Box>
 
-      <h2>Product's Collection</h2>
+ {/* <h2>
+ Product's Collection
+      </h2>
       {loading ? (
         <CircularProgress></CircularProgress>
       ) : error ? (
@@ -127,20 +155,23 @@ export default function HomeScreen() {
           <Carousel
             className="new1"
             mouseTracking
+            //  enableAutoPlay
+            //  autoPlaySpeed={100}
+            //  enableSwipe={true}
             pagination={false}
             breakPoints={breakPoints}
             enableMouseSwipe={true}
             pauseOnFocus={true}
             pauseOnHover={true}
           >
-            {products?.map((menProduct) => (
-              <Box key={menProduct._id}>
-                <Product product={menProduct}></Product>
+            {products?.map((product) => (
+              <Box key={product._id}>
+                <Product product={product}></Product>
               </Box>
             ))}
           </Carousel>
         </>
-      )}
+      )} */}
 
       <h2>Men's collection</h2>
       {loading ? (
@@ -156,11 +187,7 @@ export default function HomeScreen() {
             pagination={false}
             breakPoints={breakPoints}
           >
-            {products
-              ?.filter((menProduct) => {
-                return menProduct.category === "men";
-              })
-              .map((menProduct) => (
+            {menProducts.map((menProduct) => (
                 <Box key={menProduct._id}>
                   <Product product={menProduct}></Product>
                 </Box>
@@ -176,21 +203,16 @@ export default function HomeScreen() {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <>
-          <Carousel
-            className="new1"
+          <Carousel className="new1"
             mouseTracking
             enableSwipe={true}
             pagination={false}
             breakPoints={breakPoints}
             disableArrowsOnEnd={false}
           >
-            {products
-              ?.filter((product) => {
-                return product.category === "women";
-              })
-              .map((product) => (
-                <Box key={product._id}>
-                  <Product product={product}></Product>
+            {womenProducts.map((womenProduct) => (
+                <Box key={womenProduct._id}>
+                  <Product product={womenProduct}></Product>
                 </Box>
               ))}
           </Carousel>
@@ -204,8 +226,13 @@ export default function HomeScreen() {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <>
-          <Carousel
-            className="new3"
+         <InfiniteScroll
+      dataLength={allKidProducts.length}
+      next={loadProducts}
+      hasMore={hasMore}
+      loader={<h4>Loading...</h4>}
+    >
+        <Carousel className="new3"
             mouseTracking
             enableAutoPlay
             autoPlaySpeed={1500}
@@ -214,16 +241,13 @@ export default function HomeScreen() {
             breakPoints={breakPoints}
             kXteup={false}
           >
-            {products
-              ?.filter((kidProduct) => {
-                return kidProduct?.category === "kids";
-              })
-              .map((kidProduct) => (
+            {kidProducts.map((kidProduct) => (
                 <Box key={kidProduct._id}>
                   <Product product={kidProduct}></Product>
                 </Box>
               ))}
           </Carousel>
+    </InfiniteScroll>
         </>
       )}
     </Box>

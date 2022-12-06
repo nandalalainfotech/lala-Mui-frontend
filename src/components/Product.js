@@ -12,7 +12,7 @@ import Rating from "@mui/material/Rating";
 
 export default function Product(props) {
   const { product } = props;
-  const [image, setImage] = useState()
+  const [image, setImage] = useState();
   useEffect(() => {
     async function fetchData() {
       const imageData = await Axios.get(`/api/uploads/show/${product._id}`, { responseType: 'blob' });

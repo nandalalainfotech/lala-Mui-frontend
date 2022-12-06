@@ -212,7 +212,7 @@ export default function ProductEditScreen(props) {
       dispatch(createProduct({
         name:e.name,
         price:e.price,
-        category:e.category,
+        category:e.category.toLowerCase(),
         categorygroup:e.categorygroup,
         categorytype:e.categorytext,
         brand:e.categorybrand,

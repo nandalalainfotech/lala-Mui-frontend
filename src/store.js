@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import { addressListReducer } from './reducers/addressReducers';
 import { cartReducer } from './reducers/cartReducers';
 import { orderCreateReducer, orderDeleteReducer, orderDeliverReducer, orderDetailsReducer, orderListReducer, orderMineListReducer, orderPayReducer, orderSummaryReducer } from './reducers/orderReducers';
-import { productCategoryListReducer,productCategorygroupListReducer,productCategorytypeListReducer, productCreateReducer, productDeleteReducer, productDetailsReducer, productListReducer, productReviewCreateReducer, productUpdateReducer } from './reducers/productReducers';
+import { productCategoryListReducer,productCategorygroupListReducer,productCategorytypeListReducer, productCreateReducer, productDeleteReducer, productDetailsReducer, productListReducer, productReviewCreateReducer, productUpdateReducer, productMenListReducer, productWomenListReducer, productKidsListReducer, } from './reducers/productReducers';
 import { userAddressMapReducer, userDeleteReducer, userDetailsReducer, userListReducer, userRegisterReducer, userSigninReducer, userAccountReducer, userAccountcreationReducer, userAdmininReducer, userTopSellerListReducer, userUpdateProfileReducer, userUpdateReducer } from './reducers/userReducers';
 import { SareeListReducer, SareeDetailsReducer } from './reducers/sareeReducer';
 import { womenCategoryListReducer, womenCreateReducer, womenDeleteReducer, womenDetailsReducer, womenListReducer, womenReviewCreateReducer, womenUpdateReducer } from './reducers/womenReducers';
@@ -60,6 +60,9 @@ const initialState = {
 const reducer = combineReducers({
   addressesList: addressListReducer,
   productList: productListReducer,
+  productMenList:productMenListReducer,
+  productWomenList:productWomenListReducer,
+  productKidsList:productKidsListReducer,
   womenList: womenListReducer,
   
   kidList: kidListReducer,
