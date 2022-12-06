@@ -22,10 +22,15 @@ export default function RegisterScreen(props) {
     formState: { errors }
   } = useForm();
   const navigate = useNavigate();
+  // eslint-disable-next-line no-unused-vars
   const [name, setName] = useState('');
+  // eslint-disable-next-line no-unused-vars
   const [mobile, setMobile] = useState('');
+  // eslint-disable-next-line no-unused-vars
   const [email, setEmail] = useState('');
+  // eslint-disable-next-line no-unused-vars
   const [password, setPassword] = useState('');
+  // eslint-disable-next-line no-unused-vars
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const { search } = useLocation();
@@ -154,6 +159,7 @@ export default function RegisterScreen(props) {
               name="email"
               autoComplete="email"
               onChange={(e) => setEmail(e.target.value)}
+              // eslint-disable-next-line no-useless-escape
               {...register("email", { required: true, pattern: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i, })}
               error={(errors.email)}
             />

@@ -23,7 +23,9 @@ export default function SigninScreen(props) {
     formState: { errors }
   } = useForm();
   const navigate = useNavigate();
+  // eslint-disable-next-line no-unused-vars
   const [email, setEmail] = useState('');
+  // eslint-disable-next-line no-unused-vars
   const [password, setPassword] = useState('');
   const { search } = useLocation();
   const redirectInUrl = new URLSearchParams(search).get('redirect');
@@ -107,6 +109,7 @@ export default function SigninScreen(props) {
               autoFocus
               inputProps={{ style: { fontSize: 14 } }}
               onChange={(e) => setEmail(e.target.value)}
+              // eslint-disable-next-line no-useless-escape
               {...register('email', { required: true, pattern: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i })}
               error={(errors.email)}
             />

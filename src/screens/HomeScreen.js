@@ -3,14 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import { listKids } from "../actions/kidAction";
-import { kidsProductList, listMensProducts, listProducts, menProductList, womenProductList } from "../actions/productAction";
+import { kidsProductList,  listProducts, menProductList, womenProductList } from "../actions/productAction";
 import { listTopSellers } from "../actions/userAction";
 import MessageBox from "../components/MessageBox";
 import Product from "../components/Product";
 import InfiniteScroll from "react-infinite-scroll-component";
-// import LeftArrow from "../assets/left-arrow.svg"
-// import RightArrow from "../assets/right-arrow.svg"
+
 
 // materieal ui******************
 import Box from "@mui/material/Box";
@@ -46,6 +44,7 @@ const images = [
 export default function HomeScreen() {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
+  // eslint-disable-next-line no-unused-vars
   const { loading, error, products } = productList;
   const productMenList = useSelector((state) => state.productMenList);
   const { menProducts } = productMenList;
@@ -92,7 +91,7 @@ export default function HomeScreen() {
   ];
   
   const [allKidProducts, setAllKidProducts] = useState(kidProducts);
-  const [hasMore, setHasmore] = useState(true);
+  const [hasMore] = useState(true);
   const [lastPosition, setLastPosition] = useState(0);
   const perPage = 4;
 
@@ -187,7 +186,7 @@ export default function HomeScreen() {
             pagination={false}
             breakPoints={breakPoints}
           >
-            {menProducts.map((menProduct) => (
+            {menProducts?.map((menProduct) => (
                 <Box key={menProduct._id}>
                   <Product product={menProduct}></Product>
                 </Box>
@@ -210,7 +209,7 @@ export default function HomeScreen() {
             breakPoints={breakPoints}
             disableArrowsOnEnd={false}
           >
-            {womenProducts.map((womenProduct) => (
+            {womenProducts?.map((womenProduct) => (
                 <Box key={womenProduct._id}>
                   <Product product={womenProduct}></Product>
                 </Box>
@@ -241,7 +240,7 @@ export default function HomeScreen() {
             breakPoints={breakPoints}
             kXteup={false}
           >
-            {kidProducts.map((kidProduct) => (
+            {kidProducts?.map((kidProduct) => (
                 <Box key={kidProduct._id}>
                   <Product product={kidProduct}></Product>
                 </Box>

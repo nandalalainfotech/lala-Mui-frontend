@@ -378,7 +378,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { useNavigate } from "../../node_modules/react-router-dom/dist/index";
 import { listProducts } from "../actions/productAction";
-import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import Product from "../components/Product";
 import { prices, ratings } from "../utils";
@@ -386,20 +385,14 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
+// eslint-disable-next-line no-unused-vars
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
-import Divider from "@mui/material/Divider";
 import Rating from "@mui/material/Rating";
 import CircularProgress from "@mui/material/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
 
 export default function SearchScreen(props) {
   const {
@@ -420,6 +413,7 @@ export default function SearchScreen(props) {
   const productCategoryList = useSelector((state) => state.productCategoryList);
   const {
     // loading: loadingCategories,
+    // eslint-disable-next-line no-unused-vars
     error: errorCategories,
     categories,
   } = productCategoryList;
@@ -467,7 +461,9 @@ export default function SearchScreen(props) {
 
   const getFilterUrl = (filter) => {
     const filterCategory = filter.category || category;
+    // eslint-disable-next-line no-unused-vars
     const filterCategorygroup = filter.categorygroup || categorygroup;
+    // eslint-disable-next-line no-unused-vars
     const filterCategorytype = filter.categorytype || categorytype;
     const filterName = filter.name || name;
     const filterMin = filter.min ? filter.min : filter.min === 0 ? 0 : min;
@@ -479,6 +475,7 @@ export default function SearchScreen(props) {
     // `/search/categorygroup/${filterCategorygroup}/name/${filterName}/min/${filterMin}/max/${filterMax}/rating/${filterRating}/order/${sortOrder}/pageNumber/${filterPage}`,
     // `/search/categorytype/${filterCategorytype}/name/${filterName}/min/${filterMin}/max/${filterMax}/rating/${filterRating}/order/${sortOrder}/pageNumber/${filterPage}`);
   };
+  // eslint-disable-next-line no-unused-vars
   const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,

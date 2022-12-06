@@ -34,6 +34,7 @@ export default function ProductEditScreen(props) {
   const { id: productId } = params;
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [imageFile, setImageFile] = useState();
   const [category, setCategory] = useState("");
   const [categorygroup, setCategorygroup] = useState("");
@@ -46,12 +47,16 @@ export default function ProductEditScreen(props) {
   const productUpdate = useSelector((state) => state.productUpdate);
   const productCreate = useSelector((state) => state.productCreate);
   const {
+    // eslint-disable-next-line no-unused-vars
     success: successUpdate,
   } = productUpdate;
 
   const {
+    // eslint-disable-next-line no-unused-vars
     loading: loadingCreate,
+    // eslint-disable-next-line no-unused-vars
     error: errorCreate,
+    // eslint-disable-next-line no-unused-vars
     success: successCreate,
     product: createdProduct,
   } = productCreate;
@@ -224,6 +229,7 @@ export default function ProductEditScreen(props) {
   }
 
   // const [loadingUpload, setLoadingUpload] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [errorUpload, setErrorUpload] = useState('');
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;

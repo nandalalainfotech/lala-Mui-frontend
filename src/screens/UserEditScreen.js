@@ -33,7 +33,9 @@ export default function UserEditScreen(props) {
 
   const userUpdate = useSelector((state) => state.userUpdate);
   const {
+    // eslint-disable-next-line no-unused-vars
     loading: loadingUpdate,
+    // eslint-disable-next-line no-unused-vars
     error: errorUpdate,
     success: successUpdate,
   } = userUpdate;
