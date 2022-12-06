@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { detailsUser, updateUser } from "../actions/userAction";
-import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import { USER_UPDATE_RESET } from "../constants/userConstants";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -14,10 +13,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-// import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -65,68 +61,6 @@ export default function UserEditScreen(props) {
   };
   let theme = createTheme();
   return (
-    // <div>
-    //   <form className="form" onSubmit={submitHandler}>
-    //     <div>
-    //       <h1>Edit User {name}</h1>
-    //       {loadingUpdate && <CircularProgress></CircularProgress>}
-    //       {errorUpdate && (
-    //         <MessageBox variant="danger">{errorUpdate}</MessageBox>
-    //       )}
-    //     </div>
-    //     {loading ? (
-    //       <LoadingBox />
-    //     ) : error ? (
-    //       <MessageBox variant="danger">{error}</MessageBox>
-    //     ) : (
-    //       <>
-    //         <div>
-    //           <label htmlFor="name">Name</label>
-    //           <input
-    //             id="name"
-    //             type="text"
-    //             placeholder="Enter name"
-    //             value={name}
-    //             onChange={(e) => setName(e.target.value)}
-    //           ></input>
-    //         </div>
-    //         <div>
-    //           <label htmlFor="email">Email</label>
-    //           <input
-    //             id="email"
-    //             type="email"
-    //             placeholder="Enter email"
-    //             value={email}
-    //             onChange={(e) => setEmail(e.target.value)}
-    //           ></input>
-    //         </div>
-    //         <div>
-    //           <label htmlFor="isSeller">Is Seller</label>
-    //           <input
-    //             id="isSeller"
-    //             type="checkbox"
-    //             checked={isSeller}
-    //             onChange={(e) => setIsSeller(e.target.checked)}
-    //           ></input>
-    //         </div>
-    //         <div>
-    //           <label htmlFor="isAdmin">Is Admin</label>
-    //           <input
-    //             id="isAdmin"
-    //             type="checkbox"
-    //             checked={isAdmin}
-    //             onChange={(e) => setIsAdmin(e.target.checked)}
-    //           ></input>
-    //         </div>
-    //         <div>
-    //           <button type="submit" className="primary">
-    //             Update
-    //           </button>
-    //         </div>
-    //       </>
-    //     )}
-    //   </form>
-    // </div>
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -138,13 +72,10 @@ export default function UserEditScreen(props) {
             alignItems: "center",
             border: "1px solid #ddd",
             padding: "0px 30px 30px 30px",
-            // backgroundColor:'lightblue',
             borderRadius: "5px",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            {/* <LockOutlinedIcon /> */}
-          </Avatar>
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}></Avatar>
           <Typography component="h1" variant="h5">
             Edit User {name}
           </Typography>
@@ -215,7 +146,6 @@ export default function UserEditScreen(props) {
             </Button>
           </Box>
         </Box>
-        {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
       </Container>
     </ThemeProvider>
   );

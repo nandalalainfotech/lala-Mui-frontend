@@ -351,7 +351,7 @@ function App() {
                                         bgcolor: "inherit",
                                         "&:hover": { color: "#ff7519" },
                                         mr: -20,
-                                        display: 'flex'
+                                        display: "flex",
                                       }}
                                     >
                                       {" "}
@@ -514,19 +514,19 @@ function App() {
                                     Orders
                                   </Link>
                                 </MenuItem>
-                                  <MenuItem onClick={handleClose}>
-                                    {" "}
-                                    <Link
-                                      style={{
-                                        fontSize: "16px",
-                                        color: "#263238",
-                                        textDecoration: "none",
-                                      }}
-                                      to="/userlist"
-                                    >
-                                      Users
-                                    </Link>
-                                  </MenuItem>
+                                <MenuItem onClick={handleClose}>
+                                  {" "}
+                                  <Link
+                                    style={{
+                                      fontSize: "16px",
+                                      color: "#263238",
+                                      textDecoration: "none",
+                                    }}
+                                    to="/userlist"
+                                  >
+                                    Users
+                                  </Link>
+                                </MenuItem>
                                 <MenuItem onClick={handleClose}>
                                   {" "}
                                   <Link
@@ -3468,9 +3468,8 @@ function App() {
                         opacity: "1",
                         fontWeight: "600",
 
-cursor:"pointer",
-                      lineHeight:"2",
-
+                        cursor: "pointer",
+                        lineHeight: "2",
 
                         "&:hover": { color: "#ff7519" },
                       }}
@@ -3721,7 +3720,10 @@ cursor:"pointer",
             }}
             elevation={3}
           >
-            <BottomNavigation sx={{ backgroundColor: "#37474f" }} showlabels="true">
+            <BottomNavigation
+              sx={{ backgroundColor: "#37474f" }}
+              showlabels="true"
+            >
               {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
               <BottomNavigationAction label="All right reserved" />
             </BottomNavigation>
