@@ -38,6 +38,7 @@
     "react-hook-form": "^7.39.5",
     "react-hover-animation": "^2.1.1",
     "react-image-magnify": "^2.7.4",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-magnifier": "^3.0.4",
     "react-mailto": "^0.4.0",
     "react-material-ui-carousel": "^3.4.2",

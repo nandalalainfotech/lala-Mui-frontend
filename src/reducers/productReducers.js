@@ -33,6 +33,16 @@ const {
   PRODUCT_REVIEW_CREATE_FAIL,
   PRODUCT_REVIEW_CREATE_RESET,
   PRODUCT_DETAILS_RESET,
+  PRODUCT_MEN_LIST_REQUEST,
+  PRODUCT_MEN_LIST_SUCCESS,
+  PRODUCT_MEN_LIST_FAIL,
+  PRODUCT_KIDS_LIST_FAIL,
+  PRODUCT_KIDS_LIST_SUCCESS,
+  PRODUCT_KIDS_LIST_REQUEST,
+  PRODUCT_WOMEN_LIST_FAIL,
+  PRODUCT_WOMEN_LIST_SUCCESS,
+  PRODUCT_WOMEN_LIST_REQUEST,
+ 
 } = require("../constants/productConstants");
 
 export const productListReducer = (
@@ -50,6 +60,60 @@ export const productListReducer = (
         page: action.payload.page,
       };
     case PRODUCT_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const productMenListReducer = (
+  state = { loading: true, menProducts: [] },action) => {
+  switch (action.type) {
+    case PRODUCT_MEN_LIST_REQUEST:
+      return { loading: true };
+    case PRODUCT_MEN_LIST_SUCCESS:
+      return {
+        loading: false,
+        menProducts: action.payload,
+       
+      };
+    case PRODUCT_MEN_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const productWomenListReducer = (
+  state = { loading: true, womenProducts: [] },action) => {
+  switch (action.type) {
+    case PRODUCT_WOMEN_LIST_REQUEST:
+      return { loading: true };
+    case PRODUCT_WOMEN_LIST_SUCCESS:
+      return {
+        loading: false,
+        womenProducts: action.payload,
+       
+      };
+    case PRODUCT_WOMEN_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const productKidsListReducer = (
+  state = { loading: true, kidProducts: [] },action) => {
+  switch (action.type) {
+    case PRODUCT_KIDS_LIST_REQUEST:
+      return { loading: true };
+    case PRODUCT_KIDS_LIST_SUCCESS:
+      return {
+        loading: false,
+        kidProducts: action.payload,
+       
+      };
+    case PRODUCT_KIDS_LIST_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;
