@@ -71,9 +71,11 @@ import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
 import Paper from "@mui/material/Paper";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import { userCartList } from "./actions/cartAction";
 
 // import Image from "/image/logo.png";
 // Side bar section start*************************************
@@ -145,6 +147,7 @@ function App() {
   // eslint-disable-next-line no-unused-vars
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const { cartItems } = cart;
+  const { usercart } = useSelector((state) => state.userCartListItem);
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const dispatch = useDispatch();
@@ -168,6 +171,7 @@ function App() {
   } = productCategoryList;
 
   useEffect(() => {
+    dispatch(userCartList(userInfo?._id));
     dispatch(listProductCategories());
     dispatch(listProductCategorygroup());
     dispatch(listProductCategorytype());
@@ -294,6 +298,7 @@ function App() {
                     <Box
                       style={{ justifyContent: "center" }}
                       sx={{
+                        mt: 1,
                         display: {
                           xs: "none",
                           sm: "block",
@@ -336,11 +341,10 @@ function App() {
                                       "&:hover": { color: "#ff7519" },
                                     }}
                                   >
-                                    {" "}
-                                    {cartItems.length > 0 && (
-                                      <span className="badge">
-                                        {cartItems.length}
-                                      </span>
+                                    {usercart?.length >0 &&(
+                                       <span className="badge">
+                                       {usercart?.length}
+                                     </span>
                                     )}
                                     <ShoppingCartCheckoutIcon />
                                   </Avatar>
@@ -354,12 +358,6 @@ function App() {
                                         display: "flex",
                                       }}
                                     >
-                                      {" "}
-                                      {cartItems.length > 0 && (
-                                        <span className="badge">
-                                          {cartItems.length}
-                                        </span>
-                                      )}
                                       <ShoppingCartCheckoutIcon />
                                     </Avatar>
                                   </Box>
