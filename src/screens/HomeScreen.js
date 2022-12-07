@@ -3,12 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import { kidsProductList,  listProducts, menProductList, womenProductList } from "../actions/productAction";
+import {
+  kidsProductList,
+  listProducts,
+  menProductList,
+  womenProductList,
+} from "../actions/productAction";
 import { listTopSellers } from "../actions/userAction";
 import MessageBox from "../components/MessageBox";
 import Product from "../components/Product";
 import InfiniteScroll from "react-infinite-scroll-component";
-
 
 // materieal ui******************
 import Box from "@mui/material/Box";
@@ -17,7 +21,11 @@ import Carousel from "react-elastic-carousel";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Typography from "@mui/material/Typography";
+
+
+
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const images = [
@@ -77,8 +85,8 @@ export default function HomeScreen() {
   };
   const navigate = useNavigate();
   const Open = () => {
-    navigate('/cart')
-  }
+    navigate("/cart");
+  };
 
   const breakPoints = [
     { width: 400, itemsToShow: 1 },
@@ -89,7 +97,7 @@ export default function HomeScreen() {
     { width: 1200, itemsToShow: 5 },
     { width: 1500, itemsToShow: 8 },
   ];
-  
+
   const [allKidProducts, setAllKidProducts] = useState(kidProducts);
   const [hasMore] = useState(true);
   const [lastPosition, setLastPosition] = useState(0);
@@ -102,6 +110,8 @@ export default function HomeScreen() {
 
     setLastPosition(lastPosition + perPage);
   };
+
+  
 
   return (
     <Box>
@@ -118,61 +128,41 @@ export default function HomeScreen() {
             enableMouseEvents
             onClick={Open}
           >
-              {images?.map((step, index) => (
-                <Box key={index}>
-                  {Math.abs(activeStep - index) <= 2 ? (
-                    <Box
-                      component="img"
-                      sx={{
-                        height: { xs: 255, sm: 330, md: 430, lg: 470, xl: 470 },
-                        display: "block",
-                        width: { xs: 400, sm: 400, lg: 1800, xl: 1800 },
-                        overflow: "hidden",
-                        cursor: "pointer",
-                        // eslint-disable-next-line no-dupe-keys
-                        width: "100%",
-                      }}
-                      src={step.imgPath}
-                      alt={step.label}
-                    />
-                  ) : null}
-                </Box>
-              ))}
+            {images?.map((step, index) => (
+              <Box key={index}>
+                {Math.abs(activeStep - index) <= 2 ? (
+                  <Box
+                    component="img"
+                    sx={{
+                      height: { xs: 255, sm: 330, md: 430, lg: 470, xl: 470 },
+                      display: "block",
+                      width: { xs: 400, sm: 400, lg: 1800, xl: 1800 },
+                      overflow: "hidden",
+                      cursor: "pointer",
+                      // eslint-disable-next-line no-dupe-keys
+                      width: "100%",
+                    }}
+                    src={step.imgPath}
+                    alt={step.label}
+                  />
+                ) : null}
+              </Box>
+            ))}
           </AutoPlaySwipeableViews>
         </Box>
       </Box>
 
- {/* <h2>
- Product's Collection
-      </h2>
-      {loading ? (
-        <CircularProgress></CircularProgress>
-      ) : error ? (
-        <MessageBox variant="danger">{error}</MessageBox>
-      ) : (
-        <>
-          <Carousel
-            className="new1"
-            mouseTracking
-            //  enableAutoPlay
-            //  autoPlaySpeed={100}
-            //  enableSwipe={true}
-            pagination={false}
-            breakPoints={breakPoints}
-            enableMouseSwipe={true}
-            pauseOnFocus={true}
-            pauseOnHover={true}
-          >
-            {products?.map((product) => (
-              <Box key={product._id}>
-                <Product product={product}></Product>
-              </Box>
-            ))}
-          </Carousel>
-        </>
-      )} */}
-
-      <h2>Men's collection</h2>
+      
+      <Link
+        to="/collectionlist/men"
+        style={{
+          color: "black",
+          textDecoration: "none",
+          textTransform: "capitalize",
+        }}
+      >
+        <Typography variant="h4"  sx={{'&:hover':{color:"#6633FF",textDecoration: "underline"}}}>Men's collection</Typography>
+      </Link>
       {loading ? (
         <CircularProgress></CircularProgress>
       ) : error ? (
@@ -187,22 +177,37 @@ export default function HomeScreen() {
             breakPoints={breakPoints}
           >
             {menProducts?.map((menProduct) => (
-                <Box key={menProduct._id}>
-                  <Product product={menProduct}></Product>
-                </Box>
-              ))}
+              <Box key={menProduct._id}>
+                <Product product={menProduct}></Product>
+              </Box>
+            ))}
           </Carousel>
         </>
       )}
 
-      <h2>Women collection</h2>
+      <Link
+        to="/collectionlist/women"
+        style={{
+          color: "black",
+          textDecoration: "none",
+          textTransform: "capitalize",
+        }}
+      >
+        <Typography
+          variant="h4"
+          sx={{'&:hover':{color:"#6633FF",textDecoration: "underline"}}}
+        >
+          Women collection
+        </Typography>
+      </Link>
       {loading ? (
         <CircularProgress></CircularProgress>
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <>
-          <Carousel className="new1"
+          <Carousel
+            className="new1"
             mouseTracking
             enableSwipe={true}
             pagination={false}
@@ -210,43 +215,55 @@ export default function HomeScreen() {
             disableArrowsOnEnd={false}
           >
             {womenProducts?.map((womenProduct) => (
-                <Box key={womenProduct._id}>
-                  <Product product={womenProduct}></Product>
-                </Box>
-              ))}
+              <Box key={womenProduct._id}>
+                <Product product={womenProduct}></Product>
+              </Box>
+            ))}
           </Carousel>
         </>
       )}
 
-      <h2>Kids collection</h2>
+      <Link
+        to="/collectionlist/kids"
+        style={{
+          color: "black",
+          textDecoration: "none",
+          textTransform: "capitalize",
+        }}
+      >
+        <Typography  sx={{'&:hover':{color:"#6633FF",textDecoration: "underline"}}} variant="h4">
+          Kids collection
+        </Typography>
+      </Link>
       {loading ? (
         <CircularProgress></CircularProgress>
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <>
-         <InfiniteScroll
-      dataLength={allKidProducts.length}
-      next={loadProducts}
-      hasMore={hasMore}
-      loader={<h4>Loading...</h4>}
-    >
-        <Carousel className="new3"
-            mouseTracking
-            enableAutoPlay
-            autoPlaySpeed={1500}
-            enableSwipe={true}
-            pagination={false}
-            breakPoints={breakPoints}
-            kXteup={false}
+          <InfiniteScroll
+            dataLength={allKidProducts.length}
+            next={loadProducts}
+            hasMore={hasMore}
+            // loader={<h4>Loading...</h4>}
           >
-            {kidProducts?.map((kidProduct) => (
+            <Carousel
+              className="new3"
+              mouseTracking
+              enableAutoPlay
+              autoPlaySpeed={1500}
+              enableSwipe={true}
+              pagination={false}
+              breakPoints={breakPoints}
+              kXteup={false}
+            >
+              {kidProducts?.map((kidProduct) => (
                 <Box key={kidProduct._id}>
                   <Product product={kidProduct}></Product>
                 </Box>
               ))}
-          </Carousel>
-    </InfiniteScroll>
+            </Carousel>
+          </InfiniteScroll>
         </>
       )}
     </Box>
