@@ -76,6 +76,8 @@ import Paper from "@mui/material/Paper";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import { userCartList } from "./actions/cartAction";
+import Badge from "@material-ui/core/Badge";
+import { withStyles } from "@material-ui/core/styles";
 
 // import Image from "/image/logo.png";
 // Side bar section start*************************************
@@ -140,6 +142,25 @@ const useStyles = makeStyles((theme) => ({
     pointerEvents: "none",
   },
 }));
+
+const StyledBadge = withStyles((theme) => ({
+  badge: {
+    backgroundColor: "#FF66FF",
+    // color: "green",
+    top: 9,
+    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+    "&::after": {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      borderRadius: "50%",
+      // border: "1px solid currentColor",
+      // content: '""',
+    },
+  },
+}))(Badge);
 
 function App() {
   let currentlyHovering = false;
@@ -335,19 +356,31 @@ function App() {
                                 to="/cart"
                               >
                                 {userInfo ? (
-                                  <Avatar
-                                    sx={{
-                                      bgcolor: "inherit",
-                                      "&:hover": { color: "#ff7519" },
-                                    }}
-                                  >
-                                    {usercart?.length >0 &&(
-                                       <span className="badge">
-                                       {usercart?.length}
-                                     </span>
+                                  <>
+                                  
+                                    
+                                         {usercart?.length >= 0 && (
+                                    <StyledBadge
+                                    badgeContent={usercart?.length}
+                                      // overlap="circle"
+                                      anchorOrigin={{
+                                        vertical: "top",
+                                        horizontal: "right",
+                                      }}
+                                     
+                                    >
+                                     <Avatar
+                                        sx={{
+                                          bgcolor: "inherit",
+                                          "&:hover": { color: "#ff7519" },
+                                        }}
+                                      >
+                                        <ShoppingCartCheckoutIcon />
+                                      </Avatar>
+                                    </StyledBadge>
                                     )}
-                                    <ShoppingCartCheckoutIcon />
-                                  </Avatar>
+                                     
+                                  </>
                                 ) : (
                                   <Box>
                                     <Avatar
@@ -807,7 +840,7 @@ function App() {
                       marginRight: { lg: "20px", xl: "20px" },
                       cursor: "pointer",
                       color: "#37474f",
-                      fontWeight: "bold"
+                      fontWeight: "bold",
                     }}
                   >
                     Men
@@ -1240,7 +1273,9 @@ function App() {
                         <Link to="search/categorytype/trimmers">trimmers</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/categorytype/deodorant">Deodorants</Link>
+                        <Link to="search/categorytype/deodorant">
+                          Deodorants
+                        </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link to="search/categorytype/tie">
@@ -1253,7 +1288,9 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/categorytype/caps-hates">caps&hates</Link>
+                        <Link to="search/categorytype/caps-hates">
+                          caps&hates
+                        </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link to="search/categorytype/muffalear-scarves-gloves">
@@ -1261,9 +1298,7 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                      
-                    
-                         <Link to="search/categorytype/phone-cases">
+                        <Link to="search/categorytype/phone-cases">
                           phone cases
                         </Link>
                       </MenuItem>
@@ -1317,7 +1352,7 @@ function App() {
                       marginRight: { lg: "20px", xl: "20px" },
                       cursor: "pointer",
                       color: "#37474f",
-                      fontWeight: "bold"
+                      fontWeight: "bold",
                     }}
                   >
                     Women
@@ -1618,14 +1653,10 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/categorytype/clothing">
-                          Clothing
-                        </Link>
+                        <Link to="search/categorytype/clothing">Clothing</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/categorytype/Footwear">
-                          Footwear
-                        </Link>
+                        <Link to="search/categorytype/Footwear">Footwear</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link to="search/categorytype/sports-accessories">
@@ -1670,9 +1701,7 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/categorytype/swimwear">
-                          Swimwear
-                        </Link>
+                        <Link to="search/categorytype/swimwear">Swimwear</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link to="search/categorytype/camisoles-thermal">
@@ -1696,9 +1725,7 @@ function App() {
                         <Link to="search/categorytype/makeup">Makeup</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/categorytype/skincare">
-                          Skincare
-                        </Link>
+                        <Link to="search/categorytype/skincare">Skincare</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link to="search/categorytype/premium-beauty">
@@ -1747,9 +1774,7 @@ function App() {
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/categorytype/speakers">
-                          Speakers
-                        </Link>
+                        <Link to="search/categorytype/speakers">Speakers</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link
@@ -1775,9 +1800,7 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/categorytype/earrings">
-                          Earrings
-                        </Link>
+                        <Link to="search/categorytype/earrings">Earrings</Link>
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
@@ -1837,7 +1860,7 @@ function App() {
                       marginRight: { lg: "20px", xl: "20px" },
                       cursor: "pointer",
                       color: "#37474f",
-                      fontWeight: "bold"
+                      fontWeight: "bold",
                     }}
                   >
                     Kids
@@ -2322,7 +2345,7 @@ function App() {
                       marginRight: { lg: "20px", xl: "20px" },
                       cursor: "pointer",
                       color: "#37474f",
-                      fontWeight: "bold"
+                      fontWeight: "bold",
                     }}
                   >
                     Home & Living
@@ -2867,7 +2890,7 @@ function App() {
                       marginRight: { lg: "20px", xl: "20px" },
                       cursor: "pointer",
                       color: "#37474f",
-                      fontWeight: "bold"
+                      fontWeight: "bold",
                     }}
                   >
                     Beauty
@@ -2942,9 +2965,7 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/categorytype/lipstick">
-                          Lipstick
-                        </Link>
+                        <Link to="search/categorytype/lipstick">Lipstick</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link to="search/categorytype/lip-gloss">
@@ -2960,9 +2981,7 @@ function App() {
                         <Link to="search/categorytype/mascara">Mascara</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/categorytype/eyeliner">
-                          Eyeliner
-                        </Link>
+                        <Link to="search/categorytype/eyeliner">Eyeliner</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link to="search/categorytype/kajal">Kajal</Link>
@@ -3015,9 +3034,7 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/categorytype/cleanser">
-                          Cleanser
-                        </Link>
+                        <Link to="search/categorytype/cleanser">Cleanser</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link to="search/categorytype/masks-peel">
@@ -3044,9 +3061,7 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/categorytype/lip-balm">
-                          Lip Balm
-                        </Link>
+                        <Link to="search/categorytype/lip-balm">Lip Balm</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link to="search/categorytype/body-lotion ">
@@ -3124,14 +3139,10 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/categorytype/hair-oil">
-                          Hair Oil
-                        </Link>
+                        <Link to="search/categorytype/hair-oil">Hair Oil</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/categorytype/hair-gel">
-                          Hair Gel
-                        </Link>
+                        <Link to="search/categorytype/hair-gel">Hair Gel</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link to="search/categorytype/hair-color">
@@ -3200,9 +3211,7 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/categorytype/epilator">
-                          Epilator
-                        </Link>
+                        <Link to="search/categorytype/epilator">Epilator</Link>
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
@@ -3220,9 +3229,7 @@ function App() {
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/categorytype/trimmers">
-                          Trimmers
-                        </Link>
+                        <Link to="search/categorytype/trimmers">Trimmers</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link to="search/categorytype/beard-oil">
@@ -3231,9 +3238,7 @@ function App() {
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/categorytype/hair-wax">
-                          Hair Wax
-                        </Link>
+                        <Link to="search/categorytype/hair-wax">Hair Wax</Link>
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
@@ -3327,9 +3332,7 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/categorytype/biotique">
-                          Biotique
-                        </Link>
+                        <Link to="search/categorytype/biotique">Biotique</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link to="search/categorytype/mamaearth">
