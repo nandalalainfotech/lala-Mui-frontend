@@ -18,24 +18,29 @@ export default function CollectionScreen(props) {
     dispatch(listProducts({}));
   }, [dispatch]);
   return (
-    <div className="collection">
+    <Box  style={{marginTop:20}}>
+        <Box><Typography variant="h4">{categorytype+" "+"Collection"}</Typography></Box>
       <Box
         sx={{
           padding: 0,
-          margin: 10,
+          margin: 5,
           width: "100%",
           listStyle: "none",
           display: "flex",
           flexFlow: "wrap row",
           flexDirection: "row",
+        
         }}
       >
         {loading ? (
           <CircularProgress></CircularProgress>
         ) : (
           <>
-            {categorytype === "men" && (
+         
+            {categorytype === "Men" && (
+              
               <>
+             {/* <Box> */}
                 {products
                   ?.filter((product) => {
                     return product.category === "men";
@@ -43,9 +48,10 @@ export default function CollectionScreen(props) {
                   .map((product) => (
                     <Product key={product._id} product={product}></Product>
                   ))}
+                  {/* </Box> */}
               </>
             )}  
-             {categorytype === "women" &&(
+             {categorytype === "Women" &&(
                 <>
                 {products
                   ?.filter((product) => {
@@ -57,7 +63,7 @@ export default function CollectionScreen(props) {
               </>
             )}
             <>
-            {categorytype === "kids" &&(
+            {categorytype === "Kids" &&(
                 <>
                 {products
                   ?.filter((product) => {
@@ -73,6 +79,6 @@ export default function CollectionScreen(props) {
           
         )}
       </Box>
-    </div>
+    </Box>
   );
 }
