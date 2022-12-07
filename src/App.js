@@ -3508,9 +3508,9 @@ function App() {
               ></Route>
 
               <Route path="/cart" element={<CartScreen />}></Route>
-              <Route path="/collectionlist/men" element={ <CollectionScreen categorytype= "men" />}></Route>
-              <Route path="/collectionlist/women" element={ <CollectionScreen categorytype= "women" />}></Route>
-              <Route path="/collectionlist/kids" element={ <CollectionScreen categorytype= "kids" />}></Route>
+              <Route path="/collectionlist/men" element={ <CollectionScreen categorytype= "Men" />}></Route>
+              <Route path="/collectionlist/women" element={ <CollectionScreen categorytype= "Women" />}></Route>
+              <Route path="/collectionlist/kids" element={ <CollectionScreen categorytype= "Kids" />}></Route>
               <Route path="/signin" element={<SigninScreen />}></Route>
               <Route path="/account" element={<AccountScreen />}></Route>
               <Route
