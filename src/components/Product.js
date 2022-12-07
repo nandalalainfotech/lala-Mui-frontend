@@ -12,7 +12,7 @@ import Rating from "@mui/material/Rating";
 
 export default function Product(props) {
   const { product } = props;
-  const [image, setImage] = useState();
+  const [image, setImage] = useState()
   useEffect(() => {
     async function fetchData() {
       const imageData = await Axios.get(`/api/uploads/show/${product._id}`, { responseType: 'blob' });
@@ -27,21 +27,28 @@ export default function Product(props) {
   return (
 
     <Card key={product._id} sx={{
-      minWidth: 200, margin: 1
+      width: 200,  margin: 1
     }}
     >
-      <Link to={`/product/${product._id}`}><CardMedia
-        sx={{
-          transition: "transform .5s ease",
-          "&:hover": {
-            transform: "scale(1.1)"
-          }
-        }}
-        component="img"
-        height="200"
-        image={image}
-        alt={product.name}
-      /></Link>
+      <Link to={`/product/${product._id}`}>
+        <CardMedia className="media"
+
+          style={{
+
+            transition: "transform .5s ease",
+            "&:hover": {
+              transform: "scale(1.1)",
+
+            },
+
+
+          }}
+          component="img"
+
+          // height="200"
+          image={image}
+          alt={product.name}
+        /></Link>
       <Link style={{
         textDecoration: "none",
         color: "#263238",

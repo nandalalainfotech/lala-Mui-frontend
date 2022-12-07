@@ -750,7 +750,7 @@ function App() {
             style={{
               marginTop: "50px",
               zIndex: "99",
-              background: "#37474f",
+              background: "#fff",
               height: "60px",
             }}
           >
@@ -808,6 +808,8 @@ function App() {
                       fontSize: { sm: "14px", md: "16px", lg: "16px" },
                       marginRight: { lg: "20px", xl: "20px" },
                       cursor: "pointer",
+                      color: "#37474f",
+                      fontWeight: "bold"
                     }}
                   >
                     Men
@@ -1139,7 +1141,7 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/categorytype/trackpants-shorts">
+                        <Link to="search/categorytype/trackpants">
                           trackpants&shorts
                         </Link>
                       </MenuItem>
@@ -1149,7 +1151,7 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/categorytype/jackets-sweetshirts">
+                        <Link to="search/categorytype/sweatshirt">
                           Jackets&sweetshirts
                         </Link>
                       </MenuItem>
@@ -1161,7 +1163,7 @@ function App() {
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/categorytype/swirm-wears">
+                        <Link to="search/categorytype/swirm-wear">
                           swirm wears
                         </Link>
                       </MenuItem>
@@ -1180,12 +1182,12 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/categorytype/small-wearables">
+                        <Link to="search/categorytype/small-wearble">
                           small wearables
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/categorytype/fitness-gadgets">
+                        <Link to="search/categorytype/fitnes">
                           fitness gadgets
                         </Link>
                       </MenuItem>
@@ -1207,7 +1209,7 @@ function App() {
                             color: "#ee5f73",
                             textDecoration: "none",
                           }}
-                          to="search/name/men-faschion"
+                          to="search/categorygroup/fashion"
                         >
                           Faschion Accessories
                         </Link>
@@ -1218,60 +1220,57 @@ function App() {
                             color: "#263238",
                             textDecoration: "none",
                           }}
-                          to="search/name/men-wallets"
+                          to="search/categorytype/wallet"
                         >
                           wallets
                         </Link>
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/name/men-belts">belts</Link>
+                        <Link to="search/categorytype/belt">belts</Link>
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/name/men-perfume-bodymists">
+                        <Link to="search/categorytype/perfume">
                           perfume&bodymists
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/name/men-belts">helmets</Link>
+                        <Link to="search/categorytype/helmet">helmets</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/name/men-trimmers">trimmers</Link>
+                        <Link to="search/categorytype/trimmers">trimmers</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/name/men-Deodorants">Deodorants</Link>
+                        <Link to="search/categorytype/deodorant">Deodorants</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/name/men-tiles-cuffkins-pocketsquares">
+                        <Link to="search/categorytype/tie">
                           tiles,cuffkins & pocketsquares
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/name/men-accessory-gift-seat">
+                        <Link to="search/categorytype/accessory-gift-seat">
                           accessory gift seat
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/name/men-caps-hates">caps&hates</Link>
+                        <Link to="search/categorytype/caps-hates">caps&hates</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/name/men-muffalear-scarves-gloves">
+                        <Link to="search/categorytype/muffalear-scarves-gloves">
                           muffalear,scarves &gloves
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/name/men-perfume-bodymists">
-                          perfume&bodymists
-                        </Link>
-                      </MenuItem>
-                      <MenuItem onClick={handleClose}>
-                        <Link to="search/name/men-phone-cases">
+                      
+                    
+                         <Link to="search/categorytype/phone-cases">
                           phone cases
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/name/men-rings-wrist-wear">
+                        <Link to="search/categorytype/rings-wrist-wear">
                           rings&wrist wear
                         </Link>
                       </MenuItem>
@@ -1283,14 +1282,14 @@ function App() {
                             color: "#ee5f73",
                             textDecoration: "none",
                           }}
-                          to="search/name/men-Bags-Backpacks"
+                          to="search/categorygroup/Bags-Backpacks"
                         >
                           Bags&Backpacks
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/name/men-Luggages-trolleys"
+                          to="search/categorygroup/luggages-trolleys"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -1319,6 +1318,8 @@ function App() {
                       fontSize: { sm: "14px", md: "16px", lg: "16px" },
                       marginRight: { lg: "20px", xl: "20px" },
                       cursor: "pointer",
+                      color: "#37474f",
+                      fontWeight: "bold"
                     }}
                   >
                     Women
@@ -1380,7 +1381,7 @@ function App() {
                     <div className="row">
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/women-Indian-fusion-wear"
+                          to="search/categorygroup/indian-fusion-wear"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -1392,58 +1393,58 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-kurtas-suits">
+                        <Link to="search/categorytype/kurtas-suits">
                           kurtas&suits
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-kurits-tunics&tops">
+                        <Link to="search/categorytype/kurits-tunics">
                           kurits,tunics&tops
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-sarees">sarees</Link>
+                        <Link to="search/categorytype/sarees">sarees</Link>
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-ethnic-wear">
+                        <Link to="search/categorytype/ethnic-wear">
                           ethnic wear
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-laggins-salwars-chudidars">
+                        <Link to="search/categorytype/laggins-salwars-chudidars">
                           laggins,salwars & chudidars
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Skirts-Palazzos">
+                        <Link to="search/categorytype/skirts-Palazzos">
                           Skirts & Palazzos
                         </Link>
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Dress-Materials">
+                        <Link to="search/categorytype/dress-materials">
                           Dress Materials
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Lehenga-Cholis">
+                        <Link to="search/categorytype/lehenga-cholis">
                           Lehenga Cholis
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Dupattas-Shawls">
+                        <Link to="search/categorytype/dupattas-shawls">
                           Dupattas & Shawls
                         </Link>
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Jackets">Jackets</Link>
+                        <Link to="search/categorytype/jackets">Jackets</Link>
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/women-Belts-Scarves-More"
+                          to="search/categorygroup/belts-scarves"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -1457,7 +1458,7 @@ function App() {
 
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/women-Watches-Wearables"
+                          to="search/categorygroup/watches-wearables"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -1472,7 +1473,7 @@ function App() {
                     <div className="row">
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/women-Western-Wear"
+                          to="search/categorygroup/western-wear"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -1484,57 +1485,57 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Dresses">Dresses</Link>
+                        <Link to="search/categorytype/dresses">Dresses</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Tops">Tops</Link>
+                        <Link to="search/categorytype/tops">Tops</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-T-shirts">Tshirts</Link>
+                        <Link to="search/categorytype/T-shirts">Tshirts</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Jeans">Jeans</Link>
+                        <Link to="search/categorytype/Jeans">Jeans</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Shorts-Skirts">
+                        <Link to="search/categorytype/shorts-skirts">
                           Shorts & Skirts
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Co-ords">Co-ords</Link>
+                        <Link to="search/categorytype/co-ords">Co-ords</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Playsuits">
+                        <Link to="search/categorytype/playsuits">
                           Playsuits
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Jumpsuits">
+                        <Link to="search/categorytype/jumpsuits">
                           Jumpsuits
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Shrugs">Shrugs</Link>
+                        <Link to="search/categorytype/shrugs">Shrugs</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Sweaters-Sweatshirts">
+                        <Link to="search/categorytype/sweaters-sweatshirts">
                           Sweaters&Sweatshirts
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Jackets-Coats">
+                        <Link to="search/categorytype/jackets-coats">
                           Jackets & Coats
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Blazers-Waistcoats">
+                        <Link to="search/categorytype/blazers-waistcoats">
                           Blazers & Waistcoats
                         </Link>
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/women-Plus-Size"
+                          to="search/categorygroup/plus-size"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -1549,7 +1550,7 @@ function App() {
                     <div className="row">
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/women-Maternity"
+                          to="search/categorygroup/maternity"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -1562,7 +1563,7 @@ function App() {
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/women-Sunglasses-Frames"
+                          to="search/categorygroup/sunglasses-frames"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -1575,7 +1576,7 @@ function App() {
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/women-Foot-Wear"
+                          to="search/categorygroup/foot-wear"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -1587,27 +1588,27 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Flats">Flats</Link>
+                        <Link to="search/categorytype/flats">Flats</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Casual-Shoes">
+                        <Link to="search/categorytype/casual-shoes">
                           Casual Shoes
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Heels">Heels</Link>
+                        <Link to="search/categorytype/heels">Heels</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Boots">Boots</Link>
+                        <Link to="search/categorytype/boots">Boots</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Sports-Shoes-Floaters">
+                        <Link to="search/categorytype/sports-shoes-floaters">
                           SportsShoes&Floaters
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="/search/category/women-ports-activy-Wear"
+                          to="search/categorygroup/sports-activy-wear"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -1619,22 +1620,22 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-clothing">
+                        <Link to="search/categorytype/clothing">
                           Clothing
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Footwear">
+                        <Link to="search/categorytype/Footwear">
                           Footwear
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Sports-Accessories">
+                        <Link to="search/categorytype/sports-accessories">
                           Sports Accessories
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Sports-Equipment">
+                        <Link to="search/categorytype/sports-equipment">
                           Sports Equipment
                         </Link>
                       </MenuItem>
@@ -1642,7 +1643,7 @@ function App() {
                     <div className="row">
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/women-Lingerie-Sleepwear"
+                          to="search/categorygroup/lingerie-sleepwear"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -1654,35 +1655,35 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Bra">Bra</Link>
+                        <Link to="search/categorytype/bra">Bra</Link>
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Briefs">Briefs</Link>
+                        <Link to="search/categorytype/briefs">Briefs</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Shapewear">
+                        <Link to="search/categorytype/shapewear">
                           Shapewear
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Sleepwear-Loungewear">
+                        <Link to="search/categorytype/sleepwear-loungewear">
                           Sleepwear & Loungewear
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Swimwear">
+                        <Link to="search/categorytype/swimwear">
                           Swimwear
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Camisoles-Thermals">
+                        <Link to="search/categorytype/camisoles-thermal">
                           Camisoles & Thermals
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/women-Beauty-Personal-Care"
+                          to="search/categorygroup/beauty-personal-care"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -1694,25 +1695,25 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Makeup">Makeup</Link>
+                        <Link to="search/categorytype/makeup">Makeup</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Skincare">
+                        <Link to="search/categorytype/skincare">
                           Skincare
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Premium-Beauty">
+                        <Link to="search/categorytype/premium-beauty">
                           Premium Beauty
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Lipsticks">
+                        <Link to="search/categorytype/lipsticks">
                           Lipsticks
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Fragrances">
+                        <Link to="search/categorytype/fragrances">
                           Fragrances
                         </Link>
                       </MenuItem>
@@ -1720,7 +1721,7 @@ function App() {
                     <div className="row">
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="/Gadgets"
+                          to="search/categorygroup/gadgets"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -1732,29 +1733,29 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Smart-Wearables">
+                        <Link to="search/categorytype/smart-wearble">
                           SmartWearables
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Fitness-Gadgets">
+                        <Link to="search/categorytype/fitness-gadgets">
                           FitnessGadgets
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Headphones">
+                        <Link to="search/categorytype/headphone">
                           Headphones
                         </Link>
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Speakers">
+                        <Link to="search/categorytype/speakers">
                           Speakers
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/women-Jewellery"
+                          to="search/categorygroup/jewellery"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -1766,24 +1767,24 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Fashion-Jewellery">
+                        <Link to="search/categorytype/fashion-jewellery">
                           FashionJewellery
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Fine-Jewellery">
+                        <Link to="search/categorytype/fine-jewellery">
                           Fine Jewellery
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/women-Earrings">
+                        <Link to="search/categorytype/earrings">
                           Earrings
                         </Link>
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/women-Gadgets"
+                          to="search/categorygroup/backpacks"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -1796,7 +1797,7 @@ function App() {
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/women-Handbags-Bags-Wallets"
+                          to="search/categorygroup/handbags-bags-wallets"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -1809,7 +1810,7 @@ function App() {
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/women-Luggages-Trolleys"
+                          to="search/categorygroup/luggages-trolleys"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -1837,6 +1838,8 @@ function App() {
                       fontSize: { sm: "14px", md: "16px", lg: "16px" },
                       marginRight: { lg: "20px", xl: "20px" },
                       cursor: "pointer",
+                      color: "#37474f",
+                      fontWeight: "bold"
                     }}
                   >
                     Kids
@@ -1899,7 +1902,7 @@ function App() {
                     <div className="row">
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/kids-Boys-Clothing"
+                          to="search/categorygroup/boys-clothing"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -1911,61 +1914,61 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-T-Shirts">T-Shirts</Link>
+                        <Link to="search/categorytype/T-Shirts">T-Shirts</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Shirts">Shirts</Link>
+                        <Link to="search/categorytype/Shirts">Shirts</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Shorts">Shorts</Link>
+                        <Link to="search/categorytype/Shorts">Shorts</Link>
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Jeans">Jeans</Link>
+                        <Link to="search/categorytype/jeans">Jeans</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Trousers">Trousers</Link>
+                        <Link to="search/categorytype/Trousers">Trousers</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Clothing-Sets">
+                        <Link to="search/categorytype/clothing-sets">
                           Clothing Sets
                         </Link>
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Ethnic-Wear">
+                        <Link to="search/categorytype/Ethnic-wear">
                           Ethnic Wear
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Track-Pants-Pyjamas">
+                        <Link to="search/categorytype/track-pants-pyjamas">
                           Track Pants & Pyjamas
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="/Jacket-Sweater-Sweatshirts">
+                        <Link to="search/categorytype/jacket-sweater-sweatshirts">
                           Jacket,Sweater & Sweatshirts
                         </Link>
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Party-Wear">
+                        <Link to="search/categorytype/party-wear">
                           Party Wear
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Innerwear-Thermals">
+                        <Link to="search/categorytype/innerwear-thermals">
                           Innerwear & Thermals
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Nightwear-Loungewear">
+                        <Link to="search/categorytype/nightwear-loungewear">
                           Nightwear & Loungewear
                         </Link>
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Value-Packs">
+                        <Link to="search/categorytype/value-packs">
                           Value Packs
                         </Link>
                       </MenuItem>
@@ -1973,7 +1976,7 @@ function App() {
                     <div className="row">
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/kids-girls-clothing"
+                          to="search/categorygroup/girls-clothing"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -1985,71 +1988,71 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Dresses">Dresses</Link>
+                        <Link to="search/categorytype/dress">Dresses</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Tops">Tops</Link>
+                        <Link to="search/categorytype/top">Tops</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-T-shirts">Tshirts</Link>
+                        <Link to="search/categorytype/T-shirt">Tshirts</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Clothing-Sets">
+                        <Link to="search/categorytype/clothing-set">
                           Clothing Sets
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Lehenga-choli">
+                        <Link to="search/categorytype/lehenga-choli">
                           Lehenga choli
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Kurta-Sets">
+                        <Link to="search/categorytype/kurta-sets">
                           Kurta Sets
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Party-wear">
+                        <Link to="search/categorytype/party-wears">
                           Party wear
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Dungarees-Jumpsuits">
+                        <Link to="search/categorytype/dungarees-jumpsuits">
                           Dungarees & Jumpsuits
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Skirts-shorts">
+                        <Link to="search/categorytype/skirts-shorts">
                           Skirts & shorts
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Tights-Leggings">
+                        <Link to="search/categorytype/tights-leggings">
                           Tights & Leggings
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Jeans-Trousers-Capris">
+                        <Link to="search/categorytype/jeans-trousers-capris">
                           Jeans,Trousers &Capris
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Jacket-Sweater-Sweatshirts">
+                        <Link to="search/categorytype/jacket-sweater">
                           Jacket,Sweater&Sweatshirts
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Innerwear-Thermals">
+                        <Link to="search/categorytype/innerwear-thermal">
                           Innerwear & Thermals
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Nightwear-Loungewear">
+                        <Link to="search/categorytype/nightwear-loungewears">
                           Nightwear & Loungewear
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Value-Packs">
+                        <Link to="search/categorytype/value-Pack">
                           Value Packs
                         </Link>
                       </MenuItem>
@@ -2057,7 +2060,7 @@ function App() {
                     <div className="row">
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/kids-Foot-Wear"
+                          to="search/categorygroup/foot-wears"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -2069,37 +2072,37 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Casual-Shoes">
+                        <Link to="search/categorytype/casual-shoes">
                           Casual Shoes
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Flipflops">
+                        <Link to="search/categorytype/flipflops">
                           Flipflops
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Sports Shoes">
+                        <Link to="search/categorytype/Sports-shoes">
                           Sports Shoes
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Flats">Flats</Link>
+                        <Link to="search/categorytype/flat">Flats</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Sandals">Sandals</Link>
+                        <Link to="search/categorytype/Sandals">Sandals</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-School-Shoes">
+                        <Link to="search/categorytype/school-shoes">
                           School Shoes
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Socks">Socks</Link>
+                        <Link to="search/categorytype/Socks">Socks</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/kids-Toys"
+                          to="search/categorygroup/toys"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -2111,22 +2114,22 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Learning-Development">
+                        <Link to="search/categorytype/learning-development">
                           Learning&Development
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Activity-Toys">
+                        <Link to="search/categorytype/activity-toys">
                           Activity Toys
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Soft-Toys">
+                        <Link to="search/categorytype/soft-toys">
                           Soft Toys
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Action-Figure-Play">
+                        <Link to="search/categorytype/action-figure-play">
                           Action Figure / Play set
                         </Link>
                       </MenuItem>
@@ -2134,7 +2137,7 @@ function App() {
                     <div className="row">
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/kids-Infants"
+                          to="search/categorygroup/infants"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -2146,51 +2149,51 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Bodysuits">
+                        <Link to="search/categorytype/bodysuits">
                           Bodysuits
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Rompers-Sleepsuits">
+                        <Link to="search/categorytype/rompers-sleepsuits">
                           Rompers&Sleepsuits
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Clothing-Sets">
+                        <Link to="search/categorytype/clothing-sets">
                           Clothing Sets
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Tshirts-Tops">
+                        <Link to="search/categorytype/t-shirts-tops">
                           Tshirts & Tops
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Dresses">Dresses</Link>
+                        <Link to="search/categorytype/dress">Dresses</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Bottom-wear">
+                        <Link to="search/categorytype/bottom-wear">
                           Bottom wear
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Winter-Wear">
+                        <Link to="search/categorytype/winter-wear">
                           Winter Wear
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Innerwear-Sleepwear">
+                        <Link to="search/categorytype/innerwear-sleepwear">
                           Innerwear & Sleepwear
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Infant-Care">
+                        <Link to="search/categorytype/infant-care">
                           Infant Care
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/kids-Home-Bath"
+                          to="search/categorygroup/home-bath"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -2203,7 +2206,7 @@ function App() {
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/kids-Personal-Care"
+                          to="search/categorygroup/personal-care"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -2218,7 +2221,7 @@ function App() {
                     <div className="row">
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/kids-Accessories"
+                          to="search/categorygroup/kids-accessories"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -2230,12 +2233,12 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Bags-Backpacks">
+                        <Link to="search/categorytype/bags-backpacks">
                           Bags&Backpacks
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Watches">Watches</Link>
+                        <Link to="search/categorytype/watches">Watches</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link to="search/category/kids-Jewellery-Hair-accessory">
@@ -2243,23 +2246,23 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Sunglasses">
+                        <Link to="search/categorytype/sunglass">
                           Sunglasses
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Masks-Protective-Gears">
+                        <Link to="search/categorytype/masks-protective-gears">
                           Masks & ProtectiveGears
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Caps-Hats">
+                        <Link to="search/categorytype/caps-hat">
                           Caps & Hats
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/kids-Brands"
+                          to="search/categorygroup/brands"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -2277,30 +2280,30 @@ function App() {
                         <Link to="search/category/kids-Max-Kids">Max Kids</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Pantaloons">
+                        <Link to="search/categorytype/pantaloons">
                           Pantaloons
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-United-Colors">
+                        <Link to="search/categorytype/united-Colors">
                           UnitedColors of BenettonKids
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-YK">YK</Link>
+                        <Link to="search/categorytype/yk">YK</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Kids">
+                        <Link to="search/categorytype/us-kids">
                           U.S. Polo Assn. Kids
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-Mothercare">
+                        <Link to="search/categorytype/mothercare">
                           Mothercare
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/kids-HRX">HRX</Link>
+                        <Link to="search/categorytype/hrx">HRX</Link>
                       </MenuItem>
                     </div>
                   </Menu>
@@ -2320,6 +2323,8 @@ function App() {
                       fontSize: { sm: "14px", md: "16px", lg: "16px" },
                       marginRight: { lg: "20px", xl: "20px" },
                       cursor: "pointer",
+                      color: "#37474f",
+                      fontWeight: "bold"
                     }}
                   >
                     Home & Living
@@ -2382,7 +2387,7 @@ function App() {
                     <div className="row">
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/home-Bed-Linen"
+                          to="search/categorygroup/bed-linen"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -2394,34 +2399,34 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Bed-Runners">
+                        <Link to="search/categorytype/bed-runners">
                           {" "}
                           Bed Runners
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Mattress-Protectors">
+                        <Link to="search/categorytype/mattress-protectors">
                           Mattress Protectors
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Bedsheets">
+                        <Link to="search/categorytype/bedsheets">
                           Bedsheets
                         </Link>
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Bedding-Sets">
+                        <Link to="search/categorytype/bedding-sets">
                           Bedding Sets
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Blankets-Quilts-Dohars">
+                        <Link to="search/categorytype/blankets-quilts-dohars">
                           Blankets,Quilts & Dohars
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Pillows-Pillow-Covers">
+                        <Link to="search/categorytype/pillows-pillow-covers">
                           Pillows & Pillow Covers
                         </Link>
                       </MenuItem>
@@ -2432,23 +2437,23 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Diwan-Sets">
+                        <Link to="search/categorytype/diwan-sets">
                           Diwan Sets
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Chair-Pads-Covers">
+                        <Link to="search/categorytype/chair-pads-covers">
                           Chair Pads & Covers
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Sofa-Covers">
+                        <Link to="search/categorytype/sofa-cover">
                           Sofa Covers
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/home-Flooring"
+                          to="search/categorygroup/flooring"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -2460,21 +2465,21 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Floor-Runners">
+                        <Link to="search/categorytype/floor-Runners">
                           Floor Runners
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Carpets">Carpets</Link>
+                        <Link to="search/categorytype/carpets">Carpets</Link>
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Floor-Mats-Dhurries">
+                        <Link to="search/categorytype/floor-mats-dhurries">
                           Floor Mats & Dhurries
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Door-Mats">
+                        <Link to="search/categorytype/door-mats">
                           Door Mats
                         </Link>
                       </MenuItem>
@@ -2482,7 +2487,7 @@ function App() {
                     <div className="row">
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/home-Bath"
+                          to="search/categorygroup/bath"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -2494,48 +2499,48 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Bath-Towels">
+                        <Link to="search/categorytype/bath-towels">
                           Bath Towels
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Hand-Face-Towels">
+                        <Link to="search/categorytype/hand-face-towels">
                           Hand & Face Towels
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Beach-Towels">
+                        <Link to="search/categorytype/beach-towels">
                           Beach Towels
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Towels-Set">
+                        <Link to="search/categorytype/towels-set">
                           Towels Set
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Bath-Rugs">
+                        <Link to="search/categorytype/bath-rugs">
                           Bath Rugs
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Bath-Robes">
+                        <Link to="search/categorytype/bath-robes">
                           Bath Robes
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Bathroom-Accessories">
+                        <Link to="search/categorytype/bathroom-accessories">
                           Bathroom Accessories
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Shower-Curtains">
+                        <Link to="search/categorytype/shower-curtains">
                           ShowerCurtains
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/home-Lamps-Lighting"
+                          to="search/categorygroup/lamps-lighting"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -2547,32 +2552,32 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Floor-Lamps">
+                        <Link to="search/categorytype/floor-lamps">
                           Floor Lamps
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Ceiling-Lamps">
+                        <Link to="search/categorytype/ceiling-lamps">
                           CeilingLamps
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Table-Lamps">
+                        <Link to="search/categorytype/table-lamps">
                           Table Lamps
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Wall-Lamps">
+                        <Link to="search/categorytype/wall-lamps">
                           Wall Lamps
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Outdoor-Lamps">
+                        <Link to="search/categorytype/outdoor-lamps">
                           Outdoor Lamps
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-String-Lights">
+                        <Link to="search/categorytype/string-lights">
                           String Lights
                         </Link>
                       </MenuItem>
@@ -2580,7 +2585,7 @@ function App() {
                     <div className="row">
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/home-Decor"
+                          to="search/categorygroup/home-Decor"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -2592,60 +2597,60 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Plants-Planters">
+                        <Link to="search/categorytype/plants">
                           Plants & Planters
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Aromas-Candles">
+                        <Link to="search/categorytype/aromas-candles">
                           Aromas & Candles
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Clocks">Clocks</Link>
+                        <Link to="search/categorytype/clock">Clocks</Link>
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Mirrors">Mirrors</Link>
+                        <Link to="search/categorytype/mirrors">Mirrors</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Wall-Decor">
+                        <Link to="search/categorytype/wall-decor">
                           Wall Decor
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Festive-Decor">
+                        <Link to="search/categorytype/festive-decor">
                           Festive Decor
                         </Link>
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Pooja-Essentials">
+                        <Link to="search/categorytype/pooja-essentials">
                           Pooja Essentials
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Wall-Shelves">
+                        <Link to="search/categorytype/wall-shelves">
                           Wall Shelves
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Fountains">
+                        <Link to="search/categorytype/fountains">
                           Fountains
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Showpieces-Vases">
+                        <Link to="search/categorytype/showpieces-vases">
                           Show pieces& Vases
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Ottoman">Ottoman</Link>
+                        <Link to="search/categorytype/ottoman">Ottoman</Link>
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/home-Cushions-Cushion-Covers"
+                          to="search/categorygroup/cushions-cushion-covers"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -2658,7 +2663,7 @@ function App() {
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="/Curtains"
+                          to="search/categorygroup/curtains"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -2673,7 +2678,7 @@ function App() {
                     <div className="row">
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/home-Home-Gift-Sets"
+                          to="search/categorygroup/home-gift-sets"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -2686,7 +2691,7 @@ function App() {
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/home-Kitchen-Table"
+                          to="search/categorygroup/kitchen-table"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -2698,43 +2703,43 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Table-Runners">
+                        <Link to="search/categorytype/table-runners">
                           Table Runners
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Dinnerware-Serveware">
+                        <Link to="search/categorytype/dinnerware-serveware">
                           Dinnerware & Serveware
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Cups-and-Mugs">
+                        <Link to="search/categorytype/cups-mugs">
                           Cups and Mugs
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Bakeware-Cookware">
+                        <Link to="search/categorytype/bakeware-cookware">
                           Bakeware & Cookware
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Kitchen-Storage-Tools">
+                        <Link to="search/categorytype/kitchen-storage-tools">
                           Kitchen Storage & Tools
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Bar-Drinkware">
+                        <Link to="search/categorytype/bar-drinkware">
                           Bar & Drinkware
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Table-Covers-Furnishings">
+                        <Link to="search/categorytype/table-covers-furnishings">
                           TableCovers&Furnishings
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/home-Gadgets"
+                          to="search/categorygroup/storages"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -2746,23 +2751,23 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Bins">Bins</Link>
+                        <Link to="search/categorytype/bins">Bins</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Hangers">Hangers</Link>
+                        <Link to="search/categorytype/hangers">Hangers</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Organisers">
+                        <Link to="search/categorytype/organisers">
                           Organisers
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Hooks-Holders">
+                        <Link to="search/categorytype/hooks-holders">
                           Hooks & Holders
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Laundry-Bags">
+                        <Link to="search/categorytype/laundry-bags">
                           Laundry Bags
                         </Link>
                       </MenuItem>
@@ -2771,7 +2776,7 @@ function App() {
                     <div className="row">
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/home-Brands"
+                          to="search/categorygroup/brand"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -2783,65 +2788,65 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-H&M">H&M</Link>
+                        <Link to="search/categorytype/h-m">H&M</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Marks-Spencer">
+                        <Link to="search/categorytype/marks-spencer">
                           Marks & Spencer
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Home-Centre">
+                        <Link to="search/categorytype/home-centre">
                           Home Centre
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Spaces">Spaces</Link>
+                        <Link to="search/categorytype/spaces">Spaces</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-D-Decor">D'Decor</Link>
+                        <Link to="search/categorytype/d-decor">D'Decor</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Story-Home">
+                        <Link to="search/categorytype/story-home">
                           Story@Home
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Pure-Home-Living">
+                        <Link to="search/categorytype/pure-home-living">
                           PureHome&Living
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Swayam">Swayam</Link>
+                        <Link to="search/categorytype/swayam">Swayam</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Raymond-Home">
+                        <Link to="search/categorytype/raymond-home">
                           Raymond Home
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Maspar">Maspar</Link>{" "}
+                        <Link to="search/categorytype/maspar">Maspar</Link>{" "}
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Trident">Trident</Link>
+                        <Link to="search/categorytype/trident">Trident</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Cortina">Cortina</Link>
+                        <Link to="search/categorytype/cortina">Cortina</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Random">Random</Link>
+                        <Link to="search/categorytype/random">Random</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Ellementry">
+                        <Link to="search/categorytype/ellementry">
                           Ellementry
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-ROMEE">ROMEE</Link>
+                        <Link to="search/categorytype/romee">ROMEE</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/home-Story-Home">
+                        <Link to="search/categorytype/nishagupta">
                           SEJby NishaGupta
                         </Link>
                       </MenuItem>
@@ -2863,6 +2868,8 @@ function App() {
                       fontSize: { sm: "14px", md: "16px", lg: "16px" },
                       marginRight: { lg: "20px", xl: "20px" },
                       cursor: "pointer",
+                      color: "#37474f",
+                      fontWeight: "bold"
                     }}
                   >
                     Beauty
@@ -2925,7 +2932,7 @@ function App() {
                     <div className="row">
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/beauty-Makeup"
+                          to="search/categorygroup/makeup"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -2937,55 +2944,55 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Lipstick">
+                        <Link to="search/categorytype/lipstick">
                           Lipstick
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Lip-Gloss">
+                        <Link to="search/categorytype/lip-gloss">
                           Lip Gloss
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Lip-Liner">
+                        <Link to="search/categorytype/lip-liner">
                           Lip Liner
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Mascara">Mascara</Link>
+                        <Link to="search/categorytype/mascara">Mascara</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Eyeliner">
+                        <Link to="search/categorytype/eyeliner">
                           Eyeliner
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Kajal">Kajal</Link>
+                        <Link to="search/categorytype/kajal">Kajal</Link>
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Eyeshadow">
+                        <Link to="search/categorytype/eyeshadow">
                           Eyeshadow
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Foundation">
+                        <Link to="search/categorytype/foundation">
                           Foundation
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Primer">Primer</Link>
+                        <Link to="search/categorytype/primer">Primer</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Concealer">
+                        <Link to="search/categorytype/concealer">
                           Concealer
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Compact">Compact</Link>
+                        <Link to="search/categorytype/compact">Compact</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Nail-Polish">
+                        <Link to="search/categorytype/nail-polish">
                           Nail Polish
                         </Link>
                       </MenuItem>
@@ -2993,7 +3000,7 @@ function App() {
                     <div className="row">
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="/Skincare-Bath-Body "
+                          to="search/categorygroup/skincare-bath-body "
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -3005,68 +3012,68 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Face-Moisturiser">
+                        <Link to="search/categorytype/face-moisturiser">
                           Face Moisturiser
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Cleanser">
+                        <Link to="search/categorytype/cleanser">
                           Cleanser
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Masks-Peel">
+                        <Link to="search/categorytype/masks-peel">
                           Masks & Peel
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Sunscreen">
+                        <Link to="search/categorytype/sunscreen">
                           Sunscreen
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Serum">Serum</Link>
+                        <Link to="search/categorytype/serum">Serum</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Face-Wash">
+                        <Link to="search/categorytype/face-wash">
                           Face Wash
                         </Link>
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Eye-Cream">
+                        <Link to="search/categorytype/eye-cream">
                           Eye Cream
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Lip-Balm">
+                        <Link to="search/categorytype/lip-balm">
                           Lip Balm
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Body-Lotion ">
+                        <Link to="search/categorytype/body-lotion ">
                           Body Lotion{" "}
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Body-Wash">
+                        <Link to="search/categorytype/body-wash">
                           Body Wash
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Body-Scrup">
+                        <Link to="search/categorytype/body-scrup">
                           {" "}
                           Body Scrub
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Hand-cream">
+                        <Link to="search/categorytype/hand-cream">
                           Hand Cream{" "}
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/beauty-Baby-Care"
+                          to="search/categorygroup/baby-care"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -3079,7 +3086,7 @@ function App() {
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/beauty-Masks"
+                          to="search/categorygroup/masks"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -3094,7 +3101,7 @@ function App() {
                     <div className="row">
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/beauty-Haircare"
+                          to="search/categorygroup/haircare"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -3106,46 +3113,46 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Shampoo">Shampoo</Link>
+                        <Link to="search/categorytype/shampoo">Shampoo</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Conditioner">
+                        <Link to="search/categorytype/conditioner">
                           Conditioners
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Hair-Cream">
+                        <Link to="search/categorytype/hair-cream">
                           Hair Cream
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Hair-Oil">
+                        <Link to="search/categorytype/hair-oil">
                           Hair Oil
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Hair-Gel">
+                        <Link to="search/categorytype/hair-gel">
                           Hair Gel
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Hair-Color">
+                        <Link to="search/categorytype/hair-color">
                           Hair Color
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Hair-Serum">
+                        <Link to="search/categorytype/hair-serum">
                           Hair Serum
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Hair-Accessory">
+                        <Link to="search/categorytype/hair-accessory">
                           Hair Accessory
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/beauty-Fragrances"
+                          to="search/categorygroup/fragrances"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -3157,15 +3164,15 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Perfume">Perfume</Link>
+                        <Link to="search/categorytype/perfume">Perfume</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Deodorant">
+                        <Link to="search/categorytype/deodorant">
                           Deodorant
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Body-Mist">
+                        <Link to="search/categorytype/body-mist">
                           Body Mist
                         </Link>
                       </MenuItem>
@@ -3173,7 +3180,7 @@ function App() {
                     <div className="row">
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/beauty-Appliances"
+                          to="search/categorygroup/appliances"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -3185,24 +3192,24 @@ function App() {
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Hair-Straightener">
+                        <Link to="search/categorytype/hair-straightener">
                           Hair Straightener
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Hair-Dryer">
+                        <Link to="search/categorytype/hair-dryer">
                           Hair Dryer
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Epilator">
+                        <Link to="search/categorytype/epilator">
                           Epilator
                         </Link>
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/beauty-Men-Grooming"
+                          to="search/categorygroup/men-grooming"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -3215,25 +3222,25 @@ function App() {
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Trimmers">
+                        <Link to="search/categorytype/trimmers">
                           Trimmers
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Beard-Oil">
+                        <Link to="search/categorytype/beard-oil">
                           Beard Oil
                         </Link>
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Hair-Wax">
+                        <Link to="search/categorytype/hair-wax">
                           Hair Wax
                         </Link>
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/beauty-Beauty-Gift-Makeup"
+                          to="search/categorygroup/beauty-gift-makeup"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -3246,18 +3253,18 @@ function App() {
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Beauty-Gift">
+                        <Link to="search/categorytype/beauty-gift">
                           Beauty Gift
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Makeup-Kit">
+                        <Link to="search/categorytype/makeup-kit">
                           Makeup Kit
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/beauty-Premium-Beauty"
+                          to="search/categorygroup/premium-beauty"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -3270,7 +3277,7 @@ function App() {
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/beauty-Wellness-Hygiene"
+                          to="search/categorygroup/wellness-hygiene"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -3285,7 +3292,7 @@ function App() {
                     <div className="row">
                       <MenuItem onClick={handleClose}>
                         <Link
-                          to="search/category/beauty-Top-Brands"
+                          to="search/categorygroup/top-brands"
                           style={{
                             lineHeight: "25px",
                             fontWeight: "bold",
@@ -3298,63 +3305,63 @@ function App() {
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Lakme">Lakme</Link>
+                        <Link to="ssearch/categorytype/lakme">Lakme</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Maybelline">
+                        <Link to="search/categorytype/maybelline">
                           Maybelline
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Loreal">Loreal</Link>
+                        <Link to="search/categorytype/loreal">Loreal</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Philips">Philips</Link>
+                        <Link to="search/categorytype/philips">Philips</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Bath-Body-Works">
+                        <Link to="search/categorytype/bath-body-works">
                           Bath & Body Works
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Body-Shop">
+                        <Link to="search/categorytype/body-shop">
                           The Body Shop
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Biotique">
+                        <Link to="search/categorytype/biotique">
                           Biotique
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Mamaearth">
+                        <Link to="search/categorytype/mamaearth">
                           Mamaearth
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-MCaffeine">
+                        <Link to="search/categorytype/mcaffeine">
                           MCaffeine
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Nivea">Nivea</Link>
+                        <Link to="search/categorytype/nivea">Nivea</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Loreal-Professionnel">
+                        <Link to="search/categorytype/loreal-professionnel">
                           Loreal Professionnel
                         </Link>{" "}
                       </MenuItem>
 
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-KAMA-AYURVEDA">
+                        <Link to="search/categorytype/kama-ayurveda">
                           Kama Ayerveda
                         </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-m.a.c">M.A.C</Link>
+                        <Link to="search/categorytype/m-a-c">M.A.C</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/category/beauty-Forest-Essentials">
+                        <Link to="search/categorytype/forest-essentials">
                           Forest Essentials
                         </Link>
                       </MenuItem>

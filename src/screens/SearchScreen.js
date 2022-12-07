@@ -378,6 +378,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { useNavigate } from "../../node_modules/react-router-dom/dist/index";
 import { listProducts } from "../actions/productAction";
+import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import Product from "../components/Product";
 import { prices, ratings } from "../utils";
@@ -385,14 +386,20 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-// eslint-disable-next-line no-unused-vars
+import CardMedia from "@mui/material/CardMedia";
+import Button from "@mui/material/Button";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
+import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
+import Divider from "@mui/material/Divider";
 import Rating from "@mui/material/Rating";
 import CircularProgress from "@mui/material/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
 
 export default function SearchScreen(props) {
   const {
