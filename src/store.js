@@ -1,7 +1,7 @@
 import { createStore, compose, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import { addressListReducer } from './reducers/addressReducers';
-import { cartReducer } from './reducers/cartReducers';
+import { cartDeleteReducer, cartReducer, cartUpdateReducer, userCartListReducer } from './reducers/cartReducers';
 import { orderCreateReducer, orderDeleteReducer, orderDeliverReducer, orderDetailsReducer, orderListReducer, orderMineListReducer, orderPayReducer, orderSummaryReducer } from './reducers/orderReducers';
 import { productCategoryListReducer,productCategorygroupListReducer,productCategorytypeListReducer, productCreateReducer, productDeleteReducer, productDetailsReducer, productListReducer, productReviewCreateReducer, productUpdateReducer, productMenListReducer, productWomenListReducer, productKidsListReducer, } from './reducers/productReducers';
 import { userAddressMapReducer, userDeleteReducer, userDetailsReducer, userListReducer, userRegisterReducer, userSigninReducer, userAccountReducer, userAccountcreationReducer, userAdmininReducer, userTopSellerListReducer, userUpdateProfileReducer, userUpdateReducer } from './reducers/userReducers';
@@ -64,7 +64,9 @@ const reducer = combineReducers({
   productWomenList:productWomenListReducer,
   productKidsList:productKidsListReducer,
   womenList: womenListReducer,
-  
+    userCartListItem:userCartListReducer,
+  cartDelete:cartDeleteReducer,
+  cartUpdate:cartUpdateReducer,
   kidList: kidListReducer,
   
 

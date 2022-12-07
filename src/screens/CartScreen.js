@@ -8,15 +8,28 @@ import Grid from "@mui/material/Grid";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import { addToCart, removeFromCart } from "../actions/cartAction";
+import {
+  addToCart,
+  deleteCart,
+  removeFromCart,
+  updateCart,
+  userCartList,
+} from "../actions/cartAction";
 import MessageBox from "../components/MessageBox";
+import { makeStyles } from "@material-ui/core/styles";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
-
+import {
+  CART_ADD_ITEM,
+  CART_DELETE_RESET,
+  CART_UPDATE_RESET,
+  USER_CART_LIST_SUCCESS,
+} from "../constants/cartConstants";
+import CircularProgress from "@mui/material/CircularProgress";
 export default function CartScreen(props) {
   const navigate = useNavigate();
   const theme = createTheme();
@@ -29,15 +42,58 @@ export default function CartScreen(props) {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const cart = useSelector((state) => state.cart);
-  const { cartItems, error } = cart;
+  const { cartItems, error, success, loading: loadingCartItem } = cart;
+  const userCartListItem = useSelector((state) => state.userCartListItem);
+  const {
+    usercart: usercart,
+    loading: loadingCart,
+    success: successCart,
+  } = userCartListItem;
+  const [cartupdate, setCartupdate] = useState(usercart);
+  const cartDelete = useSelector((state) => state.cartDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = cartDelete;
+
+  const cartUpdate = useSelector((state) => state.cartUpdate);
+  const { success: successUpdate } = cartUpdate;
+
+  const updateHandler = (e, id) => {
+    e.preventDefault();
+    dispatch(
+      updateCart({
+        usercartId: id,
+        qty: e.target.value,
+      })
+    );
+  };
   useEffect(() => {
+    // dispatch(userCartId());
+
     if (productId) {
       dispatch(addToCart(productId, qty));
     }
-  }, [dispatch, productId, qty]);
-  const removeFromCartHandler = (id) => {
-    // delete action
-    dispatch(removeFromCart(id));
+    if (success) {
+      dispatch(userCartList(userInfo?._id));
+    }
+    
+    if (successUpdate) {
+      dispatch(userCartList(userInfo?._id));
+      dispatch({ type: CART_UPDATE_RESET });
+    }
+    if (successDelete) {
+      dispatch(userCartList(userInfo?._id));
+      dispatch({ type: CART_DELETE_RESET });
+      navigate("/cart");
+    }
+  }, [dispatch, productId, qty, successDelete, successUpdate, success]);
+
+  const removeFromCartHandler = (_id) => {
+    if (window.confirm("Are you sure to delete?")) {
+      dispatch(deleteCart(_id));
+    }
   };
 
   const checkoutHandler = () => {
@@ -61,266 +117,184 @@ export default function CartScreen(props) {
               gutterBottom
               variant="h5"
               component="div"
-              justifyContent="left"
+              justifyContent="right"
             >
               Shopping Cart
             </Typography>
           )}
-          {error && <MessageBox variant="danger">{error}</MessageBox>}
-          {cartItems.length === 0 ? (
-            <Box>
-              {userInfo ? (
+          {userInfo ?(
+            <>
+           {loadingCart ? (
+            <CircularProgress></CircularProgress>
+          ) : (
+            
+            <>
+              {usercart?.length === 0 ? (
                 <Box>
-                  <CardMedia
-                    component="img"
-                    image="/image/carts.jpg"
-                    alt="green iguana"
-                    sx={{
-                      m: 2,
-                      p: 2,
-                      width: "60%",
-                      boxShadow:
-                        "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                    }}
-                  />
-                  <CardContent>
-                    <Typography
-                      gutterBottom
-                      variant="h5"
-                      component="div"
-                      style={{ color: "red" }}
-                    >
-                      <MessageBox>Cart is empty.</MessageBox>
-                    </Typography>
-                  </CardContent>
+                  <Box>
+                    <CardMedia
+                      component="img"
+                      image="/image/carts.jpg"
+                      alt="green iguana"
+                      sx={{
+                        m: 2,
+                        p: 2,
+                        width: "60%",
+                        boxShadow:
+                          "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                      }}
+                    />
+                    <CardContent>
+                      <Typography
+                        gutterBottom
+                        variant="h5"
+                        component="div"
+                        style={{ color: "red" }}
+                      >
+                        <MessageBox>Cart is empty.</MessageBox>
+                      </Typography>
+                    </CardContent>
+                  </Box>
                 </Box>
               ) : (
-                <ThemeProvider theme={theme}>
-                  <Container
-                    component="main"
-                    maxWidth="sm"
-                    sx={{ my: { xs: 13 }, justifyContent: "center" }}
+                <Grid xs>
+                  <Box
+                    sx={{
+                      flexGrow: 1,
+                    }}
                   >
-                    <CssBaseline />
-                    <Box sx={{ marginLeft: "70%" }}>
+                    {usercart?.map((item) => (
                       <Card
+                        key={item._id}
                         sx={{
-                          justifyContent: "center!important",
-                          height: 550,
-                          width: 500,
+                          display: "flex",
+                          marginLeft: 10,
+                          alignItems: "center",
+                          p: 5,
+                          m: 2,
+                          boxShadow:
+                            "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                          justifyContent: "space-between",
+                          flex: 1,
                         }}
                       >
                         <CardMedia
+                          key={item._id}
                           component="img"
-                          image="/image/carts.jpg"
-                          alt="green iguana"
-                        />
-                        <CardContent>
-                          <Typography
-                            gutterBottom
-                            variant="h5"
-                            component="div"
-                            style={{ color: "red" }}
-                          >
-                            <MessageBox>Cart is empty.</MessageBox>
-                          </Typography>
-                          <Typography
-                            sx={{ marginLeft: 32 }}
-                            gutterBottom
-                            variant="h5"
-                            component="div"
-                          >
-                            <Link
-                              to="/signin"
-                              style={{ textDecoration: "none" }}
-                            >
-                              <Button variant="contained">Sign In</Button>{" "}
-                            </Link>
-                            <Link
-                              to="/register"
-                              style={{ textDecoration: "none" }}
-                            >
-                              <Button variant="contained">Register</Button>
-                            </Link>
-                          </Typography>
-                        </CardContent>
-                      </Card>
-                    </Box>
-                  </Container>
-                </ThemeProvider>
-              )}
-            </Box>
-          ) : (
-            <>
-              <Grid
-                xs
-                sx={{ display: { xs: "none", sm: "block" } }}
-                item={true}
-              >
-                <Box
-                  sx={{
-                    flexGrow: 1,
-                  }}
-                >
-                  {cartItems.map((item) => (
-                    <Card
-                      key={item}
-                      sx={{
-                        display: "flex",
-                        marginLeft: 10,
-                        alignItems: "center",
-                        p: 5,
-                        m: 2,
-                        boxShadow:
-                          "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                        justifyContent: "space-between",
-                        flex: 1,
-                      }}
-                    >
-                      <CardMedia
-                        key={item.product}
-                        component="img"
-                        sx={{ width: 130 }}
-                        image={item.image}
-                        alt={item.name}
-                      />
-                      <Box>
-                        <Typography gutterBottom variant="h5" component="div">
-                          <Link
-                            to={`/product/${item.product}`}
-                            style={{ textDecoration: "none" }}
-                          >
-                            {item.name}
-                          </Link>
-                        </Typography>
-                      </Box>
-
-                      <Box>
-                        <FormControl
-                          sx={{
-                            m: 1,
-                            minWidth: 120,
-                            flexDirection: "column",
-                          }}
-                        >
-                          <Select
-                            value={item.qty}
-                            onChange={(e) =>
-                              dispatch(
-                                addToCart(item.product, Number(e.target.value))
-                              )
-                            }
-                          >
-                            {[...Array(item.countInStock).keys()].map((x) => (
-                              <MenuItem key={x + 1} value={x + 1}>
-                                {x + 1}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </Box>
-                      <Box>
-                        <Typography gutterBottom variant="h5" component="div">
-                          ₹{item.price}
-                        </Typography>
-                      </Box>
-                      <Box sx={{ m: 1 }}>
-                        <Button
-                          variant="contained"
-                          type="button"
-                          onClick={() => removeFromCartHandler(item.product)}
-                        >
-                          Delete
-                        </Button>
-                      </Box>
-                      {/* </Box> */}
-                    </Card>
-                  ))}
-                </Box>
-              </Grid>
-
-              <Grid
-                xs
-                sx={{ display: { xs: "block", sm: "none" } }}
-                item={true}
-              >
-                <Box sx={{ flexGrow: 1, justifyContent: "center" }}>
-                  {cartItems.map((item) => (
-                    <Card
-                      key={item}
-                      sx={{
-                        minWidth: 200,
-                        marginLeft: 10,
-                        m: 2,
-                        boxShadow:
-                          "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                      }}
-                    >
-                      <Box sx={{ textAlign: "center" }}>
-                        <CardMedia
-                          key={item.product}
-                          component="img"
-                          sx={{
-                            width: '100%'
-                          }}
+                          sx={{ width: 130 }}
                           image={item.image}
                           alt={item.name}
                         />
-
-                        <Typography gutterBottom variant="h6" component="div">
-                          <Link
-                            to={`/product/${item.product}`}
-                            style={{ textDecoration: "none" }}
+                        <Box>
+                          <Typography gutterBottom variant="h5" component="div">
+                            <Link
+                              to={`/product/${item._id}`}
+                              style={{ textDecoration: "none" }}
+                            >
+                              {item.name}
+                            </Link>
+                          </Typography>
+                        </Box>
+                        <Box>
+                          <FormControl
+                            sx={{
+                              m: 1,
+                              minWidth: 120,
+                              flexDirection: "column",
+                            }}
                           >
-                            {item.name}
-                          </Link>
-                        </Typography>
-                      </Box>
-
-                      <Box sx={{ textAlign: "center" }}>
-                        <FormControl
-                          sx={{
-                            m: 1,
-                            minWidth: 100,
-                            flexDirection: "column",
-                          }}
-                        >
-                          <Select
-                            value={item.qty}
-                            onChange={(e) =>
-                              dispatch(
-                                addToCart(item.product, Number(e.target.value))
-                              )
-                            }
+                            <Select
+                              value={item.qty}
+                              onChange={(e) => updateHandler(e, item._id)}
+                            >
+                              {[...Array(item.countInStock).keys()].map((x) => (
+                                <MenuItem key={x + 1} value={x + 1}>
+                                  {x + 1}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
+                        </Box>
+                        <Box>
+                          <Typography gutterBottom variant="h5" component="div">
+                            ₹{item.price}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ m: 1 }}>
+                          <Button
+                            variant="contained"
+                            type="button"
+                            onClick={() => removeFromCartHandler(item._id)}
                           >
-                            {[...Array(item.countInStock).keys()].map((x) => (
-                              <MenuItem key={x + 1} value={x + 1}>
-                                {x + 1}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </Box>
-                      <Box sx={{ textAlign: "center" }}>
-                        <Typography gutterBottom variant="h5" component="div">
-                          ₹{item.price}
-                        </Typography>
-                      </Box>
-                      <Box sx={{ m: 5, textAlign: "center" }}>
-                        <Button
-                          variant="contained"
-                          type="button"
-                          onClick={() => removeFromCartHandler(item.product)}
-                        >
-                          Delete
-                        </Button>
-                      </Box>
-                    </Card>
-                  ))}
-                </Box>
-              </Grid>
+                            Delete
+                          </Button>
+                        </Box>
+                      </Card>
+                    ))}
+                  </Box>
+                </Grid>
+              )}
             </>
           )}
+          </>
+          ):(
+           <Box>
+              <ThemeProvider theme={theme}>
+                    <Container
+                      component="main"
+                      maxWidth="sm"
+                      sx={{ my: { xs: 13 }, justifyContent: "center" }}
+                    >
+                      <CssBaseline />
+                      <Box sx={{ marginLeft: "70%" }}>
+                        <Card
+                          sx={{
+                            justifyContent: "center!important",
+                            height: 550,
+                            width: 500,
+                          }}
+                        >
+                          <CardMedia
+                            component="img"
+                            image="/image/carts.jpg"
+                            alt="green iguana"
+                          />
+                          <CardContent>
+                            <Typography
+                              gutterBottom
+                              variant="h5"
+                              component="div"
+                              style={{ color: "red" }}
+                            >
+                              <MessageBox>Cart is empty.</MessageBox>
+                            </Typography>
+                            <Typography
+                              sx={{ marginLeft: 32 }}
+                              gutterBottom
+                              variant="h5"
+                              component="div"
+                            >
+                              <Link
+                                to="/signin"
+                                style={{ textDecoration: "none" }}
+                              >
+                                <Button variant="contained">Sign In</Button>{" "}
+                              </Link>
+                              <Link
+                                to="/register"
+                                style={{ textDecoration: "none" }}
+                              >
+                                <Button variant="contained">Register</Button>
+                              </Link>
+                            </Typography>
+                          </CardContent>
+                        </Card>
+                      </Box>
+                    </Container>
+                  </ThemeProvider>
+           </Box>
+          )}
+         
         </Grid>
 
         <Grid xs sx={{ marginTop: 7 }} item={true}>
@@ -341,8 +315,8 @@ export default function CartScreen(props) {
                 </Box>
                 <Box>
                   <Typography gutterBottom variant="h6" component="div">
-                    Subtotal ({cartItems.reduce((a, c) => a + c.qty, 0)} items)
-                    : ₹{cartItems.reduce((a, c) => a + c.price * c.qty, 0)}
+                    Subtotal ({usercart?.reduce((a, c) => a + c.qty, 0)} items)
+                    : ₹{usercart?.reduce((a, c) => a + c.price * c.qty, 0)}
                   </Typography>
                 </Box>
                 <Box>
@@ -358,7 +332,7 @@ export default function CartScreen(props) {
                 <Box>
                   <Typography gutterBottom variant="h6" component="div">
                     Total Amount : ₹
-                    {cartItems.reduce((a, c) => a + c.price * c.qty, 0)}
+                    {usercart?.reduce((a, c) => a + c.price * c.qty, 0)}
                   </Typography>
                 </Box>
                 <Box>
@@ -368,7 +342,7 @@ export default function CartScreen(props) {
                     sx={{ width: "100%" }}
                     onClick={checkoutHandler}
                     className="primary block"
-                    disabled={cartItems.length === 0}
+                    disabled={usercart?.length === 0}
                   >
                     Proceed to Checkout
                   </Button>
