@@ -78,6 +78,7 @@ import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import { userCartList } from "./actions/cartAction";
 import Badge from "@material-ui/core/Badge";
 import { withStyles } from "@material-ui/core/styles";
+import CollectionScreen from "./screens/CollectionScreen";
 
 // import Image from "/image/logo.png";
 // Side bar section start*************************************
@@ -362,7 +363,7 @@ function App() {
                                          {usercart?.length >= 0 && (
                                     <StyledBadge
                                     badgeContent={usercart?.length}
-                                      // overlap="circle"
+                                      overlap="rectangular"
                                       anchorOrigin={{
                                         vertical: "top",
                                         horizontal: "right",
@@ -830,7 +831,8 @@ function App() {
                   <Button
                     aria-controls="simple-menu4"
                     aria-haspopup="true"
-                    onMouseOver={(e) => setAnchorEl4(e.currentTarget)}
+                    // onMouseOver={(e) => setAnchorEl4(e.currentTarget)}
+                    onClick={(e) => setAnchorEl4(e.currentTarget)}
                     // onMouseOver={handleClick1}
                     onMouseLeave={handleCloseHover}
                     color="inherit"
@@ -1342,7 +1344,7 @@ function App() {
                   <Button
                     aria-controls="simple-menu5"
                     aria-haspopup="true"
-                    onMouseOver={(e) => setAnchorEl5(e.currentTarget)}
+                    onClick={(e) => setAnchorEl5(e.currentTarget)}
                     // onMouseOver={handleClick2}
                     onMouseLeave={handleCloseHover}
                     color="inherit"
@@ -1851,7 +1853,7 @@ function App() {
                   <Button
                     aria-controls="simple-menu6"
                     aria-haspopup="true"
-                    onMouseOver={(e) => setAnchorEl6(e.currentTarget)}
+                    onClick={(e) => setAnchorEl6(e.currentTarget)}
                     onMouseLeave={handleCloseHover}
                     color="inherit"
                     sx={{
@@ -2336,7 +2338,7 @@ function App() {
                     aria-controls="simple-menu7"
                     aria-haspopup="true"
                     //  onClick={(e) => setAnchorEl7(e.currentTarget)}
-                    onMouseOver={(e) => setAnchorEl7(e.currentTarget)}
+                    onClick={(e) => setAnchorEl7(e.currentTarget)}
                     onMouseLeave={handleCloseHover}
                     color="inherit"
                     sx={{
@@ -2881,7 +2883,7 @@ function App() {
                     aria-controls="simple-menu8"
                     aria-haspopup="true"
                     //  onClick={(e) => setAnchorEl8(e.currentTarget)}
-                    onMouseOver={(e) => setAnchorEl8(e.currentTarget)}
+                    onClick={(e) => setAnchorEl8(e.currentTarget)}
                     onMouseLeave={handleCloseHover}
                     color="inherit"
                     sx={{
@@ -3506,7 +3508,9 @@ function App() {
               ></Route>
 
               <Route path="/cart" element={<CartScreen />}></Route>
-
+              <Route path="/collectionlist/men" element={ <CollectionScreen categorytype= "men" />}></Route>
+              <Route path="/collectionlist/women" element={ <CollectionScreen categorytype= "women" />}></Route>
+              <Route path="/collectionlist/kids" element={ <CollectionScreen categorytype= "kids" />}></Route>
               <Route path="/signin" element={<SigninScreen />}></Route>
               <Route path="/account" element={<AccountScreen />}></Route>
               <Route
