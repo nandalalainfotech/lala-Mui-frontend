@@ -81,3 +81,9 @@ transform: scale(1.2);
   .handleDrawerOpen{
     background-color: #ff7519;
   }
+
+
+  .media{
+    height: 200px;
+   
+  }
