@@ -208,75 +208,94 @@ export default function OrderScreen(props) {
                 </Box>
               ))}
             </Box>
+            <Grid align="center">
+              <Box
+                sx={{
+                
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                  display: {
+                    xs: "block",
+                    md: "none",
+                    sm: "block",
+                    lg: "none",
+                    xl: "none",
+                  },
+                }}
+              >
+                 <Typography  sx={{textAlign: "center",}}variant="h4">Order Items</Typography>
 
+                {order.orderItems.map((item) => (
+                  <Box
+                    key={item._id}
+                    sx={{
+                      display: "flex",
+
+                      flexDirection: "column",
+                      justifyContent: "space-between",
+
+                      marginLeft: 10,
+                      alignItems: "center",
+                      p: 5,
+                      m: 2,
+                      flex: 1,
+                    }}
+                  >
+                    <CardMedia
+                      component="img"
+                      sx={{ width: 151 }}
+                      src={item.image}
+                      alt={item.name}
+                    />
+
+                    <Link
+                      style={{ textDecoration: "none", color: "black" }}
+                      to={`/product/${item.product}`}
+                    >
+                      <Typography
+                        variant="subtitle1"
+                        sx={{
+                          "&:hover": {
+                            color: "#ff7519",
+                            textDecoration: "underline",
+                          },
+                        }}
+                      >
+                        {item.name}
+                      </Typography>
+                    </Link>
+
+                    <Typography variant="subtitle1">
+                      {item.qty} x ₹{item.price} = ₹{item.qty * item.price}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
+            </Grid>
+          </Box>
+
+          <Grid xs sm md lg xl sx={{ display: { xs: "block", sm: "none" } }}>
             <Box
               sx={{
                 p: 5,
                 m: 2,
                 boxShadow:
                   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                display: {
-                  xs: "block",
-                  md: "none",
-                  sm: "block",
-                  lg: "none",
-                  xl: "none",
-                },
               }}
             >
-              <Typography variant="h4">Order Items</Typography>
-
-              {order.orderItems.map((item) => (
-                <Box
-                  key={item._id}
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    marginTop: 2,
-                  }}
-                >
-                  <CardMedia
-                    component="img"
-                    sx={{ width: 151 }}
-                    src={item.image}
-                    alt={item.name}
-                  />
-
-                  <Typography variant="subtitle1">
-                    <Link to={`/product/${item.product}`}>{item.name}</Link>
-                  </Typography>
-
-                  <Typography variant="subtitle1">
-                    {item.qty} x ₹{item.price} = ₹{item.qty * item.price}
-                  </Typography>
-                </Box>
-              ))}
-            </Box>
-          </Box>
-
-          <Grid xs sm md lg xl sx={{display:{xs:"block",sm:"none"}}}>
-          <Box
-            sx={{
-              p: 5,
-              m: 2,
-              boxShadow:
-                "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-            }}
-          >
               <Box>
-                  <Typography variant="h4">Order Summary</Typography>
-                </Box>
-            
-              
-                <>
+                <Typography variant="h6">Order Summary</Typography>
+              </Box>
+
+              <>
                 <Box>
-                  <Typography gutterBottom variant="h6" component="div">
-                    Shipping Items: {order.orderItems.reduce((a, c) => a + c.qty, 0)}
+                  <Typography gutterBottom variant="subtitle1" component="div">
+                    Shipping Items:{" "}
+                    {order.orderItems.reduce((a, c) => a + c.qty, 0)}
                   </Typography>
                 </Box>
                 <Box>
-                  <Typography gutterBottom variant="h6" component="div">
+                  <Typography gutterBottom variant="subtitle1" component="div">
                     Shipping Price: ₹
                     {order.orderItems.reduce((a, c) => a + c.price * c.qty, 0)}
                   </Typography>
@@ -287,53 +306,51 @@ export default function OrderScreen(props) {
                   </Typography>
                 </Box> */}
                 <Box>
-                  <Typography gutterBottom variant="h6" component="div">
+                  <Typography gutterBottom variant="subtitle1" component="div">
                     Order Total : ₹
                     {order.orderItems.reduce((a, c) => a + c.price * c.qty, 0)}
                   </Typography>
                 </Box>
-                </>
-            
-           
-          
-            {!order.isPaid && (
-              <Box sx={{ marginTop: 2 }}>
-                {!sdkReady ? (
-                  <LoadingBox></LoadingBox>
-                ) : (
-                  <>
-                    {errorPay && (
-                      <MessageBox variant="danger">{errorPay}</MessageBox>
-                    )}
-                    {loadingPay && <LoadingBox></LoadingBox>}
+              </>
 
-                    <PayPalButton
-                      amount={order.totalPrice}
-                      onSuccess={successPaymentHandler}
-                    ></PayPalButton>
-                  </>
-                )}
-              </Box>
-            )}
-            {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
-              <Box>
-                {loadingDeliver && <LoadingBox></LoadingBox>}
-                {errorDeliver && (
-                  <MessageBox variant="danger">{errorDeliver}</MessageBox>
-                )}
-                <Button
-                  fullWidth
-                  variant="contained"
-                  onClick={deliverHandler}
-                  sx={{ mt: 3, mb: 2 }}
-                  type="button"
-                >
-                  Delivery Order
-                </Button>
-              </Box>
-            )}
-          </Box>
-        </Grid>
+              {!order.isPaid && (
+                <Box sx={{ marginTop: 2 }}>
+                  {!sdkReady ? (
+                    <LoadingBox></LoadingBox>
+                  ) : (
+                    <>
+                      {errorPay && (
+                        <MessageBox variant="danger">{errorPay}</MessageBox>
+                      )}
+                      {loadingPay && <LoadingBox></LoadingBox>}
+
+                      <PayPalButton
+                        amount={order.totalPrice}
+                        onSuccess={successPaymentHandler}
+                      ></PayPalButton>
+                    </>
+                  )}
+                </Box>
+              )}
+              {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                <Box>
+                  {loadingDeliver && <LoadingBox></LoadingBox>}
+                  {errorDeliver && (
+                    <MessageBox variant="danger">{errorDeliver}</MessageBox>
+                  )}
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    onClick={deliverHandler}
+                    sx={{ mt: 3, mb: 2 }}
+                    type="button"
+                  >
+                    Delivery Order
+                  </Button>
+                </Box>
+              )}
+            </Box>
+          </Grid>
         </Grid>
         {/* <Grid xs sm md lg xl>
             <Box
@@ -402,7 +419,7 @@ export default function OrderScreen(props) {
             </Box>
           </Grid> */}
 
-        <Grid xs sm md lg xl sx={{display:{xs:"none",sm:"block"}}}>
+        <Grid xs sm md lg xl sx={{ display: { xs: "none", sm: "block" } }}>
           <Box
             sx={{
               p: 5,
@@ -411,38 +428,36 @@ export default function OrderScreen(props) {
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
           >
+            <Box>
+              <Typography variant="h5">Order Summary</Typography>
+            </Box>
+
+            <>
               <Box>
-                  <Typography variant="h4">Order Summary</Typography>
-                </Box>
-            
-              
-                <>
-                <Box>
-                  <Typography gutterBottom variant="h6" component="div">
-                    Shipping Items: {order.orderItems.reduce((a, c) => a + c.qty, 0)}
-                  </Typography>
-                </Box>
-                <Box>
-                  <Typography gutterBottom variant="h6" component="div">
-                    Shipping Price: ₹
-                    {order.orderItems.reduce((a, c) => a + c.price * c.qty, 0)}
-                  </Typography>
-                </Box>
-                {/* <Box>
+                <Typography gutterBottom variant="subtitle1" component="div">
+                  Shipping Items:{" "}
+                  {order.orderItems.reduce((a, c) => a + c.qty, 0)}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography gutterBottom variant="subtitle1" component="div">
+                  Shipping Price: ₹
+                  {order.orderItems.reduce((a, c) => a + c.price * c.qty, 0)}
+                </Typography>
+              </Box>
+              {/* <Box>
                   <Typography variant="subtitle1">
                     <strong>Tax:</strong>₹{orderitem.taxPrice.toFixed(2)}
                   </Typography>
                 </Box> */}
-                <Box>
-                  <Typography gutterBottom variant="h6" component="div">
-                    Order Total : ₹
-                    {order.orderItems.reduce((a, c) => a + c.price * c.qty, 0)}
-                  </Typography>
-                </Box>
-                </>
-            
-           
-          
+              <Box>
+                <Typography gutterBottom variant="subtitle1" component="div">
+                  Order Total : ₹
+                  {order.orderItems.reduce((a, c) => a + c.price * c.qty, 0)}
+                </Typography>
+              </Box>
+            </>
+
             {!order.isPaid && (
               <Box sx={{ marginTop: 2 }}>
                 {!sdkReady ? (

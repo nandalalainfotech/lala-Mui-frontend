@@ -17,7 +17,7 @@ export default function PlaceOrderScreen() {
   if (!cart.paymentMethod) {
     navigate("/payment");
   }
- 
+
   const userCartListItem = useSelector((state) => state.userCartListItem);
   const {
     usercart: usercart,
@@ -36,7 +36,7 @@ export default function PlaceOrderScreen() {
   cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
   const dispatch = useDispatch();
   const placeOrderHandler = () => {
-    dispatch(createOrder({...cart, orderItems: usercart }));
+    dispatch(createOrder({ ...cart, orderItems: usercart }));
   };
   useEffect(() => {
     if (success) {
@@ -47,7 +47,7 @@ export default function PlaceOrderScreen() {
   return (
     <Box sx={{ flexGrow: 1, m: 2 }}>
       <Grid container spacing={2}>
-        <Grid sm>
+        <Grid sm  align="center">
           <Box>
             <Box
               sx={{
@@ -110,6 +110,7 @@ export default function PlaceOrderScreen() {
                   sx={{
                     display: "flex",
                     flexDirection: "row",
+                    
                     justifyContent: "space-between",
                     marginTop: 2,
                   }}
@@ -130,7 +131,7 @@ export default function PlaceOrderScreen() {
                       variant="h6"
                       sx={{
                         "&:hover": {
-                          color: "#66FFFF",
+                          color: "#ff7519",
                           textDecoration: "underline",
                         },
                       }}
@@ -145,11 +146,12 @@ export default function PlaceOrderScreen() {
                 </Box>
               ))}
             </Box>
-
-            <Box
+            <Grid align="center">
+            <Box 
               sx={{
-                p: 5,
-                m: 2,
+                // p: 5,
+                // m: 2,
+               
                 boxShadow:
                   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 display: {
@@ -161,16 +163,24 @@ export default function PlaceOrderScreen() {
                 },
               }}
             >
-              <Typography variant="h4">Order Items</Typography>
+             
+              <Typography  sx={{textAlign: "center",}}variant="h4">Order Items</Typography>
 
               {usercart?.map((item) => (
-                <Box
+                
+                <Box 
                   key={item.product}
                   sx={{
                     display: "flex",
+                    
                     flexDirection: "column",
                     justifyContent: "space-between",
-                    marginTop: 2,
+                  
+                    marginLeft: 10,
+                    alignItems: "center",
+                    p: 5,
+                    m: 2,
+                    flex: 1,
                   }}
                 >
                   <CardMedia
@@ -186,10 +196,10 @@ export default function PlaceOrderScreen() {
                   >
                     {" "}
                     <Typography
-                      variant="h6"
+                      variant="subtitle1"
                       sx={{
                         "&:hover": {
-                          color: "#66FFFF",
+                          color: "#ff7519",
                           textDecoration: "underline",
                         },
                       }}
@@ -203,10 +213,128 @@ export default function PlaceOrderScreen() {
                   </Typography>
                 </Box>
               ))}
+              
             </Box>
+            </Grid>
           </Box>
+
+          <Grid xs sm md lg xl  sx={{ display: { xs: "block", sm: "none" } }}>
+            <Box
+              sx={{
+                p: 5,
+                m: 2,
+                boxShadow:
+                  "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+              }}
+            >
+              <Box>
+                <Typography variant="h6">Order Summary</Typography>
+              </Box>
+              <Box>
+                <Typography gutterBottom variant="subtitle1" component="div">
+                  Shipping Items: {usercart?.reduce((a, c) => a + c.qty, 0)}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography gutterBottom variant="subtitle1" component="div">
+                  Shipping Price: ₹
+                  {usercart?.reduce((a, c) => a + c.price * c.qty, 0)}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography variant="subtitle1">
+                  <strong>Tax:</strong>₹{cart.taxPrice.toFixed(2)}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography gutterBottom variant="subtitle1" component="div">
+                  Order Total : ₹
+                  {usercart?.reduce((a, c) => a + c.price * c.qty, 0)}
+                </Typography>
+              </Box>
+              <Box>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  onClick={placeOrderHandler}
+                  disabled={usercart?.length === 0}
+                  sx={{ mt: 3, mb: 2 }}
+                  type="submit"
+                >
+                  Place Order
+                </Button>
+              </Box>
+            </Box>
+          </Grid>
         </Grid>
         {/* <Grid xs sm md lg xl>
+            <Box
+              sx={{
+                p: 5,
+                m: 2,
+                marginTop: 2,
+                boxShadow:
+                  "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+              }}
+            >
+              <Typography variant="h4">Order Summary</Typography>
+
+              <Typography variant="subtitle1">
+                <strong>Items:</strong>${order.itemsPrice.toFixed(2)}
+              </Typography>
+
+              <Typography variant="subtitle1">
+                <strong>Shipping:</strong>${order.shippingPrice.toFixed(2)}
+              </Typography>
+
+              <Typography variant="subtitle1">
+                <strong>Tax:</strong>${order.taxPrice.toFixed(2)}
+              </Typography>
+
+              <Typography variant="subtitle1">
+                <strong> Order Total:</strong>${order.totalPrice.toFixed(2)}
+              </Typography>
+
+              {!order.isPaid && (
+                <Box sx={{ marginTop: 2 }}>
+                  {!sdkReady ? (
+                    <LoadingBox></LoadingBox>
+                  ) : (
+                    <>
+                      {errorPay && (
+                        <MessageBox variant="danger">{errorPay}</MessageBox>
+                      )}
+                      {loadingPay && <LoadingBox></LoadingBox>}
+
+                      <PayPalButton
+                        amount={order.totalPrice}
+                        onSuccess={successPaymentHandler}
+                      ></PayPalButton>
+                    </>
+                  )}
+                </Box>
+              )}
+              {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                <Box>
+                  {loadingDeliver && <LoadingBox></LoadingBox>}
+                  {errorDeliver && (
+                    <MessageBox variant="danger">{errorDeliver}</MessageBox>
+                  )}
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    onClick={deliverHandler}
+                    sx={{ mt: 3, mb: 2 }}
+                    type="button"
+                  >
+                    Delivery Order
+                  </Button>
+                </Box>
+              )}
+            </Box>
+          </Grid> */}
+
+        <Grid xs sm md lg xl sx={{ display: { xs: "none", sm: "block" } }}>
           <Box
             sx={{
               p: 5,
@@ -215,87 +343,44 @@ export default function PlaceOrderScreen() {
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
           >
-            <Typography variant="h4">Order Summary</Typography>
-
-            <Typography variant="subtitle1">
-              <strong>Shipping:</strong>${cart.shippingPrice.toFixed(2)}
-            </Typography>
-
-            <Typography variant="subtitle1">
-              <strong>Tax:</strong>${cart.taxPrice.toFixed(2)}
-            </Typography>
-
-            <Typography variant="subtitle1">
-              <strong> Order Total:</strong>${usercart?.totalPrice.toFixed(2)}
-            </Typography>
-
-            <Button
-              fullWidth
-              variant="contained"
-              onClick={placeOrderHandler}
-              disabled={cart.cartItems.length === 0}
-              sx={{ mt: 3, mb: 2 }}
-              type="submit"
-            >
-              Place Order
-            </Button>
-
-            {loading && <LoadingBox></LoadingBox>}
-            {error && <MessageBox variant="danger">{error}</MessageBox>}
+            <Box>
+              <Typography variant="h5">Order Summary</Typography>
+            </Box>
+            <Box>
+              <Typography gutterBottom variant="subtitle1" component="div">
+                Shipping Items: {usercart?.reduce((a, c) => a + c.qty, 0)}
+              </Typography>
+            </Box>
+            <Box>
+              <Typography gutterBottom variant="subtitle1" component="div">
+                Shipping Price: ₹
+                {usercart?.reduce((a, c) => a + c.price * c.qty, 0)}
+              </Typography>
+            </Box>
+            <Box>
+              <Typography variant="subtitle1">
+                <strong>Tax:</strong>₹{cart.taxPrice.toFixed(2)}
+              </Typography>
+            </Box>
+            <Box>
+              <Typography gutterBottom variant="subtitle1" component="div">
+                Order Total : ₹
+                {usercart?.reduce((a, c) => a + c.price * c.qty, 0)}
+              </Typography>
+            </Box>
+            <Box>
+              <Button
+                fullWidth
+                variant="contained"
+                onClick={placeOrderHandler}
+                disabled={usercart?.length === 0}
+                sx={{ mt: 3, mb: 2 }}
+                type="submit"
+              >
+                Place Order
+              </Button>
+            </Box>
           </Box>
-        </Grid> */}
-
-        <Grid xs sx={{ marginTop: 7 }} item={true}>
-      
-        <Grid xs sm md lg xl>
-          <Box
-            sx={{
-              p: 5,
-              m: 2,
-              boxShadow:
-                "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-            }}
-          >
-                <Box>
-                <Typography variant="h4">Order Summary</Typography>
-                </Box>
-                <Box>
-                  <Typography gutterBottom variant="h6" component="div">
-                  Shipping Items: {usercart?.reduce((a, c) => a + c.qty, 0)} 
-                    
-                  </Typography>
-                </Box>
-                <Box>
-                  <Typography gutterBottom variant="h6" component="div">
-                  Shipping Price:  ₹{usercart?.reduce((a, c) => a + c.price * c.qty, 0)}
-                  </Typography>
-                </Box>
-                <Box>
-                <Typography variant="subtitle1">
-              <strong>Tax:</strong>₹{cart.taxPrice.toFixed(2)}
-            </Typography>
-                </Box>
-                <Box>
-                  <Typography gutterBottom variant="h6" component="div">
-                  Order Total : ₹
-                    {usercart?.reduce((a, c) => a + c.price * c.qty, 0)}
-                  </Typography>
-                </Box>
-                <Box>
-                <Button
-              fullWidth
-              variant="contained"
-              onClick={placeOrderHandler}
-              disabled={usercart?.length === 0}
-              sx={{ mt: 3, mb: 2 }}
-              type="submit"
-            >
-              Place Order
-            </Button>
-                </Box>
-              </Box>
-            </Grid>
-         
         </Grid>
       </Grid>
     </Box>
