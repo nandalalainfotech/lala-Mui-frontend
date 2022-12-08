@@ -23,8 +23,8 @@ export default function ShippingAddressScreen() {
   const { userInfo } = userSignin;
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
-  const [lat, setLat] = useState(shippingAddress.lat);
-  const [lng, setLng] = useState(shippingAddress.lng);
+  // const [lat, setLat] = useState(shippingAddress.lat);
+  // const [lng, setLng] = useState(shippingAddress.lng);
   const userAddressMap = useSelector((state) => state.userAddressMap);
   const { address: addressMap } = userAddressMap;
   if (!userInfo) {
@@ -40,19 +40,19 @@ export default function ShippingAddressScreen() {
   const dispatch = useDispatch();
 
   const submitHandler = (e) => {
-    const newLat = addressMap ? addressMap.lat : lat;
-    const newLng = addressMap ? addressMap.lng : lng;
+    // const newLat = addressMap ? addressMap.lat : lat;
+    // const newLng = addressMap ? addressMap.lng : lng;
     
-    if (addressMap) {
-      setLat(addressMap.lat);
-      setLng(addressMap.lng);
-    }
+    // if (addressMap) {
+    //   setLat(addressMap.lat);
+    //   setLng(addressMap.lng);
+    // }
     let moveOn = true;
-    if (!newLat || !newLng) {
-      moveOn = window.confirm(
-        "You did not set your location on map. Continue?"
-      );
-    }
+    // if (!newLat || !newLng) {
+    //   moveOn = window.confirm(
+    //     "You did not set your location on map. Continue?"
+    //   );
+    // }
     if (moveOn) {
       dispatch(
         saveShippingAddress({
@@ -61,8 +61,8 @@ export default function ShippingAddressScreen() {
           city: e.city,
           postalCode: e.postalCode,
           country: e.country,
-          lat: newLat,
-          lng: newLng,
+          // lat: newLat,
+          // lng: newLng,
         })
       );
       navigate("/payment");
@@ -77,8 +77,8 @@ export default function ShippingAddressScreen() {
         city,
         postalCode,
         country,
-        lat,
-        lng,
+        // lat,
+        // lng,
       })
     );
     navigate("/map");

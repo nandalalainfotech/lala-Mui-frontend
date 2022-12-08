@@ -27,7 +27,7 @@ export default function Product(props) {
   return (
 
     <Card key={product._id} sx={{
-      width: 200,  margin: 1
+      width: 225,  margin: 2
     }}
     >
       <Link to={`/product/${product._id}`}>
