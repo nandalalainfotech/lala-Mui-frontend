@@ -198,7 +198,7 @@ function App() {
     dispatch(listProductCategorygroup());
     dispatch(listProductCategorytype());
     dispatch(listSareeCategories());
-  }, [dispatch]);
+  }, [dispatch,userInfo]);
 
   // sidebar section Start****************************************
   const theme = useTheme();
@@ -3729,6 +3729,7 @@ function App() {
               color: "#f4f4f4",
               alignItems: "center",
               zIndex: 999,
+              // paddingBottom: 1,
             }}
             elevation={3}
           >
@@ -3736,8 +3737,11 @@ function App() {
               sx={{ backgroundColor: "#37474f" }}
               showlabels="true"
             >
-              {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
-              <BottomNavigationAction label="All right reserved" />
+              {/* {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />} */}
+              <Typography variant="h6" sx={{fontSize:20,color:"white",padding:1.5}}>
+              All right reserved
+              </Typography>
+              {/* <BottomNavigationAction label="All right reserved" /> */}
             </BottomNavigation>
           </Paper>
         </Box>

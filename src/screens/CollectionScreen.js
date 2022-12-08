@@ -23,13 +23,13 @@ export default function CollectionScreen(props) {
       <Box
         sx={{
           padding: 0,
-          margin: 5,
-          width: "100%",
+          margin: 0,
+          width: "auto",
           listStyle: "none",
           display: "flex",
           flexFlow: "wrap row",
           flexDirection: "row",
-        
+          alignItems: "center",
         }}
       >
         {loading ? (
