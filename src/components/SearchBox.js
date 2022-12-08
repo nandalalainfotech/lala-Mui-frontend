@@ -7,14 +7,15 @@ import SearchIcon from "@mui/icons-material/Search";
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
-  border: "2px solid #37474f",
+  border: "10px solid #FF0099",
   borderWidth: "2px 4px",
-  borderRadius: "40px",
+  borderRadius: "50px",
   // borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
+  // backgroundColor: alpha(theme.palette.common.white, 0.15),
+  backgroundColor:"#fff",
+  // '&:hover': {
+  //   backgroundColor: alpha(theme.palette.common.white, 0.25),
+  // },
   cursor:"pointer",
   marginRight: theme.spacing(1),
   marginLeft: 0,

@@ -273,7 +273,7 @@ function App() {
     <BrowserRouter>
       <div className="grid-container">
         <Box sx={{ flexGrow: 1 }}>
-          <AppBar position="fixed" style={{ zIndex: 999 }}>
+          <AppBar position="fixed" style={{ zIndex: 999,background:"#009" }}>
             <Toolbar>
               <Grid container spacing={3}>
                 <Grid item xs={2}>
@@ -298,7 +298,17 @@ function App() {
                       to="/"
                     >
                       <Stack direction="row">
-                        <Avatar alt="Remy Sharp" src="/image/logo.png" />
+                        <Avatar sx={{
+                           animation: "spin 5s linear infinite",
+                           "@keyframes spin": {
+                             "0%": {
+                               transform: "rotate(360deg)",
+                             },
+                             "100%": {
+                               transform: "rotate(0deg)",
+                             },
+                           },
+                        }} alt="Remy Sharp" src="/image/logo.png" />
                         <Typography
                           variant="h4"
                           noWrap
@@ -320,7 +330,7 @@ function App() {
                     <Box
                       style={{ justifyContent: "center" }}
                       sx={{
-                        mt: 1,
+                       
                         display: {
                           xs: "none",
                           sm: "block",
@@ -372,6 +382,7 @@ function App() {
                                     >
                                      <Avatar
                                         sx={{
+                                          border:"2px solid #fff",
                                           bgcolor: "inherit",
                                           "&:hover": { color: "#ff7519" },
                                         }}
@@ -421,6 +432,7 @@ function App() {
                                   >
                                     <Avatar
                                       sx={{
+                                        border:"2px solid #fff",
                                         bgcolor: "inherit",
                                         "&:hover": { color: "#ff7519" },
                                       }}
@@ -489,6 +501,7 @@ function App() {
                                   >
                                     <Avatar
                                       sx={{
+                                        border:"2px solid #fff",
                                         bgcolor: "inherit",
                                         "&:hover": { color: "#ff7519" },
                                       }}
@@ -614,6 +627,7 @@ function App() {
                                           setAnchorEl(e.currentTarget)
                                         }
                                         sx={{
+                                          border:"2px solid #fff",
                                           bgcolor: "inherit",
                                           "&:hover": { color: "#ff7519" },
                                         }}
@@ -695,6 +709,7 @@ function App() {
                                 >
                                   <Avatar
                                     sx={{
+                                      border:"2px solid #fff",
                                       bgcolor: "inherit",
                                       "&:hover": { color: "#ff7519" },
                                     }}
