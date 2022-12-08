@@ -95,7 +95,8 @@ export default function HomeScreen() {
     { width: 768, itemsToShow: 3 },
     { width: 900, itemsToShow: 5 },
     { width: 1200, itemsToShow: 5 },
-    { width: 1500, itemsToShow: 8 },
+    { width: 1500, itemsToShow: 7 },
+    { width: 2000, itemsToShow: 9 },
   ];
 
   const [allKidProducts, setAllKidProducts] = useState(kidProducts);
