@@ -25,6 +25,7 @@ import {
 export const addToCart =(productId, qty, pay) => async (dispatch, getState) => {
   dispatch({ type: CART_CREATE_REQUEST });
     const { data } = await Axios.get(`/api/products/${productId}`);
+    console.log("data",data)
     const img = await Axios.get(`/api/uploads/show/${productId}`, {
       responseType: "blob",
     });
@@ -115,6 +116,7 @@ export const savePaymentMethod = (data) => (dispatch) => {
 
 export const deleteCart = (_id) => async (dispatch, getState) => {
   dispatch({ type: CART_DELETE_REQUEST, payload: _id });
+  document.location.href = "/cart";
   const {
     userSignin: { userInfo },
   } = getState();
