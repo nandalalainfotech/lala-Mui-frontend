@@ -21,12 +21,12 @@ export default function ShippingAddressScreen() {
   const navigate = useNavigate();
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
-  const cart = useSelector((state) => state.cart);
-  const { shippingAddress } = cart;
+  // const cart = useSelector((state) => state.cart);
+  // const { shippingAddress } = cart;
   // const [lat, setLat] = useState(shippingAddress.lat);
   // const [lng, setLng] = useState(shippingAddress.lng);
-  const userAddressMap = useSelector((state) => state.userAddressMap);
-  const { address: addressMap } = userAddressMap;
+  // const userAddressMap = useSelector((state) => state.userAddressMap);
+  // const { address: addressMap } = userAddressMap;
   if (!userInfo) {
     navigate("/signin");
   }

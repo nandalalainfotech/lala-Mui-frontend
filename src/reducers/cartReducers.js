@@ -95,7 +95,7 @@ export const cartReducer = (state = {}, action) => {
 };
 
 export const userCartListReducer = (
-  state = { loading: true, usercart: [] },
+  state = { loading: true, usercarts: [] },
   action
 ) => {
   switch (action.type) {
@@ -105,7 +105,7 @@ export const userCartListReducer = (
       return {
         loading: false,
         success: true,
-        usercart: action.payload,
+        usercarts: action.payload,
       };
     case USER_CART_LIST_FAIL:
       return { loading: false, error: action.payload };

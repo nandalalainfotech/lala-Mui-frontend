@@ -1,25 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import Box from "@mui/material/Box";
-import { listProducts } from "../actions/productAction";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import { Link } from "react-router-dom";
-import Product from "../components/Product";
 import CircularProgress from "@mui/material/CircularProgress";
+import Typography from "@mui/material/Typography";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { listProducts } from "../actions/productAction";
+import Product from "../components/Product";
 export default function CollectionScreen(props) {
   const { categorytype } = props;
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
-  const { loading, error, products } = productList;
+  const { loading,products } = productList;
   useEffect(() => {
     dispatch(listProducts({}));
   }, [dispatch]);
   return (
     <Box  style={{marginTop:20}}>
-        <Box><Typography variant="h4">{categorytype+" "+"Collection"}</Typography></Box>
+        <Box><Typography variant="h4">{categorytype +" Collection"}</Typography></Box>
       <Box
         sx={{
           padding: 0,

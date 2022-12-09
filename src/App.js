@@ -25,7 +25,6 @@ import {
 } from "./actions/productAction";
 import { listSareeCategories } from "./actions/sareeAction";
 import AdminRoute from "./components/AdminRoute";
-import ChatBox from "./components/ChatBox";
 import LoadingBox from "./components/LoadingBox";
 import MessageBox from "./components/MessageBox";
 import SearchBox from "./components/SearchBox";
@@ -71,10 +70,8 @@ import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
 import Paper from "@mui/material/Paper";
 import BottomNavigation from "@mui/material/BottomNavigation";
-import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import { userCartList } from "./actions/cartAction";
 import Badge from "@material-ui/core/Badge";
 import { withStyles } from "@material-ui/core/styles";
@@ -165,11 +162,9 @@ const StyledBadge = withStyles((theme) => ({
 
 function App() {
   let currentlyHovering = false;
-  const cart = useSelector((state) => state.cart);
   // eslint-disable-next-line no-unused-vars
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
-  const { cartItems } = cart;
-  const { usercart } = useSelector((state) => state.userCartListItem);
+  const { usercarts } = useSelector((state) => state.userCartListItem);
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const dispatch = useDispatch();
@@ -371,9 +366,9 @@ function App() {
                                
                                 {userInfo ? (
                                   <>
-                                    {usercart?.length >= 0 && (
+                                    {usercarts?.length >= 0 && (
                                       <StyledBadge
-                                        badgeContent={usercart?.length}
+                                        badgeContent={usercarts?.length}
                                         overlap="rectangular"
                                         anchorOrigin={{
                                           vertical: "top",
