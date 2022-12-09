@@ -3506,7 +3506,7 @@ function App() {
             ) : (
               categories?.map((c, i) => (
                 <Box key={i}>
-                  <List to={`/search/category/${c}`}>
+                  <List><Link style={{textDecoration: 'none'}} to={`/search/category/${c}`}>
                     <Typography
                       variant="h4"
                       sx={{
@@ -3529,6 +3529,7 @@ function App() {
                     >
                       {c}
                     </Typography>
+                  </Link>
                   </List>
                 </Box>
               ))
