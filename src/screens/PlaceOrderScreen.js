@@ -28,12 +28,12 @@ export default function PlaceOrderScreen() {
   const orderCreate = useSelector((state) => state.orderCreate);
   const { loading, success, error, order } = orderCreate;
   const toPrice = (num) => Number(num.toFixed(2)); // 5.123 => "5.12" => 5.12
-  cart.itemsPrice = toPrice(
-    cart.cartItems.reduce((a, c) => a + c.qty * c.price, 0)
-  );
-  cart.shippingPrice = cart.itemsPrice > 100 ? toPrice(0) : toPrice(10);
-  cart.taxPrice = toPrice(0.15 * cart.itemsPrice);
-  cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
+  // cart.itemsPrice = toPrice(
+  //   cart.cartItems.reduce((a, c) => a + c.qty * c.price, 0)
+  // );
+  // cart.shippingPrice = cart.itemsPrice > 100 ? toPrice(0) : toPrice(10);
+  // cart.taxPrice = toPrice(0.15 * cart.itemsPrice);
+  // cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
   const dispatch = useDispatch();
   const placeOrderHandler = () => {
     dispatch(createOrder({ ...cart, orderItems: usercart }));
@@ -243,7 +243,7 @@ export default function PlaceOrderScreen() {
               </Box>
               <Box>
                 <Typography variant="subtitle1">
-                  <strong>Tax:</strong>₹{cart.taxPrice.toFixed(2)}
+                  {/* <strong>Tax:</strong>₹{cart.taxPrice.toFixed(2)} */}
                 </Typography>
               </Box>
               <Box>
@@ -359,7 +359,7 @@ export default function PlaceOrderScreen() {
             </Box>
             <Box>
               <Typography variant="subtitle1">
-                <strong>Tax:</strong>₹{cart.taxPrice.toFixed(2)}
+                {/* <strong>Tax:</strong>₹{cart.taxPrice.toFixed(2)} */}
               </Typography>
             </Box>
             <Box>
