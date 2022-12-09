@@ -536,7 +536,7 @@ export default function ProductEditScreen(props) {
           
         }}>
              <TextField style={{margin:"10px 0px"}}
-            inputProps={{style: {fontSize: 14}}}
+            inputProps={{style: {fontSize: 14},accept:"image/*"}}
              size="small"
               fullWidth   
               type="file"
@@ -766,7 +766,7 @@ export default function ProductEditScreen(props) {
           
         }}>
              <TextField style={{margin:"10px 0px"}}
-            inputProps={{style: {fontSize: 14}}}
+            inputProps={{style: {fontSize: 14},accept:"image/*"}}
              size="small"
               fullWidth   
               type="file"

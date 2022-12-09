@@ -1,25 +1,6 @@
 import Axios from "axios";
 import {
-  CART_ADD_ITEM,
-  CART_REMOVE_ITEM,
-  CART_SAVE_SHIPPING_ADDRESS,
-  CART_SAVE_PAYMENT_METHOD,
-  CART_ADD_ITEM_FAIL,
-  USER_CART_LIST_FAIL,
-  USER_CART_LIST_SUCCESS,
-  USER_CART_LIST_REQUST,
-  CART_DELETE_REQUEST,
-  CART_DELETE_FAIL,
-  CART_DELETE_SUCCESS,
-  USER_CART_ID_REQUST,
-  USER_CART_ID_SUCCESS,
-  USER_CART_ID_FAIL,
-  CART_UPDATE_FAIL,
-  CART_UPDATE_SUCCESS,
-  CART_UPDATE_REQUEST,
-  CART_CREATE_FAIL,
-  CART_CREATE_SUCCESS,
-  CART_CREATE_REQUEST,
+  CART_CREATE_FAIL, CART_CREATE_REQUEST, CART_CREATE_SUCCESS, CART_DELETE_FAIL, CART_DELETE_REQUEST, CART_DELETE_SUCCESS, CART_REMOVE_ITEM, CART_SAVE_PAYMENT_METHOD, CART_SAVE_SHIPPING_ADDRESS, CART_UPDATE_FAIL, CART_UPDATE_REQUEST, CART_UPDATE_SUCCESS, USER_CART_LIST_FAIL, USER_CART_LIST_REQUST, USER_CART_LIST_SUCCESS
 } from "../constants/cartConstants";
 
 export const addToCart =(productId, qty, pay) => async (dispatch, getState) => {
@@ -114,12 +95,9 @@ export const savePaymentMethod = (data) => (dispatch) => {
   dispatch({ type: CART_SAVE_PAYMENT_METHOD, payload: data });
 };
 
-export const deleteCart = (_id) => async (dispatch, getState) => {
+export const deleteCart = (_id) => async (dispatch) => {
   dispatch({ type: CART_DELETE_REQUEST, payload: _id });
   document.location.href = "/cart";
-  const {
-    userSignin: { userInfo },
-  } = getState();
   try {
     await Axios.delete(`/api/usercart/${_id}`);
 

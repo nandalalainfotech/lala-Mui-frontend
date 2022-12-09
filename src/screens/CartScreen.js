@@ -3,34 +3,29 @@ import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
+import CircularProgress from "@mui/material/CircularProgress";
+import Container from "@mui/material/Container";
+import CssBaseline from "@mui/material/CssBaseline";
+import Divider from "@mui/material/Divider";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   addToCart,
-  deleteCart,
-  removeFromCart,
-  updateCart,
-  userCartList,
+  deleteCart, updateCart,
+  userCartList
 } from "../actions/cartAction";
 import MessageBox from "../components/MessageBox";
-import { makeStyles } from "@material-ui/core/styles";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import Container from "@mui/material/Container";
 import {
-  CART_ADD_ITEM,
   CART_DELETE_RESET,
-  CART_UPDATE_RESET,
-  USER_CART_LIST_SUCCESS,
+  CART_UPDATE_RESET
 } from "../constants/cartConstants";
-import CircularProgress from "@mui/material/CircularProgress";
 export default function CartScreen(props) {
   const navigate = useNavigate();
   const theme = createTheme();
@@ -43,18 +38,14 @@ export default function CartScreen(props) {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const cart = useSelector((state) => state.cart);
-  const { cartItems, error, success, loading: loadingCartItem } = cart;
+  const {  success } = cart;
   const userCartListItem = useSelector((state) => state.userCartListItem);
   const {
-    usercart: usercart,
+    usercarts: usercart,
     loading: loadingCart,
-    success: successCart,
   } = userCartListItem;
-  const [cartupdate, setCartupdate] = useState(usercart);
   const cartDelete = useSelector((state) => state.cartDelete);
   const {
-    loading: loadingDelete,
-    error: errorDelete,
     success: successDelete,
   } = cartDelete;
 
@@ -89,7 +80,7 @@ export default function CartScreen(props) {
       dispatch({ type: CART_DELETE_RESET });
       navigate("/cart");
     }
-  }, [dispatch, productId, qty, successDelete, successUpdate, success]);
+  }, [dispatch, productId, qty, successDelete, successUpdate, success,navigate,userInfo]);
 
   const removeFromCartHandler = (_id) => {
     if (window.confirm("Are you sure to delete?")) {
