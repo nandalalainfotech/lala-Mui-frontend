@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
-  border: "10px solid #FF0099",
+  border: "10px solid #FBF8BE",
   borderWidth: "2px 4px",
   borderRadius: "50px",
   // borderRadius: theme.shape.borderRadius,

@@ -141,14 +141,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const StyledBadge = withStyles((theme) => ({
+const Style = withStyles((theme) => ({
   badge: {
     backgroundColor: "#FF66FF",
     // color: "green",
     top: 9,
+    left: 23,
     boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
     "&::after": {
-      position: "absolute",
+      position: "relative",
       top: 0,
       left: 0,
       width: "100%",
@@ -268,7 +269,7 @@ function App() {
     <BrowserRouter>
       <div className="grid-container">
         <Box sx={{ flexGrow: 1 }}>
-          <AppBar position="fixed" style={{ zIndex: 999, background: "#009" }}>
+          <AppBar position="fixed" style={{ zIndex: 999, background: "linear-gradient(to bottom,  #C5E1A5  ,#673AB7 " }}>
             <Toolbar>
               <Grid container spacing={3}>
                 <Grid item xs={2}>
@@ -347,7 +348,7 @@ function App() {
                     <Box sx={{ flexGrow: 0 }}>
                       <Stack
                         direction="row"
-                        spacing={{ xs: 3, sm: 2, md: 2, lg: 2, xl: 2 }}
+                        spacing={{ xs: 3,sm:3,  md: 2, lg: 2, xl: 2 }}
                         sx={{ justifyContent: "flex-end" }}
                       >
                         <Box>
@@ -367,17 +368,17 @@ function App() {
                                 {userInfo ? (
                                   <>
                                     {usercarts?.length >= 0 && (
-                                      <StyledBadge
+                                      <Style
                                         badgeContent={usercarts?.length}
-                                        overlap="rectangular"
-                                        anchorOrigin={{
-                                          vertical: "top",
-                                          horizontal: "right",
-                                        }}
+                                      overlap="rectangular"
+                                      // anchorOrigin={{
+                                      //   vertical: "right",
+                                      //   horizontal: "top",
+                                      // }}
                                       >
                                         
                                         <>
-                                          {userInfo.isAdmin && userInfo.isSeller && userInfo ?  (
+                                          {userInfo.isSeller && userInfo ? (
                                             <Avatar
                                               sx={{
                                                 border: "2px solid #fff",
@@ -400,8 +401,8 @@ function App() {
                                             </Avatar>
                                           )}
                                         </>
-                                       
-                                      </StyledBadge>
+
+                                      </Style>
                                     )}
                                   </>
                                 ) : (
@@ -410,7 +411,7 @@ function App() {
                                       sx={{
                                         bgcolor: "inherit",
                                         "&:hover": { color: "#ff7519" },
-                                        mr: -20,
+                                        // mr: -30,
                                         display: "flex",
                                       }}
                                     >
@@ -427,7 +428,7 @@ function App() {
                             display: { xs: "none", sm: "none", md: "flex" },
                           }}
                         >
-                          {userInfo && userInfo.isSeller && (
+                          {userInfo?.isSeller && userInfo && (
                             <div>
                               <Tooltip title="Seller" arrow>
                                 <IconButton
