@@ -198,7 +198,7 @@ function App() {
     dispatch(listProductCategorygroup());
     dispatch(listProductCategorytype());
     dispatch(listSareeCategories());
-  }, [dispatch,userInfo]);
+  }, [dispatch, userInfo]);
 
   // sidebar section Start****************************************
   const theme = useTheme();
@@ -273,7 +273,7 @@ function App() {
     <BrowserRouter>
       <div className="grid-container">
         <Box sx={{ flexGrow: 1 }}>
-          <AppBar position="fixed" style={{ zIndex: 999,background:"#009" }}>
+          <AppBar position="fixed" style={{ zIndex: 999, background: "#009" }}>
             <Toolbar>
               <Grid container spacing={3}>
                 <Grid item xs={2}>
@@ -298,17 +298,21 @@ function App() {
                       to="/"
                     >
                       <Stack direction="row">
-                        <Avatar sx={{
-                           animation: "spin 5s linear infinite",
-                           "@keyframes spin": {
-                             "0%": {
-                               transform: "rotate(360deg)",
-                             },
-                             "100%": {
-                               transform: "rotate(0deg)",
-                             },
-                           },
-                        }} alt="Remy Sharp" src="/image/logo.png" />
+                        <Avatar
+                          sx={{
+                            animation: "spin 5s linear infinite",
+                            "@keyframes spin": {
+                              "0%": {
+                                transform: "rotate(360deg)",
+                              },
+                              "100%": {
+                                transform: "rotate(0deg)",
+                              },
+                            },
+                          }}
+                          alt="Remy Sharp"
+                          src="/image/logo.png"
+                        />
                         <Typography
                           variant="h4"
                           noWrap
@@ -330,7 +334,6 @@ function App() {
                     <Box
                       style={{ justifyContent: "center" }}
                       sx={{
-                       
                         display: {
                           xs: "none",
                           sm: "block",
@@ -364,34 +367,47 @@ function App() {
                                   color: "inherit",
                                   textDecoration: "none",
                                 }}
-                                to="/cart"
-                              >
+                                to="/cart">
+                               
                                 {userInfo ? (
                                   <>
-                                  
-                                    
-                                         {usercart?.length >= 0 && (
-                                    <StyledBadge
-                                    badgeContent={usercart?.length}
-                                      overlap="rectangular"
-                                      anchorOrigin={{
-                                        vertical: "top",
-                                        horizontal: "right",
-                                      }}
-                                     
-                                    >
-                                     <Avatar
-                                        sx={{
-                                          border:"2px solid #fff",
-                                          bgcolor: "inherit",
-                                          "&:hover": { color: "#ff7519" },
+                                    {usercart?.length >= 0 && (
+                                      <StyledBadge
+                                        badgeContent={usercart?.length}
+                                        overlap="rectangular"
+                                        anchorOrigin={{
+                                          vertical: "top",
+                                          horizontal: "right",
                                         }}
                                       >
-                                        <ShoppingCartCheckoutIcon />
-                                      </Avatar>
-                                    </StyledBadge>
+                                        
+                                        <>
+                                          {userInfo.isAdmin && userInfo.isSeller && userInfo ?  (
+                                            <Avatar
+                                              sx={{
+                                                border: "2px solid #fff",
+                                                bgcolor: "inherit",
+                                                "&:hover": { color: "#ff7519" },
+                                              }}
+                                            >
+                                              <ShoppingCartCheckoutIcon />
+                                            </Avatar>
+                                          ):(
+                                            <Avatar
+                                              sx={{
+                                                mr: -4,
+                                                border: "2px solid #fff",
+                                                bgcolor: "inherit",
+                                                "&:hover": { color: "#ff7519" },
+                                              }}
+                                            >
+                                              <ShoppingCartCheckoutIcon />
+                                            </Avatar>
+                                          )}
+                                        </>
+                                       
+                                      </StyledBadge>
                                     )}
-                                     
                                   </>
                                 ) : (
                                   <Box>
@@ -430,15 +446,31 @@ function App() {
                                     style={{ color: "inherit", size: "larger" }}
                                     to="#admin"
                                   >
-                                    <Avatar
+                                    <>
+                                    {userInfo.isAdmin && userInfo.isSeller && userInfo ? (
+                                      <Avatar
                                       sx={{
-                                        border:"2px solid #fff",
+                                        border: "2px solid #fff",
                                         bgcolor: "inherit",
                                         "&:hover": { color: "#ff7519" },
                                       }}
                                     >
                                       <StorefrontIcon />
                                     </Avatar>
+                                    ) : (
+                                      <>
+                                      <Avatar
+                                      sx={{
+                                        mr: -2,
+                                        border: "2px solid #fff",
+                                        bgcolor: "inherit",
+                                        "&:hover": { color: "#ff7519" },
+                                      }}
+                                    >
+                                      <StorefrontIcon />
+                                    </Avatar></>
+                                    )}
+                                    </>
                                   </Link>
                                 </IconButton>
                               </Tooltip>
@@ -501,7 +533,7 @@ function App() {
                                   >
                                     <Avatar
                                       sx={{
-                                        border:"2px solid #fff",
+                                        border: "2px solid #fff",
                                         bgcolor: "inherit",
                                         "&:hover": { color: "#ff7519" },
                                       }}
@@ -627,7 +659,7 @@ function App() {
                                           setAnchorEl(e.currentTarget)
                                         }
                                         sx={{
-                                          border:"2px solid #fff",
+                                          border: "2px solid #fff",
                                           bgcolor: "inherit",
                                           "&:hover": { color: "#ff7519" },
                                         }}
@@ -709,7 +741,7 @@ function App() {
                                 >
                                   <Avatar
                                     sx={{
-                                      border:"2px solid #fff",
+                                      border: "2px solid #fff",
                                       bgcolor: "inherit",
                                       "&:hover": { color: "#ff7519" },
                                     }}
@@ -3523,9 +3555,18 @@ function App() {
               ></Route>
 
               <Route path="/cart" element={<CartScreen />}></Route>
-              <Route path="/collectionlist/men" element={ <CollectionScreen categorytype= "Men" />}></Route>
-              <Route path="/collectionlist/women" element={ <CollectionScreen categorytype= "Women" />}></Route>
-              <Route path="/collectionlist/kids" element={ <CollectionScreen categorytype= "Kids" />}></Route>
+              <Route
+                path="/collectionlist/men"
+                element={<CollectionScreen categorytype="Men" />}
+              ></Route>
+              <Route
+                path="/collectionlist/women"
+                element={<CollectionScreen categorytype="Women" />}
+              ></Route>
+              <Route
+                path="/collectionlist/kids"
+                element={<CollectionScreen categorytype="Kids" />}
+              ></Route>
               <Route path="/signin" element={<SigninScreen />}></Route>
               <Route path="/account" element={<AccountScreen />}></Route>
               <Route
@@ -3753,8 +3794,11 @@ function App() {
               showlabels="true"
             >
               {/* {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />} */}
-              <Typography variant="h6" sx={{fontSize:20,color:"white",padding:1.5}}>
-              All right reserved
+              <Typography
+                variant="h6"
+                sx={{ fontSize: 20, color: "white", padding: 1.5 }}
+              >
+                All right reserved
               </Typography>
               {/* <BottomNavigationAction label="All right reserved" /> */}
             </BottomNavigation>
