@@ -46,6 +46,7 @@ export default function Product(PropTypes) {
         style={{
           textDecoration: "none",
           color: "#263238",
+          textTransform: 'capitalize',
         }}
         to={`/product/${product._id}`}
       >
