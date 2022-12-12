@@ -75,7 +75,7 @@ export default function AccountScreen(props) {
               ></input>
             </div>
             <div>
-              <button className="acbutton" onclick={submitHandler}>
+              <button className="acbutton" onClick={submitHandler}>
                 Get Started
               </button>
             </div>

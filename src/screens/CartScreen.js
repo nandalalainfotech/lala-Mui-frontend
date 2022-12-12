@@ -26,7 +26,7 @@ import {
   CART_DELETE_RESET,
   CART_UPDATE_RESET
 } from "../constants/cartConstants";
-export default function CartScreen(props) {
+export default function CartScreen() {
   const navigate = useNavigate();
   const theme = createTheme();
   const params = useParams();
@@ -248,7 +248,7 @@ export default function CartScreen(props) {
                           {usercart?.map((item) => (
                             <Card key={item._id} sx={{ minWidth: 200,  m: 2 }}>
                               <CardMedia
-                                key={item.product}
+                                key={item._id}
                                 component="img"
                                 sx={{ width: 150, alignItems:"center"}}
                                 image={item.image}

@@ -17,9 +17,7 @@ export default function PlaceOrderScreen() {
   }
 
   const userCartListItem = useSelector((state) => state.userCartListItem);
-  const {
-    usercarts: usercart,
-  } = userCartListItem;
+  const { usercarts: usercart } = userCartListItem;
 
   const orderCreate = useSelector((state) => state.orderCreate);
   const { success, order } = orderCreate;
@@ -43,7 +41,7 @@ export default function PlaceOrderScreen() {
   return (
     <Box sx={{ flexGrow: 1, m: 2 }}>
       <Grid container spacing={2}>
-        <Grid sm  align="center">
+        <Grid sm align="center">
           <Box>
             <Box
               sx={{
@@ -102,11 +100,11 @@ export default function PlaceOrderScreen() {
 
               {usercart?.map((item) => (
                 <Box
-                  key={item.product}
+                  key={item._id}
                   sx={{
                     display: "flex",
                     flexDirection: "row",
-                    
+
                     justifyContent: "space-between",
                     marginTop: 2,
                   }}
@@ -143,78 +141,77 @@ export default function PlaceOrderScreen() {
               ))}
             </Box>
             <Grid align="center">
-            <Box 
-              sx={{
-                // p: 5,
-                // m: 2,
-               
-                boxShadow:
-                  "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                display: {
-                  xs: "block",
-                  md: "none",
-                  sm: "block",
-                  lg: "none",
-                  xl: "none",
-                },
-              }}
-            >
-             
-              <Typography  sx={{textAlign: "center",}}variant="h4">Order Items</Typography>
+              <Box
+                sx={{
+                  // p: 5,
+                  // m: 2,
 
-              {usercart?.map((item) => (
-                
-                <Box 
-                  key={item.product}
-                  sx={{
-                    display: "flex",
-                    
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                  
-                    marginLeft: 10,
-                    alignItems: "center",
-                    p: 5,
-                    m: 2,
-                    flex: 1,
-                  }}
-                >
-                  <CardMedia
-                    component="img"
-                    sx={{ width: 151 }}
-                    src={item.image}
-                    alt={item.name}
-                  />
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                  display: {
+                    xs: "block",
+                    md: "none",
+                    sm: "block",
+                    lg: "none",
+                    xl: "none",
+                  },
+                }}
+              >
+                <Typography sx={{ textAlign: "center" }} variant="h4">
+                  Order Items
+                </Typography>
 
-                  <Link
-                    style={{ textDecoration: "none", color: "black" }}
-                    to={`/product/${item.product}`}
+                {usercart?.map((item) => (
+                  <Box
+                    key={item._id}
+                    sx={{
+                      display: "flex",
+
+                      flexDirection: "column",
+                      justifyContent: "space-between",
+
+                      marginLeft: 10,
+                      alignItems: "center",
+                      p: 5,
+                      m: 2,
+                      flex: 1,
+                    }}
                   >
-                    {" "}
-                    <Typography
-                      variant="subtitle1"
-                      sx={{
-                        "&:hover": {
-                          color: "#ff7519",
-                          textDecoration: "underline",
-                        },
-                      }}
-                    >
-                      {item.name}
-                    </Typography>
-                  </Link>
+                    <CardMedia
+                      component="img"
+                      sx={{ width: 151 }}
+                      src={item.image}
+                      alt={item.name}
+                    />
 
-                  <Typography variant="subtitle1">
-                    {item.qty} x ₹{item.price} = ₹{item.qty * item.price}
-                  </Typography>
-                </Box>
-              ))}
-              
-            </Box>
+                    <Link
+                      style={{ textDecoration: "none", color: "black" }}
+                      to={`/product/${item.product}`}
+                    >
+                      {" "}
+                      <Typography
+                        variant="subtitle1"
+                        sx={{
+                          "&:hover": {
+                            color: "#ff7519",
+                            textDecoration: "underline",
+                          },
+                        }}
+                      >
+                        {item.name}
+                      </Typography>
+                    </Link>
+
+                    <Typography variant="subtitle1">
+                      {item.qty} x ₹{item.price} = ₹{item.qty * item.price}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
             </Grid>
           </Box>
 
-          <Grid xs sm md lg xl  sx={{ display: { xs: "block", sm: "none" } }}>
+          <Grid xs sm md lg xl sx={{ display: { xs: "block", sm: "none" } }}>
             <Box
               sx={{
                 p: 5,

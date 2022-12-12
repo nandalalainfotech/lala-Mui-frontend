@@ -5,7 +5,7 @@ import { adminin } from '../actions/userAction';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 
-export default function AdmininScreen(props) {
+export default function AdmininScreen() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

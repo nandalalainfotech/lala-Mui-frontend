@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
-const ScreenRoute = ({ children }) => {
+const ScreenRoute = ( children ) => {
   const userAccount = useSelector((state) => state.userAccountCreation);
   const { accountInfo } = userAccount;
 

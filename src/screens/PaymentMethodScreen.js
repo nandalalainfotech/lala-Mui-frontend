@@ -13,7 +13,7 @@ import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
-export default function PaymentMethodScreen(props) {
+export default function PaymentMethodScreen() {
   const navigate = useNavigate();
   //   const cart = useSelector((state) => state.cart);
   //   const { shippingAddress } = cart;

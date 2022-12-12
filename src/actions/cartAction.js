@@ -3,7 +3,7 @@ import {
   CART_CREATE_FAIL, CART_CREATE_REQUEST, CART_CREATE_SUCCESS, CART_DELETE_FAIL, CART_DELETE_REQUEST, CART_DELETE_SUCCESS, CART_REMOVE_ITEM, CART_SAVE_PAYMENT_METHOD, CART_SAVE_SHIPPING_ADDRESS, CART_UPDATE_FAIL, CART_UPDATE_REQUEST, CART_UPDATE_SUCCESS, USER_CART_LIST_FAIL, USER_CART_LIST_REQUST, USER_CART_LIST_SUCCESS
 } from "../constants/cartConstants";
 
-export const addToCart =(productId, qty, pay) => async (dispatch, getState) => {
+export const addToCart =(productId, qty) => async (dispatch, getState) => {
   dispatch({ type: CART_CREATE_REQUEST });
     const { data } = await Axios.get(`/api/products/${productId}`);
     const img = await Axios.get(`/api/uploads/show/${productId}`, {
@@ -111,7 +111,7 @@ export const deleteCart = (_id) => async (dispatch) => {
 };
 
 
-export const updateCart = (usercart) => async (dispatch, getState) => {
+export const updateCart = (usercart) => async (dispatch) => {
   
   dispatch({ type: CART_UPDATE_REQUEST, payload: usercart });
   try {

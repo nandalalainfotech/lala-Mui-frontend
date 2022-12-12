@@ -5,8 +5,8 @@ const ENDPOINT =
   window.location.host.indexOf('localhost') >= 0
     ? 'http://127.0.0.1:5000'
     : window.location.host;
-export default function ChatBox(props) {
-  const { userInfo } = props;
+export default function ChatBox(PropTypes) {
+  const { userInfo } = PropTypes;
   const [socket, setSocket] = useState(null);
   const uiMessagesRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);

@@ -1,4 +1,4 @@
-
+/* eslint-disable no-constant-condition */
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -19,7 +19,7 @@ import MessageBox from "../components/MessageBox";
 import Product from "../components/Product";
 import { prices, ratings } from "../utils";
 
-export default function SearchScreen(props) {
+export default function SearchScreen() {
   const {
     name = "all",
     category = "all",
@@ -115,7 +115,6 @@ export default function SearchScreen(props) {
   return (
     <div>
       <Box sx={{ flexgrow: 1, marginTop: 3 }}>
-
         <Grid container spacing={0}>
           {/* Mobile view start */}
           <Grid item xs sx={{ display: { xs: "block", sm: "none" } }}>
@@ -124,18 +123,22 @@ export default function SearchScreen(props) {
                 <Box>
                   <Card
                     sx={{
-                      marginTop: 1, marginLeft: 2, maxWidth: 300, textAlign: "center", boxShadow:
+                      marginTop: 1,
+                      marginLeft: 2,
+                      maxWidth: 300,
+                      textAlign: "center",
+                      boxShadow:
                         "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                      bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#fff'),
+                      bgcolor: (theme) =>
+                        theme.palette.mode === "dark" ? "#101010" : "#fff",
                       color: (theme) =>
-                        theme.palette.mode === 'dark' ? 'grey.500' : 'grey.800',
+                        theme.palette.mode === "dark" ? "grey.500" : "grey.800",
                       p: 1,
                       m: 1,
                       borderRadius: 2,
                     }}
                   >
                     <CardContent>
-
                       <Typography variant="h5" color="#0066CC">
                         {products?.length} Results
                       </Typography>
@@ -177,19 +180,25 @@ export default function SearchScreen(props) {
                 <Box sx={{ marginLeft: 1 }}>
                   <Card
                     sx={{
-                      marginTop: 1, maxWidth: 300, textAlign: "center", boxShadow:
-                        "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)", textTransform: 'capitalize',
+                      marginTop: 1,
+                      maxWidth: 300,
+                      textAlign: "center",
+                      boxShadow:
+                        "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                      textTransform: "capitalize",
                       cursor: "pointer",
                     }}
                   >
-                    <Typography variant="h6" color="#0066CC">Department</Typography>
+                    <Typography variant="h6" color="#0066CC">
+                      Department
+                    </Typography>
 
                     <CardContent>
                       <Link
                         style={{ textDecoration: "none", color: "inherit" }}
                         className={"all" === category ? "active" : ""}
                         to={getFilterUrl({ category: "all" })}
-                      // to={`/search/category/sample category`}
+                        // to={`/search/category/sample category`}
                       >
                         <Typography variant="h6">Any </Typography>
                       </Link>
@@ -200,15 +209,13 @@ export default function SearchScreen(props) {
                             style={{ textDecoration: "none", color: "inherit" }}
                             className={c === category ? "active" : ""}
                             to={getFilterUrl({ category: c })}
-                          // to={`/search/category/${c}`}
+                            // to={`/search/category/${c}`}
                           >
-                            <Typography color="inherit"
-                            >{c}</Typography>
+                            <Typography color="inherit">{c}</Typography>
                           </Link>
                         </Box>
                       ))}
                     </CardContent>
-
                   </Card>
                 </Box>
               </Grid>
@@ -216,11 +223,16 @@ export default function SearchScreen(props) {
                 <Box sx={{ marginLeft: 1 }}>
                   <Card
                     sx={{
-                      marginTop: 1, maxWidth: 300, textAlign: "center", boxShadow:
+                      marginTop: 1,
+                      maxWidth: 300,
+                      textAlign: "center",
+                      boxShadow:
                         "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                     }}
                   >
-                    <Typography variant="h6" color="#0066CC">Price</Typography>
+                    <Typography variant="h6" color="#0066CC">
+                      Price
+                    </Typography>
                     <CardContent>
                       {prices.map((p) => (
                         <Typography key={p.name}>
@@ -233,7 +245,7 @@ export default function SearchScreen(props) {
                                 : ""
                             }
                           >
-                            <Typography variant="h6" >{p.name}</Typography>
+                            <Typography variant="h6">{p.name}</Typography>
                           </Link>
                         </Typography>
                       ))}
@@ -245,11 +257,16 @@ export default function SearchScreen(props) {
                 <Box sx={{ marginLeft: 1 }}>
                   <Card
                     sx={{
-                      marginTop: 1, maxWidth: 300, textAlign: "center", boxShadow:
+                      marginTop: 1,
+                      maxWidth: 300,
+                      textAlign: "center",
+                      boxShadow:
                         "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                     }}
                   >
-                    <Typography variant="h6" color="#0066CC">Avg. Customer Review</Typography>
+                    <Typography variant="h6" color="#0066CC">
+                      Avg. Customer Review
+                    </Typography>
                     <CardContent>
                       {ratings.map((r) => (
                         <Typography key={r.name}>
@@ -276,12 +293,14 @@ export default function SearchScreen(props) {
           {/* system view start */}
           <Grid item sx={{ display: { xs: "none", sm: "block" } }}>
             <Box>
-
               <Grid item xs>
                 <Box>
                   <Card
                     sx={{
-                      marginTop: 1, maxWidth: 300, textAlign: "center", boxShadow:
+                      marginTop: 1,
+                      maxWidth: 300,
+                      textAlign: "center",
+                      boxShadow:
                         "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                     }}
                   >
@@ -332,14 +351,18 @@ export default function SearchScreen(props) {
                 <Box>
                   <Card
                     sx={{
-                      marginTop: 1, maxWidth: 500, textAlign: "center", boxShadow:
-                        "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)", textTransform: 'capitalize',
+                      marginTop: 1,
+                      maxWidth: 500,
+                      textAlign: "center",
+                      boxShadow:
+                        "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                      textTransform: "capitalize",
                       cursor: "pointer",
                     }}
                   >
-
-                    <Typography variant="h6" color="#0066CC">Department</Typography>
-
+                    <Typography variant="h6" color="#0066CC">
+                      Department
+                    </Typography>
 
                     {/* {loadingCategories ? (
                       <CircularProgress></CircularProgress>
@@ -350,31 +373,25 @@ export default function SearchScreen(props) {
                     ) : ( */}
                     <CardContent>
                       <Link
-                        style={{ textDecoration: "none", color: "inherit", }}
+                        style={{ textDecoration: "none", color: "inherit" }}
                         className={"all" === category ? "active" : ""}
                         to={getFilterUrl({ category: "all" })}
-                      // to={`/search/category/sample category`}
+                        // to={`/search/category/sample category`}
                       >
                         <Typography variant="h6">Any </Typography>
                       </Link>
 
-
                       {categories?.map((c) => (
-
-
-
                         <Box key={c}>
-
                           <Link
                             style={{ textDecoration: "none", color: "inherit" }}
                             className={c === category ? "active" : ""}
                             to={getFilterUrl({ category: c })}
-                          // to={`/search/category/${c}`}
+                            // to={`/search/category/${c}`}
                           >
                             <Typography variant="h6">{c}</Typography>
                           </Link>
                         </Box>
-
                       ))}
                     </CardContent>
                     {/* )} */}
@@ -385,11 +402,16 @@ export default function SearchScreen(props) {
                 <Box>
                   <Card
                     sx={{
-                      marginTop: 1, maxWidth: 500, textAlign: "center", boxShadow:
+                      marginTop: 1,
+                      maxWidth: 500,
+                      textAlign: "center",
+                      boxShadow:
                         "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                     }}
                   >
-                    <Typography variant="h6" color="#0066CC">Price</Typography>
+                    <Typography variant="h6" color="#0066CC">
+                      Price
+                    </Typography>
                     <CardContent>
                       {prices.map((p) => (
                         <Typography key={p.name}>
@@ -397,7 +419,7 @@ export default function SearchScreen(props) {
                             style={{ textDecoration: "none", color: "inherit" }}
                             to={getFilterUrl({ min: p.min, max: p.max })}
                             className={
-                              `₹{p.min}-₹{p.max}` === `₹{min}-₹{max}`
+                              `₹{p.min}-₹{p.max}` == `₹{min}-₹{max}`
                                 ? "active"
                                 : ""
                             }
@@ -414,11 +436,16 @@ export default function SearchScreen(props) {
                 <Box>
                   <Card
                     sx={{
-                      marginTop: 1, maxWidth: 500, textAlign: "center", boxShadow:
+                      marginTop: 1,
+                      maxWidth: 500,
+                      textAlign: "center",
+                      boxShadow:
                         "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                     }}
                   >
-                    <Typography variant="h6" color="#0066CC">Avg. Customer Review</Typography>
+                    <Typography variant="h6" color="#0066CC">
+                      Avg. Customer Review
+                    </Typography>
                     <CardContent>
                       {ratings.map((r) => (
                         <Typography key={r.name}>
@@ -443,7 +470,6 @@ export default function SearchScreen(props) {
           </Grid>
           {/* system view End */}
 
-
           <Grid item xs sx={{ display: { xs: "none", sm: "block" } }}>
             <Box>
               {loading ? (
@@ -463,8 +489,6 @@ export default function SearchScreen(props) {
                       display: "flex",
                       flexFlow: "wrap row",
                       flexDirection: "row",
-
-
                     }}
                   >
                     {products.map((product) => (
@@ -506,7 +530,6 @@ export default function SearchScreen(props) {
                       display: "flex",
                       flexFlow: "wrap row",
                       flexDirection: "row",
-
                     }}
                   >
                     {products.map((product) => (
@@ -529,17 +552,8 @@ export default function SearchScreen(props) {
               )}
             </Box>
           </Grid>
-
-
         </Grid>
       </Box>
     </div>
   );
 }
-
-
-
-
-
-
-

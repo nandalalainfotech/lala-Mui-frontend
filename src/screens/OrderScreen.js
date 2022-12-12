@@ -16,7 +16,7 @@ import {
   ORDER_PAY_RESET,
 } from "../constants/orderConstants";
 
-export default function OrderScreen(props) {
+export default function OrderScreen() {
   const navigate = useNavigate();
   const params = useParams();
   const { id: orderId } = params;

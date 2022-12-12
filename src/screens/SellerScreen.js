@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { listProducts } from '../actions/productAction';
-import { detailsUser } from '../actions/userAction';
-import LoadingBox from '../components/LoadingBox';
-import MessageBox from '../components/MessageBox';
-import Product from '../components/Product';
-import Rating from '../components/Rating';
-import Women from '../components/women';
-import Kid from '../components/Kid';
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { listProducts } from "../actions/productAction";
+import { detailsUser } from "../actions/userAction";
+import LoadingBox from "../components/LoadingBox";
+import MessageBox from "../components/MessageBox";
+import Product from "../components/Product";
+import Rating from "../components/Rating";
+import Women from "../components/women";
+import Kid from "../components/Kid";
 
-export default function SellerScreen(props) {
+export default function SellerScreen() {
   const params = useParams();
   const { id: sellerId } = params;
 

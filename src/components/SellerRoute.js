@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
-const SellerRoute = ({ children }) => {
+const SellerRoute = ( children ) => {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   // const useAdminin = useSelector((state) => state.useAdminin);
