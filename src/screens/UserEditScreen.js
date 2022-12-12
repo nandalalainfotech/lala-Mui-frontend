@@ -18,7 +18,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-export default function UserEditScreen(props) {
+export default function UserEditScreen() {
   const navigate = useNavigate();
   const params = useParams();
   const { id: userId } = params;

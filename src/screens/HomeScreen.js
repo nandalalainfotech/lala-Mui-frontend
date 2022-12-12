@@ -52,8 +52,7 @@ const images = [
 export default function HomeScreen() {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
-  // eslint-disable-next-line no-unused-vars
-  const { loading, error, products } = productList;
+  const { loading, error } = productList;
   const productMenList = useSelector((state) => state.productMenList);
   const { menProducts } = productMenList;
   const productWomenList = useSelector((state) => state.productWomenList);
@@ -162,7 +161,7 @@ export default function HomeScreen() {
           textTransform: "capitalize",
         }}
       >
-        <Typography variant="h4"  sx={{'&:hover':{color:"#6633FF",textDecoration: "underline"}}}>Men's collection</Typography>
+        <Typography variant="h4"  sx={{'&:hover':{color:"#6633FF",textDecoration: "underline"}}}>Men&#39;s collection</Typography>
       </Link>
       {loading ? (
         <CircularProgress></CircularProgress>

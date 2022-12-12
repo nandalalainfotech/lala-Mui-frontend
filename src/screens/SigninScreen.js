@@ -16,7 +16,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { makeStyles } from "@material-ui/core";
 import { useForm } from "react-hook-form";
-export default function SigninScreen(props) {
+export default function SigninScreen() {
   const {
     register,
     handleSubmit,

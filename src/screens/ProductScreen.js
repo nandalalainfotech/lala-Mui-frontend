@@ -24,7 +24,7 @@ import CardMedia from "@mui/material/CardMedia";
 import { DialogContent } from "../../node_modules/@material-ui/core/index";
 // import { CenterFocusStrong } from "../../node_modules/@mui/icons-material/index";
 
-export default function ProductScreen(props) {
+export default function ProductScreen() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams();

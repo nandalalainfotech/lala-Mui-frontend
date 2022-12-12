@@ -6,8 +6,8 @@ import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 // import Box from '@mui/material/Box';
 
-export default function Product(props) {
-  const { product } = props;
+export default function Product(PropTypes) {
+  const { product } = PropTypes;
   // const [image, setImage] = useState();
   // useEffect(() => {
   //   async function fetchData() {

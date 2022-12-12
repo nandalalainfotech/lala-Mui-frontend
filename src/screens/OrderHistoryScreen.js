@@ -10,7 +10,7 @@ import { listOrderMine } from '../actions/orderActions';
 import MessageBox from '../components/MessageBox';
 import CircularProgress from '@mui/material/CircularProgress';
 
-export default function OrderHistoryScreen(props) {
+export default function OrderHistoryScreen() {
 
   const [pageSize, setPageSize] = useState(10);
 

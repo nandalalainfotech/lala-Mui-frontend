@@ -71,7 +71,6 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@mui/material/Paper";
-import BottomNavigation from "@mui/material/BottomNavigation";
 import { userCartList } from "./actions/cartAction";
 import Badge from "@material-ui/core/Badge";
 import { withStyles } from "@material-ui/core/styles";
@@ -2870,7 +2869,7 @@ function App() {
                         <Link to="search/categorytype/spaces">Spaces</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/categorytype/d-decor">D'Decor</Link>
+                        <Link to="search/categorytype/d-decor">D&#39;Decor</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link to="search/categorytype/story-home">
@@ -3269,7 +3268,7 @@ function App() {
                             textDecoration: "none",
                           }}
                         >
-                          Men's Grooming
+                          Men&#39;s Grooming
                         </Link>
                       </MenuItem>
 
@@ -3786,19 +3785,9 @@ function App() {
             }}
             elevation={3}
           >
-            <BottomNavigation
-              sx={{ backgroundColor: "#37474f" }}
-              showlabels="true"
-            >
-              {/* {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />} */}
-              <Typography
-                variant="h6"
-                sx={{ fontSize: 20, color: "white", padding: 1.5 }}
-              >
-                All right reserved
-              </Typography>
-              {/* <BottomNavigationAction label="All right reserved" /> */}
-            </BottomNavigation>
+           <Box varient='h6' sx={{ backgroundColor: "#37474F", top:0, justifyContent: 'center', height:55, display: "flex", mb:-1, padding: 1, fontSize:20}}>
+            <span> All right reserved</span>
+            </Box>
           </Paper>
         </Box>
       </div>

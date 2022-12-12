@@ -22,7 +22,7 @@ import { PRODUCT_DETAILS_RESET } from "../constants/productConstants";
 import { useForm } from "react-hook-form";
 
 
-export default function ProductEditScreen(props) {
+export default function ProductEditScreen() {
   const {
     register,
     handleSubmit,

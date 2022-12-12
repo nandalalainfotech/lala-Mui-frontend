@@ -79,7 +79,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 
-export default function SearchBox(props) {
+export default function SearchBox() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const submitHandler = (e) => {

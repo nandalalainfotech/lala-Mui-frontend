@@ -5,8 +5,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { listProducts } from "../actions/productAction";
 import Product from "../components/Product";
-export default function CollectionScreen(props) {
-  const { categorytype } = props;
+export default function CollectionScreen(PropTypes) {
+  const { categorytype } = PropTypes;
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const { loading,products } = productList;

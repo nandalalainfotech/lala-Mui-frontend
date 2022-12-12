@@ -7,7 +7,7 @@ import MessageBox from '../components/MessageBox';
 import { ADDRESS_DETAILS_RESET } from '../constants/addressConstants';
 import {useNavigate } from 'react-router-dom';
 
-export default function AddressListScreen(props) {
+export default function AddressListScreen() {
     const navigate = useNavigate();
   const addressesList = useSelector((state) => state.addressesList);
   const { loading, error, addressList } = addressesList;
@@ -25,7 +25,7 @@ export default function AddressListScreen(props) {
       type: ADDRESS_DETAILS_RESET,
     });
   }, [dispatch, successDelete]);
-  const deleteHandler = (user) => {
+  const deleteHandler = () => {
    
   };
 

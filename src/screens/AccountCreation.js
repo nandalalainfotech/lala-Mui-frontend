@@ -5,8 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import data from '../data';
 
 // console.log('accountscreen', data);
-export default function AccountCreation(props) {
-    console.log("props", props)
+export default function AccountCreation() {
     const navigate = useNavigate();
     // const AccountCreation = props => {
     //     const { username, email, city, phone } =
