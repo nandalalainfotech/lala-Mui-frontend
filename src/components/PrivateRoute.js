@@ -2,7 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
-const PrivateRoute = ( children ) => {
+// eslint-disable-next-line react/prop-types
+const PrivateRoute = ( {children} ) => {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   // const userAdminin = useSelector((state) => state.userAdminin);
