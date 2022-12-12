@@ -93,8 +93,8 @@ export default function CartScreen(props) {
   };
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={2} item={true}>
-        <Grid item={true} xs sx={{ marginTop: 3 }}>
+      <Grid container spacing={2} >
+        <Grid item  xs sx={{ marginTop: 3 }}>
           {userInfo ? (
             <Typography
               gutterBottom
@@ -149,7 +149,7 @@ export default function CartScreen(props) {
                     </Box>
                   ) : (
                     <>
-                      <Grid xs align="center" sx={{ display: { xs: "none", sm: "block" } }}>
+                      <Grid item  xs align="center" sx={{ display: { xs: "none", sm: "block" } }}>
                         <Box
                           sx={{
                             flexGrow: 1,
@@ -243,10 +243,10 @@ export default function CartScreen(props) {
                           ))}
                         </Box>
                       </Grid>
-                      <Grid xs  align="center" sx={{ display: { xs: "block", sm: "none" } }}>
+                      <Grid item  xs  align="center" sx={{ display: { xs: "block", sm: "none" } }}>
                         <Box sx={{ flexGrow: 1, justifyContent: "center" }}>
                           {usercart?.map((item) => (
-                            <Card sx={{ minWidth: 200,  m: 2 }}>
+                            <Card key={item._id} sx={{ minWidth: 200,  m: 2 }}>
                               <CardMedia
                                 key={item.product}
                                 component="img"
@@ -401,10 +401,10 @@ export default function CartScreen(props) {
           )}
         </Grid>
 
-        <Grid
+        <Grid item 
           xs
           sx={{ marginTop: 7, display: { xs: "none", sm: "block" } }}
-          item={true}
+          
         >
           {userInfo ? (
             <Grid item xs>
@@ -461,7 +461,7 @@ export default function CartScreen(props) {
             <></>
           )}
         </Grid>
-        <Grid xs sx={{ display: { xs: "block", sm: "none" } }}>
+        <Grid item  xs sx={{ display: { xs: "block", sm: "none" } }}>
           <div className="grid-elements">
             {userInfo ? (
               <Grid item xs>
