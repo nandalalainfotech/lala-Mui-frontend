@@ -52,7 +52,7 @@ export default function PlaceOrderScreen() {
               }}
             >
               <Typography variant="h4">Shipping</Typography>
-              <Typography variant="subtitle1" sx={{ marginTop: 3 }}>
+              <Typography variant="subtitle1" sx={{ marginTop: 3,textTransform: 'capitalize' }}>
                 <strong>Name:</strong> {cart.shippingAddress.fullName}
                 <br />
                 <strong>Address:</strong> {cart.shippingAddress.address}
@@ -76,7 +76,7 @@ export default function PlaceOrderScreen() {
               }}
             >
               <Typography variant="h4">Payment</Typography>
-              <Typography variant="subtitle1" sx={{ marginTop: 3 }}>
+              <Typography variant="subtitle1" sx={{ marginTop: 3,textTransform: 'capitalize' }}>
                 <strong>Method:</strong> {cart.paymentMethod}
               </Typography>
             </Box>
@@ -117,7 +117,7 @@ export default function PlaceOrderScreen() {
                   />
 
                   <Link
-                    style={{ textDecoration: "none", color: "black" }}
+                    style={{ textDecoration: "none", color: "black",textTransform: 'capitalize' }}
                     to={`/product/${item.product}`}
                   >
                     {" "}
@@ -127,6 +127,7 @@ export default function PlaceOrderScreen() {
                         "&:hover": {
                           color: "#ff7519",
                           textDecoration: "underline",
+                          textTransform: 'capitalize'
                         },
                       }}
                     >
@@ -185,7 +186,7 @@ export default function PlaceOrderScreen() {
                     />
 
                     <Link
-                      style={{ textDecoration: "none", color: "black" }}
+                      style={{ textDecoration: "none", color: "black",textTransform: 'capitalize' }}
                       to={`/product/${item.product}`}
                     >
                       {" "}

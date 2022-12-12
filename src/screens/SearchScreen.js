@@ -419,7 +419,7 @@ export default function SearchScreen() {
                             style={{ textDecoration: "none", color: "inherit" }}
                             to={getFilterUrl({ min: p.min, max: p.max })}
                             className={
-                              `₹{p.min}-₹{p.max}` == `₹{min}-₹{max}`
+                              `₹{p.min}-₹{p.max}` === `₹{min}-₹{max}`
                                 ? "active"
                                 : ""
                             }

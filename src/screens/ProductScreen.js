@@ -180,7 +180,7 @@ export default function ProductScreen() {
                   <Typography
                     variant="h5"
                     gutterBottom
-                    style={{ textTransform: "uppercase", color: "#A02020" }}
+                    style={{  color: "#A02020",textTransform: 'capitalize' }}
                   >
                     {product.name}
                   </Typography>
@@ -197,42 +197,42 @@ export default function ProductScreen() {
 
                   <Typography
                     variant="body1"
-                    style={{ color: "#A02020" }}
+                    style={{ color: "#A02020",textTransform: 'capitalize' }}
                     gutterBottom
                   >
                     <strong>Price :</strong> ₹{product.price}
                   </Typography>
                   <Typography
                     variant="body1"
-                    style={{ color: "#A02020" }}
+                    style={{ color: "#A02020",textTransform: 'capitalize' }}
                     gutterBottom
                   >
                     <strong>Brand :</strong> {product.brand}
                   </Typography>
                   <Typography
                     variant="body1"
-                    style={{ color: "#A02020" }}
+                    style={{ color: "#A02020",textTransform: 'capitalize' }}
                     gutterBottom
                   >
                     <strong>Category :</strong> {product.category}
                   </Typography>
                   <Typography
                     variant="body1"
-                    style={{ color: "#A02020" }}
+                    style={{ color: "#A02020",textTransform: 'capitalize' }}
                     gutterBottom
                   >
                     <strong>Description :</strong> {product.description}
                   </Typography>
                   <Typography
                     variant="body1"
-                    style={{ color: "#A02020" }}
+                    style={{ color: "#A02020",textTransform: 'capitalize' }}
                     gutterBottom
                   >
                     <strong> Category Group :</strong> {product.categorygroup}
                   </Typography>
                   <Typography
                     variant="body1"
-                    style={{ color: "#A02020" }}
+                    style={{ color: "#A02020",textTransform: 'capitalize' }}
                     gutterBottom
                   >
                     <strong>Category Type :</strong> {product.categorytype}

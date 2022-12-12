@@ -185,7 +185,7 @@ export default function OrderScreen() {
                     <Link to={`/product/${item.product}`}>{item.name}</Link>
                   </Typography> */}
                   <Link
-                    style={{ textDecoration: "none", color: "black" }}
+                    style={{ textDecoration: "none", color: "black",textTransform: 'capitalize' }}
                     to={`/product/${item.product}`}
                   >
                     {" "}
@@ -258,6 +258,7 @@ export default function OrderScreen() {
                           "&:hover": {
                             color: "#ff7519",
                             textDecoration: "underline",
+                            textTransform: 'capitalize'
                           },
                         }}
                       >

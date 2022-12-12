@@ -80,7 +80,16 @@ export default function CartScreen() {
       dispatch({ type: CART_DELETE_RESET });
       navigate("/cart");
     }
-  }, [dispatch, productId, qty, successDelete, successUpdate, success,navigate,userInfo]);
+  }, [
+    dispatch,
+    productId,
+    qty,
+    successDelete,
+    successUpdate,
+    success,
+    navigate,
+    userInfo,
+  ]);
 
   const removeFromCartHandler = (_id) => {
     if (window.confirm("Are you sure to delete?")) {
@@ -149,7 +158,12 @@ export default function CartScreen() {
                     </Box>
                   ) : (
                     <>
-                      <Grid item  xs align="center" sx={{ display: { xs: "none", sm: "block" } }}>
+                      <Grid
+                        item
+                        xs
+                        align="center"
+                        sx={{ display: { xs: "none", sm: "block" } }}
+                      >
                         <Box
                           sx={{
                             flexGrow: 1,
@@ -180,13 +194,14 @@ export default function CartScreen() {
                               <Box>
                                 <Link
                                   to={`/product/${item._id}`}
-                                  style={{ textDecoration: "none" }}
+                                  style={{ textDecoration: "none",textTransform: 'capitalize' }}
                                 >
                                   <Typography
                                     sx={{
                                       "&:hover": {
                                         color: "#ff7519",
                                         textDecoration: "underline",
+                                        textTransform: 'capitalize'
                                       },
                                     }}
                                     gutterBottom
@@ -243,7 +258,12 @@ export default function CartScreen() {
                           ))}
                         </Box>
                       </Grid>
-                      <Grid item  xs  align="center" sx={{ display: { xs: "block", sm: "none" } }}>
+                      <Grid
+                        item
+                        xs
+                        align="center"
+                        sx={{ display: { xs: "block", sm: "none" } }}
+                      >
                         <Box sx={{ flexGrow: 1, justifyContent: "center" }}>
                           {usercart?.map((item) => (
                             <Card key={item._id} sx={{ minWidth: 200,  m: 2 }}>
@@ -274,6 +294,7 @@ export default function CartScreen() {
                                       "&:hover": {
                                         color: "#ff7519",
                                         textDecoration: "underline",
+                                        textTransform: 'capitalize'
                                       },
                                     }}
                                     gutterBottom
@@ -467,32 +488,57 @@ export default function CartScreen() {
               <Grid item xs>
                 <Card sx={{ minWidth: 10 ,alignItems:"center"}}>
                   <Box>
-                    <Box >
-                      <Typography sx={{textAlign:"left"}} gutterBottom variant="h4" component="div">
+                    <Box>
+                      <Typography
+                        sx={{ textAlign: "left" }}
+                        gutterBottom
+                        variant="h4"
+                        component="div"
+                      >
                         Price Details
                       </Typography>
                     </Box>
                     <Divider />
-                    <Box >
-                      <Typography sx={{textAlign:"left"}} gutterBottom variant="h6" component="div">
+                    <Box>
+                      <Typography
+                        sx={{ textAlign: "left" }}
+                        gutterBottom
+                        variant="h6"
+                        component="div"
+                      >
                         Subtotal ({usercart?.reduce((a, c) => a + c.qty, 0)}{" "}
                         items) : ₹
                         {usercart?.reduce((a, c) => a + c.price * c.qty, 0)}
                       </Typography>
                     </Box>
-                    <Box >
-                      <Typography sx={{textAlign:"left"}} gutterBottom variant="h6" component="div">
+                    <Box>
+                      <Typography
+                        sx={{ textAlign: "left" }}
+                        gutterBottom
+                        variant="h6"
+                        component="div"
+                      >
                         Discount: ₹ 0%
                       </Typography>
                     </Box>
-                    <Box >
-                      <Typography sx={{textAlign:"left"}} gutterBottom variant="h6" component="div">
+                    <Box>
+                      <Typography
+                        sx={{ textAlign: "left" }}
+                        gutterBottom
+                        variant="h6"
+                        component="div"
+                      >
                         Delivery Charges: Free
                       </Typography>
                     </Box>
                     <Divider />
-                    <Box >
-                      <Typography sx={{textAlign:"left"}} gutterBottom variant="h6" component="div">
+                    <Box>
+                      <Typography
+                        sx={{ textAlign: "left" }}
+                        gutterBottom
+                        variant="h6"
+                        component="div"
+                      >
                         Total Amount : ₹
                         {usercart?.reduce((a, c) => a + c.price * c.qty, 0)}
                       </Typography>
@@ -502,7 +548,7 @@ export default function CartScreen() {
                       <Button
                         variant="contained"
                         type="button"
-                        sx={{ width: "100%", }}
+                        sx={{ width: "100%" }}
                         onClick={checkoutHandler}
                         className="primary block"
                         disabled={usercart?.length === 0}
