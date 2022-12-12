@@ -1,25 +1,23 @@
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import Axios from "axios";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import Rating from "@mui/material/Rating";
+import Typography from "@mui/material/Typography";
+import { Link } from "react-router-dom";
 // import Box from '@mui/material/Box';
 
 export default function Product(props) {
   const { product } = props;
-  const [image, setImage] = useState();
-  useEffect(() => {
-    async function fetchData() {
-      const imageData = await Axios.get(`/api/uploads/show/${product._id}`, {
-        responseType: "blob",
-      });
-      setImage(URL.createObjectURL(imageData.data));
-    }
-    fetchData();
-  }, [product]);
+  // const [image, setImage] = useState();
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const imageData = await Axios.get(`/api/uploads/show/${product._id}`, {
+  //       responseType: "blob",
+  //     });
+  //     setImage(URL.createObjectURL(imageData.data));
+  //   }
+  //   fetchData();
+  // }, [product]);
 
   return (
     <Card
@@ -40,7 +38,7 @@ export default function Product(props) {
           }}
           component="img"
           // height="200"
-          image={image}
+          image={`/api/uploads/show/${product._id}`}
           alt={product.name}
         />
       </Link>

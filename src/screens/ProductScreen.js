@@ -282,7 +282,7 @@ export default function ProductScreen(props) {
                       >
                         <strong>Qty:</strong>
                         <FormControl
-                          sx={{ marginLeft: 2, width: "60%" }}
+                          sx={{ marginLeft: 2, width: "90%" }}
                           size="small"
                         >
                           <Select
@@ -303,7 +303,7 @@ export default function ProductScreen(props) {
                         <Button
                           variant="contained"
                           onClick={addToCartHandler}
-                          sx={{ marginTop: 2, width: "100%" }}
+                          sx={{ marginTop: 2, marginLeft:{xs:2,sm:2,md:6,lg:6}, width: "90%" }}
                         >
                           {" "}
                           Add to Cart
