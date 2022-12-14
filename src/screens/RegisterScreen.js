@@ -18,7 +18,7 @@ import { useForm } from "react-hook-form";
 export default function RegisterScreen() {
   const {
     register,
-    handleSubmit,
+    handleSubmit,watch,
     formState: { errors }
   } = useForm();
   const navigate = useNavigate();
@@ -117,7 +117,7 @@ export default function RegisterScreen() {
               autoFocus
               onChange={(e) => setName(e.target.value)}
               {...register("name", { required: true })}
-              error={(errors.name)}
+              error={!!(errors?.name)}
             />
             {errors.name && <span className="formError">Name is required</span>}
             <TextField
@@ -136,8 +136,8 @@ export default function RegisterScreen() {
               name="mobile"
               autoComplete="mobile"
               onChange={(e) => setMobile(e.target.value)}
-              {...register("mobile", { required: true, pattern: /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/i, maxLength: 10, minLength: 10 })}
-              error={(errors.mobile)}
+              {...register("mobile", { required: true, pattern:{ value:/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/i, }, maxLength: 10, minLength: 10 })}
+              error={!!(errors?.mobile)}
             />
             {(errors?.mobile?.type === "required" && <span className="formError">Mobile number is required</span>)}
             {errors?.mobile?.type === "pattern" && (<span className="formError">Mobile number is invalid</span>)}
@@ -160,8 +160,8 @@ export default function RegisterScreen() {
               autoComplete="email"
               onChange={(e) => setEmail(e.target.value)}
               // eslint-disable-next-line no-useless-escape
-              {...register("email", { required: true, pattern: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i, })}
-              error={(errors.email)}
+              {...register("email", { required: true, pattern:{ value: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,}  })}
+              error={!!(errors?.email)}
             />
             {(errors?.email?.type === "required" && <span className="formError">Email is required</span>)}
             {errors?.email?.type === "pattern" && (<span className="formError">Email is invalid</span>)}
@@ -181,10 +181,11 @@ export default function RegisterScreen() {
               type="password"
               id="password"
               onChange={(e) => setPassword(e.target.value)}
-              {...register("password", { required: true })}
-              error={(errors.password)}
+              {...register("password", { required: true,pattern:{value:/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()-+_]).{8,}$/}})}
+              error={!!(errors?.password)}
             />
-            {errors.password && <span className="formError">Password is required</span>}
+            {(errors?.password?.type === "required" && <span className="formError">Password is required</span>)}
+            {errors?.password?.type === "pattern" && (<span className="formError">Password must be strong with atlest length 8</span>)}
 
             <TextField
               InputLabelProps={{
@@ -203,10 +204,11 @@ export default function RegisterScreen() {
               id="confirmPassword"
               autoComplete="current-password"
               onChange={(e) => setConfirmPassword(e.target.value)}
-              {...register("confirmPassword", { required: true })}
-              error={(errors.confirmPassword)}
+              {...register("confirmPassword", { required: true,validate: value => value === watch('password')})}
+              error={!!(errors?.confirmPassword)}
             />
             {(errors?.confirmPassword?.type === "required" && <span className="formError">Confirm Password is required</span>)}
+            {(errors?.confirmPassword?.type === 'validate' && <span className="formError">Confirm Password is mismatch</span>)}
 
             <Button
               type="submit"
