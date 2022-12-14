@@ -23,21 +23,9 @@ function ApplicationScreen() {
   } = useForm();
 
   const theme = createTheme();
-  const navigate = useNavigate();
-
-  const [name, setName] = useState("");
-  const [imageFile, setImageFile] = useState();
-  const userSignin = useSelector((state) => state.userSignin);
-  const { userInfo } = userSignin;
   
-  const [bodyFormData, setbodyFormData] = useState("")
-
   const dispatch = useDispatch();
 
-  // const onSelectFile = async (e) => {
-  //   const file = e.target.files[0];
-  //   setImageFile(file);
-  // };
 
   const submitHandler = async (e) => {
     console.log("e", e);
@@ -47,8 +35,11 @@ function ApplicationScreen() {
         imageFile: e.imageFile
       })
     ); 
-    
+    window.confirm("Image Uploaded Successfully!!");
+    event.target.reset()
   };
+
+  
 
   return (
     <ThemeProvider theme={theme}>
@@ -83,7 +74,7 @@ function ApplicationScreen() {
             label="Name"
             name="name"
             autoComplete="off"
-            onChange={(e) => setName(e.target.value)}
+            // onChange={(e) => setName(e.target.value)}
             {...register("name", { required: true })}
             error={errors.name}
           />

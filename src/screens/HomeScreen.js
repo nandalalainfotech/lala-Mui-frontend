@@ -23,31 +23,13 @@ import { autoPlay } from "react-swipeable-views-utils";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Link, useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
+import { applicatinSettingList } from "../actions/applicationAction";
 
 
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-const images = [
-  {
-    imgPath: "/image/lala1.jpg",
-  },
-  {
-    imgPath: "/image/lala2.jpg",
-  },
-  {
-    imgPath: "/image/lala3.jpg",
-  },
-  {
-    imgPath: "/image/max.jpg",
-  },
-  {
-    imgPath: "/image/iphone.jpg",
-  },
-  {
-    imgPath: "/image/furniture.jpg",
-  },
-];
+
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
@@ -59,6 +41,9 @@ export default function HomeScreen() {
   const { womenProducts } = productWomenList;
   const productKidsList = useSelector((state) => state.productKidsList);
   const { kidProducts } = productKidsList;
+  const applicationList = useSelector((state) => state.applicationList);
+  const { appSettingList } = applicationList;
+  console.log("appSettingList", appSettingList);
   const userTopSellersList = useSelector((state) => state.userTopSellersList);
   const {
     // eslint-disable-next-line no-unused-vars
@@ -74,6 +59,7 @@ export default function HomeScreen() {
     dispatch(womenProductList());
     dispatch(kidsProductList());
     dispatch(listTopSellers());
+    dispatch(applicatinSettingList());
   }, [dispatch]);
 
   const theme = useTheme();
@@ -128,7 +114,7 @@ export default function HomeScreen() {
             enableMouseEvents
             onClick={Open}
           >
-            {images?.map((step, index) => (
+            {appSettingList?.map((step, index) => (
               <Box key={index}>
                 {Math.abs(activeStep - index) <= 2 ? (
                   <Box
@@ -142,8 +128,8 @@ export default function HomeScreen() {
                       // eslint-disable-next-line no-dupe-keys
                       width: "100%",
                     }}
-                    src={step.imgPath}
-                    alt={step.label}
+                    src={`/api/application/show/${step.filename}`}
+                    alt={step.filename}
                   />
                 ) : null}
               </Box>
