@@ -71,6 +71,7 @@ import { withStyles } from "@material-ui/core/styles";
 import CollectionScreen from "./screens/CollectionScreen";
 import ApplicationScreen from "./screens/ApplicationScreen";
 import Footer from "./components/Footer";
+import { applicatinSettingList } from "./actions/applicationAction";
 
 // import Image from "/image/logo.png";
 // Side bar section start*************************************
@@ -189,6 +190,7 @@ function App() {
     dispatch(listProductCategorygroup());
     dispatch(listProductCategorytype());
     dispatch(listSareeCategories());
+    dispatch(applicatinSettingList());
   }, [dispatch, userInfo]);
 
   // sidebar section Start****************************************
