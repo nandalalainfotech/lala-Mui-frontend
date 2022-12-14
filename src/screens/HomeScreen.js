@@ -116,7 +116,7 @@ export default function HomeScreen() {
   return (
     <Box>
       <Box className="convey">
-        <h2>
+        <h2 className="topseller">
           {" "}
           <span>Top Sellers</span>
         </h2>
