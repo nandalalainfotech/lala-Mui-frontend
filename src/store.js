@@ -66,6 +66,7 @@ import {
   kidReviewCreateReducer,
   kidUpdateReducer,
 } from "./reducers/kidReducer";
+import { applicationSettingReducer } from "./reducers/applicationReducer";
 // import { cartKidReducer } from './reducers/cartKidReducers';
 // import { suitDetailsReducer, suitListReducer, suitReviewCreateReducer } from './reducers/suitReducers';
 // import { cartKidReducer } from './reducers/cartKidReducers';
@@ -116,6 +117,7 @@ const reducer = combineReducers({
   cartDelete: cartDeleteReducer,
   cartUpdate: cartUpdateReducer,
   kidList: kidListReducer,
+  applicationCreate: applicationSettingReducer,
 
   productDetails: productDetailsReducer,
   womenDetails: womenDetailsReducer,
