@@ -16,8 +16,7 @@ import ProfileScreen from "./screens/ProfileScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import ShippingAddressScreen from "./screens/ShippingAddressScreen";
 import SigninScreen from "./screens/SigninScreen";
-// import PersonIcon from '@mui/icons-material/Person';
-// import HomeScreens from "./screens/HomeScreens";
+
 import {
   listProductCategories,
   listProductCategorygroup,
@@ -31,20 +30,16 @@ import SearchBox from "./components/SearchBox";
 import SellerRoute from "./components/SellerRoute";
 import AccountCreation from "./screens/AccountCreation";
 import AdmininScreen from "./screens/AdmininScreen";
-
 import DashboardScreen from "./screens/DashboardScreen";
-
 import MapScreen from "./screens/MapScreen";
 import OrderListScreen from "./screens/OrderListScreen";
 import ProductEditScreen from "./screens/ProductEditScreen";
 import ProductListScreen from "./screens/ProductListScreen";
-
 import SearchScreen from "./screens/SearchScreen";
 import SellerScreen from "./screens/SellerScreen";
 import SupportScreen from "./screens/SupportScreen";
 import UserEditScreen from "./screens/UserEditScreen";
 import UserListScreen from "./screens/UserListScreen";
-
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -70,12 +65,12 @@ import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@mui/material/Paper";
 import { userCartList } from "./actions/cartAction";
 import Badge from "@material-ui/core/Badge";
 import { withStyles } from "@material-ui/core/styles";
 import CollectionScreen from "./screens/CollectionScreen";
 import ApplicationScreen from "./screens/ApplicationScreen";
+import Footer from "./components/Footer";
 
 // import Image from "/image/logo.png";
 // Side bar section start*************************************
@@ -348,7 +343,7 @@ function App() {
                     <Box sx={{ flexGrow: 0 }}>
                       <Stack
                         direction="row"
-                        spacing={{ xs: 3,sm:3,  md: 2, lg: 2, xl: 2 }}
+                        spacing={{ xs: 3, sm: 3, md: 2, lg: 2, xl: 2 }}
                         sx={{ justifyContent: "flex-end" }}
                       >
                         <Box>
@@ -409,6 +404,7 @@ function App() {
                                   <Box>
                                     <Avatar
                                       sx={{
+                                        border: "2px solid #fff",
                                         bgcolor: "inherit",
                                         "&:hover": { color: "#ff7519" },
                                         // mr: -30,
@@ -725,6 +721,7 @@ function App() {
                                 <Link style={{ color: "inherit" }} to="/signin">
                                   <Avatar
                                     sx={{
+                                      border: "2px solid #fff",
                                       bgcolor: "inherit",
                                       "&:hover": { color: "#ff7519" },
                                     }}
@@ -3785,7 +3782,11 @@ function App() {
                 element={<ProductScreen />}
                 exact
               ></Route>
-
+              <Route
+                path="/footer"
+                element={<Footer />}
+                exact
+              ></Route>
               <Route
                 path="/orderhistory"
                 element={<OrderHistoryScreen />}
@@ -3794,23 +3795,8 @@ function App() {
             </Routes>
             {/* </Typography> */}
           </Box>
-          <Paper
-            sx={{
-              position: "fixed",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              color: "#f4f4f4",
-              alignItems: "center",
-              zIndex: 999,
-              // paddingBottom: 1,
-            }}
-            elevation={3}
-          >
-           <Box varient='h6' sx={{ backgroundColor: "#37474F", top:0, justifyContent: 'center', height:55, display: "flex", mb:-1, padding: 1, fontSize:20}}>
-            <span> All right reserved</span>
-            </Box>
-          </Paper>
+
+          <Footer />
         </Box>
       </div>
     </BrowserRouter>

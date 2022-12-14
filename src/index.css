@@ -60,6 +60,7 @@ transform: scale(1.2);
 
 *{
     font-family: "Amazon Ember" !important;
+    margin:0;
     /* text-transform: capitalize!important; */
 }
 .formError {
@@ -97,3 +98,11 @@ transform: scale(1.2);
     display:block;
     margin-left: -1px;
   } */
+
+.topseller{
+  margin-top: 42px;
+}
+  
+
+
+
