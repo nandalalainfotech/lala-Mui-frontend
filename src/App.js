@@ -75,6 +75,7 @@ import { userCartList } from "./actions/cartAction";
 import Badge from "@material-ui/core/Badge";
 import { withStyles } from "@material-ui/core/styles";
 import CollectionScreen from "./screens/CollectionScreen";
+import ApplicationScreen from "./screens/ApplicationScreen";
 
 // import Image from "/image/logo.png";
 // Side bar section start*************************************
@@ -610,6 +611,19 @@ function App() {
                                     to="/support"
                                   >
                                     Support
+                                  </Link>
+                                </MenuItem>
+                                <MenuItem onClick={handleClose}>
+                                  {" "}
+                                  <Link
+                                    style={{
+                                      fontSize: "16px",
+                                      color: "#263238",
+                                      textDecoration: "none",
+                                    }}
+                                    to="/application"
+                                  >
+                                    Application Setting
                                   </Link>
                                 </MenuItem>
                               </Menu>
@@ -3754,6 +3768,14 @@ function App() {
                 element={
                   <AdminRoute>
                     <SupportScreen />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/application"
+                element={
+                  <AdminRoute>
+                    <ApplicationScreen />
                   </AdminRoute>
                 }
               />
