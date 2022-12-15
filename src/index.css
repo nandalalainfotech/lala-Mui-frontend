@@ -39,7 +39,7 @@
     line-height: 1.7rem !important;
 }
 .new1 .rec-arrow:hover:not(:disabled) {
-    transform: scale(1.2);
+    transform: scale(1);
     background-color: #ff7519 !important;
 }
 

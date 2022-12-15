@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {  useNavigate, useParams } from "react-router-dom";
-import { createReview, detailsProduct } from "../actions/productAction";
+import { useNavigate, useParams } from "react-router-dom";
+import { createReview, detailsProduct, listProducts } from "../actions/productAction";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import { PRODUCT_REVIEW_CREATE_RESET } from "../constants/productConstants";
@@ -21,10 +21,13 @@ import Typography from "@mui/material/Typography";
 import Axios from "axios";
 import ReactImageMagnify from "react-image-magnify";
 import CardMedia from "@mui/material/CardMedia";
-import { DialogContent } from "../../node_modules/@material-ui/core/index";
+import { CircularProgress, DialogContent } from "../../node_modules/@material-ui/core/index";
 // import { CenterFocusStrong } from "../../node_modules/@mui/icons-material/index";
-
+import Carousel from "react-elastic-carousel";
+import Product from "../components/Product";
 export default function ProductScreen() {
+  const productList = useSelector((state) => state.productList);
+  const { products } = productList;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams();
@@ -49,13 +52,6 @@ export default function ProductScreen() {
   const [image, setImage] = useState();
 
   useEffect(() => {
-    if (successReviewCreate) {
-      window.alert("Review Submitted Successfully");
-      setRating("");
-      setComment("");
-      dispatch({ type: PRODUCT_REVIEW_CREATE_RESET });
-    }
-    dispatch(detailsProduct(productId));
     const fetchBusinesses = async () => {
       const img = await Axios.get(`/api/uploads/show/${productId}`, {
         responseType: "blob",
@@ -63,6 +59,16 @@ export default function ProductScreen() {
       setImage(URL.createObjectURL(img.data));
     };
     fetchBusinesses();
+    if (successReviewCreate) {
+      window.alert("Review Submitted Successfully");
+      setRating("");
+      setComment("");
+      dispatch({ type: PRODUCT_REVIEW_CREATE_RESET });
+    }
+    dispatch(listProducts({}));
+    dispatch(detailsProduct(productId));
+
+
   }, [dispatch, productId, successReviewCreate]);
 
   const addToCartHandler = () => {
@@ -87,6 +93,17 @@ export default function ProductScreen() {
   const handleChange = (event) => {
     setRating(event.target.value);
   };
+
+  const breakPoints = [
+    { width: 400, itemsToShow: 1 },
+    { width: 500, itemsToShow: 2 },
+    { width: 600, itemsToShow: 2 },
+    { width: 768, itemsToShow: 3 },
+    { width: 900, itemsToShow: 5 },
+    { width: 1200, itemsToShow: 5 },
+    { width: 1500, itemsToShow: 7 },
+    { width: 2000, itemsToShow: 9 },
+  ];
 
   return (
     <Box sx={{ flexGrow: 1, marginTop: 3 }}>
@@ -180,7 +197,7 @@ export default function ProductScreen() {
                   <Typography
                     variant="h5"
                     gutterBottom
-                    style={{  color: "#A02020",textTransform: 'capitalize' }}
+                    style={{ color: "#A02020", textTransform: 'capitalize' }}
                   >
                     {product.name}
                   </Typography>
@@ -197,42 +214,42 @@ export default function ProductScreen() {
 
                   <Typography
                     variant="body1"
-                    style={{ color: "#A02020",textTransform: 'capitalize' }}
+                    style={{ color: "#A02020", textTransform: 'capitalize' }}
                     gutterBottom
                   >
                     <strong>Price :</strong> ₹{product.price}
                   </Typography>
                   <Typography
                     variant="body1"
-                    style={{ color: "#A02020",textTransform: 'capitalize' }}
+                    style={{ color: "#A02020", textTransform: 'capitalize' }}
                     gutterBottom
                   >
                     <strong>Brand :</strong> {product.brand}
                   </Typography>
                   <Typography
                     variant="body1"
-                    style={{ color: "#A02020",textTransform: 'capitalize' }}
+                    style={{ color: "#A02020", textTransform: 'capitalize' }}
                     gutterBottom
                   >
                     <strong>Category :</strong> {product.category}
                   </Typography>
                   <Typography
                     variant="body1"
-                    style={{ color: "#A02020",textTransform: 'capitalize' }}
+                    style={{ color: "#A02020", textTransform: 'capitalize' }}
                     gutterBottom
                   >
                     <strong>Description :</strong> {product.description}
                   </Typography>
                   <Typography
                     variant="body1"
-                    style={{ color: "#A02020",textTransform: 'capitalize' }}
+                    style={{ color: "#A02020", textTransform: 'capitalize' }}
                     gutterBottom
                   >
                     <strong> Category Group :</strong> {product.categorygroup}
                   </Typography>
                   <Typography
                     variant="body1"
-                    style={{ color: "#A02020",textTransform: 'capitalize' }}
+                    style={{ color: "#A02020", textTransform: 'capitalize' }}
                     gutterBottom
                   >
                     <strong>Category Type :</strong> {product.categorytype}
@@ -303,7 +320,7 @@ export default function ProductScreen() {
                         <Button
                           variant="contained"
                           onClick={addToCartHandler}
-                          sx={{ marginTop: 2, marginLeft:{xs:2,sm:2,md:6,lg:6}, width: "90%" }}
+                          sx={{ marginTop: 2, marginLeft: { xs: 2, sm: 2, md: 6, lg: 6 }, width: "90%" }}
                         >
                           {" "}
                           Add to Cart
@@ -410,7 +427,7 @@ export default function ProductScreen() {
                           />
                         </Box>
 
-                        <Button variant="contained" type="submit" sx={{ m: 3,width: '83.5%' }}>
+                        <Button variant="contained" type="submit" sx={{ m: 3, width: '83.5%' }}>
                           Submit
                         </Button>
 
@@ -424,7 +441,7 @@ export default function ProductScreen() {
                         </div>
                       </Box>
                     ) : (
-                      <Box sx={{ fontWeight: 500, fontSize: 20, textAlign: 'center' }}> 
+                      <Box sx={{ fontWeight: 500, fontSize: 20, textAlign: 'center' }}>
                         <DialogContent>
                           Please{" "}
                           <Button color="secondary" href="/signin">
@@ -440,7 +457,54 @@ export default function ProductScreen() {
             </Box>
           </Grid>
         </Grid>
+
       )}
+      <hr style={{ margin: '10px 0px' }}></hr>
+      <>
+        <Typography
+          variant="h4"
+          sx={{ '&:hover': { color: "#6633FF", textDecoration: "underline" }, my: 3 }}
+        >
+          Products related to this item
+        </Typography>
+        <Card
+          sx={{
+            borderRadius: 0,
+            py:3,
+            boxShadow:
+              "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+          }}
+        >
+
+          {loading ? (
+            <CircularProgress></CircularProgress>
+          ) : error ? (
+            <MessageBox variant="danger">{error}</MessageBox>
+          ) : (
+            <Carousel
+              className="new1"
+              mouseTracking
+              enableSwipe={true}
+              pagination={false}
+              breakPoints={breakPoints}
+              disableArrowsOnEnd={false}
+            >
+              {
+                products?.filter((item) => {
+                  return (item?.categorygroup === product?.categorygroup) && (item?._id != product?._id);
+                })
+                  .map((categorys) => (<>
+                    <Box key={categorys?._id}>
+                      <Product product={categorys}></Product>
+                    </Box>
+                  </>
+                  ))
+              }
+            </Carousel>
+          )
+          }
+        </Card>
+      </>
     </Box>
   );
 }
