@@ -64,15 +64,19 @@ import { styled, useTheme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import { makeStyles } from "@material-ui/core/styles";
+import { applicatinSettingList } from "./actions/applicationAction";
 import { userCartList } from "./actions/cartAction";
 import Badge from "@material-ui/core/Badge";
-import { withStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import CollectionScreen from "./screens/CollectionScreen";
 import ApplicationScreen from "./screens/ApplicationScreen";
 import Footer from "./components/Footer";
-import { applicatinSettingList } from "./actions/applicationAction";
 import Paper from "@mui/material/Paper";
+import { otpList } from "./actions/otpAction";
+
+import OtpScreen from "./screens/OtpScreen";
+import OtpVerifyScreen from "./screens/OtpVerifyScreen";
+import RegOtpVerifyScreen from "./screens/RegOtpVerifyScreen";
 // import Image from "/image/logo.png";
 // Side bar section start*************************************
 const drawerWidth = 240;
@@ -190,6 +194,7 @@ function App() {
     dispatch(listProductCategorytype());
     dispatch(listSareeCategories());
     dispatch(applicatinSettingList());
+    dispatch(otpList());
   }, [dispatch, userInfo]);
 
   // sidebar section Start****************************************
@@ -3590,6 +3595,9 @@ function App() {
               <Route path="/placeorder" element={<PlaceOrderScreen />}></Route>
               <Route path="/order/:id" element={<OrderScreen />}></Route>
               <Route path="/register" element={<RegisterScreen />}></Route>
+<Route path="/otp" element={<OtpScreen />}></Route>
+              <Route path="/otpVerify" element={<OtpVerifyScreen />}></Route>
+              <Route path="/regotpVerify" element={<RegOtpVerifyScreen />}></Route>
               <Route
                 path="/search/name"
                 element={<SearchScreen />}

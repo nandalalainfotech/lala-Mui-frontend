@@ -32,6 +32,9 @@ export default function SigninScreen() {
   const redirect = redirectInUrl ? redirectInUrl : '/';
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo, loading, error } = userSignin;
+
+
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -39,6 +42,9 @@ export default function SigninScreen() {
       navigate(redirect);
     }
   }, [navigate, redirect, userInfo]);
+
+
+  console.log("userInfo", userInfo);
 
   const submitHandler = (e) => {
     dispatch(signin({
@@ -144,6 +150,15 @@ export default function SigninScreen() {
               sx={{ mt: 3, mb: 2 }}
             >
               Sign In
+            </Button>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 2, mb: 1 }}
+              href="#" onClick={() => navigate("/otp")}
+            >
+              Request OTP
             </Button>
             <Grid container>
               <Grid item xs>

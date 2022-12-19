@@ -44,6 +44,7 @@ export const registers = (regInfo) => async (dispatch) => {
   dispatch({ type: USER_REGISTER_REQUEST});
   try {
     const { data } = await Axios.post('/api/users/register', regInfo);
+    console.log("data===>", data);
     dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
     localStorage.setItem('userInfo', JSON.stringify(data?data:''));
@@ -75,6 +76,8 @@ export const signin = (signInfo) => async (dispatch) => {
     });
   }
 };
+
+
 
 export const accountin = (email,password) => async (dispatch) => {
   dispatch({ type: USER_ACCOUNT_REQUEST, payload: { email,password } });
@@ -332,6 +335,27 @@ export const updateUser = (user) => async (dispatch, getState) => {
   } = getState();
   try {
     const { data } = await Axios.put(`/api/users/${user._id}`, user, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    dispatch({ type: USER_UPDATE_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: USER_UPDATE_FAIL, payload: message });
+  }
+};
+
+
+export const updateUserStatus = (status) => async (dispatch, getState) => {
+  console.log("status", status);
+  dispatch({ type: USER_UPDATE_PROFILE_REQUEST, payload: status });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = await Axios.put(`/api/users/status/${userInfo._id}`, status, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
     dispatch({ type: USER_UPDATE_SUCCESS, payload: data });
