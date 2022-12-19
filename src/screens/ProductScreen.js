@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { createReview, detailsProduct, listProducts } from "../actions/productAction";
+import {
+  createReview,
+  detailsProduct,
+  listProducts,
+} from "../actions/productAction";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import { PRODUCT_REVIEW_CREATE_RESET } from "../constants/productConstants";
@@ -21,10 +25,14 @@ import Typography from "@mui/material/Typography";
 import Axios from "axios";
 import ReactImageMagnify from "react-image-magnify";
 import CardMedia from "@mui/material/CardMedia";
-import { CircularProgress, DialogContent } from "../../node_modules/@material-ui/core/index";
+import {
+  CircularProgress,
+  DialogContent,
+} from "../../node_modules/@material-ui/core/index";
 // import { CenterFocusStrong } from "../../node_modules/@mui/icons-material/index";
 import Carousel from "react-elastic-carousel";
 import Product from "../components/Product";
+
 export default function ProductScreen() {
   const productList = useSelector((state) => state.productList);
   const { products } = productList;
@@ -49,7 +57,12 @@ export default function ProductScreen() {
 
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-  const [image, setImage] = useState();
+  const [images, setImage] = useState();
+  const [subimg, setSubImage] = useState();
+  // const [NewImage, setNewImage] = useState();
+  const handleChangeimage = (e) => {
+    setImage(e.target.src);
+  };
 
   useEffect(() => {
     const fetchBusinesses = async () => {
@@ -58,6 +71,11 @@ export default function ProductScreen() {
       });
       setImage(URL.createObjectURL(img.data));
     };
+    const fetchBusines = async () => {
+      const subimg = await Axios.get(`/api/uploads/showsub/${productId}`, {});
+      setSubImage(subimg.data);
+    };
+    fetchBusines();
     fetchBusinesses();
     if (successReviewCreate) {
       window.alert("Review Submitted Successfully");
@@ -67,8 +85,6 @@ export default function ProductScreen() {
     }
     dispatch(listProducts({}));
     dispatch(detailsProduct(productId));
-
-
   }, [dispatch, productId, successReviewCreate]);
 
   const addToCartHandler = () => {
@@ -113,6 +129,55 @@ export default function ProductScreen() {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <Grid container spacing={2}>
+          {/* <Grid xs sx={{margin:10}}> */}
+          
+          <Box sx={{ mt: 4,display:{xs:"none",sm:"none",md:"block"}}}>
+            
+            <CardMedia
+              sx={{
+                border: "2px solid gray",
+                cursor: "pointer",
+                transition: "transform .5s ease",
+                "&:hover": {
+                  transform: "scale(1.1)",
+                },
+                margin: 1,
+                width: 120,
+                height: 150,
+                justifycontent: "space-between",
+              }}
+              component="img"
+              // height="200"
+              image={`/api/uploads/show/${productId}`}
+              alt={"subimgnew.filename"}
+              onMouseOver={handleChangeimage}
+            />
+            {subimg?.map((subimgnew, index) => (
+              <Box key={index}>
+                <CardMedia
+                  sx={{
+                    border: "2px solid gray",
+                    cursor: "pointer",
+                    transition: "transform .5s ease",
+                    "&:hover": {
+                      transform: "scale(1.1)",
+                    },
+                    margin: 1,
+                    width: 120,
+                    height: 150,
+                    justifycontent: "space-between",
+                  }}
+                  component="img"
+                  // height="200"
+                  image={`/api/uploads/showsubimgnew/${subimgnew.filename}`}
+                  alt={"subimgnew.filename"}
+                  onMouseOver={handleChangeimage}
+                />
+              </Box>
+            ))}
+            
+          </Box>
+          {/* </Grid> */}
           <Grid
             item
             sx={{
@@ -139,21 +204,98 @@ export default function ProductScreen() {
                 {...{
                   smallImage: {
                     className: "large",
-                    src: `${image}`,
+                    src: `${images}`,
                     width: 380,
                     height: 490,
                   },
                   largeImage: {
                     className: "small",
-                    src: `${image}`,
+                    src: `${images}`,
                     width: 600,
                     height: 600,
                   },
                 }}
               />
+              {/* <Box >
+                  <CardMedia
+                    sx={{
+                      transition: "transform .5s ease",
+                      "&:hover": {
+                        transform: "scale(1.1)",
+                      },
+                      width: 120,
+                      height: 150,
+                      justifycontent:'space-between'
+                    }}
+                    component="img"
+                    // height="200"
+                    image={images}
+                   
+                  />
+                 
+                </Box> */}
             </Box>
           </Grid>
-
+          <Grid sx={{ mt: 4,display:{xs:"block",sm:"block",md:"none"}}}>
+          <Box
+        sx={{
+          padding: 0,
+          margin: 0,
+          width: "auto",
+          listStyle: "none",
+          display: "flex",
+          flexFlow: "wrap row",
+          flexDirection: "row",
+          alignItems: "center",
+        }}
+      >
+            
+            <CardMedia
+              sx={{
+                border: "2px solid gray",
+                cursor: "pointer",
+                transition: "transform .5s ease",
+                "&:hover": {
+                  transform: "scale(1.1)",
+                },
+                margin: 1,
+                width:{ xs:60,sm:120},
+                height:{ xs:90,sm:150},
+                justifycontent: "space-between",
+              }}
+              component="img"
+              // height="200"
+              image={`/api/uploads/show/${productId}`}
+              alt={"subimgnew.filename"}
+              onMouseOver={handleChangeimage}
+            />
+            {subimg?.map((subimgnew, index) => (
+              <Box key={index}>
+                <CardMedia
+                  sx={{
+                    border: "2px solid gray",
+                    cursor: "pointer",
+                    transition: "transform .5s ease",
+                    "&:hover": {
+                      transform: "scale(1.1)",
+                    },
+                    margin: 1,
+                    
+                    width:{ xs:60,sm:120},
+                    height:{ xs:90,sm:150},
+                    justifycontent: "space-between",
+                  }}
+                  component="img"
+                  // height="200"
+                  image={`/api/uploads/showsubimgnew/${subimgnew.filename}`}
+                  alt={"subimgnew.filename"}
+                  onMouseOver={handleChangeimage}
+                />
+              </Box>
+            ))}
+            
+          </Box>
+          </Grid>
           <Grid
             item
             sx={{
@@ -177,7 +319,7 @@ export default function ProductScreen() {
                     "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 }}
                 component="img"
-                src={image}
+                src={images}
               ></CardMedia>
             </Box>
           </Grid>
@@ -197,7 +339,7 @@ export default function ProductScreen() {
                   <Typography
                     variant="h5"
                     gutterBottom
-                    style={{ color: "#A02020", textTransform: 'capitalize' }}
+                    style={{ color: "#A02020", textTransform: "capitalize" }}
                   >
                     {product.name}
                   </Typography>
@@ -214,42 +356,42 @@ export default function ProductScreen() {
 
                   <Typography
                     variant="body1"
-                    style={{ color: "#A02020", textTransform: 'capitalize' }}
+                    style={{ color: "#A02020", textTransform: "capitalize" }}
                     gutterBottom
                   >
                     <strong>Price :</strong> ₹{product.price}
                   </Typography>
                   <Typography
                     variant="body1"
-                    style={{ color: "#A02020", textTransform: 'capitalize' }}
+                    style={{ color: "#A02020", textTransform: "capitalize" }}
                     gutterBottom
                   >
                     <strong>Brand :</strong> {product.brand}
                   </Typography>
                   <Typography
                     variant="body1"
-                    style={{ color: "#A02020", textTransform: 'capitalize' }}
+                    style={{ color: "#A02020", textTransform: "capitalize" }}
                     gutterBottom
                   >
                     <strong>Category :</strong> {product.category}
                   </Typography>
                   <Typography
                     variant="body1"
-                    style={{ color: "#A02020", textTransform: 'capitalize' }}
+                    style={{ color: "#A02020", textTransform: "capitalize" }}
                     gutterBottom
                   >
                     <strong>Description :</strong> {product.description}
                   </Typography>
                   <Typography
                     variant="body1"
-                    style={{ color: "#A02020", textTransform: 'capitalize' }}
+                    style={{ color: "#A02020", textTransform: "capitalize" }}
                     gutterBottom
                   >
                     <strong> Category Group :</strong> {product.categorygroup}
                   </Typography>
                   <Typography
                     variant="body1"
-                    style={{ color: "#A02020", textTransform: 'capitalize' }}
+                    style={{ color: "#A02020", textTransform: "capitalize" }}
                     gutterBottom
                   >
                     <strong>Category Type :</strong> {product.categorytype}
@@ -320,7 +462,11 @@ export default function ProductScreen() {
                         <Button
                           variant="contained"
                           onClick={addToCartHandler}
-                          sx={{ marginTop: 2, marginLeft: { xs: 2, sm: 2, md: 6, lg: 6 }, width: "90%" }}
+                          sx={{
+                            marginTop: 2,
+                            marginLeft: { xs: 2, sm: 2, md: 6, lg: 6 },
+                            width: "90%",
+                          }}
                         >
                           {" "}
                           Add to Cart
@@ -351,7 +497,7 @@ export default function ProductScreen() {
                     "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 }}
               >
-                <Box >
+                <Box>
                   <Typography
                     variant="h6"
                     gutterBottom
@@ -396,7 +542,14 @@ export default function ProductScreen() {
                         </Typography>
 
                         <Box sx={{ minWidth: 120 }}>
-                          <FormControl fullWidth sx={{ m: 3, width: "83.5%", justifycontent: 'center' }}>
+                          <FormControl
+                            fullWidth
+                            sx={{
+                              m: 3,
+                              width: "83.5%",
+                              justifycontent: "center",
+                            }}
+                          >
                             <InputLabel id="demo-simple-select-label">
                               Rating
                             </InputLabel>
@@ -416,7 +569,9 @@ export default function ProductScreen() {
                           </FormControl>
                         </Box>
 
-                        <Box sx={{ m: 3, width: "83%", justifycontent: 'center' }}>
+                        <Box
+                          sx={{ m: 3, width: "83%", justifycontent: "center" }}
+                        >
                           <TextareaAutosize
                             minRows={5}
                             placeholder="Comment"
@@ -427,7 +582,11 @@ export default function ProductScreen() {
                           />
                         </Box>
 
-                        <Button variant="contained" type="submit" sx={{ m: 3, width: '83.5%' }}>
+                        <Button
+                          variant="contained"
+                          type="submit"
+                          sx={{ m: 3, width: "83.5%" }}
+                        >
                           Submit
                         </Button>
 
@@ -441,7 +600,13 @@ export default function ProductScreen() {
                         </div>
                       </Box>
                     ) : (
-                      <Box sx={{ fontWeight: 500, fontSize: 20, textAlign: 'center' }}>
+                      <Box
+                        sx={{
+                          fontWeight: 500,
+                          fontSize: 20,
+                          textAlign: "center",
+                        }}
+                      >
                         <DialogContent>
                           Please{" "}
                           <Button color="secondary" href="/signin">
@@ -457,25 +622,26 @@ export default function ProductScreen() {
             </Box>
           </Grid>
         </Grid>
-
       )}
-      <hr style={{ margin: '10px 0px' }}></hr>
+      <hr style={{ margin: "10px 0px" }}></hr>
       <>
         <Typography
           variant="h4"
-          sx={{ '&:hover': { color: "#6633FF", textDecoration: "underline" }, my: 3 }}
+          sx={{
+            "&:hover": { color: "#6633FF", textDecoration: "underline" },
+            my: 3,
+          }}
         >
           Products related to this item
         </Typography>
         <Card
           sx={{
             borderRadius: 0,
-            py:3,
+            py: 3,
             boxShadow:
               "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
           }}
         >
-
           {loading ? (
             <CircularProgress></CircularProgress>
           ) : error ? (
@@ -489,20 +655,22 @@ export default function ProductScreen() {
               breakPoints={breakPoints}
               disableArrowsOnEnd={false}
             >
-              {
-                products?.filter((item) => {
-                  return (item?.categorygroup === product?.categorygroup) && (item?._id != product?._id);
+              {products
+                ?.filter((item) => {
+                  return (
+                    item?.categorygroup === product?.categorygroup &&
+                    item?._id != product?._id
+                  );
                 })
-                  .map((categorys) => (<>
+                .map((categorys) => (
+                  <>
                     <Box key={categorys?._id}>
                       <Product product={categorys}></Product>
                     </Box>
                   </>
-                  ))
-              }
+                ))}
             </Carousel>
-          )
-          }
+          )}
         </Card>
       </>
     </Box>
