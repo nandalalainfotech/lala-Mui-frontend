@@ -154,8 +154,9 @@ export default function ProductListScreen() {
     <div>
 
       <Typography style={{ marginTop: 30, }} variant="h4" >Products</Typography>
-      <Button style={{ marginTop: 25, }}variant="contained" onClick={createHandler}>Create Product</Button>
-
+       {userInfo.isSeller && userInfo&&( <div>
+        <Button tyle={{ marginTop: 25, }}  variant="contained" onClick={createHandler}>Create Product</Button>
+      </div>)}
       {loadingDelete && <LoadingBox></LoadingBox>}
       {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
       {loadingCreate && <LoadingBox></LoadingBox>}

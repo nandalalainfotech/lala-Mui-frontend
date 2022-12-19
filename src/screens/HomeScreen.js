@@ -59,6 +59,8 @@ export default function HomeScreen() {
   const { womenProducts } = productWomenList;
   const productKidsList = useSelector((state) => state.productKidsList);
   const { kidProducts } = productKidsList;
+  // const applicationList = useSelector((state) => state.applicationList);
+  // const { appSettingList } = applicationList;
   const userTopSellersList = useSelector((state) => state.userTopSellersList);
   const {
     // eslint-disable-next-line no-unused-vars
@@ -74,6 +76,7 @@ export default function HomeScreen() {
     dispatch(womenProductList());
     dispatch(kidsProductList());
     dispatch(listTopSellers());
+    // dispatch(applicatinSettingList());
   }, [dispatch]);
 
   const theme = useTheme();
