@@ -131,7 +131,7 @@ export default function ProductScreen() {
         <Grid container spacing={2}>
           {/* <Grid xs sx={{margin:10}}> */}
           
-          <Box sx={{ mt: 4,display:{xs:"none",sm:"none",md:"block"}}}>
+          <Box sx={{ mt: 4,display:{xs:"none",sm:"none",md:"none"}}}>
             
             <CardMedia
               sx={{
@@ -235,8 +235,67 @@ export default function ProductScreen() {
                  
                 </Box> */}
             </Box>
+            <Box
+        sx={{
+          padding: 0,
+          margin: 0,
+          mt:10,
+          width: "auto",
+          listStyle: "none",
+          display: "flex",
+          flexFlow: "wrap row",
+          flexDirection: "row",
+          alignItems: "center",
+        }}
+      >
+            
+            <CardMedia
+              sx={{
+                border: "2px solid gray",
+                cursor: "pointer",
+                transition: "transform .5s ease",
+                "&:hover": {
+                  transform: "scale(1.1)",
+                },
+                margin: 1,
+                width:{ xs:60,sm:120},
+                height:{ xs:90,sm:150},
+                justifycontent: "space-between",
+              }}
+              component="img"
+              // height="200"
+              image={`/api/uploads/show/${productId}`}
+              alt={"subimgnew.filename"}
+              onMouseOver={handleChangeimage}
+            />
+            {subimg?.map((subimgnew, index) => (
+              <Box key={index}>
+                <CardMedia
+                  sx={{
+                    border: "2px solid gray",
+                    cursor: "pointer",
+                    transition: "transform .5s ease",
+                    "&:hover": {
+                      transform: "scale(1.1)",
+                    },
+                    margin: 1,
+                    
+                    width:{ xs:60,sm:120},
+                    height:{ xs:90,sm:150},
+                    justifycontent: "space-between",
+                  }}
+                  component="img"
+                  // height="200"
+                  image={`/api/uploads/showsubimgnew/${subimgnew.filename}`}
+                  alt={"subimgnew.filename"}
+                  onMouseOver={handleChangeimage}
+                />
+              </Box>
+            ))}
+            
+          </Box>
           </Grid>
-          <Grid sx={{ mt: 4,display:{xs:"block",sm:"block",md:"none"}}}>
+          <Grid sx={{ mt: 4,display:{xs:"block",sm:"none",md:"none"}}}>
           <Box
         sx={{
           padding: 0,
