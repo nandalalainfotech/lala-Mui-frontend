@@ -6,6 +6,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Typography } from "../../node_modules/@material-ui/core/index";
 import { deleteOrder, listOrders } from "../actions/orderActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
@@ -30,7 +31,7 @@ export default function OrderListScreen() {
   const { userInfo } = userSignin;
   // const userAdminin = useSelector((state) => state.userAdminin);
   // const { useInfo } = userAdminin;
-  
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({ type: ORDER_DELETE_RESET });
@@ -64,7 +65,7 @@ export default function OrderListScreen() {
   }
 
   function getDelivered(orders) {
-    return `${orders.row.isDelivered ? orders.row.deliveredAt.substring(0, 10): "No" || ''}`;
+    return `${orders.row.isDelivered ? orders.row.deliveredAt.substring(0, 10) : "No" || ''}`;
   }
 
 
@@ -120,12 +121,12 @@ export default function OrderListScreen() {
         <>
           <EditIcon
             onClick={() => editHandler(orders)}
-            style={{ color: deepPurple[500], fontSize: 15, margin:20, cursor: "pointer" }}
+            style={{ color: deepPurple[500], fontSize: 15, margin: 20, cursor: "pointer" }}
           />
 
           <DeleteIcon
             onClick={() => deleteHandler(orders)}
-            style={{ color: red[500], fontSize: 15, cursor: "pointer"}}
+            style={{ color: red[500], fontSize: 15, cursor: "pointer" }}
           />
         </>
       ),
@@ -135,7 +136,7 @@ export default function OrderListScreen() {
 
   return (
     <div>
-      <h1>Orders</h1>
+      <Typography style={{ marginTop: 30, }} variant="h4" >Orders</Typography>
       {loadingDelete && <LoadingBox></LoadingBox>}
       {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
       {loading ? (
@@ -145,8 +146,10 @@ export default function OrderListScreen() {
       ) : (
         <Box
           sx={{
+            bottom:3,
             height: 460,
             width: "100%",
+            // zIndex:0,
             "& .super-app-theme--header": {
               backgroundColor: "#808080",
               color: "#ffffff",
@@ -158,10 +161,10 @@ export default function OrderListScreen() {
               fontSize: 13,
             },
             ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-              {
-                backgroundColor: "#330033",
-                color: "#ffffff",
-              },
+            {
+              backgroundColor: "#330033",
+              color: "#ffffff",
+            },
             ".css-h4y409-MuiList-root": {
               display: "grid",
             },
@@ -184,6 +187,7 @@ export default function OrderListScreen() {
             pagination
           />
         </Box>
+        
       )}
     </div>
   );

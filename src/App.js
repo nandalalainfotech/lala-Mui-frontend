@@ -72,7 +72,7 @@ import CollectionScreen from "./screens/CollectionScreen";
 import ApplicationScreen from "./screens/ApplicationScreen";
 import Footer from "./components/Footer";
 import { applicatinSettingList } from "./actions/applicationAction";
-
+import Paper from "@mui/material/Paper";
 // import Image from "/image/logo.png";
 // Side bar section start*************************************
 const drawerWidth = 240;
@@ -140,7 +140,6 @@ const useStyles = makeStyles((theme) => ({
 const Style = withStyles((theme) => ({
   badge: {
     backgroundColor: "#FF66FF",
-    // color: "green",
     top: 9,
     left: 23,
     boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
@@ -342,10 +341,10 @@ function App() {
                 </Grid>
                 <Grid item xs={2}>
                   <div className="grid-elements">
-                    <Box sx={{ flexGrow: 0 }}>
+                    <Box sx={{ flexGrow: 1 }}>
                       <Stack
                         direction="row"
-                        spacing={{ xs: 3, sm: 3, md: 2, lg: 2, xl: 2 }}
+                        spacing={{ xs: 2, sm: 0.5, md: 1, lg: 1, }}
                         sx={{ justifyContent: "flex-end" }}
                       >
                         <Box>
@@ -361,19 +360,19 @@ function App() {
                                   textDecoration: "none",
                                 }}
                                 to="/cart">
-                               
+
                                 {userInfo ? (
                                   <>
                                     {usercarts?.length >= 0 && (
                                       <Style
                                         badgeContent={usercarts?.length}
-                                      overlap="rectangular"
+                                        overlap="rectangular"
                                       // anchorOrigin={{
                                       //   vertical: "right",
                                       //   horizontal: "top",
                                       // }}
                                       >
-                                        
+
                                         <>
                                           {userInfo.isSeller && userInfo ? (
                                             <Avatar
@@ -385,10 +384,10 @@ function App() {
                                             >
                                               <ShoppingCartCheckoutIcon />
                                             </Avatar>
-                                          ):(
+                                          ) : (
                                             <Avatar
                                               sx={{
-                                                mr: -4,
+                                                mr: 0.5,
                                                 border: "2px solid #fff",
                                                 bgcolor: "inherit",
                                                 "&:hover": { color: "#ff7519" },
@@ -441,29 +440,29 @@ function App() {
                                     to="#admin"
                                   >
                                     <>
-                                    {userInfo.isAdmin && userInfo.isSeller && userInfo ? (
-                                      <Avatar
-                                      sx={{
-                                        border: "2px solid #fff",
-                                        bgcolor: "inherit",
-                                        "&:hover": { color: "#ff7519" },
-                                      }}
-                                    >
-                                      <StorefrontIcon />
-                                    </Avatar>
-                                    ) : (
-                                      <>
-                                      <Avatar
-                                      sx={{
-                                        mr: -2,
-                                        border: "2px solid #fff",
-                                        bgcolor: "inherit",
-                                        "&:hover": { color: "#ff7519" },
-                                      }}
-                                    >
-                                      <StorefrontIcon />
-                                    </Avatar></>
-                                    )}
+                                      {userInfo.isAdmin && userInfo.isSeller && userInfo ? (
+                                        <Avatar
+                                          sx={{
+                                            border: "2px solid #fff",
+                                            bgcolor: "inherit",
+                                            "&:hover": { color: "#ff7519" },
+                                          }}
+                                        >
+                                          <StorefrontIcon />
+                                        </Avatar>
+                                      ) : (
+                                        <>
+                                          <Avatar
+                                            sx={{
+                                              mr: -1,
+                                              border: "2px solid #fff",
+                                              bgcolor: "inherit",
+                                              "&:hover": { color: "#ff7519" },
+                                            }}
+                                          >
+                                            <StorefrontIcon />
+                                          </Avatar></>
+                                      )}
                                     </>
                                   </Link>
                                 </IconButton>
@@ -3519,7 +3518,7 @@ function App() {
             ) : (
               categories?.map((c, i) => (
                 <Box key={i}>
-                  <List><Link style={{textDecoration: 'none'}} to={`/search/category/${c}`}>
+                  <List><Link style={{ textDecoration: 'none' }} to={`/search/category/${c}`}>
                     <Typography
                       variant="h4"
                       sx={{
@@ -3549,7 +3548,7 @@ function App() {
             )}
             <Divider sx={{ backgroundColor: "#FFFFFF" }} showlabels="true" />
           </Drawer>
-          <Box component="main" sx={{ p: 3 }}>
+          <Box component="main" sx={{ p: 3, flexGrow: 1, minHeight: "100vh" }}>
             <Toolbar />
             {/* <Typography> */}
             <Routes>
@@ -3798,10 +3797,22 @@ function App() {
             {/* </Typography> */}
           </Box>
 
-          <Footer />
+          <Paper
+            sx={{
+              position: "relative",
+              bottom: 0,
+              color: "#ff7519",
+              alignItems: "center",
+            }}
+            elevation={0}
+          >
+            <Footer />
+          </Paper>
         </Box>
+
       </div>
     </BrowserRouter>
+
   );
 }
 

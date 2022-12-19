@@ -66,11 +66,8 @@ import {
   kidReviewCreateReducer,
   kidUpdateReducer,
 } from "./reducers/kidReducer";
-import { applicationSettingReducer, appSettingListReducer } from "./reducers/applicationReducer";
-// import { cartKidReducer } from './reducers/cartKidReducers';
-// import { suitDetailsReducer, suitListReducer, suitReviewCreateReducer } from './reducers/suitReducers';
-// import { cartKidReducer } from './reducers/cartKidReducers';
-// import { cartWomenReducer } from './reducers/cartWomenReducers';
+import { applicationSettingReducer } from "./reducers/applicationReducer";
+
 
 const initialState = {
   userSignin: {
@@ -118,7 +115,6 @@ const reducer = combineReducers({
   cartUpdate: cartUpdateReducer,
   kidList: kidListReducer,
   applicationCreate: applicationSettingReducer,
-  applicationList: appSettingListReducer,
 
   productDetails: productDetailsReducer,
   womenDetails: womenDetailsReducer,

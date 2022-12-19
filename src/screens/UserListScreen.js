@@ -6,6 +6,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { Typography } from "../../node_modules/@material-ui/core/index";
 import { deleteUser, listUsers } from '../actions/userAction';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
@@ -96,12 +97,12 @@ export default function UserListScreen() {
         <>
           <EditIcon
             onClick={() => editHandler(users)}
-            style={{ color: deepPurple[500], fontSize: 15, margin:20, cursor: "pointer" }}
+            style={{ color: deepPurple[500], fontSize: 15, margin: 20, cursor: "pointer" }}
           />
 
           <DeleteIcon
             onClick={() => deleteHandler(users)}
-            style={{ color: red[500], fontSize: 15, cursor: "pointer"}}
+            style={{ color: red[500], fontSize: 15, cursor: "pointer" }}
           />
         </>
       ),
@@ -110,7 +111,7 @@ export default function UserListScreen() {
 
   return (
     <div>
-      <h1>Users</h1>
+      <Typography style={{ marginTop: 50, }} variant="h4" >Users</Typography>
       {loadingDelete && <LoadingBox></LoadingBox>}
       {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
       {successDelete && (
@@ -136,10 +137,10 @@ export default function UserListScreen() {
               fontSize: 13,
             },
             ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-              {
-                backgroundColor: "#330033",
-                color: "#ffffff",
-              },
+            {
+              backgroundColor: "#330033",
+              color: "#ffffff",
+            },
             ".css-h4y409-MuiList-root": {
               display: "grid",
             },
