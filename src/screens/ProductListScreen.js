@@ -7,6 +7,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Typography } from "../../node_modules/@material-ui/core/index";
 import { deleteProduct, listProducts } from "../actions/productAction";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
@@ -136,12 +137,12 @@ export default function ProductListScreen() {
         <>
           <EditIcon
             onClick={() => editHandler(products)}
-            style={{ color: deepPurple[500], fontSize: 15, margin:20, cursor: "pointer" }}
+            style={{ color: deepPurple[500], fontSize: 15, margin: 20, cursor: "pointer" }}
           />
 
           <DeleteIcon
             onClick={() => deleteHandler(products)}
-            style={{ color: red[500], fontSize: 15, cursor: "pointer"}}
+            style={{ color: red[500], fontSize: 15, cursor: "pointer" }}
           />
         </>
       ),
@@ -151,10 +152,10 @@ export default function ProductListScreen() {
 
   return (
     <div>
-      <div>
-        <h1 >Products</h1>
-        <Button  variant="contained" onClick={createHandler}>Create Product</Button>
-      </div>
+
+      <Typography style={{ marginTop: 30, }} variant="h4" >Products</Typography>
+      <Button style={{ marginTop: 25, }}variant="contained" onClick={createHandler}>Create Product</Button>
+
       {loadingDelete && <LoadingBox></LoadingBox>}
       {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
       {loadingCreate && <LoadingBox></LoadingBox>}
@@ -168,6 +169,7 @@ export default function ProductListScreen() {
           sx={{
             height: 460,
             width: "100%",
+          
             "& .super-app-theme--header": {
               backgroundColor: "#808080",
               color: "#ffffff",
@@ -179,14 +181,14 @@ export default function ProductListScreen() {
               fontSize: 13,
             },
             ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-              {
-                backgroundColor: "#330033",
-                color: "#ffffff",
-              },
+            {
+              backgroundColor: "#330033",
+              color: "#ffffff",
+            },
             ".css-h4y409-MuiList-root": {
               display: "grid",
             },
-            
+
           }}
         >
           <DataGrid

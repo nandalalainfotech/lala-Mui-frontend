@@ -9,12 +9,13 @@ import { useNavigate } from 'react-router-dom';
 import { listOrderMine } from '../actions/orderActions';
 import MessageBox from '../components/MessageBox';
 import CircularProgress from '@mui/material/CircularProgress';
+import { Typography } from "../../node_modules/@material-ui/core/index";
 
 export default function OrderHistoryScreen() {
 
   const [pageSize, setPageSize] = useState(10);
 
- const navigate = useNavigate();
+  const navigate = useNavigate();
   const orderMineList = useSelector((state) => state.orderMineList);
   const { loading, error, orders } = orderMineList;
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ export default function OrderHistoryScreen() {
   }
 
   function getDelivered(orders) {
-    return `${orders.row.isDelivered ? orders.row.deliveredAt.substring(0, 10): "No" || ''}`;
+    return `${orders.row.isDelivered ? orders.row.deliveredAt.substring(0, 10) : "No" || ''}`;
   }
 
 
@@ -88,7 +89,7 @@ export default function OrderHistoryScreen() {
         <>
           <ContentPasteSearchIcon
             onClick={() => detailHandler(orders)}
-            style={{ color: deepPurple[500], fontSize: 15, margin:30, cursor: "pointer" }}
+            style={{ color: deepPurple[500], fontSize: 15, margin: 30, cursor: "pointer" }}
           />
         </>
       ),
@@ -115,8 +116,8 @@ export default function OrderHistoryScreen() {
           backgroundColor: alpha(
             theme.palette.primary.main,
             ODD_OPACITY +
-              theme.palette.action.selectedOpacity +
-              theme.palette.action.hoverOpacity
+            theme.palette.action.selectedOpacity +
+            theme.palette.action.hoverOpacity
           ),
           // Reset on touch devices, it doesn't add specificity
           "@media (hover: none)": {
@@ -133,7 +134,7 @@ export default function OrderHistoryScreen() {
 
   return (
     <div>
-      <h1>Order History</h1>
+      <Typography style={{ marginTop: 30, }} variant="h5" >Order History</Typography>
       {loading ? (
         <CircularProgress></CircularProgress>
       ) : error ? (
@@ -154,10 +155,10 @@ export default function OrderHistoryScreen() {
               fontSize: 13,
             },
             ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-              {
-                backgroundColor: "#330033",
-                color: "#ffffff",
-              },
+            {
+              backgroundColor: "#330033",
+              color: "#ffffff",
+            },
             ".css-h4y409-MuiList-root": {
               display: "grid",
             },

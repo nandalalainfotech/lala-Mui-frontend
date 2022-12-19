@@ -39,7 +39,7 @@
     line-height: 1.7rem !important;
 }
 .new1 .rec-arrow:hover:not(:disabled) {
-    transform: scale(1);
+    transform: scale(1.2);
     background-color: #ff7519 !important;
 }
 
@@ -61,6 +61,7 @@ transform: scale(1.2);
 *{
     font-family: "Amazon Ember" !important;
     margin:0;
+   top:0,
     /* text-transform: capitalize!important; */
 }
 .formError {
@@ -100,7 +101,7 @@ transform: scale(1.2);
   } */
 
 .topseller{
-  margin-top: 42px;
+  margin-top: 52px;
 }
   
 

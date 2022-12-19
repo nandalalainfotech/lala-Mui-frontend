@@ -12,11 +12,11 @@ const Search = styled('div')(({ theme }) => ({
   borderRadius: "50px",
   // borderRadius: theme.shape.borderRadius,
   // backgroundColor: alpha(theme.palette.common.white, 0.15),
-  backgroundColor:"#fff",
+  backgroundColor: "#fff",
   // '&:hover': {
   //   backgroundColor: alpha(theme.palette.common.white, 0.25),
   // },
-  cursor:"pointer",
+  cursor: "pointer",
   marginRight: theme.spacing(1),
   marginLeft: 0,
   width: '100%',
@@ -24,7 +24,7 @@ const Search = styled('div')(({ theme }) => ({
   // [theme.breakpoints.only('xs')]: {
   //  display:"none"
   // },
-  [theme.breakpoints.between('sm','md')]: {
+  [theme.breakpoints.between('sm', 'md')]: {
     marginLeft: theme.spacing(5),
     width: 'auto',
   },
@@ -87,25 +87,17 @@ export default function SearchBox() {
     navigate(`/search/name/${name}`);
   };
   return (
-    // <form className="search" onSubmit={submitHandler} >
-    //   <div className="row">
-    //     <div className="form-group has-search">
-    //       <span className="fa fa-search form-control-feedback"></span>
-    //       <input type="text" className="form-control" placeholder="Search for Products,brands and more..." onChange={(e)=>setName(e.target.value)}></input>
-    //       <button type="submit" className="search-submit"><i className="fa">Search</i></button>
-    //     </div>
-    //   </div>
-    // </form>
+
     <form onSubmit={submitHandler} >
-    <Search>
-    <SearchIconWrapper>
-      <SearchIcon />
-    </SearchIconWrapper>
-    <StyledInputBase
-      placeholder="Search for Products,brands and more..."
-      inputProps={{ "aria-label": "search" }} onChange={(e)=>setName(e.target.value)}
-    />
-  </Search>
-  </form>
+      <Search>
+        <SearchIconWrapper>
+          <SearchIcon />
+        </SearchIconWrapper>
+        <StyledInputBase
+          placeholder="Search for Products,brands and more..."
+          inputProps={{ "aria-label": "search" }} onChange={(e) => setName(e.target.value)}
+        />
+      </Search>
+    </form>
   );
 }
