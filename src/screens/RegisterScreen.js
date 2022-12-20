@@ -35,7 +35,7 @@ export default function RegisterScreen() {
 
   const { search } = useLocation();
   const redirectInUrl = new URLSearchParams(search).get('redirect');
-  const redirect = redirectInUrl ? redirectInUrl : '/regotpVerify';
+  const redirect = redirectInUrl ? redirectInUrl : '/';
   const userRegister = useSelector((state) => state.userRegister);
   const { userInfo, loading, error } = userRegister;
   const dispatch = useDispatch();
