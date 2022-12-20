@@ -19,19 +19,26 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Rating from "@mui/material/Rating";
 // import Reviews from "@mui/material/Reviews";
+import CardMedia from "@mui/material/CardMedia";
 import Select from "@mui/material/Select";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import Typography from "@mui/material/Typography";
 import Axios from "axios";
 import ReactImageMagnify from "react-image-magnify";
-import CardMedia from "@mui/material/CardMedia";
 import {
   CircularProgress,
   DialogContent,
+  TextField,
 } from "../../node_modules/@material-ui/core/index";
 // import { CenterFocusStrong } from "../../node_modules/@mui/icons-material/index";
 import Carousel from "react-elastic-carousel";
 import Product from "../components/Product";
+import IconButton from "@mui/material/IconButton";
+// import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
+// import AddCircleIcon from '@mui/icons-material/AddCircle';
+import AddIcon from "@material-ui/icons/Add";
+import RemoveIcon from "@material-ui/icons/Remove";
+
 
 export default function ProductScreen() {
   const productList = useSelector((state) => state.productList);
@@ -59,10 +66,22 @@ export default function ProductScreen() {
   const [comment, setComment] = useState("");
   const [images, setImage] = useState();
   const [subimg, setSubImage] = useState();
-  // const [NewImage, setNewImage] = useState();
+
   const handleChangeimage = (e) => {
     setImage(e.target.src);
   };
+
+  const handleIncrement = () => {
+    setQty((qty) => qty + 1);
+  };
+
+  const handleDecrement = () => {
+    if( qty > 0){
+      setQty((qty) => qty  - 1);
+    }
+    
+  };
+  console.log("qty",qty);
 
   useEffect(() => {
     const fetchBusinesses = async () => {
@@ -88,7 +107,12 @@ export default function ProductScreen() {
   }, [dispatch, productId, successReviewCreate]);
 
   const addToCartHandler = () => {
-    navigate(`/cart/${productId}?qty=${qty}`);
+    if(qty > 0){
+      navigate(`/cart/${productId}?qty=${qty}`);
+    }else{
+      window.confirm("Please Select the qty")
+    }
+   
   };
 
   const addToHandler = () => {
@@ -130,9 +154,8 @@ export default function ProductScreen() {
       ) : (
         <Grid container spacing={2}>
           {/* <Grid xs sx={{margin:10}}> */}
-          
-          <Box sx={{ mt: 4,display:{xs:"none",sm:"none",md:"none"}}}>
-            
+
+          <Box sx={{ mt: 4, display: { xs: "none", sm: "none", md: "none" } }}>
             <CardMedia
               sx={{
                 border: "2px solid gray",
@@ -175,7 +198,6 @@ export default function ProductScreen() {
                 />
               </Box>
             ))}
-            
           </Box>
           {/* </Grid> */}
           <Grid
@@ -196,8 +218,8 @@ export default function ProductScreen() {
                 borderRadius: 0,
                 width: "auto",
                 m: 3,
-                boxShadow:
-                  "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                // boxShadow:
+                //   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
               }}
             >
               <ReactImageMagnify
@@ -236,124 +258,122 @@ export default function ProductScreen() {
                 </Box> */}
             </Box>
             <Box
-        sx={{
-          padding: 0,
-          margin: 0,
-          mt:10,
-          width: "auto",
-          listStyle: "none",
-          display: "flex",
-          flexFlow: "wrap row",
-          flexDirection: "row",
-          alignItems: "center",
-        }}
-      >
-            
-            <CardMedia
               sx={{
-                border: "2px solid gray",
-                cursor: "pointer",
-                transition: "transform .5s ease",
-                "&:hover": {
-                  transform: "scale(1.1)",
-                },
-                margin: 1,
-                width:{ xs:60,sm:120},
-                height:{ xs:90,sm:150},
-                justifycontent: "space-between",
+                padding: 0,
+                margin: 0,
+                mt: 10,
+                width: "auto",
+                listStyle: "none",
+                display: "flex",
+                flexFlow: "wrap row",
+                flexDirection: "row",
+                alignItems: "center",
               }}
-              component="img"
-              // height="200"
-              image={`/api/uploads/show/${productId}`}
-              alt={"subimgnew.filename"}
-              onMouseOver={handleChangeimage}
-            />
-            {subimg?.map((subimgnew, index) => (
-              <Box key={index}>
-                <CardMedia
-                  sx={{
-                    border: "2px solid gray",
-                    cursor: "pointer",
-                    transition: "transform .5s ease",
-                    "&:hover": {
-                      transform: "scale(1.1)",
-                    },
-                    margin: 1,
-                    
-                    width:{ xs:60,sm:120},
-                    height:{ xs:90,sm:150},
-                    justifycontent: "space-between",
-                  }}
-                  component="img"
-                  // height="200"
-                  image={`/api/uploads/showsubimgnew/${subimgnew.filename}`}
-                  alt={"subimgnew.filename"}
-                  onMouseOver={handleChangeimage}
-                />
-              </Box>
-            ))}
-            
-          </Box>
+            >
+              <CardMedia
+                sx={{
+                  border: "2px solid gray",
+                  cursor: "pointer",
+                  transition: "transform .5s ease",
+                  "&:hover": {
+                    transform: "scale(1.1)",
+                  },
+                  margin: 1,
+                  width: { xs: 60, sm: 120 },
+                  height: { xs: 90, sm: 150 },
+                  justifycontent: "space-between",
+                }}
+                component="img"
+                // height="200"
+                image={`/api/uploads/show/${productId}`}
+                alt={"subimgnew.filename"}
+                onMouseOver={handleChangeimage}
+              />
+              {subimg?.map((subimgnew, index) => (
+                <Box key={index}>
+                  <CardMedia
+                    sx={{
+                      border: "2px solid gray",
+                      cursor: "pointer",
+                      transition: "transform .5s ease",
+                      "&:hover": {
+                        transform: "scale(1.1)",
+                      },
+                      margin: 1,
+
+                      width: { xs: 60, sm: 120 },
+                      height: { xs: 90, sm: 150 },
+                      justifycontent: "space-between",
+                    }}
+                    component="img"
+                    // height="200"
+                    image={`/api/uploads/showsubimgnew/${subimgnew.filename}`}
+                    alt={"subimgnew.filename"}
+                    onMouseOver={handleChangeimage}
+                  />
+                </Box>
+              ))}
+            </Box>
           </Grid>
-          <Grid sx={{ mt: 4,display:{xs:"block",sm:"none",md:"none"}}}>
-          <Box
-        sx={{
-          padding: 0,
-          margin: 0,
-          width: "auto",
-          listStyle: "none",
-          display: "flex",
-          flexFlow: "wrap row",
-          flexDirection: "row",
-          alignItems: "center",
-        }}
-      >
-            
-            <CardMedia
+          <Grid
+            sx={{ mt: 4, display: { xs: "block", sm: "none", md: "none" } }}
+          >
+            <Box
               sx={{
-                border: "2px solid gray",
-                cursor: "pointer",
-                transition: "transform .5s ease",
-                "&:hover": {
-                  transform: "scale(1.1)",
-                },
-                margin: 1,
-                width:{ xs:60,sm:120},
-                height:{ xs:90,sm:150},
-                justifycontent: "space-between",
+                padding: 0,
+                margin: 0,
+                width: "auto",
+                listStyle: "none",
+                display: "flex",
+                flexFlow: "wrap row",
+                flexDirection: "row",
+                alignItems: "center",
               }}
-              component="img"
-              // height="200"
-              image={`/api/uploads/show/${productId}`}
-              alt={"subimgnew.filename"}
-              onMouseOver={handleChangeimage}
-            />
-            {subimg?.map((subimgnew, index) => (
-              <Box key={index}>
-                <CardMedia
-                  sx={{
-                    border: "2px solid gray",
-                    cursor: "pointer",
-                    transition: "transform .5s ease",
-                    "&:hover": {
-                      transform: "scale(1.1)",
-                    },
-                    margin: 1,
-                    
-                    width:{ xs:60,sm:120},
-                    height:{ xs:90,sm:150},
-                    justifycontent: "space-between",
-                  }}
-                  component="img"
-                  // height="200"
-                  image={`/api/uploads/showsubimgnew/${subimgnew.filename}`}
-                  alt={"subimgnew.filename"}
-                  onMouseOver={handleChangeimage}
-                />
-              </Box>
-            ))}
-            
-          </Box>
+            >
+              <CardMedia
+                sx={{
+                  border: "2px solid gray",
+                  cursor: "pointer",
+                  transition: "transform .5s ease",
+                  "&:hover": {
+                    transform: "scale(1.1)",
+                  },
+                  margin: 1,
+                  width: { xs: 60, sm: 120 },
+                  height: { xs: 90, sm: 150 },
+                  justifycontent: "space-between",
+                }}
+                component="img"
+                // height="200"
+                image={`/api/uploads/show/${productId}`}
+                alt={"subimgnew.filename"}
+                onMouseOver={handleChangeimage}
+              />
+              {subimg?.map((subimgnew, index) => (
+                <Box key={index}>
+                  <CardMedia
+                    sx={{
+                      border: "2px solid gray",
+                      cursor: "pointer",
+                      transition: "transform .5s ease",
+                      "&:hover": {
+                        transform: "scale(1.1)",
+                      },
+                      margin: 1,
+
+                      width: { xs: 60, sm: 120 },
+                      height: { xs: 90, sm: 150 },
+                      justifycontent: "space-between",
+                    }}
+                    component="img"
+                    // height="200"
+                    image={`/api/uploads/showsubimgnew/${subimgnew.filename}`}
+                    alt={"subimgnew.filename"}
+                    onMouseOver={handleChangeimage}
+                  />
+                </Box>
+              ))}
+            </Box>
           </Grid>
           <Grid
             item
@@ -374,8 +394,8 @@ export default function ProductScreen() {
                   width: "100%",
                   marginTop: 3,
                   height: "100%",
-                  boxShadow:
-                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                  // boxShadow:
+                  //   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 }}
                 component="img"
                 src={images}
@@ -384,122 +404,124 @@ export default function ProductScreen() {
           </Grid>
 
           <Grid item xs sx={{ zIndex: 0 }}>
-            <Box>
-              <Card
-                style={{
-                  padding: 30,
-                  borderRadius: 0,
-                  margin: 20,
-                  boxShadow:
-                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                }}
-              >
-                <Box>
-                  <Typography
-                    variant="h5"
-                    gutterBottom
-                    style={{ color: "#A02020", textTransform: "capitalize" }}
-                  >
-                    {product.name}
-                  </Typography>
+            <Grid>
+              <Box>
+                <Card
+                  style={{
+                    padding: 30,
+                    borderRadius: 0,
+                    margin: 20,
+                    // boxShadow:
+                    //   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                  }}
+                >
+                  <Box>
+                    <Typography
+                      variant="h5"
+                      gutterBottom
+                      style={{ color: "#A02020", textTransform: "capitalize" }}
+                    >
+                      {product.name}
+                    </Typography>
 
-                  <Typography variant="body1" gutterBottom>
-                    <Rating>
-                      Value={product.rating}
-                      {/* numReviews={product.numReviews} */}
-                    </Rating>
-                  </Typography>
-                  <Typography variant="body1" gutterBottom>
-                    {product.numReviews + "reviews"}
-                  </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      <Rating>
+                        Value={product.rating}
+                        {/* numReviews={product.numReviews} */}
+                      </Rating>
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      {product.numReviews + "reviews"}
+                    </Typography>
 
-                  <Typography
-                    variant="body1"
-                    style={{ color: "#A02020", textTransform: "capitalize" }}
-                    gutterBottom
-                  >
-                    <strong>Price :</strong> ₹{product.price}
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    style={{ color: "#A02020", textTransform: "capitalize" }}
-                    gutterBottom
-                  >
-                    <strong>Brand :</strong> {product.brand}
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    style={{ color: "#A02020", textTransform: "capitalize" }}
-                    gutterBottom
-                  >
-                    <strong>Category :</strong> {product.category}
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    style={{ color: "#A02020", textTransform: "capitalize" }}
-                    gutterBottom
-                  >
-                    <strong>Description :</strong> {product.description}
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    style={{ color: "#A02020", textTransform: "capitalize" }}
-                    gutterBottom
-                  >
-                    <strong> Category Group :</strong> {product.categorygroup}
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    style={{ color: "#A02020", textTransform: "capitalize" }}
-                    gutterBottom
-                  >
-                    <strong>Category Type :</strong> {product.categorytype}
-                  </Typography>
-                </Box>
-              </Card>
-            </Box>
+                    <Typography
+                      variant="body1"
+                      style={{ color: "#A02020", textTransform: "capitalize" }}
+                      gutterBottom
+                    >
+                      <strong>Price :</strong> ₹{product.price}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      style={{ color: "#A02020", textTransform: "capitalize" }}
+                      gutterBottom
+                    >
+                      <strong>Brand :</strong> {product.brand}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      style={{ color: "#A02020", textTransform: "capitalize" }}
+                      gutterBottom
+                    >
+                      <strong>Category :</strong> {product.category}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      style={{ color: "#A02020", textTransform: "capitalize" }}
+                      gutterBottom
+                    >
+                      <strong>Description :</strong> {product.description}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      style={{ color: "#A02020", textTransform: "capitalize" }}
+                      gutterBottom
+                    >
+                      <strong> Category Group :</strong> {product.categorygroup}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      style={{ color: "#A02020", textTransform: "capitalize" }}
+                      gutterBottom
+                    >
+                      <strong>Category Type :</strong> {product.categorytype}
+                    </Typography>
+                  </Box>
+                </Card>
+              </Box>
+            </Grid>
+            <Grid>
+              <Box>
+                <Card
+                  style={{
+                    padding: 30,
+                    borderRadius: 0,
+                    margin: 20,
+                    // boxShadow:
+                    //   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                  }}
+                >
+                  <Box>
+                    <Typography
+                      variant="body1"
+                      style={{ color: "#A02020" }}
+                      gutterBottom
+                    >
+                      <strong>Price :</strong> ₹{product.price}
+                    </Typography>
 
-            <Box>
-              <Card
-                style={{
-                  padding: 30,
-                  borderRadius: 0,
-                  margin: 20,
-                  boxShadow:
-                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                }}
-              >
-                <Box>
-                  <Typography
-                    variant="body1"
-                    style={{ color: "#A02020" }}
-                    gutterBottom
-                  >
-                    <strong>Price :</strong> ₹{product.price}
-                  </Typography>
+                    <Typography
+                      variant="body1"
+                      style={{ color: "#A02020" }}
+                      gutterBottom
+                    >
+                      <strong>Status :</strong>{" "}
+                      {product.countInStock > 0 ? (
+                        <span style={{ color: "green" }}>In Stock</span>
+                      ) : (
+                        <span style={{ color: "red" }}>Unavailable</span>
+                      )}
+                    </Typography>
 
-                  <Typography
-                    variant="body1"
-                    style={{ color: "#A02020" }}
-                    gutterBottom
-                  >
-                    <strong>Status :</strong>{" "}
-                    {product.countInStock > 0 ? (
-                      <span style={{ color: "green" }}>In Stock</span>
-                    ) : (
-                      <span style={{ color: "red" }}>Unavailable</span>
-                    )}
-                  </Typography>
-
-                  {product.countInStock > 0 && (
-                    <>
-                      <Typography
-                        variant="body1"
-                        style={{ color: "#A02020" }}
-                        component="span"
-                      >
-                        <strong>Qty:</strong>
-                        <FormControl
+                    {product.countInStock > 0 && (
+                      <>
+                        <Typography
+                          variant="body1"
+                          style={{ color: "#A02020" }}
+                          component="span"
+                        >
+                          <strong>Qty:</strong>
+                          {/* <FormControl
                           sx={{ marginLeft: 2, width: "90%" }}
                           size="small"
                         >
@@ -515,36 +537,83 @@ export default function ProductScreen() {
                               )
                             )}
                           </Select>
-                        </FormControl>
-                      </Typography>
-                      {userInfo ? (
-                        <Button
-                          variant="contained"
-                          onClick={addToCartHandler}
-                          sx={{
-                            marginTop: 2,
-                            marginLeft: { xs: 2, sm: 2, md: 6, lg: 6 },
-                            width: "90%",
-                          }}
-                        >
-                          {" "}
-                          Add to Cart
-                        </Button>
-                      ) : (
-                        <Button
-                          variant="contained"
-                          onClick={addToHandler}
-                          sx={{ marginTop: 2, width: "100%" }}
-                        >
-                          {" "}
-                          Add to Cart
-                        </Button>
-                      )}
-                    </>
-                  )}
-                </Box>
-              </Card>
-            </Box>
+                        </FormControl> */}
+                          {/* <Button onClick={handleIncrement}>+</Button>
+                        <TextField>{qty}</TextField>
+                        <Button onClick={handleDecrement}>-</Button> */}
+                          {/* <Box
+                            sx={{ display: "flex", alignItems: "center" }}
+                          > */}
+                          
+                            <IconButton
+                              onClick={handleDecrement}
+                              aria-label="minus"
+                              style={{ marginTop: 15,
+                                minHeight: "40px",
+                              backgroundColor: "#8566aa",
+                              color: "#fff",
+                              borderRadius: "5%",
+                              boxShadow: "5px 5px 15px -5px rgba(0, 0, 0, 0.3)",
+                            
+                            }}
+                            >
+                              <RemoveIcon  />
+                            </IconButton>
+                            <TextField
+                              value={qty}
+                              id="outlined-adornment-small-Child"
+                              variant="outlined"
+                              size="small"
+                              style={{ width: 48, height: 35, marginTop: 15 }}
+                              labelWidth={0}
+                              // disabled="false"
+                              onChange={(e) => setComment(e.target.value)}
+                            />
+                            <IconButton
+                              onClick={handleIncrement}
+                              aria-label="plus"
+                              style={{ marginTop: 15,
+                                minHeight: "40px",
+                              backgroundColor: "#8566aa",
+                              color: "#fff",
+                              borderRadius: "5%",
+                              boxShadow: "5px 5px 15px -5px rgba(0, 0, 0, 0.3)",
+                            
+                            }}
+                            >
+                              <AddIcon fontSize="inherit" />
+                            </IconButton>
+                          {/* </Box> */}
+                        </Typography>
+                        {userInfo ? (
+                          <Button
+                            variant="contained"
+                            onClick={addToCartHandler}
+                            sx={{
+                              marginTop: 2,
+                              marginLeft: { xs: 2, sm: 2, md: 6, lg: 6 },
+                              width: "90%",
+                            }}
+                          >
+                            {" "}
+                            Add to Cart
+                          </Button>
+                        ) : (
+                          <Button
+                            variant="contained"
+                            onClick={addToHandler}
+                            sx={{ marginTop: 2, width: "100%" }}
+                          >
+                            {" "}
+                            Add to Cart
+                          </Button>
+                        )}
+                      </>
+                    )}
+                  </Box>
+                </Card>
+              </Box>
+            </Grid>
 
             <Box>
               <Card
