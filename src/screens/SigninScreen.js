@@ -44,8 +44,6 @@ export default function SigninScreen() {
   }, [navigate, redirect, userInfo]);
 
 
-  console.log("userInfo", userInfo);
-
   const submitHandler = (e) => {
     dispatch(signin({
       email: e.email,

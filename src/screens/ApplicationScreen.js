@@ -28,7 +28,6 @@ function ApplicationScreen() {
 
 
   const submitHandler = async (e) => {
-    console.log("e", e);
     dispatch(
       saveApplicationSetting({
         name: e.name,

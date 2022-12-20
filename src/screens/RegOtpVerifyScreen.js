@@ -26,10 +26,8 @@ const RegOtpVerifyScreen = () => {
   const userRegister = useSelector((state) => state.userRegister);
   // console.log("userRegister", userRegister);
   const { userInfo } = userRegister;
-  console.log("userInfo", userInfo);
   const submitHandler = (e) => {
 
-    console.log("e", e);
 
     if(e.otp === userInfo?.otp) {
       dispatch(

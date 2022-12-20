@@ -30,11 +30,9 @@ const OtpVerifyScreen = () => {
 
   // const [otp, setOtp] = useState("");
   // console.log("otp", otp);
-  console.log("all", all);
 
   const submitHandler = (e) => {
 
-    console.log("e", e);
 
     if(e.otp === all?.otp) {
       navigate("/");

@@ -27,7 +27,6 @@ const OtpScreen = () => {
   console.log("email", email);
 
   const submitHandler = (e) => {
-    console.log("e", e);
     // setEmail(e.email);
     dispatch(
       saveOtp({
