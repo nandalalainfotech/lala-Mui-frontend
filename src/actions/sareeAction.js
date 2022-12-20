@@ -194,7 +194,6 @@ import {
   SAREE_REVIEW_CREATE_SUCCESS,
   SAREE_REVIEW_CREATE_FAIL,
 } from '../constants/sareeConstants';
-import data from '../data';
 
 
 export const listSaree =
@@ -233,7 +232,6 @@ export const listSareeCategories = () => async (dispatch) => {
   }
 };
 export const detailsSaree = (Saree) => async (dispatch) => {
-  console.log("sareeid",data);
   dispatch({ type: SAREE_DETAILS_REQUEST, payload: Saree });
   try {
     const { data } = await Axios.get(`/api/saree/${Saree}`);

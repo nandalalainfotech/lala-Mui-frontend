@@ -3,11 +3,9 @@ import { OTP_LIST_FAIL, OTP_LIST_REQUEST, OTP_LIST_SUCCESS, USER_OTP_FAIL, USER_
 
 
 export const saveOtp = (otpInfo) => async (dispatch) => {
-    console.log("otpInfo--->", otpInfo);
     dispatch({ type: USER_OTP_REQUEST});
     try {
       const { data } = await Axios.post('/api/otp', otpInfo);
-      console.log("data", data);
       dispatch({ type: USER_OTP_SUCCESS, payload: data });
       dispatch({ type: USER_OTP_SUCCESS, payload: data });
       localStorage.setItem('userInfo', JSON.stringify(data?data:''));

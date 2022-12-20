@@ -44,7 +44,6 @@ export const registers = (regInfo) => async (dispatch) => {
   dispatch({ type: USER_REGISTER_REQUEST});
   try {
     const { data } = await Axios.post('/api/users/register', regInfo);
-    console.log("data===>", data);
     dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
     localStorage.setItem('userInfo', JSON.stringify(data?data:''));
@@ -349,7 +348,6 @@ export const updateUser = (user) => async (dispatch, getState) => {
 
 
 export const updateUserStatus = (status) => async (dispatch, getState) => {
-  console.log("status", status);
   dispatch({ type: USER_UPDATE_PROFILE_REQUEST, payload: status });
   const {
     userSignin: { userInfo },
