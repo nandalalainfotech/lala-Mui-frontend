@@ -24,7 +24,7 @@ import Select from "@mui/material/Select";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import Typography from "@mui/material/Typography";
 import Axios from "axios";
-import ReactImageMagnify from "react-image-magnify";
+import ReactImageMagnify from "@vorld/react-image-magnify";
 import {
   CircularProgress,
   DialogContent,
