@@ -31,7 +31,7 @@ export default function Product(PropTypes) {
             },
           }}
           component="img"
-          // height="200"
+          height="200"
           image={`/api/uploads/show/${product._id}`}
           alt={product.name}
         />
