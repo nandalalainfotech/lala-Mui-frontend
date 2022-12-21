@@ -4,20 +4,14 @@ import CardMedia from "@mui/material/CardMedia";
 import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 // import Box from '@mui/material/Box';
 
 export default function Product(PropTypes) {
   const { product } = PropTypes;
-  // const [image, setImage] = useState();
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const imageData = await Axios.get(`/api/uploads/show/${product._id}`, {
-  //       responseType: "blob",
-  //     });
-  //     setImage(URL.createObjectURL(imageData.data));
-  //   }
-  //   fetchData();
-  // }, [product]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <Card
