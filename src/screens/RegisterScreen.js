@@ -8,13 +8,13 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { makeStyles } from "@material-ui/core";
 import { useForm } from "react-hook-form";
+
 export default function RegisterScreen() {
   const {
     register,
@@ -218,13 +218,19 @@ export default function RegisterScreen() {
             >
               Sign In
             </Button>
-            <Grid container>
-              <Grid item>
-                <Link to="/signin" style={{ fontSize: '12px' }} >
-                  {" Already have an account? Sign In"}
+            <Typography align='center' sx={{mt: 2}}>
+            <Link to="/signin" style={{ fontSize: '14px',textAlign: "center" }} >
+                  {"Already have an account? Sign In"}
                 </Link>
-              </Grid>
-            </Grid>
+            </Typography>
+            <Typography align='center' sx={{mt: 2}}>
+            <Link to="/account" style={{ fontSize: '14px',paddingRight: "5px",textAlign: "center" }} >
+                  {" Buying for Work? Create a free business account"}
+                </Link>
+            </Typography>
+            
+               
+              
           </Box>
         </Box>
       </Container>

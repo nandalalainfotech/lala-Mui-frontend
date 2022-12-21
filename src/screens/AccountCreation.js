@@ -1,56 +1,61 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 // import { useNavigate } from '../../node_modules/react-router-dom/dist/index';
 // import { useNavigate } from 'react-router-dom';
-import data from '../data';
-
+import data from "../data";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 // console.log('accountscreen', data);
 export default function AccountCreation() {
-    const navigate = useNavigate();
-    // const AccountCreation = props => {
-    //     const { username, email, city, phone } =
-    //       (props.location && props.location.state) ||
-    // const email=()=>{
-    //     const {fname,lname}=useParams();
-    //     const location=useLocation();
-    //     console.log('location');
-    // }
-    useEffect(() => {
-        const accountInfo = localStorage.getItem('accountInfo')
-        if (accountInfo) {
-            navigate('')
-        }
-    },)
-
-    return (
-
-        <div key='value' className='Home'>
-
-            <h1>This Email is already being used for an Amazon account.Would you like to convert it to an Amazon Business account?</h1>
-
-            <p> If you<strong> choose to convert the account</strong> for<span> &lt;{localStorage.getItem('Email', JSON.stringify(data))}&gt; </span>
-                to an amazon business account:</p>
-
-            <h4> Your orders and payment methods will carry over and can be seen by people you add to your account.</h4>
-            {/* <div>
-                    <label />
-                    {/* <div className="third" type="submit"
-                        onClick={() => navigate("/")}> Convert to a business account
-                    </div> */}
-            {/* <>
-                New customer?{''}
-                <div className='round'
-                    onClick={() => navigate("/account")}>Start here</div>
-            </> */}
-            <div className='round'>
-                <button onClick={() => navigate("/account")}>Start here</button>
-
-
-            </div>
-
-
-
-        </div >
-
-    );
+  const navigate = useNavigate();
+  const userAccount = useSelector((state) => state.userAccountCreation);
+  const { userInfo } = userAccount;
+      
+    
+ 
+  useEffect(() => {
+    if (userInfo) {
+      navigate("");
+    }
+  }, [userInfo, navigate]);
+  return (
+    <Box
+      sx={{
+        mt: 10,
+        textAlign: "center",
+        boxShadow:
+          "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+        p: 5,
+      }}
+    >
+      <Typography variant="h5">
+        This Email is already being used for an Amazon account.Would you like to
+        convert it to an Amazon Business account?
+      </Typography>
+      <br></br>
+      <Typography>
+        {" "}
+        If you<strong> choose to convert the account</strong> for
+        <span>
+          {" "}
+          &lt;{localStorage.getItem("Email", JSON.stringify(data))}&gt;{" "}
+        </span>
+        to an amazon business account:
+      </Typography>
+      <br></br>
+      <Typography variant="h5">
+        {" "}
+        Your orders and payment methods will carry over and can be seen by
+        people you add to your account.
+      </Typography>
+      <br></br>
+      <Box>
+        <Button variant="contained" onClick={() => navigate("/account")}>
+          Start here
+        </Button>
+      </Box>
+    </Box>
+  );
 }
