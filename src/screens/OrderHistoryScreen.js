@@ -32,7 +32,7 @@ export default function OrderHistoryScreen() {
   }
 
   function getTotal(orders) {
-    return `${orders.row.totalPrice.toFixed(2) || ''}`;
+    return `${orders.row.totalPrice?.toFixed(2) || ''}`;
   }
 
   function getPaid(orders) {
