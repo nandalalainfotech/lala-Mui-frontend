@@ -20,9 +20,15 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { makeStyles } from "@material-ui/core";
 import { PRODUCT_DETAILS_RESET } from "../constants/productConstants";
 import { useForm } from "react-hook-form";
-import { Typography } from "../../node_modules/@material-ui/core/index";
+import {
+  MenuItem,
+  Typography,
+} from "../../node_modules/@material-ui/core/index";
+import { categoryListDetails } from "../actions/categoryAction";
 // import MultiImageInput from "react-multiple-image-input";
-
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 export default function ProductEditScreen() {
   const {
     register,
@@ -37,6 +43,7 @@ export default function ProductEditScreen() {
   const [price, setPrice] = useState("");
   // eslint-disable-next-line no-unused-vars
   const [imageFile, setImageFile] = useState();
+  const [categorytitle, setCategorytitle] = useState("");
   const [category, setCategory] = useState("");
   const [categorygroup, setCategorygroup] = useState("");
   const [categorytype, setCategorytype] = useState("");
@@ -70,6 +77,9 @@ export default function ProductEditScreen() {
   const [countInStockError, setCountInStockError] = useState("");
   const [brandError, setBrandError] = useState("");
   const [descriptionError, setDescriptionError] = useState("");
+
+  const categoryList = useSelector((state) => state.categoryList);
+  const { categorydetails } = categoryList;
 
   const validateName = (e) => {
     setName(e.target.value);
@@ -166,6 +176,7 @@ export default function ProductEditScreen() {
   const updateSteps = ["Update Product", "Update File"];
 
   useEffect(() => {
+    dispatch(categoryListDetails());
     if (!product && productId) {
       dispatch(detailsProduct(productId));
     }
@@ -216,9 +227,10 @@ export default function ProductEditScreen() {
       createProduct({
         name: e.name,
         price: e.price,
-        category: e.category.toLowerCase(),
-        categorygroup: e.categorygroup,
-        categorytype: e.categorytext,
+        category: category.toLowerCase(),
+        categorygroup: categorygroup,
+        categorytype: categorytype,
+        categorytitel: categorytitle,
         brand: e.categorybrand,
         countInStock: e.countInStock,
         description: e.description,
@@ -226,7 +238,7 @@ export default function ProductEditScreen() {
     );
     setActiveStep(activeStep + 1);
   };
-
+console.log("categorydetails=======>>>",categorydetails);
   // const [loadingUpload, setLoadingUpload] = useState(false);
   // eslint-disable-next-line no-unused-vars
   const [errorUpload, setErrorUpload] = useState("");
@@ -234,7 +246,6 @@ export default function ProductEditScreen() {
   const { userInfo } = userSignin;
 
   const onSelectFile = async (e) => {
-    console.log("e================>>>", e);
     const file = e.target.files[0];
     setImageFile(file);
   };
@@ -285,6 +296,27 @@ export default function ProductEditScreen() {
   //   console.log("data=======>>", data);
   // };
   // ***************************************************
+
+ 
+
+  // const [age, setAge] = React.useState("");
+  // const handlecategoryChange = (e) => {
+  // console.log("event=====>>", age);
+  //   setAge(e.target.value);
+  // };
+
+  // const handlecategoryChange = (event) => {
+  //   setCategory(event.target.value);
+  // };
+
+  // const handlecategorygroupChange = (event) => {
+  //   setCategorygroup(event.target.value);
+  // };
+
+  // const handlecategorytypeChange = (event) => {
+  //   setCategorytype(event.target.value);
+  // };
+
   // ***************************************************
   const handleChangeApi = async (e) => {
     e.preventDefault();
@@ -471,72 +503,89 @@ export default function ProductEditScreen() {
               {errors?.price?.type === "pattern" && (
                 <span className="formError">Please Enter Number Only</span>
               )}
-              <TextField
-                InputLabelProps={{
-                  classes: {
-                    root: classes.cssLabel,
-                    focused: classes.cssFocused,
-                  },
-                }}
-                inputProps={{ style: { fontSize: 14 } }}
-                size="small"
-                margin="normal"
-                fullWidth
-                id="category"
-                label="Category"
-                name="category"
-                autoComplete="off"
-                onChange={(e) => setCategory(e.target.value)}
-                {...register("category", { required: true })}
-                error={errors.category}
-              />
-              {errors.category && (
-                <span className="formError">Category is required</span>
-              )}
-              <TextField
-                InputLabelProps={{
-                  classes: {
-                    root: classes.cssLabel,
-                    focused: classes.cssFocused,
-                  },
-                }}
-                inputProps={{ style: { fontSize: 14 } }}
-                size="small"
-                margin="normal"
-                fullWidth
-                id="category group"
-                label="Category group"
-                name="category group"
-                autoComplete="off"
-                onChange={(e) => setCategorygroup(e.target.value)}
-                {...register("categorygroup", { required: true })}
-                error={errors.categorygroup}
-              />
-              {errors.categorygroup && (
-                <span className="formError">Category group is required</span>
-              )}
-              <TextField
-                InputLabelProps={{
-                  classes: {
-                    root: classes.cssLabel,
-                    focused: classes.cssFocused,
-                  },
-                }}
-                inputProps={{ style: { fontSize: 14 } }}
-                size="small"
-                margin="normal"
-                fullWidth
-                id="category text"
-                label="Category text"
-                name="category text"
-                autoComplete="off"
-                onChange={(e) => setCategorytype(e.target.value)}
-                {...register("categorytext", { required: true })}
-                error={errors.categorytext}
-              />
-              {errors.categorytext && (
-                <span className="formError">Category text is required</span>
-              )}
+
+              {/* *********************************************************** */}
+
+              <FormControl fullWidth>
+                <InputLabel>Category Title</InputLabel>
+                <Select
+                  id="standard-simple-select"
+                  value={categorytitle}
+                  label="Category Name"
+                  name="category"
+                  onChange={(e) => setCategorytitle(e.target.value)}
+                //   {...register("category", { required: true })}
+                // error={errors.category}
+                >
+                  {categorydetails?.map((item, index) => (
+                    <MenuItem key={index} value={item.categorytittel}>
+                      {item.categorytittel}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
+              <FormControl fullWidth sx={{ mt: 1 }}>
+                <InputLabel>Category Name</InputLabel>
+                <Select
+                  id="standard-simple-select"
+                  value={category}
+                  label="Category Name"
+                  name="category"
+                  onChange={(e) => setCategory(e.target.value)}
+                //   {...register("category", { required: true })}
+                // error={errors.category}
+                >
+                  {categorydetails?.filter((item) => {
+                      return item.categorytittel === categorytitle;
+                    }).map((item, index) => (
+                    <MenuItem key={index} value={item.categoryname}>
+                      {item.categoryname}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
+              <FormControl fullWidth sx={{ mt: 1 }}>
+                <InputLabel>Category Group</InputLabel>
+                <Select
+                  id="standard-simple-select"
+                  value={categorygroup}
+                  label="Category Group"
+                  onChange={(e) => setCategorygroup(e.target.value)}
+                >
+                  {categorydetails
+                    ?.filter((item) => {
+                      return item.categoryname === category;
+                    })
+                    .map((item, index) => (
+                      <MenuItem key={index} value={item.categorygroup}>
+                        {item.categorygroup}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+
+              <FormControl fullWidth sx={{ mt: 1 }}>
+                <InputLabel>Category Type</InputLabel>
+                <Select
+                  id="standard-simple-select"
+                  value={categorytype}
+                  label="Category Type"
+                  onChange={(e) => setCategorytype(e.target.value)}
+                >
+                  {categorydetails
+                    ?.filter((item) => {
+                      return item.categorygroup === categorygroup;
+                    })
+                    .map((item, index) => (
+                      <MenuItem key={index} value={item.categorytype}>
+                        {item.categorytype}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+              {/* *********************************************************** */}
               <TextField
                 InputLabelProps={{
                   classes: {
@@ -685,7 +734,7 @@ export default function ProductEditScreen() {
                   borderRadius: "5px",
                 }}
               >
-                <Typography variant='h5'>Main image</Typography>
+                <Typography variant="h5">Main image</Typography>
                 <TextField
                   style={{ margin: "10px 0px" }}
                   inputProps={{ style: { fontSize: 14 }, accept: "image/*" }}
@@ -694,7 +743,7 @@ export default function ProductEditScreen() {
                   name="file"
                   onChange={handleChange}
                 />
-                <Typography variant='h5'>Sub images</Typography>
+                <Typography variant="h5">Sub images</Typography>
                 <TextField
                   style={{ margin: "10px 0px" }}
                   inputProps={{

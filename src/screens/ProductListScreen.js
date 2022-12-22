@@ -7,7 +7,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { Typography } from "../../node_modules/@material-ui/core/index";
+import { Grid, Typography } from "../../node_modules/@material-ui/core/index";
 import { deleteProduct, listProducts } from "../actions/productAction";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
@@ -116,6 +116,10 @@ export default function ProductListScreen() {
     navigate(`/products/new`);
   };
 
+  const categoycreateHandler = () => {
+    navigate(`/categorys`);
+  };
+
   const editHandler = (product) => {
     navigate(`/product/${product.row._id}/edit`);
   };
@@ -129,8 +133,8 @@ export default function ProductListScreen() {
       renderCell: (params) => {
         return (
           <Avatar
-          onClick={handleClickOpen}
-          // onMouseOut={handleClose}
+            onClick={handleClickOpen}
+            // onMouseOut={handleClose}
             sx={{ height: "50px", width: "50px", cursor: "pointer" }}
             src={`/api/uploads/showNew/${params.id}`}
             alt="avatar"
@@ -206,15 +210,18 @@ export default function ProductListScreen() {
         Products
       </Typography>
       {userInfo.isSeller && userInfo && (
-        <div>
-          <Button
-            tyle={{ marginTop: 25 }}
-            variant="contained"
-            onClick={createHandler}
-          >
+        <Grid
+          conteiner
+          sx={{ display: "flex", flexFlow: "wrap row", flexDirection: "row" }}
+        >
+          <Button variant="contained"  onClick={createHandler}>
             Create Product
           </Button>
-        </div>
+
+          <Button variant="contained" style={{margin:10}} onClick={categoycreateHandler}>
+            Create category
+          </Button>
+        </Grid>
       )}
       {loadingDelete && <LoadingBox></LoadingBox>}
       {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
@@ -238,7 +245,7 @@ export default function ProductListScreen() {
           >
             <Box>
               <CardMedia
-                sx={{
+                sx={{ 
                   cursor: "pointer",
                   justifycontent: "space-between",
                 }}

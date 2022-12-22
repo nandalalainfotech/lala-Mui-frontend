@@ -24,17 +24,20 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { Link, useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import { applicatinSettingList } from "../actions/applicationAction";
-
-
+import { List } from "../../node_modules/@material-ui/core/index";
+import { categoryListDetails } from "../actions/categoryAction";
+// import { CarouselPage } from "../components/CarouselPage";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-
-
 export default function HomeScreen() {
   const dispatch = useDispatch();
+
+  const categoryList = useSelector((state) => state.categoryList);
+  const { categorydetails } = categoryList;
   const productList = useSelector((state) => state.productList);
-  const { loading, error } = productList;
+  const { products, loading, error } = productList;
+
   const productMenList = useSelector((state) => state.productMenList);
   const { menProducts } = productMenList;
   const productWomenList = useSelector((state) => state.productWomenList);
@@ -52,7 +55,13 @@ export default function HomeScreen() {
     // eslint-disable-next-line no-unused-vars
     users: sellers,
   } = userTopSellersList;
+  // setProductdetils(products)
+
+  // const[newproduct,setNewProduct] = useState()
+  // console.log("productdetils",newproduct);
+
   useEffect(() => {
+    dispatch(categoryListDetails());
     dispatch(listProducts({}));
     dispatch(menProductList());
     dispatch(womenProductList());
@@ -73,14 +82,14 @@ export default function HomeScreen() {
   };
 
   const breakPoints = [
-    { width: 400, itemsToShow: 1 },
-    { width: 500, itemsToShow: 2 },
-    { width: 600, itemsToShow: 2 },
-    { width: 768, itemsToShow: 3 },
-    { width: 900, itemsToShow: 5 },
-    { width: 1200, itemsToShow: 5 },
-    { width: 1500, itemsToShow: 7 },
-    { width: 2000, itemsToShow: 9 },
+    { width: 400, itemsToShow: 1,itemsToScroll:  1 },
+    { width: 500, itemsToShow: 2,itemsToScroll: 2 },
+    { width: 600, itemsToShow: 2,itemsToScroll: 2 },
+    { width: 768, itemsToShow: 3,itemsToScroll: 3 },
+    { width: 900, itemsToShow: 5,itemsToScroll: 5 },
+    { width: 1200, itemsToShow: 5,itemsToScroll: 5 },
+    { width: 1500, itemsToShow: 7,itemsToScroll: 7 },
+    { width: 2000, itemsToShow: 9,itemsToScroll: 9 },
   ];
 
   const [allKidProducts, setAllKidProducts] = useState(kidProducts);
@@ -96,7 +105,9 @@ export default function HomeScreen() {
     setLastPosition(lastPosition + perPage);
   };
 
-  
+  // console.log("products", products);
+
+ 
 
   return (
     <Box>
@@ -137,7 +148,45 @@ export default function HomeScreen() {
         </Box>
       </Box>
 
-      
+      <Box>
+        {/* <CarouselPage ></CarouselPage> */}
+
+        {categorydetails?.map((categoryitem,index) => (
+          <>
+          <List key={index}>
+            <Link  to="/collectionlist/men"><Typography variant="h4">{categoryitem.categorytittel}</Typography></Link>
+          </List>
+          <Carousel
+            className="new1"
+            mouseTracking
+            enableSwipe={true}
+            pagination={false}
+            breakPoints={breakPoints}
+          >
+          {products
+          ?.filter((product) => {
+            return product.categorytitle === categoryitem.categorytittel;
+          })
+          .map((product) => (
+            <Box key={product._id}>
+              <Product product={product}></Product>
+            </Box>
+          ))} 
+          </Carousel>
+          </>
+        ))}
+
+        {/* {products
+          ?.filter((product) => {
+            return product.categorytitle === "Men Collection";
+          })
+          .map((product) => (
+            <Box key={product._id}>
+              <Product product={product}></Product>
+            </Box>
+          ))} */}
+      </Box>
+
       <Link
         to="/collectionlist/men"
         style={{
@@ -146,7 +195,12 @@ export default function HomeScreen() {
           textTransform: "capitalize",
         }}
       >
-        <Typography variant="h4"  sx={{'&:hover':{color:"#6633FF",textDecoration: "underline"}}}>Men&#39;s collection</Typography>
+        <Typography
+          variant="h4"
+          sx={{ "&:hover": { color: "#6633FF", textDecoration: "underline" } }}
+        >
+          Men&#39;s collection
+        </Typography>
       </Link>
       {loading ? (
         <CircularProgress></CircularProgress>
@@ -159,6 +213,7 @@ export default function HomeScreen() {
             mouseTracking
             enableSwipe={true}
             pagination={false}
+            // initialActiveIndex={3}
             breakPoints={breakPoints}
           >
             {menProducts?.map((menProduct) => (
@@ -180,7 +235,7 @@ export default function HomeScreen() {
       >
         <Typography
           variant="h4"
-          sx={{'&:hover':{color:"#6633FF",textDecoration: "underline"}}}
+          sx={{ "&:hover": { color: "#6633FF", textDecoration: "underline" } }}
         >
           Women collection
         </Typography>
@@ -216,7 +271,10 @@ export default function HomeScreen() {
           textTransform: "capitalize",
         }}
       >
-        <Typography  sx={{'&:hover':{color:"#6633FF",textDecoration: "underline"}}} variant="h4">
+        <Typography
+          sx={{ "&:hover": { color: "#6633FF", textDecoration: "underline" } }}
+          variant="h4"
+        >
           Kids collection
         </Typography>
       </Link>

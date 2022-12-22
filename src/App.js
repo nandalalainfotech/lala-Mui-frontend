@@ -77,6 +77,7 @@ import { otpList } from "./actions/otpAction";
 import OtpScreen from "./screens/OtpScreen";
 import OtpVerifyScreen from "./screens/OtpVerifyScreen";
 import RegOtpVerifyScreen from "./screens/RegOtpVerifyScreen";
+import CategoryScreen from "./screens/CategoryScreen";
 // import Image from "/image/logo.png";
 // Side bar section start*************************************
 const drawerWidth = 240;
@@ -3556,6 +3557,7 @@ function App() {
             <Toolbar />
             {/* <Typography> */}
             <Routes>
+            <Route path="/categorys" element={<CategoryScreen />}></Route>
               <Route path="/seller/:id" element={<SellerScreen />}></Route>
               <Route path="/cart/:id" element={<CartScreen />}></Route>
 
