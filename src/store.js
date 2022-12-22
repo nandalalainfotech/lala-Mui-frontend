@@ -68,6 +68,7 @@ import {
 } from "./reducers/kidReducer";
 import { applicationSettingReducer, appSettingListReducer } from "./reducers/applicationReducer";
 import { otpListReducer, userOtpReducer } from "./reducers/otpReducer";
+import { categoryCreateReducer, categoryListReducer } from "./reducers/categoryReducers";
 // import { cartKidReducer } from './reducers/cartKidReducers';
 // import { suitDetailsReducer, suitListReducer, suitReviewCreateReducer } from './reducers/suitReducers';
 // import { cartKidReducer } from './reducers/cartKidReducers';
@@ -135,6 +136,9 @@ const reducer = combineReducers({
   userSignin: userSigninReducer,
   userAccount: userAccountReducer,
 
+  categoryList: categoryListReducer,
+
+  categoryCreate:categoryCreateReducer,
   userAccountCreation: userAccountcreationReducer,
   userAdminin: userAdmininReducer,
   userRegister: userRegisterReducer,

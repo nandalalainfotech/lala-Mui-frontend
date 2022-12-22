@@ -162,6 +162,7 @@ export const detailsProduct = (productId) => async (dispatch) => {
   }
 };
 export const createProduct = (product) => async (dispatch, getState) => {
+  console.log("product=============>>>",product);
   dispatch({ type: PRODUCT_CREATE_REQUEST });
   const {userSignin: { userInfo },} = getState();
   try {
