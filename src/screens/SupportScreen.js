@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import socketIOClient from 'socket.io-client';
 import { useSelector } from 'react-redux';
 import MessageBox from '../components/MessageBox';
+import { Box,  Typography } from '../../node_modules/@material-ui/core/index';
+import { Button } from 'bootstrap';
 
 let allUsers = [];
 let allMessages = [];
@@ -112,64 +114,103 @@ export default function SupportScreen() {
 
   return (
     <div className="row top full-container">
-      <div className="col-1 support-users">
-        {users.filter((x) => x._id !== userInfo._id).length === 0 && (
-          <MessageBox>No Online User Found</MessageBox>
-        )}
-        <ul>
-          {users
-            .filter((x) => x._id !== userInfo._id)
-            .map((user) => (
-              <li
-                key={user._id}
-                className={user._id === selectedUser._id ? '  selected' : '  '}
-              >
-                <button
-                  className="block"
-                  type="button"
-                  onClick={() => selectUser(user)}
+      <Box
+        sx={{
+          p: 5,
+          m: 5,
+          width: "20%",
+          height: "150%",
+          boxShadow:
+            "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+          display: {
+            xs: "none",
+            md: "block",
+            sm: "none",
+            lg: "block",
+            xl: "block",
+
+          },
+        }}
+      >
+        <Typography sx={{ fontSize: 12 }}>
+          {users.filter((x) => x._id !== userInfo._id).length === 0 && (
+            <MessageBox>No Online User Found</MessageBox>
+          )}
+
+          <ul>
+            {users
+              .filter((x) => x._id !== userInfo._id)
+              .map((user) => (
+                <li
+                  key={user._id}
+                  className={user._id === selectedUser._id ? '  selected' : '  '}
                 >
-                  {user.name}
-                </button>
-                <span
-                  className={
-                    user.unread ? 'unread' : user.online ? 'online' : 'offline'
-                  }
-                />
-              </li>
-            ))}
-        </ul>
-      </div>
-      <div className="col-3 support-messages">
-        {!selectedUser._id ? (
-          <MessageBox>Select a user to start chat</MessageBox>
-        ) : (
-          <div>
-            <div className="row">
-              <strong>Chat with {selectedUser.name} </strong>
-            </div>
-            <ul ref={uiMessagesRef}>
-              {messages.length === 0 && <li>No message.</li>}
-              {messages.map((msg, index) => (
-                <li key={index}>
-                  <strong>{`${msg.name}: `}</strong> {msg.body}
+                  <Button
+                    className="block"
+                    type="button"
+                    onClick={() => selectUser(user)}
+                  >
+                    {user.name}
+                  </Button>
+                  <span
+                    className={
+                      user.unread ? 'unread' : user.online ? 'online' : 'offline'
+                    }
+                  />
                 </li>
               ))}
-            </ul>
-            <div>
-              <form onSubmit={submitHandler} className="row">
-                <input
-                  value={messageBody}
-                  onChange={(e) => setMessageBody(e.target.value)}
-                  type="text"
-                  placeholder="type message"
-                />
-                <button type="submit">Send</button>
-              </form>
-            </div>
-          </div>
-        )}
-      </div>
+          </ul>
+        </Typography>
+      </Box>
+      <Box
+        sx={{
+          p: 5,
+          m: 5,
+          width: "20%",
+          height: "150%",
+          boxShadow:
+            "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+          display: {
+            xs: "none",
+            md: "block",
+            sm: "none",
+            lg: "block",
+            xl: "block",
+
+          },
+        }}
+      >
+        <Typography sx={{ fontSize: 12 ,display:"flex"}}>
+          {!selectedUser._id ? (
+            <MessageBox>Select a user to start chat</MessageBox>
+          ) : (
+            <>
+              <Typography>
+                <strong>Chat with {selectedUser.name} </strong>
+              </Typography>
+              <ul ref={uiMessagesRef}>
+                {messages.length === 0 && <li>No message.</li>}
+                {messages.map((msg, index) => (
+                  <li key={index}>
+                    <strong>{`${msg.name}: `}</strong> {msg.body}
+                  </li>
+                ))}
+              </ul>
+              <>
+                <Box component="form" onSubmit={submitHandler} className="row">
+                  <input
+                    value={messageBody}
+                    onChange={(e) => setMessageBody(e.target.value)}
+                    type="text"
+                    placeholder="type message"
+                  />
+                  <Button type="submit">Send</Button>
+                </Box>
+              </>
+            </>
+          )}
+        </Typography>
+      </Box>
     </div>
   );
 }

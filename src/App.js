@@ -392,7 +392,7 @@ function App() {
                                           ) : (
                                             <Avatar
                                               sx={{
-                                                mr: 0.5,
+                                                mr: -1,
                                                 border: "2px solid #fff",
                                                 bgcolor: "inherit",
                                                 "&:hover": { color: "#ff7519" },
