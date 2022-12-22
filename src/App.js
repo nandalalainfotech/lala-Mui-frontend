@@ -346,17 +346,17 @@ function App() {
                 </Grid>
                 <Grid item xs={2}>
                   <div className="grid-elements">
-                    <Box sx={{ flexGrow: 1 }}>
+                    <Box sx={{ flexGrow: 0 ,display:"flex-end"}}>
                       <Stack
                         direction="row"
-                        spacing={{ xs: 2, sm: 0.5, md: 1, lg: 1, }}
-                        sx={{ justifyContent: "flex-end" }}
+                        spacing={{ xs: 1.5, sm: 1.5, md: 1.5, lg: 1.5, }}
+                        sx={{ justifyContent: "flex-end"}}
                       >
                         <Box>
                           <Tooltip title="Cart" arrow placement="top">
                             <IconButton
                               sx={{ p: 0, "&:hover": { color: "#ff7519" } }}
-                              // aria-label="show 4 new mails"
+
                               color="inherit"
                             >
                               <Link
@@ -372,10 +372,7 @@ function App() {
                                       <Style
                                         badgeContent={usercarts?.length}
                                         overlap="rectangular"
-                                      // anchorOrigin={{
-                                      //   vertical: "right",
-                                      //   horizontal: "top",
-                                      // }}
+
                                       >
 
                                         <>
@@ -392,7 +389,7 @@ function App() {
                                           ) : (
                                             <Avatar
                                               sx={{
-                                                mr: -1,
+                                                mr: -2,
                                                 border: "2px solid #fff",
                                                 bgcolor: "inherit",
                                                 "&:hover": { color: "#ff7519" },
@@ -456,17 +453,18 @@ function App() {
                                           <StorefrontIcon />
                                         </Avatar>
                                       ) : (
-                                        <>
-                                          <Avatar
-                                            sx={{
-                                              mr: -1,
-                                              border: "2px solid #fff",
-                                              bgcolor: "inherit",
-                                              "&:hover": { color: "#ff7519" },
-                                            }}
-                                          >
-                                            <StorefrontIcon />
-                                          </Avatar></>
+
+                                        <Avatar
+                                          sx={{
+                                            mr: -2,
+                                            border: "2px solid #fff",
+                                            bgcolor: "inherit",
+                                            "&:hover": { color: "#ff7519" },
+                                          }}
+                                        >
+                                          <StorefrontIcon />
+                                        </Avatar>
+
                                       )}
                                     </>
                                   </Link>
@@ -825,6 +823,7 @@ function App() {
               </Grid>
             </Toolbar>
           </AppBar>
+
 
           {/* {userInfo &&  ( */}
           <AppBar
@@ -3595,7 +3594,7 @@ function App() {
               <Route path="/placeorder" element={<PlaceOrderScreen />}></Route>
               <Route path="/order/:id" element={<OrderScreen />}></Route>
               <Route path="/register" element={<RegisterScreen />}></Route>
-<Route path="/otp" element={<OtpScreen />}></Route>
+              <Route path="/otp" element={<OtpScreen />}></Route>
               <Route path="/otpVerify" element={<OtpVerifyScreen />}></Route>
               <Route path="/regotpVerify" element={<RegOtpVerifyScreen />}></Route>
               <Route
