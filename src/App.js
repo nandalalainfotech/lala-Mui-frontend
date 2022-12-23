@@ -110,6 +110,10 @@ const styles = (theme) => ({
 });
 
 // ************************ footer******************
+
+// const classes = useStyles();
+
+
 const useStyles = makeStyles((theme) => ({
   rootBox: {
     [theme.breakpoints.down("md")]: {
@@ -141,6 +145,18 @@ const useStyles = makeStyles((theme) => ({
   popOverRoot: {
     pointerEvents: "none",
   },
+  firstchild: {
+    height: "25%",
+    background: "#FF0000",
+    borderRadius: 0,
+    color: "white",
+    paddingTop: "2em",
+    paddingBottom: "2em",
+    fontFamily: 'Brush Script MT',
+  },
+  // firstchild:{
+  //   fontFamily:'Brush Script MT',
+  // }
 }));
 
 const Style = withStyles((theme) => ({
@@ -247,7 +263,7 @@ function App() {
   }
   // navbar dropdowns section End************************************************
   const styles = useStyles();
-
+  const classes = useStyles();
   const content = {
     brand: { image: "nereus-assets/img/nereus-light.png", width: 110 },
     copy: "© 2020 Nereus All rights reserved.",
@@ -313,6 +329,8 @@ function App() {
                           src="/image/logo.png"
                         />
                         <Typography
+                          className={classes.sideBarButtons}
+
                           variant="h4"
                           noWrap
                           component="span"
@@ -321,7 +339,7 @@ function App() {
                             "&:hover": { color: "#ff7519" },
                           }}
                         >
-                          Lala
+                          <div className="firstchild" >Lala</div>
                         </Typography>
                       </Stack>
                     </Link>
