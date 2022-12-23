@@ -117,7 +117,7 @@ export default function ProductListScreen() {
   };
 
   const categoycreateHandler = () => {
-    navigate(`/categorys`);
+    navigate(`/categorysmaster`);
   };
 
   const editHandler = (product) => {
