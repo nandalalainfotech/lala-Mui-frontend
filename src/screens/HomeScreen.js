@@ -25,7 +25,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import { applicatinSettingList } from "../actions/applicationAction";
 import { List } from "../../node_modules/@material-ui/core/index";
-import { categoryListDetails } from "../actions/categoryAction";
+import { categoryListDetails, categoryMasterListDetails } from "../actions/categoryAction";
 // import { CarouselPage } from "../components/CarouselPage";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
@@ -33,8 +33,8 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 export default function HomeScreen() {
   const dispatch = useDispatch();
 
-  const categoryList = useSelector((state) => state.categoryList);
-  const { categorydetails } = categoryList;
+  // const categoryList = useSelector((state) => state.categoryList);
+  // const { categorydetails } = categoryList;
   const productList = useSelector((state) => state.productList);
   const { products } = productList;
 
@@ -60,8 +60,13 @@ export default function HomeScreen() {
   // const[newproduct,setNewProduct] = useState()
   // console.log("productdetils",newproduct);
 
+  const categoryMasterList = useSelector((state) => state.categoryMasterList);
+  const { categoryMasterdetails } = categoryMasterList;
+
+
   useEffect(() => {
     dispatch(categoryListDetails());
+    dispatch(categoryMasterListDetails());
     dispatch(listProducts({}));
     dispatch(menProductList());
     dispatch(womenProductList());
@@ -151,7 +156,7 @@ export default function HomeScreen() {
       <Box>
         {/* <CarouselPage ></CarouselPage> */}
 
-        {categorydetails?.map((categoryitem,index) => (
+        {categoryMasterdetails?.map((categoryitem,index) => (
           <>
           <List key={index}>
             <Link  to="/collectionlist/men"><Typography variant="h4">{categoryitem.categorytittel}</Typography></Link>
@@ -165,7 +170,7 @@ export default function HomeScreen() {
           >
           {products
           ?.filter((product) => {
-            return product.categorytitle === categoryitem.categorytittel;
+            return product.categorytitle === categoryitem._id;
           })
           .map((product) => (
             <Box key={product._id}>
