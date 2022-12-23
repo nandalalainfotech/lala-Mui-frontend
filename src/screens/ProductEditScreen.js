@@ -24,7 +24,7 @@ import {
   MenuItem,
   Typography,
 } from "../../node_modules/@material-ui/core/index";
-import { categoryListDetails } from "../actions/categoryAction";
+import { CategoryChildListDetails, categoryListDetails, categoryMasterListDetails, subCategoryListDetails } from "../actions/categoryAction";
 // import MultiImageInput from "react-multiple-image-input";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
@@ -43,7 +43,7 @@ export default function ProductEditScreen() {
   const [price, setPrice] = useState("");
   // eslint-disable-next-line no-unused-vars
   const [imageFile, setImageFile] = useState();
-  // const [categorytitle, setCategorytitle] = useState("");
+  const [categorytitle, setCategorytitle] = useState("");
   const [category, setCategory] = useState("");
   const [categorygroup, setCategorygroup] = useState("");
   const [categorytype, setCategorytype] = useState("");
@@ -78,8 +78,19 @@ export default function ProductEditScreen() {
   const [brandError, setBrandError] = useState("");
   const [descriptionError, setDescriptionError] = useState("");
 
-  const categoryList = useSelector((state) => state.categoryList);
-  const { categorydetails } = categoryList;
+  // const categoryList = useSelector((state) => state.categoryList);
+  // const { categorydetails } = categoryList;
+
+  // *************************************
+  const categoryMasterList = useSelector((state) => state.categoryMasterList);
+  const { categoryMasterdetails } = categoryMasterList;
+
+  const subCategoryList = useSelector((state) => state.subCategoryList);
+  const { subCategory } = subCategoryList;
+
+  const ChildCategoryLis = useSelector((state) => state.ChildCategoryLis);
+  const { childCategory } = ChildCategoryLis;
+  
 
   const validateName = (e) => {
     setName(e.target.value);
@@ -177,6 +188,9 @@ export default function ProductEditScreen() {
 
   useEffect(() => {
     dispatch(categoryListDetails());
+    dispatch(categoryMasterListDetails());
+    dispatch(subCategoryListDetails());
+    dispatch(CategoryChildListDetails());
     if (!product && productId) {
       dispatch(detailsProduct(productId));
     }
@@ -230,7 +244,7 @@ export default function ProductEditScreen() {
         category: category.toLowerCase(),
         categorygroup: categorygroup,
         categorytype: categorytype,
-        // categorytitel: categorytitle,
+        categorytitel: categorytitle,
         brand: e.categorybrand,
         countInStock: e.countInStock,
         description: e.description,
@@ -238,7 +252,7 @@ export default function ProductEditScreen() {
     );
     setActiveStep(activeStep + 1);
   };
-console.log("categorydetails=======>>>",categorydetails);
+
   // const [loadingUpload, setLoadingUpload] = useState(false);
   // eslint-disable-next-line no-unused-vars
   const [errorUpload, setErrorUpload] = useState("");
@@ -267,12 +281,10 @@ console.log("categorydetails=======>>>",categorydetails);
   const [image, setImage] = useState("");
   const [images, setImages] = useState([]);
   function handleChange(e) {
-    console.log(e);
     setImage(e.target.files);
   }
 
   function handleChange1(e) {
-    console.log(e);
     setImages(e.target.files);
   }
 
@@ -506,7 +518,7 @@ console.log("categorydetails=======>>>",categorydetails);
 
               {/* *********************************************************** */}
 
-              {/* <FormControl fullWidth>
+              <FormControl fullWidth>
                 <InputLabel>Category Title</InputLabel>
                 <Select
                   id="standard-simple-select"
@@ -517,13 +529,13 @@ console.log("categorydetails=======>>>",categorydetails);
                 //   {...register("category", { required: true })}
                 // error={errors.category}
                 >
-                  {categorydetails?.map((item, index) => (
-                    <MenuItem key={index} value={item.categorytittel}>
+                  {categoryMasterdetails?.map((item, index) => (
+                    <MenuItem key={index} value={item._id}>
                       {item.categorytittel}
                     </MenuItem>
                   ))}
                 </Select>
-              </FormControl> */}
+              </FormControl>
 
               <FormControl fullWidth sx={{ mt: 1 }}>
                 <InputLabel>Category Name</InputLabel>
@@ -536,8 +548,10 @@ console.log("categorydetails=======>>>",categorydetails);
                 //   {...register("category", { required: true })}
                 // error={errors.category}
                 >
-                  {categorydetails?.map((item, index) => (
-                    <MenuItem key={index} value={item.categoryname}>
+                  {categoryMasterdetails?.filter((item) => {
+                      return item._id=== categorytitle;
+                    }).map((item, index) => (
+                    <MenuItem key={index} value={item._id}>
                       {item.categoryname}
                     </MenuItem>
                   ))}
@@ -552,13 +566,13 @@ console.log("categorydetails=======>>>",categorydetails);
                   label="Category Group"
                   onChange={(e) => setCategorygroup(e.target.value)}
                 >
-                  {categorydetails
+                  {subCategory
                     ?.filter((item) => {
-                      return item.categoryname === category;
+                      return item.categoryId=== category;
                     })
                     .map((item, index) => (
-                      <MenuItem key={index} value={item.categorygroup}>
-                        {item.categorygroup}
+                      <MenuItem key={index} value={item._id}>
+                        {item.subcategorygroup}
                       </MenuItem>
                     ))}
                 </Select>
@@ -572,13 +586,13 @@ console.log("categorydetails=======>>>",categorydetails);
                   label="Category Type"
                   onChange={(e) => setCategorytype(e.target.value)}
                 >
-                  {categorydetails
+                  {childCategory
                     ?.filter((item) => {
-                      return item.categorygroup === categorygroup;
+                      return item.childcategorygroup === categorygroup;
                     })
                     .map((item, index) => (
-                      <MenuItem key={index} value={item.categorytype}>
-                        {item.categorytype}
+                      <MenuItem key={index} value={item.childcategorytype}>
+                        {item.childcategorytype}
                       </MenuItem>
                     ))}
                 </Select>
