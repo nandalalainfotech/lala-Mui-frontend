@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { useNavigate } from "../../node_modules/react-router-dom/dist/index";
+import { categoryMasterListDetails } from "../actions/categoryAction";
 import { listProducts } from "../actions/productAction";
 import MessageBox from "../components/MessageBox";
 import Product from "../components/Product";
@@ -42,6 +43,8 @@ export default function SearchScreen() {
     error: errorCategories,
     categories,
   } = productCategoryList;
+  const categoryMasterList = useSelector((state) => state.categoryMasterList);
+  const { categoryMasterdetails } = categoryMasterList;
   // const productCategorygroupList = useSelector((state) => state.productCategorygroupList);
   // const {
   //   loadinggrp: loadingCategoriesGroup,
@@ -58,6 +61,7 @@ export default function SearchScreen() {
   // console.log("categoriesGroup----------------->>>", categoriesGroup)
   // console.log("categoriesType----------------->>>", categoriesType)
   useEffect(() => {
+    dispatch(categoryMasterListDetails());
     dispatch(
       listProducts({
         pageNumber,
@@ -204,16 +208,23 @@ export default function SearchScreen() {
                       </Link>
 
                       {categories?.map((c) => (
-                        <Box key={c}>
+                        <>
+                        {categoryMasterdetails?.filter((item)=>{
+                          return item._id === c 
+                        }).map((item)=>(
+                          <Box key={item._id}>
                           <Link
                             style={{ textDecoration: "none", color: "inherit" }}
-                            className={c === category ? "active" : ""}
+                            className={item.categoryname === category ? "active" : ""}
                             to={getFilterUrl({ category: c })}
                             // to={`/search/category/${c}`}
                           >
-                            <Typography color="inherit">{c}</Typography>
+                            <Typography variant="h6">{item.categoryname}</Typography>
                           </Link>
                         </Box>
+                        ))}
+                        </>
+                      
                       ))}
                     </CardContent>
                   </Card>
@@ -382,16 +393,23 @@ export default function SearchScreen() {
                       </Link>
 
                       {categories?.map((c) => (
-                        <Box key={c}>
+                        <>
+                        {categoryMasterdetails?.filter((item)=>{
+                          return item._id === c 
+                        }).map((item)=>(
+                          <Box key={item._id}>
                           <Link
                             style={{ textDecoration: "none", color: "inherit" }}
-                            className={c === category ? "active" : ""}
+                            className={item.categoryname === category ? "active" : ""}
                             to={getFilterUrl({ category: c })}
                             // to={`/search/category/${c}`}
                           >
-                            <Typography variant="h6">{c}</Typography>
+                            <Typography variant="h6">{item.categoryname}</Typography>
                           </Link>
                         </Box>
+                        ))}
+                        </>
+                      
                       ))}
                     </CardContent>
                     {/* )} */}

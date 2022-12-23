@@ -39,7 +39,6 @@ import IconButton from "@mui/material/IconButton";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 
-
 export default function ProductScreen() {
   const productList = useSelector((state) => state.productList);
   const { products } = productList;
@@ -66,6 +65,8 @@ export default function ProductScreen() {
   const [comment, setComment] = useState("");
   const [images, setImage] = useState();
   const [subimg, setSubImage] = useState();
+  const [categoryName, setCategoryName] = useState();
+  const [categorygroup, setCategorygroup] = useState();
 
   const handleChangeimage = (e) => {
     setImage(e.target.src);
@@ -76,12 +77,10 @@ export default function ProductScreen() {
   };
 
   const handleDecrement = () => {
-    if( qty > 0){
-      setQty((qty) => qty  - 1);
+    if (qty > 0) {
+      setQty((qty) => qty - 1);
     }
-    
   };
-  console.log("qty",qty);
 
   useEffect(() => {
     const fetchBusinesses = async () => {
@@ -96,6 +95,16 @@ export default function ProductScreen() {
     };
     fetchBusines();
     fetchBusinesses();
+    const fetchCategory = async () => {
+      const categoryName = await Axios.get(`/api/categoryMain/categoryName/${productId}`);
+      setCategoryName(categoryName.data);
+    };
+    const fetchCategoryGroup = async () => {
+      const categorygroup = await Axios.get(`/api/subCategory/categorygroup/${productId}`);
+      setCategorygroup(categorygroup.data);
+    };
+    fetchCategory();
+    fetchCategoryGroup();
     if (successReviewCreate) {
       window.alert("Review Submitted Successfully");
       setRating("");
@@ -107,12 +116,11 @@ export default function ProductScreen() {
   }, [dispatch, productId, successReviewCreate]);
 
   const addToCartHandler = () => {
-    if(qty > 0){
+    if (qty > 0) {
       navigate(`/cart/${productId}?qty=${qty}`);
-    }else{
-      window.confirm("Please Select the qty")
+    } else {
+      window.confirm("Please Select the qty");
     }
-   
   };
 
   const addToHandler = () => {
@@ -448,13 +456,21 @@ export default function ProductScreen() {
                     >
                       <strong>Brand :</strong> {product.brand}
                     </Typography>
-                    <Typography
-                      variant="body1"
-                      style={{ color: "#A02020", textTransform: "capitalize" }}
-                      gutterBottom
-                    >
-                      <strong>Category :</strong> {product.category}
-                    </Typography>
+                    {categoryName?.map((categoryname) => (
+                      <>
+                      <Typography
+                        variant="body1"
+                        style={{
+                          color: "#A02020",
+                          textTransform: "capitalize",
+                        }}
+                        gutterBottom
+                      >
+                        <strong>Category :</strong> {categoryname.categoryname}
+                      </Typography>
+                      </>
+                    ))}
+
                     <Typography
                       variant="body1"
                       style={{ color: "#A02020", textTransform: "capitalize" }}
@@ -462,13 +478,18 @@ export default function ProductScreen() {
                     >
                       <strong>Description :</strong> {product.description}
                     </Typography>
-                    <Typography
+                    {categorygroup?.map((categroup)=>(
+                      <>
+                       <Typography
                       variant="body1"
                       style={{ color: "#A02020", textTransform: "capitalize" }}
                       gutterBottom
                     >
-                      <strong> Category Group :</strong> {product.categorygroup}
+                      <strong> Category Group :</strong> {categroup.subcategorygroup}
                     </Typography>
+                      </>
+                    ))}
+                   
                     <Typography
                       variant="body1"
                       style={{ color: "#A02020", textTransform: "capitalize" }}
@@ -544,45 +565,45 @@ export default function ProductScreen() {
                           {/* <Box
                             sx={{ display: "flex", alignItems: "center" }}
                           > */}
-                          
-                            <IconButton
-                              onClick={handleDecrement}
-                              aria-label="minus"
-                              style={{ marginTop: 15,
-                                minHeight: "40px",
+
+                          <IconButton
+                            onClick={handleDecrement}
+                            aria-label="minus"
+                            style={{
+                              marginTop: 15,
+                              minHeight: "40px",
                               backgroundColor: "#8566aa",
                               color: "#fff",
                               borderRadius: "5%",
                               boxShadow: "5px 5px 15px -5px rgba(0, 0, 0, 0.3)",
-                            
                             }}
-                            >
-                              <RemoveIcon  />
-                            </IconButton>
-                            <TextField
-                              value={qty}
-                              id="outlined-adornment-small-Child"
-                              variant="outlined"
-                              size="small"
-                              style={{ width: 48, height: 35, marginTop: 15 }}
-                              labelWidth={0}
-                              // disabled="false"
-                              onChange={(e) => setComment(e.target.value)}
-                            />
-                            <IconButton
-                              onClick={handleIncrement}
-                              aria-label="plus"
-                              style={{ marginTop: 15,
-                                minHeight: "40px",
+                          >
+                            <RemoveIcon />
+                          </IconButton>
+                          <TextField
+                            value={qty}
+                            id="outlined-adornment-small-Child"
+                            variant="outlined"
+                            size="small"
+                            style={{ width: 48, height: 35, marginTop: 15 }}
+                            labelWidth={0}
+                            // disabled="false"
+                            onChange={(e) => setComment(e.target.value)}
+                          />
+                          <IconButton
+                            onClick={handleIncrement}
+                            aria-label="plus"
+                            style={{
+                              marginTop: 15,
+                              minHeight: "40px",
                               backgroundColor: "#8566aa",
                               color: "#fff",
                               borderRadius: "5%",
                               boxShadow: "5px 5px 15px -5px rgba(0, 0, 0, 0.3)",
-                            
                             }}
-                            >
-                              <AddIcon fontSize="inherit" />
-                            </IconButton>
+                          >
+                            <AddIcon fontSize="inherit" />
+                          </IconButton>
                           {/* </Box> */}
                         </Typography>
                         {userInfo ? (
