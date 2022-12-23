@@ -142,6 +142,15 @@ export default function CatergorymasterScreens() {
     
   ];
 
+
+  
+
+  function getsubCategoryId(subCategory) {
+    console.log("subCategory", subCategory);
+    let cat = `${subCategory.row.categoryId ? categoryMasterdetails.find(x => x._id === subCategory.row.categoryId)?.categoryname : "arraa"}`;
+    return cat;
+  }
+
   const subCategorycolumns = [
     {
       field: "_id",
@@ -154,6 +163,7 @@ export default function CatergorymasterScreens() {
       headerName: "Category Name",
       flex: 1,
       headerClassName: "super-app-theme--header",
+      valueGetter: getsubCategoryId,
     },
     {
       field: "subcategorygroup",
@@ -171,6 +181,16 @@ export default function CatergorymasterScreens() {
     
   ];
 
+  function getCategoryId(childCategory) {
+    let cat = `${childCategory.row.categorychildId ? categoryMasterdetails.find(x => x._id === childCategory.row.categorychildId)?.categoryname : "arraa"}`;
+    return cat;
+  }
+  
+   function getCategoryGroupId(childCategory) {
+    let cats = `${childCategory.row.childcategorygroup ? subCategory.find(x => x._id === childCategory.row.childcategorygroup)?.subcategorygroup : "arraa"}`;
+    return cats;
+  }
+
 
   
   const childCategorycolumns = [
@@ -185,17 +205,14 @@ export default function CatergorymasterScreens() {
       headerName: "Category Name",
       flex: 1,
       headerClassName: "super-app-theme--header",
-      // renderCell: (params) => {
-      //   console.log("params", params.row.categorychildId);
-      //   fetch(`/api/categoryMain/categorychildId/${params.row.categorychildId}`)
-      //   return
-      // },
+      valueGetter: getCategoryId,
     },
     {
       field: "childcategorygroup",
       headerName: "Category Group",
       flex: 1,
       headerClassName: "super-app-theme--header",
+      valueGetter: getCategoryGroupId,
     },
     {
       field: "childcategorytype",
