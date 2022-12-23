@@ -79,6 +79,7 @@ import OtpVerifyScreen from "./screens/OtpVerifyScreen";
 import RegOtpVerifyScreen from "./screens/RegOtpVerifyScreen";
 import CategoryScreen from "./screens/CategoryScreen";
 import CatergorymasterScreens from "./screens/CatergorymasterScreens";
+import { categoryMasterListDetails } from "./actions/categoryAction";
 // import Image from "/image/logo.png";
 // Side bar section start*************************************
 const drawerWidth = 240;
@@ -112,7 +113,6 @@ const styles = (theme) => ({
 // ************************ footer******************
 
 // const classes = useStyles();
-
 
 const useStyles = makeStyles((theme) => ({
   rootBox: {
@@ -152,7 +152,7 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
     paddingTop: "2em",
     paddingBottom: "2em",
-    fontFamily: 'Brush Script MT',
+    fontFamily: "Brush Script MT",
   },
   // firstchild:{
   //   fontFamily:'Brush Script MT',
@@ -205,6 +205,9 @@ function App() {
     categories,
   } = productCategoryList;
 
+  const categoryMasterList = useSelector((state) => state.categoryMasterList);
+  const { categoryMasterdetails } = categoryMasterList;
+
   useEffect(() => {
     dispatch(userCartList(userInfo?._id));
     dispatch(listProductCategories());
@@ -213,6 +216,7 @@ function App() {
     dispatch(listSareeCategories());
     dispatch(applicatinSettingList());
     dispatch(otpList());
+    dispatch(categoryMasterListDetails());
   }, [dispatch, userInfo]);
 
   // sidebar section Start****************************************
@@ -288,7 +292,13 @@ function App() {
     <BrowserRouter>
       <div className="grid-container">
         <Box sx={{ flexGrow: 1 }}>
-          <AppBar position="fixed" style={{ zIndex: 999, background: "linear-gradient(to bottom,  #C5E1A5  ,#673AB7 " }}>
+          <AppBar
+            position="fixed"
+            style={{
+              zIndex: 999,
+              background: "linear-gradient(to bottom,  #C5E1A5  ,#673AB7 ",
+            }}
+          >
             <Toolbar>
               <Grid container spacing={3}>
                 <Grid item xs={2}>
@@ -330,7 +340,6 @@ function App() {
                         />
                         <Typography
                           className={classes.sideBarButtons}
-
                           variant="h4"
                           noWrap
                           component="span"
@@ -339,7 +348,7 @@ function App() {
                             "&:hover": { color: "#ff7519" },
                           }}
                         >
-                          <div className="firstchild" >Lala</div>
+                          <div className="firstchild">Lala</div>
                         </Typography>
                       </Stack>
                     </Link>
@@ -366,17 +375,16 @@ function App() {
                 </Grid>
                 <Grid item xs={2}>
                   <div className="grid-elements">
-                    <Box sx={{ flexGrow: 0 ,display:"flex-end"}}>
+                    <Box sx={{ flexGrow: 0, display: "flex-end" }}>
                       <Stack
                         direction="row"
-                        spacing={{ xs: 1.5, sm: 1.5, md: 1.5, lg: 1.5, }}
-                        sx={{ justifyContent: "flex-end"}}
+                        spacing={{ xs: 1.5, sm: 1.5, md: 1.5, lg: 1.5 }}
+                        sx={{ justifyContent: "flex-end" }}
                       >
                         <Box>
                           <Tooltip title="Cart" arrow placement="top">
                             <IconButton
                               sx={{ p: 0, "&:hover": { color: "#ff7519" } }}
-
                               color="inherit"
                             >
                               <Link
@@ -384,17 +392,15 @@ function App() {
                                   color: "inherit",
                                   textDecoration: "none",
                                 }}
-                                to="/cart">
-
+                                to="/cart"
+                              >
                                 {userInfo ? (
                                   <>
                                     {usercarts?.length >= 0 && (
                                       <Style
                                         badgeContent={usercarts?.length}
                                         overlap="rectangular"
-
                                       >
-
                                         <>
                                           {userInfo.isSeller && userInfo ? (
                                             <Avatar
@@ -419,7 +425,6 @@ function App() {
                                             </Avatar>
                                           )}
                                         </>
-
                                       </Style>
                                     )}
                                   </>
@@ -462,7 +467,9 @@ function App() {
                                     to="#admin"
                                   >
                                     <>
-                                      {userInfo.isAdmin && userInfo.isSeller && userInfo ? (
+                                      {userInfo.isAdmin &&
+                                      userInfo.isSeller &&
+                                      userInfo ? (
                                         <Avatar
                                           sx={{
                                             border: "2px solid #fff",
@@ -473,7 +480,6 @@ function App() {
                                           <StorefrontIcon />
                                         </Avatar>
                                       ) : (
-
                                         <Avatar
                                           sx={{
                                             mr: -2,
@@ -484,7 +490,6 @@ function App() {
                                         >
                                           <StorefrontIcon />
                                         </Avatar>
-
                                       )}
                                     </>
                                   </Link>
@@ -843,7 +848,6 @@ function App() {
               </Grid>
             </Toolbar>
           </AppBar>
-
 
           {/* {userInfo &&  ( */}
           <AppBar
@@ -2905,7 +2909,9 @@ function App() {
                         <Link to="search/categorytype/spaces">Spaces</Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
-                        <Link to="search/categorytype/d-decor">D&#39;Decor</Link>
+                        <Link to="search/categorytype/d-decor">
+                          D&#39;Decor
+                        </Link>
                       </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link to="search/categorytype/story-home">
@@ -3540,35 +3546,56 @@ function App() {
             ) : errorCategories ? (
               <MessageBox variant="danger">{errorCategories}</MessageBox>
             ) : (
-              categories?.map((c, i) => (
-                <Box key={i}>
-                  <List><Link style={{ textDecoration: 'none' }} to={`/search/category/${c}`}>
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        color: "	#F0FFF0",
-                        paddingTop: "-55px",
-                        marginTop: "-2px",
-                        textAlign: "center",
-                        fontSize: "16px",
-                        textDecoration: "none",
-                        textTransform: "capitalize",
-                        opacity: "1",
-                        fontWeight: "600",
+              <>
+                <>
+                  {categories?.map((c, i) => (
+                    <>
+                      {categoryMasterdetails
+                        ?.filter((item) => {
+                          return item._id === c;
+                        })
+                        .map(
+                          (item) => (
+                            console.log("item========>>", item),
+                            (
+                              <Box key={i}>
+                                <List>
+                                  <Link
+                                    style={{ textDecoration: "none" }}
+                                    to={`/search/category/${item.categoryname}`}
+                                  >
+                                    <Typography
+                                      variant="h4"
+                                      sx={{
+                                        color: "	#F0FFF0",
+                                        paddingTop: "-55px",
+                                        marginTop: "-2px",
+                                        textAlign: "center",
+                                        fontSize: "16px",
+                                        textDecoration: "none",
+                                        textTransform: "capitalize",
+                                        opacity: "1",
+                                        fontWeight: "600",
 
-                        cursor: "pointer",
-                        lineHeight: "2",
+                                        cursor: "pointer",
+                                        lineHeight: "2",
 
-                        "&:hover": { color: "#ff7519" },
-                      }}
-                      inputprops={{ disableUnderline: true }}
-                    >
-                      {c}
-                    </Typography>
-                  </Link>
-                  </List>
-                </Box>
-              ))
+                                        "&:hover": { color: "#ff7519" },
+                                      }}
+                                      inputprops={{ disableUnderline: true }}
+                                    >
+                                      {item.categoryname}
+                                    </Typography>
+                                  </Link>
+                                </List>
+                              </Box>
+                            )
+                          )
+                        )}
+                    </>
+                  ))}
+                </>
+              </>
             )}
             <Divider sx={{ backgroundColor: "#FFFFFF" }} showlabels="true" />
           </Drawer>
@@ -3576,8 +3603,11 @@ function App() {
             <Toolbar />
             {/* <Typography> */}
             <Routes>
-            <Route path="/categorysmaster" element={<CatergorymasterScreens/>}></Route>
-            <Route path="/categorys" element={<CategoryScreen />}></Route>
+              <Route
+                path="/categorysmaster"
+                element={<CatergorymasterScreens />}
+              ></Route>
+              <Route path="/categorys" element={<CategoryScreen />}></Route>
               <Route path="/seller/:id" element={<SellerScreen />}></Route>
               <Route path="/cart/:id" element={<CartScreen />}></Route>
 
@@ -3618,7 +3648,10 @@ function App() {
               <Route path="/register" element={<RegisterScreen />}></Route>
               <Route path="/otp" element={<OtpScreen />}></Route>
               <Route path="/otpVerify" element={<OtpVerifyScreen />}></Route>
-              <Route path="/regotpVerify" element={<RegOtpVerifyScreen />}></Route>
+              <Route
+                path="/regotpVerify"
+                element={<RegOtpVerifyScreen />}
+              ></Route>
               <Route
                 path="/search/name"
                 element={<SearchScreen />}
@@ -3812,11 +3845,7 @@ function App() {
                 element={<ProductScreen />}
                 exact
               ></Route>
-              <Route
-                path="/footer"
-                element={<Footer />}
-                exact
-              ></Route>
+              <Route path="/footer" element={<Footer />} exact></Route>
               <Route
                 path="/orderhistory"
                 element={<OrderHistoryScreen />}
@@ -3838,10 +3867,8 @@ function App() {
             <Footer />
           </Paper>
         </Box>
-
       </div>
     </BrowserRouter>
-
   );
 }
 
