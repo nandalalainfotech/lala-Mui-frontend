@@ -1,15 +1,15 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import { createCategory } from "../actions/categoryAction";
-import { useForm } from "react-hook-form";
-import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import { DataGrid } from "@mui/x-data-grid";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { createCategory } from "../actions/categoryAction";
 
 export default function CategoryScreen() {
   const {
@@ -47,7 +47,9 @@ export default function CategoryScreen() {
     event.target.reset();
   };
 
-  useEffect(() => {}, [dispatch]);
+  useEffect(() => {
+    // dispatch(categoryListDetails());
+  }, [dispatch]);
   const theme = createTheme();
 
   const columns = [

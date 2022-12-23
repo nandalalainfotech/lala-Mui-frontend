@@ -43,7 +43,7 @@ export default function ProductEditScreen() {
   const [price, setPrice] = useState("");
   // eslint-disable-next-line no-unused-vars
   const [imageFile, setImageFile] = useState();
-  const [categorytitle, setCategorytitle] = useState("");
+  // const [categorytitle, setCategorytitle] = useState("");
   const [category, setCategory] = useState("");
   const [categorygroup, setCategorygroup] = useState("");
   const [categorytype, setCategorytype] = useState("");
@@ -230,7 +230,7 @@ export default function ProductEditScreen() {
         category: category.toLowerCase(),
         categorygroup: categorygroup,
         categorytype: categorytype,
-        categorytitel: categorytitle,
+        // categorytitel: categorytitle,
         brand: e.categorybrand,
         countInStock: e.countInStock,
         description: e.description,
@@ -506,7 +506,7 @@ console.log("categorydetails=======>>>",categorydetails);
 
               {/* *********************************************************** */}
 
-              <FormControl fullWidth>
+              {/* <FormControl fullWidth>
                 <InputLabel>Category Title</InputLabel>
                 <Select
                   id="standard-simple-select"
@@ -523,7 +523,7 @@ console.log("categorydetails=======>>>",categorydetails);
                     </MenuItem>
                   ))}
                 </Select>
-              </FormControl>
+              </FormControl> */}
 
               <FormControl fullWidth sx={{ mt: 1 }}>
                 <InputLabel>Category Name</InputLabel>
@@ -536,9 +536,7 @@ console.log("categorydetails=======>>>",categorydetails);
                 //   {...register("category", { required: true })}
                 // error={errors.category}
                 >
-                  {categorydetails?.filter((item) => {
-                      return item.categorytittel === categorytitle;
-                    }).map((item, index) => (
+                  {categorydetails?.map((item, index) => (
                     <MenuItem key={index} value={item.categoryname}>
                       {item.categoryname}
                     </MenuItem>
