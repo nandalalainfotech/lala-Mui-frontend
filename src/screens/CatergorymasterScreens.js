@@ -6,7 +6,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
-
+import { DataGrid } from "@mui/x-data-grid";
 import { Tab, Tabs } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
@@ -41,11 +41,20 @@ export default function CatergorymasterScreens() {
     formState: { errors: errors3 },
   } = useForm();
 
+  const [pageSize, setPageSize] = useState(10);
+
   const categoryMasterList = useSelector((state) => state.categoryMasterList);
   const { categoryMasterdetails } = categoryMasterList;
 
+
   const subCategoryList = useSelector((state) => state.subCategoryList);
   const { subCategory } = subCategoryList;
+
+  const ChildCategoryLis = useSelector((state) => state.ChildCategoryLis);
+  const { childCategory } = ChildCategoryLis;
+
+
+  
   const [categoryId, setCategoryname] = useState("");
   const [subCategorygroup, setsubCategorygroup] = useState("");
   const [categorychildId, setChildCategoryname] = useState("");
@@ -95,6 +104,7 @@ export default function CatergorymasterScreens() {
     dispatch(categoryMasterListDetails());
     dispatch(subCategoryListDetails());
     dispatch(CategoryChildListDetails());
+    
   }, [dispatch]);
 
   const [tabIndex, setTabIndex] = useState(0);
@@ -102,6 +112,107 @@ export default function CatergorymasterScreens() {
   const handleTabChange = (event, newTabIndex) => {
     setTabIndex(newTabIndex);
   };
+
+  const columns = [
+    {
+      field: "_id",
+      headerName: "ID",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "categorytittel",
+      headerName: "Category Title",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "categoryname",
+      headerName: "Category Title",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "status",
+      headerName: "Category Status",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
+    
+    
+  ];
+
+  const subCategorycolumns = [
+    {
+      field: "_id",
+      headerName: "ID",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "categoryId",
+      headerName: "Category Name",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "subcategorygroup",
+      headerName: "Subcategory Name",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "substatus",
+      headerName: "Category Status",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
+    
+    
+  ];
+
+
+  
+  const childCategorycolumns = [
+    {
+      field: "_id",
+      headerName: "ID",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "categorychildId",
+      headerName: "Category Name",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+      // renderCell: (params) => {
+      //   console.log("params", params.row.categorychildId);
+      //   fetch(`/api/categoryMain/categorychildId/${params.row.categorychildId}`)
+      //   return
+      // },
+    },
+    {
+      field: "childcategorygroup",
+      headerName: "Category Group",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "childcategorytype",
+      headerName: "Category Type",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "childstatus",
+      headerName: "Category Status",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
+    
+    
+  ];
+
 
   return (
     <>
@@ -121,6 +232,7 @@ export default function CatergorymasterScreens() {
         </Box>
         <Box sx={{ padding: 2 }}>
           {tabIndex === 0 && (
+            <Box>
             <ThemeProvider theme={theme}>
               <Container
                 component="main"
@@ -204,8 +316,53 @@ export default function CatergorymasterScreens() {
                 </Box>
               </Container>
             </ThemeProvider>
+            <Box
+            sx={{
+              height: 560,
+              width: "100%",
+
+              "& .super-app-theme--header": {
+                backgroundColor: "#808080",
+                color: "#ffffff",
+              },
+              "& .css-1jbbcbn-MuiDataGrid-columnHeaderTitle": {
+                fontSize: 16,
+              },
+              ".css-o8hwua-MuiDataGrid-root .MuiDataGrid-cellContent": {
+                fontSize: 13,
+              },
+              ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
+                {
+                  backgroundColor: "#330033",
+                  color: "#ffffff",
+                },
+              ".css-h4y409-MuiList-root": {
+                display: "grid",
+              },
+            }}
+          >
+            <DataGrid
+              sx={{
+                boxShadow: 10,
+                borderRadius: 0,
+                m: 2,
+              }}
+              columns={columns}
+              rows={categoryMasterdetails ? categoryMasterdetails : ""}
+              getRowId={(rows) => rows._id}
+              VerticalAlignment="Center"
+              rowHeight={64}
+              pageSize={pageSize}
+              onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+              rowsPerPageOptions={[5, 10, 20]}
+              pagination
+            />
+          </Box>
+          </Box>
+            
           )}
           {tabIndex === 1 && (
+            <Box>
             <ThemeProvider theme={theme}>
               <Container
                 component="main"
@@ -290,8 +447,51 @@ export default function CatergorymasterScreens() {
                 </Box>
               </Container>
             </ThemeProvider>
+            <Box
+            sx={{
+              height: 560,
+              width: "100%",
+
+              "& .super-app-theme--header": {
+                backgroundColor: "#808080",
+                color: "#ffffff",
+              },
+              "& .css-1jbbcbn-MuiDataGrid-columnHeaderTitle": {
+                fontSize: 16,
+              },
+              ".css-o8hwua-MuiDataGrid-root .MuiDataGrid-cellContent": {
+                fontSize: 13,
+              },
+              ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
+                {
+                  backgroundColor: "#330033",
+                  color: "#ffffff",
+                },
+              ".css-h4y409-MuiList-root": {
+                display: "grid",
+              },
+            }}
+          >
+            <DataGrid
+              sx={{
+                boxShadow: 10,
+                borderRadius: 0,
+                m: 2,
+              }}
+              columns={subCategorycolumns}
+              rows={subCategory}
+              getRowId={(rows) => rows._id}
+              VerticalAlignment="Center"
+              rowHeight={64}
+              pageSize={pageSize}
+              onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+              pagination
+            />
+          </Box>
+            </Box>
           )}
           {tabIndex === 2 && (
+            <Box>
             <ThemeProvider theme={theme}>
               <Container
                 component="main"
@@ -394,35 +594,53 @@ export default function CatergorymasterScreens() {
                 </Box>
               </Container>
             </ThemeProvider>
+            <Box
+            sx={{
+              height: 560,
+              width: "100%",
+
+              "& .super-app-theme--header": {
+                backgroundColor: "#808080",
+                color: "#ffffff",
+              },
+              "& .css-1jbbcbn-MuiDataGrid-columnHeaderTitle": {
+                fontSize: 16,
+              },
+              ".css-o8hwua-MuiDataGrid-root .MuiDataGrid-cellContent": {
+                fontSize: 13,
+              },
+              ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
+                {
+                  backgroundColor: "#330033",
+                  color: "#ffffff",
+                },
+              ".css-h4y409-MuiList-root": {
+                display: "grid",
+              },
+            }}
+          >
+            <DataGrid
+              sx={{
+                boxShadow: 10,
+                borderRadius: 0,
+                m: 2,
+              }}
+              columns={childCategorycolumns}
+              rows={childCategory}
+              getRowId={(rows) => rows._id}
+              VerticalAlignment="Center"
+              rowHeight={64}
+              pageSize={pageSize}
+              onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+              pagination
+            />
+          </Box>
+            </Box>
           )}
         </Box>
       </Box>
 
-      <Box
-        sx={{
-          height: 460,
-          width: "100%",
-
-          "& .super-app-theme--header": {
-            backgroundColor: "#808080",
-            color: "#ffffff",
-          },
-          "& .css-1jbbcbn-MuiDataGrid-columnHeaderTitle": {
-            fontSize: 16,
-          },
-          ".css-o8hwua-MuiDataGrid-root .MuiDataGrid-cellContent": {
-            fontSize: 13,
-          },
-          ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-            {
-              backgroundColor: "#330033",
-              color: "#ffffff",
-            },
-          ".css-h4y409-MuiList-root": {
-            display: "grid",
-          },
-        }}
-      ></Box>
+      
     </>
   );
 }
