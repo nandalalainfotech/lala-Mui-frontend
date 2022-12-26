@@ -62,7 +62,8 @@ export default function HomeScreen() {
 
   const categoryMasterList = useSelector((state) => state.categoryMasterList);
   const { categoryMasterdetails } = categoryMasterList;
-
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
 
   useEffect(() => {
     dispatch(categoryListDetails());
@@ -73,7 +74,7 @@ export default function HomeScreen() {
     dispatch(kidsProductList());
     dispatch(listTopSellers());
     dispatch(applicatinSettingList());
-  }, [dispatch]);
+  }, [dispatch,userInfo]);
 
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -115,7 +116,8 @@ export default function HomeScreen() {
  
 
   return (
-    <Box>
+    <>
+   {userInfo.isAuth ?( <Box>
       <Box className="convey">
         <h2 className="topseller">
           {" "}
@@ -183,6 +185,9 @@ export default function HomeScreen() {
       </Box>
 
       
-    </Box>
+    </Box>):(
+      <></>
+    )}
+    </>
   );
 }

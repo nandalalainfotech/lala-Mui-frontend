@@ -354,7 +354,7 @@ function App() {
                     </Link>
                   </div>
                 </Grid>
-                <Grid item xs={8}>
+               <Grid item xs={8}>
                   <div className="grid-elements">
                     {" "}
                     <Box
@@ -369,7 +369,9 @@ function App() {
                         },
                       }}
                     >
-                      <SearchBox />
+                      {userInfo.isAuth?( <SearchBox />):(
+                  <></>
+                )}
                     </Box>
                   </div>
                 </Grid>
@@ -850,7 +852,7 @@ function App() {
           </AppBar>
 
           {/* {userInfo &&  ( */}
-          <AppBar
+         {userInfo.isAuth?( <AppBar
             sx={{
               position: "absolute",
               display: {
@@ -3459,10 +3461,12 @@ function App() {
                 </Grid>
               </Grid>
             </Toolbar>
-          </AppBar>
+          </AppBar>):(
+            <></>
+          )}
           {/* )} */}
 
-          <Drawer
+         {userInfo.isAuth? (<Drawer
             sx={{
               width: drawerWidth,
 
@@ -3506,7 +3510,7 @@ function App() {
                 >
                   <PersonIcon sx={{ fontSize: 60 }} /></Avatar> */}
 
-                {userInfo?.name}
+                {/* {userInfo?.name} */}
                 <IconButton onClick={handleDrawerClose}>
                   {theme.direction === "ltr" ? (
                     <ChevronLeftIcon
@@ -3556,7 +3560,6 @@ function App() {
                         })
                         .map(
                           (item) => (
-                            console.log("item========>>", item),
                             (
                               <Box key={i}>
                                 <List>
@@ -3564,6 +3567,7 @@ function App() {
                                     style={{ textDecoration: "none" }}
                                     to={`/search/category/${item.categoryname}`}
                                   >
+                                   
                                     <Typography
                                       variant="h4"
                                       sx={{
@@ -3598,7 +3602,71 @@ function App() {
               </>
             )}
             <Divider sx={{ backgroundColor: "#FFFFFF" }} showlabels="true" />
+          </Drawer>):(
+            <Drawer
+            sx={{
+              width: drawerWidth,
+
+              flexShrink: 0,
+              "& .MuiDrawer-paper": {
+                width: drawerWidth,
+                boxSizing: "border-box",
+                backgroundColor: "#13265C",
+              },
+            }}
+            variant="persistent"
+            anchor="left"
+            open={open}
+          >
+            <DrawerHeader></DrawerHeader>
+
+            <Stack direction="row">
+              <Typography
+                variant="h5"
+                noWrap
+                component="span"
+                sx={{
+                  fontSize: "20px",
+                  color: "#F0FFF0",
+                  marginBottom: "15px",
+                  display: { xs: "block", sm: "block", md: "block" },
+                  "&:hover": { color: "#ff7519" },
+                  fontWeight: "700",
+                  textAlign: "center",
+                  marginLeft: "50px",
+                }}
+              >
+                {/* <Avatar
+                  sx={{
+                    bgcolor: "inherit",
+                    marginLeft: "50px",
+                    textAlign: 'center',
+                    "&:hover": { color: "#ff7519" },
+                    // marginTop:"-5px",
+                  }}
+                >
+                  <PersonIcon sx={{ fontSize: 60 }} /></Avatar> */}
+
+                {/* {userInfo?.name} */}
+                <IconButton onClick={handleDrawerClose}>
+                  {theme.direction === "ltr" ? (
+                    <ChevronLeftIcon
+                      sx={{
+                        color: "white",
+                        marginTop: "-10px",
+                        marginLeft: 17,
+                      }}
+                    />
+                  ) : (
+                    <ChevronRightIcon />
+                  )}
+                </IconButton>
+              </Typography>
+            </Stack>
+
+           
           </Drawer>
+          )}
           <Box component="main" sx={{ p: 3, flexGrow: 1, minHeight: "100vh" }}>
             <Toolbar />
             {/* <Typography> */}
