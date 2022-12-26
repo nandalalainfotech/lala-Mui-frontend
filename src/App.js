@@ -78,8 +78,10 @@ import OtpScreen from "./screens/OtpScreen";
 import OtpVerifyScreen from "./screens/OtpVerifyScreen";
 import RegOtpVerifyScreen from "./screens/RegOtpVerifyScreen";
 import CategoryScreen from "./screens/CategoryScreen";
+import CategoryMasterScreen from "./components/CategoryMasterScreen";
 import CatergorymasterScreens from "./screens/CatergorymasterScreens";
 import { categoryMasterListDetails } from "./actions/categoryAction";
+import CategoryMasterFormScreen from "./components/CategoryMasterFormScreen";
 // import Image from "/image/logo.png";
 // Side bar section start*************************************
 const drawerWidth = 240;
@@ -3675,6 +3677,8 @@ function App() {
                 path="/categorysmaster"
                 element={<CatergorymasterScreens />}
               ></Route>
+               <Route path="/categorymaster" element={<CategoryMasterScreen/>}></Route>
+               <Route path="/categoryFormmaster" element={<CategoryMasterFormScreen/>}></Route>
               <Route path="/categorys" element={<CategoryScreen />}></Route>
               <Route path="/seller/:id" element={<SellerScreen />}></Route>
               <Route path="/cart/:id" element={<CartScreen />}></Route>
