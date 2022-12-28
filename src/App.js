@@ -89,6 +89,9 @@ import { categoryMasterListDetails } from "./actions/categoryAction";
 import CategoryMasterFormScreen from "./components/CategoryMasterFormScreen";
 import { AttributeMasterListDetails } from "./actions/AttributeActions";
 import AttributesScreen from "./screens/AttributesScreen";
+import TextEditScreen from "./screens/TextEditScreen";
+import PrestaProductScreen from "./screens/PrestaProductScreen";
+import BrandScreen from "./screens/BrandScreen";
 // import Image from "/image/logo.png";
 // Side bar section start*************************************
 const drawerWidth = 240;
@@ -386,7 +389,7 @@ dispatch(AttributeMasterListDetails());
                         },
                       }}
                     >
-                      {userInfo.isAuth?( <SearchBox />):(
+                      {userInfo?.isAuth?( <SearchBox />):(
                   <></>
                 )}
                     </Box>
@@ -869,7 +872,7 @@ dispatch(AttributeMasterListDetails());
           </AppBar>
 
           {/* {userInfo &&  ( */}
-         {userInfo.isAuth?( <AppBar
+         {userInfo?.isAuth?( <AppBar
             sx={{
               position: "absolute",
               display: {
@@ -3483,7 +3486,7 @@ dispatch(AttributeMasterListDetails());
           )}
           {/* )} */}
 
-         {userInfo.isAuth? (<Drawer
+         {userInfo?.isAuth? (<Drawer
             sx={{
               width: drawerWidth,
 
@@ -3702,6 +3705,10 @@ dispatch(AttributeMasterListDetails());
                       
                       <Link to='/attributes' style={{textDecoration:"none"}}><ListItemText sx={{ color: "#fff" }} primary="Attributes & Features" /></Link>
                     </ListItemButton>
+                    <ListItemButton sx={{ pl: 4 }}>
+                      
+                      <Link to='/brand' style={{textDecoration:"none"}}><ListItemText sx={{ color: "#fff" }} primary="Brand & Supplier" /></Link>
+                    </ListItemButton>
                   </List>
                 </Collapse>
               </List>
@@ -3762,6 +3769,9 @@ dispatch(AttributeMasterListDetails());
               <Route path="/register" element={<RegisterScreen />}></Route>
               <Route path="/otp" element={<OtpScreen />}></Route>
               <Route path="/otpVerify" element={<OtpVerifyScreen />}></Route>
+              <Route path="/text" element={<TextEditScreen />}></Route>
+              <Route path="/presta" element={<PrestaProductScreen />}></Route>
+              <Route path="/brand" element={<BrandScreen />}></Route>
               <Route
                 path="/regotpVerify"
                 element={<RegOtpVerifyScreen />}
@@ -3969,7 +3979,7 @@ dispatch(AttributeMasterListDetails());
             {/* </Typography> */}
           </Box>
 
-         {userInfo.isAuth&&( <Paper
+         {userInfo?.isAuth&&( <Paper
             sx={{
               position: "relative",
               bottom: 0,

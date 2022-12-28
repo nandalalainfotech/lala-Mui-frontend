@@ -70,6 +70,7 @@ import { applicationSettingReducer, appSettingListReducer } from "./reducers/app
 import { otpListReducer, userOtpReducer } from "./reducers/otpReducer";
 import { categoryCreateReducer, categoryListReducer, categorymasterCreateReducer, categoryMasterListReducer, childcategoryCreateReducer, ChildCategoryListReducer, subcategoryCreateReducer, subCategoryListReducer } from "./reducers/categoryReducers";
 import { AttributeCreateReducer, AttributeMasterListReducer, AttributeValueCreateReducer, AttributeValueListReducer, FeaturesCreateReducer, FeaturesListReducer, FeaturesValueCreateReducer, FeaturesValueListReducer } from "./reducers/AttributeReducers";
+import { brandAddressListReducer, brandAddressReducer, brandListReducer, brandReducer } from "./reducers/brandReducer";
 // import { cartKidReducer } from './reducers/cartKidReducers';
 // import { suitDetailsReducer, suitListReducer, suitReviewCreateReducer } from './reducers/suitReducers';
 // import { cartKidReducer } from './reducers/cartKidReducers';
@@ -121,6 +122,10 @@ const reducer = combineReducers({
   cartUpdate: cartUpdateReducer,
   kidList: kidListReducer,
   applicationCreate: applicationSettingReducer,
+  brandCreate: brandReducer,
+  brandReduce: brandListReducer,
+  brandAddressCreate: brandAddressReducer,
+  brandAddreList: brandAddressListReducer,
   applicationList: appSettingListReducer,
   userOtp: userOtpReducer,
   otpLists: otpListReducer,
