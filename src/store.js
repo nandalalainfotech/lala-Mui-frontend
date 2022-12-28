@@ -69,6 +69,7 @@ import {
 import { applicationSettingReducer, appSettingListReducer } from "./reducers/applicationReducer";
 import { otpListReducer, userOtpReducer } from "./reducers/otpReducer";
 import { categoryCreateReducer, categoryListReducer, categorymasterCreateReducer, categoryMasterListReducer, childcategoryCreateReducer, ChildCategoryListReducer, subcategoryCreateReducer, subCategoryListReducer } from "./reducers/categoryReducers";
+import { AttributeCreateReducer, AttributeMasterListReducer, AttributeValueCreateReducer, AttributeValueListReducer, FeaturesCreateReducer, FeaturesListReducer, FeaturesValueCreateReducer, FeaturesValueListReducer } from "./reducers/AttributeReducers";
 // import { cartKidReducer } from './reducers/cartKidReducers';
 // import { suitDetailsReducer, suitListReducer, suitReviewCreateReducer } from './reducers/suitReducers';
 // import { cartKidReducer } from './reducers/cartKidReducers';
@@ -131,7 +132,14 @@ const reducer = combineReducers({
   cart: cartReducer,
 
   // cart: cartWomenReducer,
-
+  AttributeCreate:AttributeCreateReducer,
+  attributeMasterList:AttributeMasterListReducer,
+  AttributeValueCreate:AttributeValueCreateReducer,
+  AttributeValueList:AttributeValueListReducer,
+  FeaturesCreate:FeaturesCreateReducer,
+  FeaturesList:FeaturesListReducer,
+  CreateFeaturesValue:FeaturesValueCreateReducer,
+  FeaturesValueList:FeaturesValueListReducer,
   // cart: cartKidReducer,
   userSignin: userSigninReducer,
   userAccount: userAccountReducer,
