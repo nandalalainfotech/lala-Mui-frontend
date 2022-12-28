@@ -146,7 +146,6 @@ export default function CatergorymasterScreens() {
   
 
   function getsubCategoryId(subCategory) {
-    console.log("subCategory", subCategory);
     let cat = `${subCategory.row.categoryId ? categoryMasterdetails.find(x => x._id === subCategory.row.categoryId)?.categoryname : "arraa"}`;
     return cat;
   }

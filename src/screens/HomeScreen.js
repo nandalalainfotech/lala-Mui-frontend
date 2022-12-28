@@ -117,7 +117,7 @@ export default function HomeScreen() {
 
   return (
     <>
-   {userInfo.isAuth ?( <Box>
+   {userInfo?.isAuth ?( <Box>
       <Box className="convey">
         <h2 className="topseller">
           {" "}

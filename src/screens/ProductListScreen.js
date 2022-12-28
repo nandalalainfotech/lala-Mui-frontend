@@ -21,6 +21,7 @@ import {
 import Avatar from "@mui/material/Avatar";
 import CardMedia from "@mui/material/CardMedia";
 import Dialog from "@mui/material/Dialog";
+import { subCategoryListDetails } from "../actions/categoryAction";
 
 export default function ProductListScreen() {
   const navigate = useNavigate();
@@ -73,6 +74,13 @@ export default function ProductListScreen() {
     setOpen(true);
   };
 
+  const categoryMasterList = useSelector((state) => state.categoryMasterList);
+  const { categoryMasterdetails } = categoryMasterList;
+
+
+  const subCategoryList = useSelector((state) => state.subCategoryList);
+  const { subCategory } = subCategoryList;
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -90,6 +98,7 @@ export default function ProductListScreen() {
     if (successDelete) {
       dispatch({ type: PRODUCT_DELETE_RESET });
     }
+    dispatch(subCategoryListDetails());
     dispatch(
       listProducts({ seller: sellerMode ? userInfo._id : "", pageNumber })
     );
@@ -123,6 +132,16 @@ export default function ProductListScreen() {
   const editHandler = (product) => {
     navigate(`/product/${product.row._id}/edit`);
   };
+
+  function getCategoryGroupId(products) {
+    return `${products.row.categorygroup ? subCategory.find(x => x._id === products.row.categorygroup)?.subcategorygroup : "arraa"}`;
+  }
+
+  function getCategoryId(products) {
+    return `${products.row.category ? categoryMasterdetails.find(x => x._id === products.row.category)?.categoryname : "arraa"}`;
+  }
+  
+ 
 
   const columns = [
     {
@@ -165,12 +184,14 @@ export default function ProductListScreen() {
       headerName: "CATEGORY",
       flex: 1,
       headerClassName: "super-app-theme--header",
+      valueGetter: getCategoryId,
     },
     {
       field: "categorygroup",
       headerName: "CATEGORY GROUP",
       flex: 1,
       headerClassName: "super-app-theme--header",
+      valueGetter: getCategoryGroupId,
     },
     {
       field: "brand",
