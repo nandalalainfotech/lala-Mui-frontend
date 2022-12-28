@@ -16,6 +16,11 @@ import ProfileScreen from "./screens/ProfileScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import ShippingAddressScreen from "./screens/ShippingAddressScreen";
 import SigninScreen from "./screens/SigninScreen";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import Collapse from "@mui/material/Collapse";
 
 import {
   listProductCategories,
@@ -82,6 +87,8 @@ import CategoryMasterScreen from "./components/CategoryMasterScreen";
 import CatergorymasterScreens from "./screens/CatergorymasterScreens";
 import { categoryMasterListDetails } from "./actions/categoryAction";
 import CategoryMasterFormScreen from "./components/CategoryMasterFormScreen";
+import { AttributeMasterListDetails } from "./actions/AttributeActions";
+import AttributesScreen from "./screens/AttributesScreen";
 // import Image from "/image/logo.png";
 // Side bar section start*************************************
 const drawerWidth = 240;
@@ -219,6 +226,7 @@ function App() {
     dispatch(applicatinSettingList());
     dispatch(otpList());
     dispatch(categoryMasterListDetails());
+dispatch(AttributeMasterListDetails());
   }, [dispatch, userInfo]);
 
   // sidebar section Start****************************************
@@ -290,6 +298,13 @@ function App() {
     // eslint-disable-next-line no-unused-vars
     brand = content.brand.text || "";
   }
+
+  const [sidopen, setSidopen] = useState();
+
+  const handleClick = () => {
+    setSidopen(!sidopen);
+  };
+
   return (
     <BrowserRouter>
       <div className="grid-container">
@@ -3649,30 +3664,57 @@ function App() {
                 >
                   <PersonIcon sx={{ fontSize: 60 }} /></Avatar> */}
 
-                {/* {userInfo?.name} */}
-                <IconButton onClick={handleDrawerClose}>
-                  {theme.direction === "ltr" ? (
-                    <ChevronLeftIcon
-                      sx={{
-                        color: "white",
-                        marginTop: "-10px",
-                        marginLeft: 17,
-                      }}
-                    />
-                  ) : (
-                    <ChevronRightIcon />
-                  )}
-                </IconButton>
+                  {/* {userInfo?.name} */}
+                  <IconButton onClick={handleDrawerClose}>
+                    {theme.direction === "ltr" ? (
+                      <ChevronLeftIcon
+                        sx={{
+                          color: "white",
+                          marginTop: "-10px",
+                          marginLeft: 17,
+                        }}
+                      />
+                    ) : (
+                      <ChevronRightIcon />
+                    )}
+                  </IconButton>
+                </Typography>
+              </Stack>
+              <Typography
+                variant="h6"
+                sx={{ color: "#fff", textAlign: "center" }}
+              >
+                Dashboard
               </Typography>
-            </Stack>
-
-           
-          </Drawer>
+              <Divider sx={{ backgroundColor: "#FFFFFF" }} showlabels="true" />
+              <List>
+                <ListItemButton onClick={handleClick}>
+                  <ListItemText sx={{ color: "#fff" }} primary="Catalog" />
+                  {sidopen ? <ExpandLess sx={{ color: "#fff" }}/> : <ExpandMore sx={{ color: "#fff" }}/>}
+                </ListItemButton>
+                <Collapse in={sidopen} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                    <ListItemButton sx={{ pl: 4 }}>
+                      <ListItemText sx={{ color: "#fff" }} primary="Products" />
+                     
+                    </ListItemButton>
+                    <ListItemButton sx={{ pl: 4 }}>
+                      
+                      <Link to='/attributes' style={{textDecoration:"none"}}><ListItemText sx={{ color: "#fff" }} primary="Attributes & Features" /></Link>
+                    </ListItemButton>
+                  </List>
+                </Collapse>
+              </List>
+            </Drawer>
           )}
           <Box component="main" sx={{ p: 3, flexGrow: 1, minHeight: "100vh" }}>
             <Toolbar />
             {/* <Typography> */}
             <Routes>
+            <Route
+                path="/attributes"
+                element={<AttributesScreen />}
+              ></Route>
               <Route
                 path="/categorysmaster"
                 element={<CatergorymasterScreens />}
@@ -3927,7 +3969,7 @@ function App() {
             {/* </Typography> */}
           </Box>
 
-          <Paper
+         {userInfo.isAuth&&( <Paper
             sx={{
               position: "relative",
               bottom: 0,
@@ -3937,7 +3979,7 @@ function App() {
             elevation={0}
           >
             <Footer />
-          </Paper>
+          </Paper>)}
         </Box>
       </div>
     </BrowserRouter>
