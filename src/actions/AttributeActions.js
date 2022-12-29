@@ -177,7 +177,6 @@ export const updateAttribute = (attributedit) => async (dispatch, getState) => {
 
 // ***************************************************
 export const deleteAttribute = (productId) => async (dispatch, getState) => {
-  console.log("productId",productId);
   dispatch({ type: ATTRIBUTE_DELETE_REQUEST, payload: productId });
   const {
     userSignin: { userInfo },

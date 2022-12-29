@@ -3,7 +3,6 @@ import { CATEGORY_MASTER_CREATE_FAIL, CATEGORY_MASTER_CREATE_REQUEST, CATEGORY_M
 
 
 export const createCategoryMaster = (categoryMaster) => async (dispatch, getState) => {
-  console.log("categoryMaster", categoryMaster);
 
   const fd = new FormData();
   fd.append('name', categoryMaster.name);
@@ -19,7 +18,6 @@ export const createCategoryMaster = (categoryMaster) => async (dispatch, getStat
         headers: { Authorization: `Bearer ${userInfo.token}` },
       }
     );
-    console.log("create category master", data)
     dispatch({
       type: CATEGORY_MASTER_CREATE_SUCCESS,
       payload: data.category,

@@ -39,12 +39,10 @@ export default function CategoryMasterScreen() {
   }, [dispatch, successDelete])
 
   const editHandler = (id) => {
-    console.log("id", id)
     navigate(`/categorymaster/` + id);
   };
 
   const deleteHandler = (id) => {
-    console.log("id--screen", id);
     if (window.confirm("Are you sure to delete?")) {
       dispatch(deleteCategegoryMasterlist(id));
     }

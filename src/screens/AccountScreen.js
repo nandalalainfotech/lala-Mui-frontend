@@ -33,7 +33,6 @@ export default function AccountScreen() {
 
   const dispatch = useDispatch();
   const submitHandler = (e) => {
-    console.log("e", e);
     dispatch(accountin(e.email, e.password));
   };
 
