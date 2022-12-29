@@ -83,10 +83,10 @@ import OtpScreen from "./screens/OtpScreen";
 import OtpVerifyScreen from "./screens/OtpVerifyScreen";
 import RegOtpVerifyScreen from "./screens/RegOtpVerifyScreen";
 import CategoryScreen from "./screens/CategoryScreen";
-import CategoryMasterScreen from "./components/CategoryMasterScreen";
+import CategoryMasterScreen from "./screens/CategoryMasterScreen";
 import CatergorymasterScreens from "./screens/CatergorymasterScreens";
 import { categoryMasterListDetails } from "./actions/categoryAction";
-import CategoryMasterFormScreen from "./components/CategoryMasterFormScreen";
+import CategoryMasterFormScreen from "./screens/CategoryMasterFormScreen";
 import { AttributeMasterListDetails } from "./actions/AttributeActions";
 import AttributesScreen from "./screens/AttributesScreen";
 import TextEditScreen from "./screens/TextEditScreen";
@@ -3700,6 +3700,10 @@ dispatch(AttributeMasterListDetails());
                     <ListItemButton sx={{ pl: 4 }}>
                       <ListItemText sx={{ color: "#fff" }} primary="Products" />
                      
+                    </ListItemButton>
+                    <ListItemButton sx={{ pl: 4 }}>
+                      
+                      <Link to='/categorymaster' style={{textDecoration:"none"}}><ListItemText sx={{ color: "#fff" }} primary="Categories" /></Link>
                     </ListItemButton>
                     <ListItemButton sx={{ pl: 4 }}>
                       
