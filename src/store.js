@@ -71,6 +71,7 @@ import { otpListReducer, userOtpReducer } from "./reducers/otpReducer";
 import { categoryCreateReducer, categoryListReducer, categorymasterCreateReducer, categoryMasterListReducer, childcategoryCreateReducer, ChildCategoryListReducer, subcategoryCreateReducer, subCategoryListReducer } from "./reducers/categoryReducers";
 import { AttributeCreateReducer, AttributeMasterListReducer, AttributeValueCreateReducer, AttributeValueListReducer, FeaturesCreateReducer, FeaturesListReducer, FeaturesValueCreateReducer, FeaturesValueListReducer } from "./reducers/AttributeReducers";
 import { brandAddressListReducer, brandAddressReducer, brandListReducer, brandReducer } from "./reducers/brandReducer";
+import { categmastercreateReducer, categoryMasterallListReducer, CategoryMasterDeleteReducer } from "./reducers/categoryMasterReducer";
 // import { cartKidReducer } from './reducers/cartKidReducers';
 // import { suitDetailsReducer, suitListReducer, suitReviewCreateReducer } from './reducers/suitReducers';
 // import { cartKidReducer } from './reducers/cartKidReducers';
@@ -194,6 +195,9 @@ const reducer = combineReducers({
   orderSummary: orderSummaryReducer,
   sareeReducer: SareeListReducer,
   sareeDetails: SareeDetailsReducer,
+  CategoryMasterCreate:categmastercreateReducer,
+  CategoryMasterallList:categoryMasterallListReducer,
+  CategoryMasterDelete:CategoryMasterDeleteReducer
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
