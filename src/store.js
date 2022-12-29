@@ -69,7 +69,7 @@ import {
 import { applicationSettingReducer, appSettingListReducer } from "./reducers/applicationReducer";
 import { otpListReducer, userOtpReducer } from "./reducers/otpReducer";
 import { categoryCreateReducer, categoryListReducer, categorymasterCreateReducer, categoryMasterListReducer, childcategoryCreateReducer, ChildCategoryListReducer, subcategoryCreateReducer, subCategoryListReducer } from "./reducers/categoryReducers";
-import { AttributeCreateReducer, AttributeMasterListReducer, AttributeValueCreateReducer, AttributeValueListReducer, FeaturesCreateReducer, FeaturesListReducer, FeaturesValueCreateReducer, FeaturesValueListReducer } from "./reducers/AttributeReducers";
+import { AttributeCreateReducer, attributeDeleteReducer, AttributeMasterListReducer, attributeUpdateReducer, AttributeValueCreateReducer, AttributeValueListReducer, FeaturesCreateReducer, FeaturesListReducer, FeaturesValueCreateReducer, FeaturesValueListReducer } from "./reducers/AttributeReducers";
 import { brandAddressListReducer, brandAddressReducer, brandListReducer, brandReducer } from "./reducers/brandReducer";
 import { categmastercreateReducer, categoryMasterallListReducer, CategoryMasterDeleteReducer } from "./reducers/categoryMasterReducer";
 // import { cartKidReducer } from './reducers/cartKidReducers';
@@ -146,6 +146,8 @@ const reducer = combineReducers({
   FeaturesList:FeaturesListReducer,
   CreateFeaturesValue:FeaturesValueCreateReducer,
   FeaturesValueList:FeaturesValueListReducer,
+  attributeUpdate:attributeUpdateReducer,
+  attributeDelete:attributeDeleteReducer,
   // cart: cartKidReducer,
   userSignin: userSigninReducer,
   userAccount: userAccountReducer,

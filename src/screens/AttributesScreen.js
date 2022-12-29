@@ -3,11 +3,12 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
-import { DataGrid, } from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
 // import { DataGridPro } from '@mui/x-data-grid-pro';
 import { useEffect, useState } from "react";
 // import Card from "@mui/material/Card";
 import SearchIcon from "@mui/icons-material/Search";
+import Chip from "@mui/material/Chip";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import FormControl from "@mui/material/FormControl";
@@ -25,14 +26,22 @@ import {
   AttributeMasterListDetails,
   AttributeValueListDetails,
   createAttributeVlaue,
+  deleteAttribute,
   FeaturesCategory,
   FeaturesMasterListDetails,
   FeaturesValueCategory,
   FeaturesValueListDetails,
+  updateAttribute,
 } from "../actions/AttributeActions";
 // import { useDemoData } from '@mui/x-data-grid-generator';
-
-
+import { deepPurple, red } from "@material-ui/core/colors";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import SearchOffIcon from "@mui/icons-material/SearchOff";
+import {
+  ATTRIBUTE_DELETE_RESET,
+  ATTRIBUTE_UPDATE_RESET,
+} from "../constants/AttributesConstants";
 
 function AttributesScreen() {
   const {
@@ -56,12 +65,21 @@ function AttributesScreen() {
     handleSubmit: handleSubmit3,
     formState: { errors: errors3 },
   } = useForm();
+
+  const {
+    // register: register4,
+    handleSubmit: handleSubmit4,
+    // formState: { errors: errors4 },
+  } = useForm();
+
   const dispatch = useDispatch();
   const [tabIndex, setTabIndex] = useState(0);
   const [Attribute, setAttribute] = useState(0);
   const [AttributeValue, setAttributeValue] = useState(0);
   const [attributestype, setAttributestype] = useState("");
   const [AttributeVlaue, setAttributeVlaue] = useState("");
+  const [attributupdte, setAttriupdate] = useState("");
+  const [attributupdtename, setAttriNameupdate] = useState("");
   const [color, setColor] = useState(false);
   const [viewitem, setView] = useState();
   const [feautureview, setFeatureView] = useState();
@@ -69,6 +87,9 @@ function AttributesScreen() {
   const [features, setFeatures] = useState(0);
   const [featuresValue, setFeaturesValue] = useState(0);
   const [featurestype, setFeaturestype] = useState("");
+
+  const [Attributedit, setAttributeEdit] = useState("");
+
   const handleTabChange = (event, newTabIndex) => {
     setTabIndex(newTabIndex);
     setAttribute(0);
@@ -77,6 +98,7 @@ function AttributesScreen() {
     setFeaturesValue(0);
     setView(0);
     setFeatureView(0);
+    setAttributeEdit(0);
   };
   const attributeMasterList = useSelector((state) => state.attributeMasterList);
   const { attributeMasterdetails } = attributeMasterList;
@@ -90,6 +112,15 @@ function AttributesScreen() {
   const FeaturesValueList = useSelector((state) => state.FeaturesValueList);
   const { Featuresvaluedetails } = FeaturesValueList;
 
+  const attributeUpdate = useSelector((state) => state.attributeUpdate);
+  const {
+    // eslint-disable-next-line no-unused-vars
+    success: successUpdate,
+  } = attributeUpdate;
+
+  const attributeDelete = useSelector((state) => state.attributeDelete);
+  const { success: successDelete } = attributeDelete;
+
   const createHandler = (e) => {
     dispatch(
       AttributeCategory({
@@ -99,8 +130,9 @@ function AttributesScreen() {
     );
     window.confirm("Attribute Saved Successfully!!");
     event.target.reset();
-    setAttributestype();
+    setAttributestype("");
   };
+
   const createAttributeValue = (e) => {
     dispatch(
       createAttributeVlaue({
@@ -139,23 +171,42 @@ function AttributesScreen() {
 
   const names = ["Dropdown List", "Radio Buttons", "Color or Texture"];
 
-  // const { data } = useDemoData({
-  //   dataSet: 'Commodity',
-  //   rowLength: 100,
-  //   maxColumns: 5,
-  // });
+  // **********************************Edit Section *****************
+  const editAttributeHandler = (attributeId) => {
+    setAttributeEdit(attributeId);
+    setAttriupdate(attributeId.attributetype);
+    setAttriNameupdate(attributeId.attributename);
+  };
 
-  
-
- 
+  const updatdHandler = () => {
+    dispatch(
+      updateAttribute({
+        _id: Attributedit._id,
+        attributename: attributupdtename,
+        attributetype: attributupdte,
+      })
+    );
+    window.confirm("Attribute Update Successfully!!");
+    setAttributeEdit(0);
+  };
+  const deleteHandler = (product) => {
+    if (window.confirm("Are you sure to delete?")) {
+      dispatch(deleteAttribute(product.row._id));
+    }
+  };
 
   useEffect(() => {
     dispatch(FeaturesValueListDetails());
     dispatch(FeaturesMasterListDetails());
     dispatch(AttributeMasterListDetails());
     dispatch(AttributeValueListDetails());
-   
-  }, [dispatch]);
+    if (successUpdate) {
+      dispatch({ type: ATTRIBUTE_UPDATE_RESET });
+    }
+    if (successDelete) {
+      dispatch({ type: ATTRIBUTE_DELETE_RESET });
+    }
+  }, [dispatch, successUpdate, successDelete]);
 
   const theme = createTheme();
 
@@ -211,20 +262,63 @@ function AttributesScreen() {
       headerClassName: "super-app-theme--header",
     },
     {
-      field: "actions",
+      field: "Edit",
       headerName: "Viwe",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+      renderCell: (params) => {
+        const attributeList = attributeValuedetails
+          ?.filter((item) => {
+            return item.attributeVlaue === params.row._id;
+          })
+          .map((item) => {
+            <Box key={item}></Box>;
+            return {
+              id: item._id,
+              value: item.value,
+              attributeVlaue: item.attributeVlaue,
+              filename: item.filename,
+            };
+          });
+        if (attributeList.length === 0) {
+          return (
+            <ThemeProvider theme={theme}>
+              <Chip icon={<SearchOffIcon />} label="View" />
+            </ThemeProvider>
+          );
+        } else {
+          return (
+            <ThemeProvider theme={theme}>
+              <Chip
+                onClick={() => setView(params)}
+                icon={<SearchIcon />}
+                label="View"
+              />
+            </ThemeProvider>
+          );
+        }
+      },
+    },
+    {
+      field: "actions",
+      headerName: "ACTIONS",
       flex: 1,
       headerClassName: "super-app-theme--header",
       renderCell: (params) => (
         <>
-          <SearchIcon
-            onClick={() => setView(params)}
+          <EditIcon
+            onClick={() => editAttributeHandler(params.row)}
             style={{
-              // color: deepPurple[500],
+              color: deepPurple[500],
               fontSize: 15,
               margin: 20,
               cursor: "pointer",
             }}
+          />
+
+          <DeleteIcon
+            onClick={() => deleteHandler(params)}
+            style={{ color: red[500], fontSize: 15, cursor: "pointer" }}
           />
         </>
       ),
@@ -309,19 +403,35 @@ function AttributesScreen() {
       headerName: "View",
       flex: 1,
       headerClassName: "super-app-theme--header",
-      renderCell: (params) => (
-        <>
-          <SearchIcon
-            onClick={() => setFeatureView(params)}
-            style={{
-              // color: deepPurple[500],
-              fontSize: 15,
-              margin: 20,
-              cursor: "pointer",
-            }}
-          />
-        </>
-      ),
+      renderCell: (params) => {
+        const FList = Featuresvaluedetails?.filter((item) => {
+          return item.featuretype === params.row._id;
+        }).map((item) => {
+          <Box key={item}></Box>;
+          return {
+            id: item._id,
+            featurevalue: item.featurevalue,
+            featuretype: item.featuretype,
+          };
+        });
+        if (FList.length === 0) {
+          return (
+            <ThemeProvider theme={theme}>
+              <Chip icon={<SearchOffIcon />} label="View" />
+            </ThemeProvider>
+          );
+        } else {
+          return (
+            <ThemeProvider theme={theme}>
+              <Chip
+                onClick={() => setFeatureView(params)}
+                icon={<SearchIcon />}
+                label="View"
+              />
+            </ThemeProvider>
+          );
+        }
+      },
     },
   ];
 
@@ -508,7 +618,7 @@ function AttributesScreen() {
       <Box>
         {tabIndex === 0 ? (
           <>
-            {Attribute === 1 ? (
+            {Attributedit._id ? (
               <Box>
                 <ThemeProvider theme={theme}>
                   <Container
@@ -520,7 +630,7 @@ function AttributesScreen() {
 
                     <Box
                       component="form"
-                      onSubmit={handleSubmit(createHandler)}
+                      onSubmit={handleSubmit4(updatdHandler)}
                       sx={{
                         display: "flex",
                         width: "80%",
@@ -532,7 +642,7 @@ function AttributesScreen() {
                     >
                       <Typography variant="h5" sx={{ textAlign: "center" }}>
                         {" "}
-                        Create Attributes
+                        Update Attributes
                       </Typography>
                       <TextField
                         size="small"
@@ -540,22 +650,19 @@ function AttributesScreen() {
                         fullWidth
                         id="categoryTittel"
                         label="Name"
-                        name="name"
+                        name="attributupdtename"
+                        value={attributupdtename}
                         autoComplete="off"
-                        {...register("name", { required: true })}
-                        error={errors.name}
+                        onChange={(e) => setAttriNameupdate(e.target.value)}
                       />
-                      {errors.name && (
-                        <span className="formError">Name is required</span>
-                      )}
 
                       <FormControl fullWidth sx={{ mt: 1 }}>
                         <InputLabel>Attributes Type</InputLabel>
                         <Select
                           id="standard-simple-select"
-                          value={attributestype}
+                          value={attributupdte}
                           label="Attributes Type"
-                          onChange={(e) => setAttributestype(e.target.value)}
+                          onChange={(e) => setAttriupdate(e.target.value)}
                         >
                           {names.map((name) => (
                             <MenuItem key={name} value={name}>
@@ -579,164 +686,247 @@ function AttributesScreen() {
               </Box>
             ) : (
               <>
-                <>
-                  {AttributeValue === 2 ? (
-                    <Box>
-                      <ThemeProvider theme={theme}>
-                        <Container
-                          component="main"
-                          maxWidth="sm"
+                {Attribute === 1 ? (
+                  <Box>
+                    <ThemeProvider theme={theme}>
+                      <Container
+                        component="main"
+                        maxWidth="sm"
+                        sx={{
+                          my: { xs: 3, md: 6, lg: 10 },
+                          p: { xs: 2, md: 1 },
+                        }}
+                      >
+                        <CssBaseline />
+
+                        <Box
+                          component="form"
+                          onSubmit={handleSubmit(createHandler)}
                           sx={{
-                            my: { xs: 3, md: 6, lg: 10 },
-                            p: { xs: 2, md: 1 },
+                            display: "flex",
+                            width: "80%",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            margin: "0px 10%",
+                            borderRadius: "5px",
                           }}
                         >
-                          <CssBaseline />
-
-                          <Box
-                            component="form"
-                            onSubmit={handleSubmit1(createAttributeValue)}
-                            sx={{
-                              display: "flex",
-                              width: "100%",
-                              flexDirection: "column",
-                              alignItems: "center",
-                              borderRadius: "0px",
-                              p: 5,
-                              border: "1px solid #000000",
-                            }}
-                          >
-                            <Typography
-                              variant="h5"
-                              sx={{ textAlign: "center" }}
-                            >
-                              {" "}
-                              Create Attributes Value
-                            </Typography>
-                            <FormControl fullWidth sx={{ mt: 1 }}>
-                              <InputLabel>Attributes Type</InputLabel>
-                              <Select
-                                id="standard-simple-select"
-                                value={AttributeVlaue}
-                                label="Attributes Type"
-                                onChange={(e) =>
-                                  setAttributeVlaue(e.target.value)
-                                }
-                              >
-                                {attributeMasterdetails.map((detail) => (
-                                  <MenuItem key={detail._id} value={detail._id}>
-                                    {detail.attributename}
-                                  </MenuItem>
-                                ))}
-                              </Select>
-                            </FormControl>
-                            <TextField
-                              size="small"
-                              margin="normal"
-                              fullWidth
-                              id="value"
-                              label="Value"
-                              name="value"
-                              autoComplete="off"
-                              {...register1("value", { required: true })}
-                              error={errors1.value}
-                            />
-                            {errors1.value && (
-                              <span className="formError">
-                                value is required
-                              </span>
-                            )}
-                            <ColorPicker
-                              defaultValue="transparent"
-                              id="ColorPic"
-                              name="ColorPic"
-                              value={color}
-                              onChange={setColor}
-                            />
-                            {errors1.ColorPic && (
-                              <span className="formError">
-                                ColorPic is required
-                              </span>
-                            )}
-                            <Typography variant="h6">Texture</Typography>
-                            <TextField
-                              style={{ margin: "10px 0px" }}
-                              inputProps={{
-                                style: { fontSize: 14 },
-                                accept: "image/*",
-                              }}
-                              size="small"
-                              fullWidth
-                              type="file"
-                              id="imageFile"
-                              name="imageFile"
-                              autoComplete="off"
-                              // onChange={(e) => onSelectFile(e)}
-                              {...register1("imageFile", { required: true })}
-                              error={errors1.imageFile}
-                            />
-                            {errors1?.imageFile?.type === "required" && (
-                              <span className="formError">
-                                File is required
-                              </span>
-                            )}
-
-                            <Button
-                              fullWidth
-                              variant="contained"
-                              sx={{ mt: 3, mb: 2 }}
-                              type="submit"
-                            >
-                              Create
-                            </Button>
-                          </Box>
-                        </Container>
-                      </ThemeProvider>
-                    </Box>
-                  ) : (
-                    <>
-                      {viewitem?.id ? (
-                        <Box style={{ height: 400, width: "100%" }}>
-                          <DataGrid
-                            sx={{
-                              boxShadow: 10,
-                              borderRadius: 0,
-                              m: 2,
-                            }}
-                            columns={valuecolumn}
-                            rows={assemList}
-                            getRowId={(rows) => rows.id}
-                            pageSize={5}
-                            rowsPerPageOptions={[5]}
-                            checkboxSelection
+                          <Typography variant="h5" sx={{ textAlign: "center" }}>
+                            {" "}
+                            Create Attributes
+                          </Typography>
+                          <TextField
+                            size="small"
+                            margin="normal"
+                            fullWidth
+                            id="categoryTittel"
+                            label="Name"
+                            name="name"
+                            autoComplete="off"
+                            {...register("name", { required: true })}
+                            error={errors.name}
                           />
+                          {errors.name && (
+                            <span className="formError">Name is required</span>
+                          )}
+
+                          <FormControl fullWidth sx={{ mt: 1 }}>
+                            <InputLabel>Attributes Type</InputLabel>
+                            <Select
+                              id="standard-simple-select"
+                              value={attributestype}
+                              label="Attributes Type"
+                              onChange={(e) =>
+                                setAttributestype(e.target.value)
+                              }
+                            >
+                              {names.map((name) => (
+                                <MenuItem key={name} value={name}>
+                                  {name}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
+
+                          <Button
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                            type="submit"
+                          >
+                            Create
+                          </Button>
+                        </Box>
+                      </Container>
+                    </ThemeProvider>
+                  </Box>
+                ) : (
+                  <>
+                    <>
+                      {AttributeValue === 2 ? (
+                        <Box>
+                          <ThemeProvider theme={theme}>
+                            <Container
+                              component="main"
+                              maxWidth="sm"
+                              sx={{
+                                my: { xs: 3, md: 6, lg: 10 },
+                                p: { xs: 2, md: 1 },
+                              }}
+                            >
+                              <CssBaseline />
+
+                              <Box
+                                component="form"
+                                onSubmit={handleSubmit1(createAttributeValue)}
+                                sx={{
+                                  display: "flex",
+                                  width: "100%",
+                                  flexDirection: "column",
+                                  alignItems: "center",
+                                  borderRadius: "0px",
+                                  p: 5,
+                                  border: "1px solid #000000",
+                                }}
+                              >
+                                <Typography
+                                  variant="h5"
+                                  sx={{ textAlign: "center" }}
+                                >
+                                  {" "}
+                                  Create Attributes Value
+                                </Typography>
+                                <FormControl fullWidth sx={{ mt: 1 }}>
+                                  <InputLabel>Attributes Type</InputLabel>
+                                  <Select
+                                    id="standard-simple-select"
+                                    value={AttributeVlaue}
+                                    label="Attributes Type"
+                                    onChange={(e) =>
+                                      setAttributeVlaue(e.target.value)
+                                    }
+                                  >
+                                    {attributeMasterdetails.map((detail) => (
+                                      <MenuItem
+                                        key={detail._id}
+                                        value={detail._id}
+                                      >
+                                        {detail.attributename}
+                                      </MenuItem>
+                                    ))}
+                                  </Select>
+                                </FormControl>
+                                <TextField
+                                  size="small"
+                                  margin="normal"
+                                  fullWidth
+                                  id="value"
+                                  label="Value"
+                                  name="value"
+                                  autoComplete="off"
+                                  {...register1("value", { required: true })}
+                                  error={errors1.value}
+                                />
+                                {errors1.value && (
+                                  <span className="formError">
+                                    value is required
+                                  </span>
+                                )}
+                                <ColorPicker
+                                  defaultValue="transparent"
+                                  id="ColorPic"
+                                  name="ColorPic"
+                                  value={color}
+                                  onChange={setColor}
+                                />
+                                {errors1.ColorPic && (
+                                  <span className="formError">
+                                    ColorPic is required
+                                  </span>
+                                )}
+                                <Typography variant="h6">Texture</Typography>
+                                <TextField
+                                  style={{ margin: "10px 0px" }}
+                                  inputProps={{
+                                    style: { fontSize: 14 },
+                                    accept: "image/*",
+                                  }}
+                                  size="small"
+                                  fullWidth
+                                  type="file"
+                                  id="imageFile"
+                                  name="imageFile"
+                                  autoComplete="off"
+                                  // onChange={(e) => onSelectFile(e)}
+                                  {...register1("imageFile", {
+                                    required: true,
+                                  })}
+                                  error={errors1.imageFile}
+                                />
+                                {errors1?.imageFile?.type === "required" && (
+                                  <span className="formError">
+                                    File is required
+                                  </span>
+                                )}
+
+                                <Button
+                                  fullWidth
+                                  variant="contained"
+                                  sx={{ mt: 3, mb: 2 }}
+                                  type="submit"
+                                >
+                                  Create
+                                </Button>
+                              </Box>
+                            </Container>
+                          </ThemeProvider>
                         </Box>
                       ) : (
-                        <Box style={{ height: 400, width: "100%" }}>
-                          <DataGrid
-                            sx={{
-                              boxShadow: 10,
-                              borderRadius: 0,
-                              m: 2,
-                            }}
-                            columns={columns}
-                            rows={
-                              attributeMasterdetails
-                                ? attributeMasterdetails
-                                : ""
-                            }
-                            getRowId={(rows) => rows._id}
-                            VerticalAlignment="Center"
-                            rowHeight={64}
-                            pageSize={5}
-                            rowsPerPageOptions={[5]}
-                            checkboxSelection
-                          />
-                        </Box>
+                        <>
+                          {viewitem?.id ? (
+                            <Box style={{ height: 560, width: "100%" }}>
+                              <DataGrid
+                                sx={{
+                                  boxShadow: 10,
+                                  borderRadius: 0,
+                                  m: 2,
+                                }}
+                                columns={valuecolumn}
+                                rows={assemList}
+                                getRowId={(rows) => rows.id}
+                                pageSize={5}
+                                rowsPerPageOptions={[5]}
+                                checkboxSelection
+                              />
+                            </Box>
+                          ) : (
+                            <Box style={{ height: 560, width: "100%" }}>
+                              <DataGrid
+                                sx={{
+                                  boxShadow: 10,
+                                  borderRadius: 0,
+                                  m: 2,
+                                }}
+                                columns={columns}
+                                rows={
+                                  attributeMasterdetails
+                                    ? attributeMasterdetails
+                                    : ""
+                                }
+                                getRowId={(rows) => rows._id}
+                                VerticalAlignment="Center"
+                                rowHeight={64}
+                                pageSize={5}
+                                rowsPerPageOptions={[10]}
+                                checkboxSelection
+                              />
+                            </Box>
+                          )}
+                        </>
                       )}
                     </>
-                  )}
-                </>
+                  </>
+                )}
               </>
             )}
           </>
