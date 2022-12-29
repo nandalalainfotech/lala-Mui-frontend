@@ -3,6 +3,10 @@ import {
   BRAND_ADDRESS_REQUEST,
   BRAND_ADDRESS_RESET,
   BRAND_ADDRESS_SUCCESS,
+  BRAND_DELETE_FAIL,
+  BRAND_DELETE_REQUEST,
+  BRAND_DELETE_RESET,
+  BRAND_DELETE_SUCCESS,
   BRAND_FAIL,
   BRAND_REQUEST,
   BRAND_RESET,
@@ -56,6 +60,21 @@ export const brandUpdateReducer = (state = {}, action) => {
     case BRAND_UPDATE_FAIL:
       return { loading: false, error: action.payload };
     case BRAND_UPDATE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const brandDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case BRAND_DELETE_REQUEST:
+      return { loading: true };
+    case BRAND_DELETE_SUCCESS:
+      return { loading: false, success: true };
+    case BRAND_DELETE_FAIL:
+      return { loading: false, error: action.payload };
+    case BRAND_DELETE_RESET:
       return {};
     default:
       return state;

@@ -3,6 +3,9 @@ import {
   BRAND_ADDRESS_FAIL,
   BRAND_ADDRESS_REQUEST,
   BRAND_ADDRESS_SUCCESS,
+  BRAND_DELETE_FAIL,
+  BRAND_DELETE_REQUEST,
+  BRAND_DELETE_SUCCESS,
   BRAND_FAIL,
   BRAND_REQUEST,
   BRAND_SUCCESS,
@@ -71,6 +74,31 @@ export const updateBrand = (brandUpdate) => async (dispatch, getState) => {
         ? error.response.data.message
         : error.message;
     dispatch({ type: BRAND_UPDATE_FAIL, error: message });
+  }
+};
+
+export const deleteBrand = (brandId) => async (dispatch, getState) => {
+  dispatch({ type: BRAND_DELETE_REQUEST, payload: brandId });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+
+    // await Axios.delete(`/api/uploads/${productId}`, {
+    //   headers: { Authorization: `Bearer ${userInfo.token}` },
+    // });
+   
+    await Axios.delete(`/api/brand/${brandId}`, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    
+    dispatch({ type: BRAND_DELETE_SUCCESS });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: BRAND_DELETE_FAIL, payload: message });
   }
 };
 

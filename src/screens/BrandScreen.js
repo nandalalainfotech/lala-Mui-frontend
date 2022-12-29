@@ -15,6 +15,7 @@ import Avatar from "@mui/material/Avatar";
 import {
   brandAddressList,
   brandList,
+  deleteBrand,
   saveAddress,
   saveBrand,
   updateBrand,
@@ -28,6 +29,7 @@ import Dialog from "@mui/material/Dialog";
 import { deepPurple, red } from "@material-ui/core/colors";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import { BRAND_DELETE_RESET, BRAND_UPDATE_RESET } from "../constants/brandConstant";
 
 function BrandScreen() {
   const {
@@ -89,6 +91,7 @@ function BrandScreen() {
     event.target.reset();
     setEditor("");
     setckeditor("");
+    setBranditem(0)
   };
 
   const updateHandler = (e) => {
@@ -103,6 +106,7 @@ function BrandScreen() {
     );
     window.confirm("Brand Details Updated SuccessFully!!");
     setNewname("");
+    setbrnadindId(0);
 
   };
 
@@ -134,9 +138,21 @@ function BrandScreen() {
   const brandAddreList = useSelector((state) => state.brandAddreList);
   const { brandAddLists } = brandAddreList;
 
+  const brandUpdate = useSelector((state) => state.brandUpdate);
+  const { success: successUpdate,} = brandUpdate;
+
+  const brandDelete = useSelector((state) => state.brandDelete);
+  const { success: successDelete } = brandDelete;
+
   useEffect(() => {
     dispatch(brandList());
     dispatch(brandAddressList());
+    if (successUpdate) {
+      dispatch({ type: BRAND_UPDATE_RESET });
+    }
+    if (successDelete) {
+      dispatch({ type: BRAND_DELETE_RESET });
+    }
   }, [dispatch]);
 
   const editHandler = (brandIndId) => {
@@ -146,7 +162,12 @@ function BrandScreen() {
     setNeweditor(brandIndId.editor);
   };
 
-  const deleteHandler = () => {};
+  const deleteHandler = (params) => {
+    if (window.confirm("Are you sure to delete?")) {
+      dispatch(deleteBrand(params.row._id));
+    }
+    setBranditem(0);
+  };
 
   let count = 1;
   function indexstart() {
@@ -213,7 +234,7 @@ function BrandScreen() {
           />
 
           <DeleteIcon
-            onClick={() => deleteHandler(params.row)}
+            onClick={() => deleteHandler(params)}
             style={{ color: red[500], fontSize: 15, cursor: "pointer" }}
           />
         </>
