@@ -6,10 +6,12 @@ import {
   BRAND_FAIL,
   BRAND_REQUEST,
   BRAND_SUCCESS,
+  BRAND_UPDATE_FAIL,
+  BRAND_UPDATE_REQUEST,
+  BRAND_UPDATE_SUCCESS,
 } from "../constants/brandConstant";
 
 export const saveBrand = (brand) => async (dispatch, getState) => {
-  console.log("brand", brand);
   const fd = new FormData();
   fd.append("image", brand.imageFile[0]);
   fd.append("name", brand.name);
@@ -48,6 +50,30 @@ export const brandList = () => async (dispatch) => {
   }
 };
 
+export const updateBrand = (brandUpdate) => async (dispatch, getState) => {
+  const fd = new FormData();
+  fd.append("image", brandUpdate.imageFile[0]);
+  fd.append("name", brandUpdate.name);
+  fd.append("editor", brandUpdate.editor);
+  fd.append("ckeditor", brandUpdate.ckeditor);
+  dispatch({ type: BRAND_UPDATE_REQUEST });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = await Axios.put(`/api/brand/${brandUpdate._id}`,fd, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    dispatch({ type: BRAND_UPDATE_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: BRAND_UPDATE_FAIL, error: message });
+  }
+};
+
 export const saveAddress = (address) => async (dispatch, getState) => {
   dispatch({ type: BRAND_ADDRESS_REQUEST });
   const {
@@ -57,7 +83,6 @@ export const saveAddress = (address) => async (dispatch, getState) => {
     const { data } = await Axios.post("/api/brandaddress", address, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
-    console.log("data", data);
     dispatch({
       type: BRAND_ADDRESS_SUCCESS,
       payload: data.appsetting,

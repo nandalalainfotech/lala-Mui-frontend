@@ -17,6 +17,7 @@ import {
   brandList,
   saveAddress,
   saveBrand,
+  updateBrand,
 } from "../actions/brandAction";
 import { DataGrid } from "@mui/x-data-grid";
 import FormControl from "@mui/material/FormControl";
@@ -24,6 +25,9 @@ import Select from "@mui/material/Select";
 import { MenuItem } from "../../node_modules/@material-ui/core/index";
 import CardMedia from "@mui/material/CardMedia";
 import Dialog from "@mui/material/Dialog";
+import { deepPurple, red } from "@material-ui/core/colors";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 
 function BrandScreen() {
   const {
@@ -37,18 +41,26 @@ function BrandScreen() {
   const [brandaddress, setBrandaddress] = useState(0);
   const [supplier, setSupplier] = useState(0);
   const [brandId, setBrandId] = useState("");
-
   const [editor, setEditor] = useState("");
   const [ckeditor, setckeditor] = useState("");
-
   const [newImg, setNewimg] = useState();
   const [open, setOpen] = useState(false);
+  const [brnadindId, setbrnadindId] = useState(0);
+
+
+  ////////---Update---/////
+  const [newname, setNewname] = useState("");
+  const [newckeditor, setNewckeditor] = useState("");
+  const [neweditor, setNeweditor] = useState("");
+
+
 
   const handleTabChange = (event, newBrand) => {
     setBrand(newBrand);
     setBranditem(0);
     setBrandaddress(0);
     setSupplier(0);
+    setbrnadindId(0);
   };
 
   const handleClickOpen = (e) => {
@@ -77,6 +89,21 @@ function BrandScreen() {
     event.target.reset();
     setEditor("");
     setckeditor("");
+  };
+
+  const updateHandler = (e) => {
+    dispatch(
+      updateBrand({
+        _id: brnadindId._id,
+        name: newname,
+        imageFile: e.imageFile,
+        editor: neweditor,
+        ckeditor: newckeditor,
+      })
+    );
+    window.confirm("Brand Details Updated SuccessFully!!");
+    setNewname("");
+
   };
 
   const addresssubmitHandler = (e) => {
@@ -112,14 +139,34 @@ function BrandScreen() {
     dispatch(brandAddressList());
   }, [dispatch]);
 
+  const editHandler = (brandIndId) => {
+    setbrnadindId(brandIndId);
+    setNewname(brandIndId.name);
+    setNewckeditor(brandIndId.ckeditor);
+    setNeweditor(brandIndId.editor);
+  };
+
+  const deleteHandler = () => {};
+
+  let count = 1;
+  function indexstart() {
+    let numericId = count++;
+    return numericId;
+  }
+
   const columns = [
+    {
+      headerName: "ID",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+      valueGetter: indexstart,
+    },
     {
       field: "imageFile",
       headerName: "Logo",
       flex: 1,
       headerClassName: "super-app-theme--header",
       renderCell: (params) => {
-        console.log("params", params);
         return (
           <Avatar
             onClick={handleClickOpen}
@@ -148,14 +195,36 @@ function BrandScreen() {
       flex: 1,
       headerClassName: "super-app-theme--header",
     },
+    {
+      field: "actions",
+      headerName: "ACTIONS",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+      renderCell: (params) => (
+        <>
+          <EditIcon
+            onClick={() => editHandler(params.row)}
+            style={{
+              color: deepPurple[500],
+              fontSize: 15,
+              margin: 20,
+              cursor: "pointer",
+            }}
+          />
+
+          <DeleteIcon
+            onClick={() => deleteHandler(params.row)}
+            style={{ color: red[500], fontSize: 15, cursor: "pointer" }}
+          />
+        </>
+      ),
+    },
   ];
 
   function getbrandId(brandAddLists) {
-    console.log("brandAddLists", brandAddLists);
-    let cat = brandAddLists.row.brand
+    return brandAddLists.row.brand
       ? brandLists.find((x) => x._id === brandAddLists.row.brand)?.name
-      : "arraa";
-    return cat;
+      : "null";
   }
 
   const brandcolumns = [
@@ -208,14 +277,38 @@ function BrandScreen() {
       flex: 1,
       headerClassName: "super-app-theme--header",
     },
+    {
+      field: "actions",
+      headerName: "ACTIONS",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+      renderCell: (products) => (
+        <>
+          <EditIcon
+            onClick={() => editHandler(products)}
+            style={{
+              color: deepPurple[500],
+              fontSize: 15,
+              margin: 20,
+              cursor: "pointer",
+            }}
+          />
+
+          <DeleteIcon
+            onClick={() => deleteHandler(products)}
+            style={{ color: red[500], fontSize: 15, cursor: "pointer" }}
+          />
+        </>
+      ),
+    },
   ];
 
   return (
     <>
       <Box sx={{}}>
         {brand === 0 && (
-          <Box>
-            {branditem === 1 ? (
+          <>
+            {brnadindId ? (
               <Box sx={{ display: "flex" }}>
                 <Typography sx={{ fontSize: "25px", fontWeight: "600" }}>
                   Add New
@@ -230,11 +323,11 @@ function BrandScreen() {
                 </Box>
               </Box>
             ) : (
-              <>
-                {brandaddress === 1 ? (
+              <Box>
+                {branditem === 1 ? (
                   <Box sx={{ display: "flex" }}>
                     <Typography sx={{ fontSize: "25px", fontWeight: "600" }}>
-                      Add New Address
+                      Add New
                     </Typography>
 
                     <Box sx={{ ml: "auto" }}>
@@ -246,41 +339,63 @@ function BrandScreen() {
                     </Box>
                   </Box>
                 ) : (
-                  <Box sx={{ display: "flex" }}>
-                    <Typography sx={{ fontSize: "25px", fontWeight: "600" }}>
-                      Brands
-                    </Typography>
+                  <>
+                    {brandaddress === 1 ? (
+                      <Box sx={{ display: "flex" }}>
+                        <Typography
+                          sx={{ fontSize: "25px", fontWeight: "600" }}
+                        >
+                          Add New Address
+                        </Typography>
 
-                    <Box sx={{ ml: "auto" }}>
-                      <Button
-                        sx={{ mr: 3 }}
-                        variant="contained"
-                        startIcon={<AddCircleIcon />}
-                        onClick={() => setBranditem(1)}
-                      >
-                        Add new brand
-                      </Button>
+                        <Box sx={{ ml: "auto" }}>
+                          <Button variant="outlined" sx={{ mr: 2 }}>
+                            Recommended Modules and Services
+                          </Button>
 
-                      <Button
-                        sx={{ mr: 2 }}
-                        variant="contained"
-                        startIcon={<AddCircleIcon />}
-                        onClick={() => setBrandaddress(1)}
-                      >
-                        Add new brand address
-                      </Button>
+                          <Button variant="outlined">Help</Button>
+                        </Box>
+                      </Box>
+                    ) : (
+                      <Box sx={{ display: "flex" }}>
+                        <Typography
+                          sx={{ fontSize: "25px", fontWeight: "600" }}
+                        >
+                          Brands
+                        </Typography>
 
-                      <Button variant="outlined" sx={{ mr: 2 }}>
-                        Recommended Modules and Services
-                      </Button>
+                        <Box sx={{ ml: "auto" }}>
+                          <Button
+                            sx={{ mr: 3 }}
+                            variant="contained"
+                            startIcon={<AddCircleIcon />}
+                            onClick={() => setBranditem(1)}
+                          >
+                            Add new brand
+                          </Button>
 
-                      <Button variant="outlined">Help</Button>
-                    </Box>
-                  </Box>
+                          <Button
+                            sx={{ mr: 2 }}
+                            variant="contained"
+                            startIcon={<AddCircleIcon />}
+                            onClick={() => setBrandaddress(1)}
+                          >
+                            Add new brand address
+                          </Button>
+
+                          <Button variant="outlined" sx={{ mr: 2 }}>
+                            Recommended Modules and Services
+                          </Button>
+
+                          <Button variant="outlined">Help</Button>
+                        </Box>
+                      </Box>
+                    )}
+                  </>
                 )}
-              </>
+              </Box>
             )}
-          </Box>
+          </>
         )}
         {brand === 1 && (
           <Box sx={{ display: "flex" }}>
@@ -317,18 +432,21 @@ function BrandScreen() {
         </Box>
         <Box>
           {brand === 0 && (
-            <Box>
-              {branditem === 1 ? (
+            <>
+              {brnadindId ? (
                 <ThemeProvider theme={theme}>
                   <Container
                     component="main"
                     maxWidth="sm"
-                    sx={{ my: { xs: 5, md: 6, lg: 5 }, p: { xs: 2, md: 1 } }}
+                    sx={{
+                      my: { xs: 5, md: 6, lg: 5 },
+                      p: { xs: 2, md: 1 },
+                    }}
                   >
                     <CssBaseline />
                     <Box
                       component="form"
-                      onSubmit={handleSubmit(submitHandler)}
+                      onSubmit={handleSubmit(updateHandler)}
                       sx={{
                         display: "flex",
                         width: "100%",
@@ -343,47 +461,44 @@ function BrandScreen() {
                         Brands
                       </Typography>
 
-                      <Typography>Name*:</Typography>
+                      <Typography>Name*</Typography>
                       <TextField
                         sx={{ mt: "10px" }}
                         required
-                        id="name"
-                        name="name"
+                        id="newname"
+                        name="newname"
                         autoComplete="off"
-                        {...register("name", { required: true })}
-                        error={errors.name}
+                        value={newname}
+                        onChange={(e) => setNewname(e)}
                       />
-                      {errors.name && (
-                        <span className="formError">Name is required</span>
-                      )}
 
                       <Box sx={{ mt: "20px" }}>
                         <Typography sx={{ mb: "10px" }}>
-                          Short Description:
+                          Short Description
                         </Typography>
                         <CKEditor
                           editor={ClassicEditor}
+                          data={newckeditor}
                           onChange={(event, editor) => {
                             const data = editor.getData();
-                            setckeditor({ data });
+                            setNewckeditor({ data });
                           }}
                         />
                       </Box>
 
                       <Box sx={{ mt: "20px" }}>
-                        <Typography sx={{ mb: "10px" }}>
-                          Description:
-                        </Typography>
+                        <Typography sx={{ mb: "10px" }}>Description</Typography>
                         <CKEditor
                           editor={ClassicEditor}
+                          data={neweditor}
                           onChange={(event, editor) => {
                             const data = editor.getData();
-                            setEditor({ data });
+                            setNeweditor({ data });
                           }}
                         />
                       </Box>
 
-                      <Typography sx={{ mt: "10px" }}>Logo:</Typography>
+                      <Typography sx={{ mt: "10px" }}>Logo</Typography>
                       <TextField
                         style={{ margin: "10px 0px" }}
                         inputProps={{
@@ -403,20 +518,28 @@ function BrandScreen() {
                         <span className="formError">File is required</span>
                       )}
 
+                      <CardMedia
+                        component="img"
+                        height="125"
+                        sx={{ border: "1px solid black", width: "25%" }}
+                        image={`/api/brand/view/${brnadindId.filename}`}
+                        alt={brnadindId.filename}
+                      />
+
                       <Button
                         fullWidth
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                         type="submit"
                       >
-                        Submit
+                        Update
                       </Button>
                     </Box>
                   </Container>
                 </ThemeProvider>
               ) : (
-                <>
-                  {brandaddress === 1 ? (
+                <Box>
+                  {branditem === 1 ? (
                     <ThemeProvider theme={theme}>
                       <Container
                         component="main"
@@ -429,7 +552,7 @@ function BrandScreen() {
                         <CssBaseline />
                         <Box
                           component="form"
-                          onSubmit={handleSubmit(addresssubmitHandler)}
+                          onSubmit={handleSubmit(submitHandler)}
                           sx={{
                             display: "flex",
                             width: "100%",
@@ -444,193 +567,65 @@ function BrandScreen() {
                             Brands
                           </Typography>
 
-                          <Typography>Brand</Typography>
-                          <FormControl fullWidth sx={{ mt: 1 }}>
-                            <Select
-                              id="standard-simple-select"
-                              value={brandId}
-                              onChange={(e) => setBrandId(e.target.value)}
-                            >
-                              {brandLists?.map((item, index) => (
-                                <MenuItem key={index} value={item._id}>
-                                  {item.name}
-                                </MenuItem>
-                              ))}
-                            </Select>
-                          </FormControl>
-
-                          <Typography sx={{ mt: "10px" }}>
-                            Last Name*
-                          </Typography>
+                          <Typography>Name*:</Typography>
                           <TextField
                             sx={{ mt: "10px" }}
                             required
-                            id="lastname"
-                            name="lastname"
+                            id="name"
+                            name="name"
                             autoComplete="off"
-                            {...register("lastname", { required: true })}
-                            error={errors.lastname}
+                            {...register("name", { required: true })}
+                            error={errors.name}
                           />
-                          {errors.lastname && (
-                            <span className="formError">
-                              Last Name is required
-                            </span>
+                          {errors.name && (
+                            <span className="formError">Name is required</span>
                           )}
 
-                          <Typography sx={{ mt: "10px" }}>
-                            First Name*
-                          </Typography>
-                          <TextField
-                            sx={{ mt: "10px" }}
-                            required
-                            id="firstname"
-                            name="firstname"
-                            autoComplete="off"
-                            {...register("firstname", { required: true })}
-                            error={errors.firstname}
-                          />
-                          {errors.firstname && (
-                            <span className="formError">
-                              First Name is required
-                            </span>
-                          )}
+                          <Box sx={{ mt: "20px" }}>
+                            <Typography sx={{ mb: "10px" }}>
+                              Short Description:
+                            </Typography>
+                            <CKEditor
+                              editor={ClassicEditor}
+                              onChange={(event, editor) => {
+                                const data = editor.getData();
+                                setckeditor({ data });
+                              }}
+                            />
+                          </Box>
 
-                          <Typography sx={{ mt: "10px" }}>Address*</Typography>
-                          <TextField
-                            sx={{ mt: "10px" }}
-                            required
-                            id="address"
-                            name="address"
-                            autoComplete="off"
-                            {...register("address", { required: true })}
-                            error={errors.address}
-                          />
-                          {errors.address && (
-                            <span className="formError">
-                              Address is required
-                            </span>
-                          )}
+                          <Box sx={{ mt: "20px" }}>
+                            <Typography sx={{ mb: "10px" }}>
+                              Description:
+                            </Typography>
+                            <CKEditor
+                              editor={ClassicEditor}
+                              onChange={(event, editor) => {
+                                const data = editor.getData();
+                                setEditor({ data });
+                              }}
+                            />
+                          </Box>
 
-                          <Typography sx={{ mt: "10px" }}>Address2</Typography>
+                          <Typography sx={{ mt: "10px" }}>Logo:</Typography>
                           <TextField
-                            sx={{ mt: "10px" }}
-                            required
-                            id="address2"
-                            name="address2"
+                            style={{ margin: "10px 0px" }}
+                            inputProps={{
+                              style: { fontSize: 14 },
+                              accept: "image/*",
+                            }}
+                            fullWidth
+                            type="file"
+                            id="imageFile"
+                            name="imageFile"
                             autoComplete="off"
-                            {...register("address2", { required: true })}
-                            error={errors.address2}
+                            // onChange={(e) => onSelectFile(e)}
+                            {...register("imageFile", { required: true })}
+                            error={errors.imageFile}
                           />
-                          {errors.address2 && (
-                            <span className="formError">
-                              Address is required
-                            </span>
+                          {errors?.imageFile?.type === "required" && (
+                            <span className="formError">File is required</span>
                           )}
-
-                          <Typography sx={{ mt: "10px" }}>
-                            Zip/Postal code
-                          </Typography>
-                          <TextField
-                            sx={{ mt: "10px" }}
-                            required
-                            id="zip"
-                            name="zip"
-                            autoComplete="off"
-                            {...register("zip", { required: true })}
-                            error={errors.zip}
-                          />
-                          {errors.zip && (
-                            <span className="formError">
-                              Zip/Postal code is required
-                            </span>
-                          )}
-
-                          <Typography sx={{ mt: "10px" }}>City*</Typography>
-                          <TextField
-                            sx={{ mt: "10px" }}
-                            required
-                            id="city"
-                            name="city"
-                            autoComplete="off"
-                            {...register("city", { required: true })}
-                            error={errors.city}
-                          />
-                          {errors.city && (
-                            <span className="formError">City is required</span>
-                          )}
-
-                          <Typography sx={{ mt: "10px" }}>Country*</Typography>
-                          <TextField
-                            sx={{ mt: "10px" }}
-                            required
-                            id="country"
-                            name="country"
-                            autoComplete="off"
-                            {...register("country", { required: true })}
-                            error={errors.country}
-                          />
-                          {errors.country && (
-                            <span className="formError">
-                              Country is required
-                            </span>
-                          )}
-
-                          <Typography sx={{ mt: "10px" }}>DNI</Typography>
-                          <TextField
-                            sx={{ mt: "10px" }}
-                            required
-                            id="dni"
-                            name="dni"
-                            autoComplete="off"
-                            {...register("dni", { required: true })}
-                            error={errors.dni}
-                          />
-                          {errors.dni && (
-                            <span className="formError">DNI is required</span>
-                          )}
-
-                          <Typography sx={{ mt: "10px" }}>Phone</Typography>
-                          <TextField
-                            sx={{ mt: "10px" }}
-                            required
-                            id="phone"
-                            name="phone"
-                            autoComplete="off"
-                            {...register("phone", { required: true })}
-                            error={errors.phone}
-                          />
-                          {errors.phone && (
-                            <span className="formError">Phone is required</span>
-                          )}
-
-                          <Typography sx={{ mt: "10px" }}>
-                            Mobile phone
-                          </Typography>
-                          <TextField
-                            sx={{ mt: "10px" }}
-                            required
-                            id="mobile"
-                            name="mobile"
-                            autoComplete="off"
-                            {...register("mobile", { required: true })}
-                            error={errors.mobile}
-                          />
-                          {errors.mobile && (
-                            <span className="formError">
-                              Mobile phone is required
-                            </span>
-                          )}
-
-                          <Typography sx={{ mt: "10px" }}>Other</Typography>
-                          <TextField
-                            sx={{ mt: "10px" }}
-                            required
-                            id="other"
-                            name="other"
-                            autoComplete="off"
-                            {...register("other", { required: true })}
-                            error={errors.other}
-                          />
 
                           <Button
                             fullWidth
@@ -645,110 +640,364 @@ function BrandScreen() {
                     </ThemeProvider>
                   ) : (
                     <>
-                      <Typography
-                        sx={{
-                          mt: "20px",
-                          fontSize: "18px",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        Brands
-                      </Typography>
-                      <Box
-                        sx={{
-                          height: 560,
-                          width: "100%",
+                      {brandaddress === 1 ? (
+                        <ThemeProvider theme={theme}>
+                          <Container
+                            component="main"
+                            maxWidth="sm"
+                            sx={{
+                              my: { xs: 5, md: 6, lg: 5 },
+                              p: { xs: 2, md: 1 },
+                            }}
+                          >
+                            <CssBaseline />
+                            <Box
+                              component="form"
+                              onSubmit={handleSubmit(addresssubmitHandler)}
+                              sx={{
+                                display: "flex",
+                                width: "100%",
+                                flexDirection: "column",
+                                alignItems: "left",
+                                borderRadius: "2px",
+                                p: 5,
+                                border: "1px solid black",
+                              }}
+                            >
+                              <Typography
+                                variant="h4"
+                                sx={{ textAlign: "center" }}
+                              >
+                                Brands
+                              </Typography>
 
-                          "& .super-app-theme--header": {
-                            backgroundColor: "#808080",
-                            color: "#ffffff",
-                          },
-                          "& .css-1jbbcbn-MuiDataGrid-columnHeaderTitle": {
-                            fontSize: 16,
-                          },
-                          ".css-o8hwua-MuiDataGrid-root .MuiDataGrid-cellContent":
-                            {
-                              fontSize: 13,
-                            },
-                          ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-                            {
-                              backgroundColor: "#330033",
-                              color: "#ffffff",
-                            },
-                          ".css-h4y409-MuiList-root": {
-                            display: "grid",
-                          },
-                        }}
-                      >
-                        <DataGrid
-                          sx={{
-                            boxShadow: 10,
-                            borderRadius: 0,
-                            m: 2,
-                          }}
-                          columns={columns}
-                          rows={brandLists ? brandLists : ""}
-                          getRowId={(rows) => rows._id}
-                          VerticalAlignment="Center"
-                          rowHeight={64}
-                          pagination
-                        />
-                      </Box>
+                              <Typography>Brand</Typography>
+                              <FormControl fullWidth sx={{ mt: 1 }}>
+                                <Select
+                                  id="standard-simple-select"
+                                  value={brandId}
+                                  onChange={(e) => setBrandId(e.target.value)}
+                                >
+                                  {brandLists?.map((item, index) => (
+                                    <MenuItem key={index} value={item._id}>
+                                      {item.name}
+                                    </MenuItem>
+                                  ))}
+                                </Select>
+                              </FormControl>
 
-                      <Typography
-                        sx={{
-                          mt: "20px",
-                          fontSize: "18px",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        Brands Address Values
-                      </Typography>
-                      <Box
-                        sx={{
-                          height: 560,
-                          width: "100%",
+                              <Typography sx={{ mt: "10px" }}>
+                                Last Name*
+                              </Typography>
+                              <TextField
+                                sx={{ mt: "10px" }}
+                                required
+                                id="lastname"
+                                name="lastname"
+                                autoComplete="off"
+                                {...register("lastname", { required: true })}
+                                error={errors.lastname}
+                              />
+                              {errors.lastname && (
+                                <span className="formError">
+                                  Last Name is required
+                                </span>
+                              )}
 
-                          "& .super-app-theme--header": {
-                            backgroundColor: "#808080",
-                            color: "#ffffff",
-                          },
-                          "& .css-1jbbcbn-MuiDataGrid-columnHeaderTitle": {
-                            fontSize: 16,
-                          },
-                          ".css-o8hwua-MuiDataGrid-root .MuiDataGrid-cellContent":
-                            {
-                              fontSize: 13,
-                            },
-                          ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-                            {
-                              backgroundColor: "#330033",
-                              color: "#ffffff",
-                            },
-                          ".css-h4y409-MuiList-root": {
-                            display: "grid",
-                          },
-                        }}
-                      >
-                        <DataGrid
-                          sx={{
-                            boxShadow: 10,
-                            borderRadius: 0,
-                            m: 2,
-                          }}
-                          columns={brandcolumns}
-                          rows={brandAddLists ? brandAddLists : ""}
-                          getRowId={(rows) => rows._id}
-                          VerticalAlignment="Center"
-                          rowHeight={64}
-                          pagination
-                        />
-                      </Box>
+                              <Typography sx={{ mt: "10px" }}>
+                                First Name*
+                              </Typography>
+                              <TextField
+                                sx={{ mt: "10px" }}
+                                required
+                                id="firstname"
+                                name="firstname"
+                                autoComplete="off"
+                                {...register("firstname", { required: true })}
+                                error={errors.firstname}
+                              />
+                              {errors.firstname && (
+                                <span className="formError">
+                                  First Name is required
+                                </span>
+                              )}
+
+                              <Typography sx={{ mt: "10px" }}>
+                                Address*
+                              </Typography>
+                              <TextField
+                                sx={{ mt: "10px" }}
+                                required
+                                id="address"
+                                name="address"
+                                autoComplete="off"
+                                {...register("address", { required: true })}
+                                error={errors.address}
+                              />
+                              {errors.address && (
+                                <span className="formError">
+                                  Address is required
+                                </span>
+                              )}
+
+                              <Typography sx={{ mt: "10px" }}>
+                                Address2
+                              </Typography>
+                              <TextField
+                                sx={{ mt: "10px" }}
+                                required
+                                id="address2"
+                                name="address2"
+                                autoComplete="off"
+                                {...register("address2", { required: true })}
+                                error={errors.address2}
+                              />
+                              {errors.address2 && (
+                                <span className="formError">
+                                  Address is required
+                                </span>
+                              )}
+
+                              <Typography sx={{ mt: "10px" }}>
+                                Zip/Postal code
+                              </Typography>
+                              <TextField
+                                sx={{ mt: "10px" }}
+                                required
+                                id="zip"
+                                name="zip"
+                                autoComplete="off"
+                                {...register("zip", { required: true })}
+                                error={errors.zip}
+                              />
+                              {errors.zip && (
+                                <span className="formError">
+                                  Zip/Postal code is required
+                                </span>
+                              )}
+
+                              <Typography sx={{ mt: "10px" }}>City*</Typography>
+                              <TextField
+                                sx={{ mt: "10px" }}
+                                required
+                                id="city"
+                                name="city"
+                                autoComplete="off"
+                                {...register("city", { required: true })}
+                                error={errors.city}
+                              />
+                              {errors.city && (
+                                <span className="formError">
+                                  City is required
+                                </span>
+                              )}
+
+                              <Typography sx={{ mt: "10px" }}>
+                                Country*
+                              </Typography>
+                              <TextField
+                                sx={{ mt: "10px" }}
+                                required
+                                id="country"
+                                name="country"
+                                autoComplete="off"
+                                {...register("country", { required: true })}
+                                error={errors.country}
+                              />
+                              {errors.country && (
+                                <span className="formError">
+                                  Country is required
+                                </span>
+                              )}
+
+                              <Typography sx={{ mt: "10px" }}>DNI</Typography>
+                              <TextField
+                                sx={{ mt: "10px" }}
+                                required
+                                id="dni"
+                                name="dni"
+                                autoComplete="off"
+                                {...register("dni", { required: true })}
+                                error={errors.dni}
+                              />
+                              {errors.dni && (
+                                <span className="formError">
+                                  DNI is required
+                                </span>
+                              )}
+
+                              <Typography sx={{ mt: "10px" }}>Phone</Typography>
+                              <TextField
+                                sx={{ mt: "10px" }}
+                                required
+                                id="phone"
+                                name="phone"
+                                autoComplete="off"
+                                {...register("phone", { required: true })}
+                                error={errors.phone}
+                              />
+                              {errors.phone && (
+                                <span className="formError">
+                                  Phone is required
+                                </span>
+                              )}
+
+                              <Typography sx={{ mt: "10px" }}>
+                                Mobile phone
+                              </Typography>
+                              <TextField
+                                sx={{ mt: "10px" }}
+                                required
+                                id="mobile"
+                                name="mobile"
+                                autoComplete="off"
+                                {...register("mobile", { required: true })}
+                                error={errors.mobile}
+                              />
+                              {errors.mobile && (
+                                <span className="formError">
+                                  Mobile phone is required
+                                </span>
+                              )}
+
+                              <Typography sx={{ mt: "10px" }}>Other</Typography>
+                              <TextField
+                                sx={{ mt: "10px" }}
+                                required
+                                id="other"
+                                name="other"
+                                autoComplete="off"
+                                {...register("other", { required: true })}
+                                error={errors.other}
+                              />
+
+                              <Button
+                                fullWidth
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2 }}
+                                type="submit"
+                              >
+                                Save
+                              </Button>
+                            </Box>
+                          </Container>
+                        </ThemeProvider>
+                      ) : (
+                        <>
+                          <Typography
+                            sx={{
+                              mt: "20px",
+                              fontSize: "18px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Brands
+                          </Typography>
+                          <Box
+                            sx={{
+                              height: 560,
+                              width: "100%",
+
+                              "& .super-app-theme--header": {
+                                backgroundColor: "#808080",
+                                color: "#ffffff",
+                              },
+                              "& .css-1jbbcbn-MuiDataGrid-columnHeaderTitle": {
+                                fontSize: 16,
+                              },
+                              ".css-o8hwua-MuiDataGrid-root .MuiDataGrid-cellContent":
+                                {
+                                  fontSize: 13,
+                                },
+                              ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
+                                {
+                                  backgroundColor: "#330033",
+                                  color: "#ffffff",
+                                },
+                              ".css-h4y409-MuiList-root": {
+                                display: "grid",
+                              },
+                              ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer": {
+                                backgroundColor: "#808080",
+                              }
+                            }}
+                          >
+                            <DataGrid
+                              sx={{
+                                boxShadow: 10,
+                                borderRadius: 0,
+                                m: 2,
+                              }}
+                              columns={columns}
+                              rows={brandLists ? brandLists : ""}
+                              getRowId={(rows) => rows._id}
+                              VerticalAlignment="Center"
+                              rowHeight={64}
+                              pagination
+                              checkboxSelection
+                            />
+                          </Box>
+
+                          <Typography
+                            sx={{
+                              mt: "20px",
+                              fontSize: "18px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Brands Address Values
+                          </Typography>
+                          <Box
+                            sx={{
+                              height: 560,
+                              width: "100%",
+
+                              "& .super-app-theme--header": {
+                                backgroundColor: "#808080",
+                                color: "#ffffff",
+                              },
+                              "& .css-1jbbcbn-MuiDataGrid-columnHeaderTitle": {
+                                fontSize: 16,
+                              },
+                              ".css-o8hwua-MuiDataGrid-root .MuiDataGrid-cellContent":
+                                {
+                                  fontSize: 13,
+                                },
+                              ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
+                                {
+                                  backgroundColor: "#330033",
+                                  color: "#ffffff",
+                                },
+                              ".css-h4y409-MuiList-root": {
+                                display: "grid",
+                              },
+                              ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer": {
+                                backgroundColor: "#808080",
+                              }
+                            }}
+                          >
+                            <DataGrid
+                              sx={{
+                                boxShadow: 10,
+                                borderRadius: 0,
+                                m: 2,
+                              }}
+                              columns={brandcolumns}
+                              rows={brandAddLists ? brandAddLists : ""}
+                              getRowId={(rows) => rows._id}
+                              VerticalAlignment="Center"
+                              rowHeight={64}
+                              pagination
+                              checkboxSelection
+                            />
+                          </Box>
+                        </>
+                      )}
                     </>
                   )}
-                </>
+                </Box>
               )}
-            </Box>
+            </>
           )}
           {brand === 1 && (
             <Box>
