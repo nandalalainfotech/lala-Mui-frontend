@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { ATTRIBUTE_CREATE_FAIL, ATTRIBUTE_CREATE_REQUEST, ATTRIBUTE_CREATE_SUCCESS, ATTRIBUTE_LIST_FAIL, ATTRIBUTE_LIST_REQUEST, ATTRIBUTE_LIST_SUCCESS, ATTRIBUTE_VALUE_CREATE_FAIL, ATTRIBUTE_VALUE_CREATE_REQUEST, ATTRIBUTE_VALUE_CREATE_SUCCESS, ATTRIBUTE_VALUE_LIST_FAIL, ATTRIBUTE_VALUE_LIST_REQUEST, ATTRIBUTE_VALUE_LIST_SUCCESS, FEATURES_CREATE_FAIL, FEATURES_CREATE_REQUEST, FEATURES_CREATE_SUCCESS, FEATURES_LIST_FAIL, FEATURES_LIST_REQUEST, FEATURES_LIST_SUCCESS, FEATURES_VALUE_CREATE_FAIL, FEATURES_VALUE_CREATE_REQUEST, FEATURES_VALUE_CREATE_SUCCESS, FEATURES_VALUE_LIST_FAIL, FEATURES_VALUE_LIST_REQUEST, FEATURES_VALUE_LIST_SUCCESS } from '../constants/AttributesConstants';
+import { ATTRIBUTE_CREATE_FAIL, ATTRIBUTE_CREATE_REQUEST, ATTRIBUTE_CREATE_SUCCESS, ATTRIBUTE_DELETE_FAIL, ATTRIBUTE_DELETE_REQUEST, ATTRIBUTE_DELETE_SUCCESS, ATTRIBUTE_LIST_FAIL, ATTRIBUTE_LIST_REQUEST, ATTRIBUTE_LIST_SUCCESS, ATTRIBUTE_UPDATE_FAIL, ATTRIBUTE_UPDATE_REQUEST, ATTRIBUTE_UPDATE_SUCCESS, ATTRIBUTE_VALUE_CREATE_FAIL, ATTRIBUTE_VALUE_CREATE_REQUEST, ATTRIBUTE_VALUE_CREATE_SUCCESS, ATTRIBUTE_VALUE_LIST_FAIL, ATTRIBUTE_VALUE_LIST_REQUEST, ATTRIBUTE_VALUE_LIST_SUCCESS, FEATURES_CREATE_FAIL, FEATURES_CREATE_REQUEST, FEATURES_CREATE_SUCCESS, FEATURES_LIST_FAIL, FEATURES_LIST_REQUEST, FEATURES_LIST_SUCCESS, FEATURES_VALUE_CREATE_FAIL, FEATURES_VALUE_CREATE_REQUEST, FEATURES_VALUE_CREATE_SUCCESS, FEATURES_VALUE_LIST_FAIL, FEATURES_VALUE_LIST_REQUEST, FEATURES_VALUE_LIST_SUCCESS } from '../constants/AttributesConstants';
 
   export const AttributeCategory = (Attribute) => async (dispatch, getState) => {
     dispatch({ type:  ATTRIBUTE_CREATE_REQUEST });
@@ -149,5 +149,55 @@ export const FeaturesValueListDetails = () => async (dispatch) => {
   } catch (error) {
     dispatch({ type: FEATURES_VALUE_LIST_FAIL, payload: error.message });
 
+  }
+};
+
+// *********************************update Section*******************************************
+
+export const updateAttribute = (attributedit) => async (dispatch, getState) => {
+  
+  dispatch({ type: ATTRIBUTE_UPDATE_REQUEST, payload: attributedit });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = await Axios.put(`/api/Attribute/${attributedit._id}`, attributedit, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    dispatch({ type:ATTRIBUTE_UPDATE_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type:ATTRIBUTE_UPDATE_FAIL, error: message });
+  }
+};
+
+
+// ***************************************************
+export const deleteAttribute = (productId) => async (dispatch, getState) => {
+  console.log("productId",productId);
+  dispatch({ type: ATTRIBUTE_DELETE_REQUEST, payload: productId });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+
+    // await Axios.delete(`/api/uploads/${productId}`, {
+    //   headers: { Authorization: `Bearer ${userInfo.token}` },
+    // });
+   
+    await Axios.delete(`/api/Attribute/${productId}`, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    
+    dispatch({ type: ATTRIBUTE_DELETE_SUCCESS });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: ATTRIBUTE_DELETE_FAIL, payload: message });
   }
 };

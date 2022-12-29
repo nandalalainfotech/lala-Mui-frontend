@@ -3,9 +3,17 @@ import {
   ATTRIBUTE_CREATE_REQUEST,
   ATTRIBUTE_CREATE_RESET,
   ATTRIBUTE_CREATE_SUCCESS,
+  ATTRIBUTE_DELETE_FAIL,
+  ATTRIBUTE_DELETE_REQUEST,
+  ATTRIBUTE_DELETE_RESET,
+  ATTRIBUTE_DELETE_SUCCESS,
   ATTRIBUTE_LIST_FAIL,
   ATTRIBUTE_LIST_REQUEST,
   ATTRIBUTE_LIST_SUCCESS,
+  ATTRIBUTE_UPDATE_FAIL,
+  ATTRIBUTE_UPDATE_REQUEST,
+  ATTRIBUTE_UPDATE_RESET,
+  ATTRIBUTE_UPDATE_SUCCESS,
   ATTRIBUTE_VALUE_CREATE_FAIL,
   ATTRIBUTE_VALUE_CREATE_REQUEST,
   ATTRIBUTE_VALUE_CREATE_RESET,
@@ -28,6 +36,7 @@ import {
   FEATURES_VALUE_LIST_REQUEST,
   FEATURES_VALUE_LIST_SUCCESS,
 } from "../constants/AttributesConstants";
+
 
 export const AttributeCreateReducer = (state = {}, action) => {
   switch (action.type) {
@@ -162,6 +171,39 @@ export const FeaturesValueListReducer = (
       };
     case FEATURES_VALUE_LIST_FAIL:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+// *********************update section*******************
+export const attributeUpdateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ATTRIBUTE_UPDATE_REQUEST:
+      return { loading: true };
+    case ATTRIBUTE_UPDATE_SUCCESS:
+      return { loading: false, success: true };
+    case ATTRIBUTE_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    case ATTRIBUTE_UPDATE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+
+// ********************Delete section************************
+export const attributeDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ATTRIBUTE_DELETE_REQUEST:
+      return { loading: true };
+    case ATTRIBUTE_DELETE_SUCCESS:
+      return { loading: false, success: true };
+    case ATTRIBUTE_DELETE_FAIL:
+      return { loading: false, error: action.payload };
+    case ATTRIBUTE_DELETE_RESET:
+      return {};
     default:
       return state;
   }
