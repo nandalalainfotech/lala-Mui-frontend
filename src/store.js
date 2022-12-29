@@ -70,7 +70,7 @@ import { applicationSettingReducer, appSettingListReducer } from "./reducers/app
 import { otpListReducer, userOtpReducer } from "./reducers/otpReducer";
 import { categoryCreateReducer, categoryListReducer, categorymasterCreateReducer, categoryMasterListReducer, childcategoryCreateReducer, ChildCategoryListReducer, subcategoryCreateReducer, subCategoryListReducer } from "./reducers/categoryReducers";
 import { AttributeCreateReducer, attributeDeleteReducer, AttributeMasterListReducer, attributeUpdateReducer, AttributeValueCreateReducer, AttributeValueListReducer, FeaturesCreateReducer, FeaturesListReducer, FeaturesValueCreateReducer, FeaturesValueListReducer } from "./reducers/AttributeReducers";
-import { brandAddressListReducer, brandAddressReducer, brandListReducer, brandReducer, brandUpdateReducer } from "./reducers/brandReducer";
+import { brandAddressListReducer, brandAddressReducer, brandDeleteReducer, brandListReducer, brandReducer, brandUpdateReducer } from "./reducers/brandReducer";
 import { categmastercreateReducer, categoryMasterallListReducer, CategoryMasterDeleteReducer } from "./reducers/categoryMasterReducer";
 // import { cartKidReducer } from './reducers/cartKidReducers';
 // import { suitDetailsReducer, suitListReducer, suitReviewCreateReducer } from './reducers/suitReducers';
@@ -127,7 +127,8 @@ const reducer = combineReducers({
   brandReduce: brandListReducer,
   brandAddressCreate: brandAddressReducer,
   brandAddreList: brandAddressListReducer,
-  brandUpdate:brandUpdateReducer,
+  brandUpdate: brandUpdateReducer,
+  brandDelete: brandDeleteReducer,
   applicationList: appSettingListReducer,
   userOtp: userOtpReducer,
   otpLists: otpListReducer,
