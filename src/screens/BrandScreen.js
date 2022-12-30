@@ -60,6 +60,9 @@ function BrandScreen() {
   const [newname, setNewname] = useState("");
   const [newckeditor, setNewckeditor] = useState("");
   const [neweditor, setNeweditor] = useState("");
+  const [newchecked, setNewchecked] = useState("");
+
+  console.log("newchecked", newchecked);
 
   // ----Update Brand----------
   const [brandAddId, setBrandAddId] = useState("");
@@ -83,7 +86,7 @@ function BrandScreen() {
     setBrandaddress(0);
     setSupplier(0);
     setbrnadindId(0);
-    setBrandAddId(0)
+    setBrandAddId(0);
   };
 
   const handleClickOpen = (e) => {
@@ -102,6 +105,8 @@ function BrandScreen() {
   const switchHandler = (event) => {
     setchecked(!event.target.checked);
   };
+
+  
 
   const submitHandler = (e) => {
     dispatch(
@@ -128,6 +133,7 @@ function BrandScreen() {
         imageFile: e.imageFile,
         editor: neweditor,
         ckeditor: newckeditor,
+        checked: newchecked,
       })
     );
     window.confirm("Brand Details Updated SuccessFully!!");
@@ -176,8 +182,8 @@ function BrandScreen() {
       })
     );
     window.confirm("Brand Address Details Updated SuccessFully!!");
-    setBrandAddId(0)
-  }
+    setBrandAddId(0);
+  };
 
   const brandReduce = useSelector((state) => state.brandReduce);
   const { brandLists } = brandReduce;
@@ -203,10 +209,12 @@ function BrandScreen() {
   }, [dispatch]);
 
   const editHandler = (brandIndId) => {
+    console.log("brandIndId", brandIndId);
     setbrnadindId(brandIndId);
     setNewname(brandIndId.name);
     setNewckeditor(brandIndId.ckeditor);
     setNeweditor(brandIndId.editor);
+    setNewchecked(brandIndId.checked)
   };
 
   const editAddressHandler = (brandAddId) => {
@@ -573,7 +581,7 @@ function BrandScreen() {
                         name="newname"
                         autoComplete="off"
                         value={newname}
-                        onChange={(e) => setNewname(e)}
+                        onChange={(e) => setNewname(e.target.value)}
                       />
 
                       <Box sx={{ mt: "20px" }}>
@@ -630,13 +638,20 @@ function BrandScreen() {
                         alt={brnadindId.filename}
                       />
 
+                      <Typography sx={{mt: "10px"}}>Enabled</Typography>
+                      <Switch
+                        color="primary"
+                        checked={newchecked}
+                        onChange={(e) => setNewchecked(e.target.value)}
+                      />
+
                       <Button
                         fullWidth
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                         type="submit"
                       >
-                        Update
+                         Update
                       </Button>
                     </Box>
                   </Container>
@@ -731,7 +746,7 @@ function BrandScreen() {
                             <span className="formError">File is required</span>
                           )}
 
-                          <Typography>Enable</Typography>
+                          <Typography>Enabled</Typography>
                           <Switch
                             color="primary"
                             onChange={switchHandler}
@@ -997,206 +1012,222 @@ function BrandScreen() {
                         <>
                           {brandAddId._id ? (
                             <ThemeProvider theme={theme}>
-                            <Container
-                              component="main"
-                              maxWidth="sm"
-                              sx={{
-                                my: { xs: 5, md: 6, lg: 5 },
-                                p: { xs: 2, md: 1 },
-                              }}
-                            >
-                              <CssBaseline />
-                              <Box
-                                component="form"
-                                onSubmit={handleSubmit(addressUpdateHandler)}
+                              <Container
+                                component="main"
+                                maxWidth="sm"
                                 sx={{
-                                  display: "flex",
-                                  width: "100%",
-                                  flexDirection: "column",
-                                  alignItems: "left",
-                                  borderRadius: "2px",
-                                  p: 5,
-                                  border: "1px solid black",
+                                  my: { xs: 5, md: 6, lg: 5 },
+                                  p: { xs: 2, md: 1 },
                                 }}
                               >
-                                <Typography
-                                  variant="h4"
-                                  sx={{ textAlign: "center" }}
+                                <CssBaseline />
+                                <Box
+                                  component="form"
+                                  onSubmit={handleSubmit(addressUpdateHandler)}
+                                  sx={{
+                                    display: "flex",
+                                    width: "100%",
+                                    flexDirection: "column",
+                                    alignItems: "left",
+                                    borderRadius: "2px",
+                                    p: 5,
+                                    border: "1px solid black",
+                                  }}
                                 >
-                                  Brands
-                                </Typography>
-  
-                                <Typography>Brand</Typography>
-                                <FormControl fullWidth sx={{ mt: 1 }}>
-                                  <Select
-                                    id="standard-simple-select"
-                                    value={newbrandId}
-                                    onChange={(e) => setNewbrandId(e.target.value)}
+                                  <Typography
+                                    variant="h4"
+                                    sx={{ textAlign: "center" }}
                                   >
-                                    {brandLists?.map((item, index) => (
-                                      <MenuItem key={index} value={item._id}>
-                                        {item.name}
-                                      </MenuItem>
-                                    ))}
-                                  </Select>
-                                </FormControl>
-  
-                                <Typography sx={{ mt: "10px" }}>
-                                  Last Name*
-                                </Typography>
-                                <TextField
-                                  sx={{ mt: "10px" }}
-                                  required
-                                  id="newlastname"
-                                  name="newlastname"
-                                  autoComplete="off"
-                                  value={newlastname}
-                                  onChange={(e) => setNewlastname(e.target.value)}
-                                />
-                               
-  
-                                <Typography sx={{ mt: "10px" }}>
-                                  First Name*
-                                </Typography>
-                                <TextField
-                                  sx={{ mt: "10px" }}
-                                  required
-                                  id="newfirstname"
-                                  name="newfirstname"
-                                  autoComplete="off"
-                                  value={newfirstname}
-                                  onChange={(e) => setNewfirstname(e.target.value)}
-                                />
-                               
-  
-                                <Typography sx={{ mt: "10px" }}>
-                                  Address*
-                                </Typography>
-                                <TextField
-                                  sx={{ mt: "10px" }}
-                                  required
-                                  id="newaddress"
-                                  name="newaddress"
-                                  autoComplete="off"
-                                  value={newaddress}
-                                  onChange={(e) => setNewaddress(e.target.value)}
-                                />
-                               
-  
-                                <Typography sx={{ mt: "10px" }}>
-                                  Address2
-                                </Typography>
-                                <TextField
-                                  sx={{ mt: "10px" }}
-                                  required
-                                  id="newaddress2"
-                                  name="newaddress2"
-                                  autoComplete="off"
-                                  value={newaddress2}
-                                  onChange={(e) => setNewaddress2(e.target.value)}
-                                />
-                                
-  
-                                <Typography sx={{ mt: "10px" }}>
-                                  Zip/Postal code
-                                </Typography>
-                                <TextField
-                                  sx={{ mt: "10px" }}
-                                  required
-                                  id="newzip"
-                                  name="newzip"
-                                  autoComplete="off"
-                                  value={newzip}
-                                  onChange={(e) => setNewzip(e.target.value)}
-                                />
-                                
-  
-                                <Typography sx={{ mt: "10px" }}>City*</Typography>
-                                <TextField
-                                  sx={{ mt: "10px" }}
-                                  required
-                                  id="newcity"
-                                  name="newcity"
-                                  autoComplete="off"
-                                  value={newcity}
-                                  onChange={(e) => setNewcity(e.target.value)}
-                                />
-                                
-  
-                                <Typography sx={{ mt: "10px" }}>
-                                  Country*
-                                </Typography>
-                                <TextField
-                                  sx={{ mt: "10px" }}
-                                  required
-                                  id="newcountry"
-                                  name="newcountry"
-                                  autoComplete="off"
-                                  value={newcountry}
-                                  onChange={(e) => setNewcountry(e.target.value)}
-                                />
-                               
-  
-                                <Typography sx={{ mt: "10px" }}>DNI</Typography>
-                                <TextField
-                                  sx={{ mt: "10px" }}
-                                  required
-                                  id="newdni"
-                                  name="newdni"
-                                  autoComplete="off"
-                                  value={newdni}
-                                  onChange={(e) => setNewdni(e.target.value)}
-                                />
-                               
-  
-                                <Typography sx={{ mt: "10px" }}>Phone</Typography>
-                                <TextField
-                                  sx={{ mt: "10px" }}
-                                  required
-                                  id="newphone"
-                                  name="newphone"
-                                  autoComplete="off"
-                                  value={newphone}
-                                  onChange={(e) => setNewphone(e.target.value)}
-                                />
-                               
-  
-                                <Typography sx={{ mt: "10px" }}>
-                                  Mobile phone
-                                </Typography>
-                                <TextField
-                                  sx={{ mt: "10px" }}
-                                  required
-                                  id="newmobile"
-                                  name="newmobile"
-                                  autoComplete="off"
-                                  value={newmobile}
-                                  onChange={(e) => setNewmobile(e.target.value)}
-                                />
-                               
-  
-                                <Typography sx={{ mt: "10px" }}>Other</Typography>
-                                <TextField
-                                  sx={{ mt: "10px" }}
-                                  required
-                                  id="newother"
-                                  name="newother"
-                                  autoComplete="off"
-                                  value={newother}
-                                  onChange={(e) => setNewother(e.target.value)}
-                                />
-  
-                                <Button
-                                  fullWidth
-                                  variant="contained"
-                                  sx={{ mt: 3, mb: 2 }}
-                                  type="submit"
-                                >
-                                  Save
-                                </Button>
-                              </Box>
-                            </Container>
-                          </ThemeProvider>
+                                    Brands
+                                  </Typography>
+
+                                  <Typography>Brand</Typography>
+                                  <FormControl fullWidth sx={{ mt: 1 }}>
+                                    <Select
+                                      id="standard-simple-select"
+                                      value={newbrandId}
+                                      onChange={(e) =>
+                                        setNewbrandId(e.target.value)
+                                      }
+                                    >
+                                      {brandLists?.map((item, index) => (
+                                        <MenuItem key={index} value={item._id}>
+                                          {item.name}
+                                        </MenuItem>
+                                      ))}
+                                    </Select>
+                                  </FormControl>
+
+                                  <Typography sx={{ mt: "10px" }}>
+                                    Last Name*
+                                  </Typography>
+                                  <TextField
+                                    sx={{ mt: "10px" }}
+                                    required
+                                    id="newlastname"
+                                    name="newlastname"
+                                    autoComplete="off"
+                                    value={newlastname}
+                                    onChange={(e) =>
+                                      setNewlastname(e.target.value)
+                                    }
+                                  />
+
+                                  <Typography sx={{ mt: "10px" }}>
+                                    First Name*
+                                  </Typography>
+                                  <TextField
+                                    sx={{ mt: "10px" }}
+                                    required
+                                    id="newfirstname"
+                                    name="newfirstname"
+                                    autoComplete="off"
+                                    value={newfirstname}
+                                    onChange={(e) =>
+                                      setNewfirstname(e.target.value)
+                                    }
+                                  />
+
+                                  <Typography sx={{ mt: "10px" }}>
+                                    Address*
+                                  </Typography>
+                                  <TextField
+                                    sx={{ mt: "10px" }}
+                                    required
+                                    id="newaddress"
+                                    name="newaddress"
+                                    autoComplete="off"
+                                    value={newaddress}
+                                    onChange={(e) =>
+                                      setNewaddress(e.target.value)
+                                    }
+                                  />
+
+                                  <Typography sx={{ mt: "10px" }}>
+                                    Address2
+                                  </Typography>
+                                  <TextField
+                                    sx={{ mt: "10px" }}
+                                    required
+                                    id="newaddress2"
+                                    name="newaddress2"
+                                    autoComplete="off"
+                                    value={newaddress2}
+                                    onChange={(e) =>
+                                      setNewaddress2(e.target.value)
+                                    }
+                                  />
+
+                                  <Typography sx={{ mt: "10px" }}>
+                                    Zip/Postal code
+                                  </Typography>
+                                  <TextField
+                                    sx={{ mt: "10px" }}
+                                    required
+                                    id="newzip"
+                                    name="newzip"
+                                    autoComplete="off"
+                                    value={newzip}
+                                    onChange={(e) => setNewzip(e.target.value)}
+                                  />
+
+                                  <Typography sx={{ mt: "10px" }}>
+                                    City*
+                                  </Typography>
+                                  <TextField
+                                    sx={{ mt: "10px" }}
+                                    required
+                                    id="newcity"
+                                    name="newcity"
+                                    autoComplete="off"
+                                    value={newcity}
+                                    onChange={(e) => setNewcity(e.target.value)}
+                                  />
+
+                                  <Typography sx={{ mt: "10px" }}>
+                                    Country*
+                                  </Typography>
+                                  <TextField
+                                    sx={{ mt: "10px" }}
+                                    required
+                                    id="newcountry"
+                                    name="newcountry"
+                                    autoComplete="off"
+                                    value={newcountry}
+                                    onChange={(e) =>
+                                      setNewcountry(e.target.value)
+                                    }
+                                  />
+
+                                  <Typography sx={{ mt: "10px" }}>
+                                    DNI
+                                  </Typography>
+                                  <TextField
+                                    sx={{ mt: "10px" }}
+                                    required
+                                    id="newdni"
+                                    name="newdni"
+                                    autoComplete="off"
+                                    value={newdni}
+                                    onChange={(e) => setNewdni(e.target.value)}
+                                  />
+
+                                  <Typography sx={{ mt: "10px" }}>
+                                    Phone
+                                  </Typography>
+                                  <TextField
+                                    sx={{ mt: "10px" }}
+                                    required
+                                    id="newphone"
+                                    name="newphone"
+                                    autoComplete="off"
+                                    value={newphone}
+                                    onChange={(e) =>
+                                      setNewphone(e.target.value)
+                                    }
+                                  />
+
+                                  <Typography sx={{ mt: "10px" }}>
+                                    Mobile phone
+                                  </Typography>
+                                  <TextField
+                                    sx={{ mt: "10px" }}
+                                    required
+                                    id="newmobile"
+                                    name="newmobile"
+                                    autoComplete="off"
+                                    value={newmobile}
+                                    onChange={(e) =>
+                                      setNewmobile(e.target.value)
+                                    }
+                                  />
+
+                                  <Typography sx={{ mt: "10px" }}>
+                                    Other
+                                  </Typography>
+                                  <TextField
+                                    sx={{ mt: "10px" }}
+                                    required
+                                    id="newother"
+                                    name="newother"
+                                    autoComplete="off"
+                                    value={newother}
+                                    onChange={(e) =>
+                                      setNewother(e.target.value)
+                                    }
+                                  />
+
+                                  <Button
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2 }}
+                                    type="submit"
+                                  >
+                                    Save
+                                  </Button>
+                                </Box>
+                              </Container>
+                            </ThemeProvider>
                           ) : (
                             <>
                               <Typography

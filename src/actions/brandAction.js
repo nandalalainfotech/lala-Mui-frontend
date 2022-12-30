@@ -58,11 +58,13 @@ export const brandList = () => async (dispatch) => {
 };
 
 export const updateBrand = (brandUpdate) => async (dispatch, getState) => {
+  console.log("updateBrand", updateBrand);
   const fd = new FormData();
   fd.append("image", brandUpdate.imageFile[0]);
   fd.append("name", brandUpdate.name);
   fd.append("editor", brandUpdate.editor);
   fd.append("ckeditor", brandUpdate.ckeditor);
+  fd.append("checked", brandUpdate.checked);
   dispatch({ type: BRAND_UPDATE_REQUEST });
   const {
     userSignin: { userInfo },
@@ -137,7 +139,7 @@ export const brandAddressList = () => async (dispatch) => {
 };
 
 export const updateBrandAddress = (brandAddUpdate) => async (dispatch, getState) => {
-  console.log("brandAddUpdate", brandAddUpdate);
+  
   dispatch({ type: BRAND_ADDRESS_UPDATE_REQUEST });
   const {
     userSignin: { userInfo },
