@@ -3697,9 +3697,9 @@ dispatch(AttributeMasterListDetails());
                 </ListItemButton>
                 <Collapse in={sidopen} timeout="auto" unmountOnExit>
                   <List component="div" disablePadding>
-                    <ListItemButton sx={{ pl: 4 }}>
-                      <ListItemText sx={{ color: "#fff" }} primary="Products" />
-                     
+                  <ListItemButton sx={{ pl: 4 }}>
+                      
+                      <Link to='/product' style={{textDecoration:"none"}}><ListItemText sx={{ color: "#fff" }} primary="Product" /></Link>
                     </ListItemButton>
                     <ListItemButton sx={{ pl: 4 }}>
                       
@@ -3774,7 +3774,7 @@ dispatch(AttributeMasterListDetails());
               <Route path="/otp" element={<OtpScreen />}></Route>
               <Route path="/otpVerify" element={<OtpVerifyScreen />}></Route>
               <Route path="/text" element={<TextEditScreen />}></Route>
-              <Route path="/presta" element={<PrestaProductScreen />}></Route>
+              <Route path="/product" element={<PrestaProductScreen />}></Route>
               <Route path="/brand" element={<BrandScreen />}></Route>
               <Route
                 path="/regotpVerify"
