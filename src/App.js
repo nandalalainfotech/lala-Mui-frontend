@@ -90,8 +90,8 @@ import CategoryMasterFormScreen from "./screens/CategoryMasterFormScreen";
 import { AttributeMasterListDetails } from "./actions/AttributeActions";
 import AttributesScreen from "./screens/AttributesScreen";
 import TextEditScreen from "./screens/TextEditScreen";
-import PrestaProductScreen from "./screens/PrestaProductScreen";
 import BrandScreen from "./screens/BrandScreen";
+import CatProductScreen from "./screens/CatProductScreen";
 // import Image from "/image/logo.png";
 // Side bar section start*************************************
 const drawerWidth = 240;
@@ -3774,8 +3774,9 @@ dispatch(AttributeMasterListDetails());
               <Route path="/otp" element={<OtpScreen />}></Route>
               <Route path="/otpVerify" element={<OtpVerifyScreen />}></Route>
               <Route path="/text" element={<TextEditScreen />}></Route>
-              <Route path="/product" element={<PrestaProductScreen />}></Route>
+              {/* <Route path="/product" element={<PrestaProductScreen />}></Route> */}
               <Route path="/brand" element={<BrandScreen />}></Route>
+              <Route path="/product" element={<CatProductScreen />}></Route>
               <Route
                 path="/regotpVerify"
                 element={<RegOtpVerifyScreen />}
