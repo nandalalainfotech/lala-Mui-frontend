@@ -3732,6 +3732,7 @@ dispatch(AttributeMasterListDetails());
               ></Route>
                <Route path="/categorymaster" element={<CategoryMasterScreen/>}></Route>
                <Route path="/categoryFormmaster" element={<CategoryMasterFormScreen/>}></Route>
+               <Route path="/categorymaster/:id" element={<CategoryMasterFormScreen/>}></Route>
               <Route path="/categorys" element={<CategoryScreen />}></Route>
               <Route path="/seller/:id" element={<SellerScreen />}></Route>
               <Route path="/cart/:id" element={<CartScreen />}></Route>
