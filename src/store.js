@@ -69,7 +69,7 @@ import {
 import { applicationSettingReducer, appSettingListReducer } from "./reducers/applicationReducer";
 import { otpListReducer, userOtpReducer } from "./reducers/otpReducer";
 import { categoryCreateReducer, categoryListReducer, categorymasterCreateReducer, categoryMasterListReducer, childcategoryCreateReducer, ChildCategoryListReducer, subcategoryCreateReducer, subCategoryListReducer } from "./reducers/categoryReducers";
-import { AttributeCreateReducer, attributeDeleteReducer, AttributeMasterListReducer, attributeUpdateReducer, AttributeValueCreateReducer, AttributeValueListReducer, FeaturesCreateReducer, FeaturesListReducer, FeaturesValueCreateReducer, FeaturesValueListReducer } from "./reducers/AttributeReducers";
+import { AttributeCreateReducer, attributeDeleteReducer, AttributeMasterListReducer, attributeUpdateReducer, AttributeValueCreateReducer, attributeValueDeleteReducer, AttributeValueListReducer, attributeValueUpdateReducer, featureDeleteReducer, FeaturesCreateReducer, FeaturesListReducer, FeaturesValueCreateReducer, FeaturesValueListReducer, featureValueDeleteReducer, feautureUpdateReducer, feautureValueUpdateReducer } from "./reducers/AttributeReducers";
 import { brandAddressDeleteReducer, brandAddressListReducer, brandAddressReducer, brandAddressUpdateReducer, brandDeleteReducer, brandListReducer, brandReducer, brandUpdateReducer } from "./reducers/brandReducer";
 import { categmastercreateReducer, categoryMasterallListReducer, CategoryMasterDeleteReducer } from "./reducers/categoryMasterReducer";
 // import { cartKidReducer } from './reducers/cartKidReducers';
@@ -152,6 +152,12 @@ const reducer = combineReducers({
   FeaturesValueList:FeaturesValueListReducer,
   attributeUpdate:attributeUpdateReducer,
   attributeDelete:attributeDeleteReducer,
+  attributeValueUpdate:attributeValueUpdateReducer,
+  attributeValueDelete:attributeValueDeleteReducer,
+  feautureUpdate:feautureUpdateReducer,
+  feautureValueUpdate:feautureValueUpdateReducer,
+  featureDelete:featureDeleteReducer,
+  featureValueDelete:featureValueDeleteReducer,
   // cart: cartKidReducer,
   userSignin: userSigninReducer,
   userAccount: userAccountReducer,
