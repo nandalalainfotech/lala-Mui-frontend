@@ -18,23 +18,47 @@ import {
   ATTRIBUTE_VALUE_CREATE_REQUEST,
   ATTRIBUTE_VALUE_CREATE_RESET,
   ATTRIBUTE_VALUE_CREATE_SUCCESS,
+  ATTRIBUTE_VALUE_DELETE_FAIL,
+  ATTRIBUTE_VALUE_DELETE_REQUEST,
+  ATTRIBUTE_VALUE_DELETE_RESET,
+  ATTRIBUTE_VALUE_DELETE_SUCCESS,
   ATTRIBUTE_VALUE_LIST_FAIL,
   ATTRIBUTE_VALUE_LIST_REQUEST,
   ATTRIBUTE_VALUE_LIST_SUCCESS,
+  ATTRIBUTE_VALUE_UPDATE_FAIL,
+  ATTRIBUTE_VALUE_UPDATE_REQUEST,
+  ATTRIBUTE_VALUE_UPDATE_RESET,
+  ATTRIBUTE_VALUE_UPDATE_SUCCESS,
   FEATURES_CREATE_FAIL,
   FEATURES_CREATE_REQUEST,
   FEATURES_CREATE_RESET,
   FEATURES_CREATE_SUCCESS,
+  FEATURES_DELETE_FAIL,
+  FEATURES_DELETE_REQUEST,
+  FEATURES_DELETE_RESET,
+  FEATURES_DELETE_SUCCESS,
   FEATURES_LIST_FAIL,
   FEATURES_LIST_REQUEST,
   FEATURES_LIST_SUCCESS,
+  FEATURES_UPDATE_FAIL,
+  FEATURES_UPDATE_REQUEST,
+  FEATURES_UPDATE_RESET,
+  FEATURES_UPDATE_SUCCESS,
   FEATURES_VALUE_CREATE_FAIL,
   FEATURES_VALUE_CREATE_REQUEST,
   FEATURES_VALUE_CREATE_RESET,
   FEATURES_VALUE_CREATE_SUCCESS,
+  FEATURES_VALUE_DELETE_FAIL,
+  FEATURES_VALUE_DELETE_REQUEST,
+  FEATURES_VALUE_DELETE_RESET,
+  FEATURES_VALUE_DELETE_SUCCESS,
   FEATURES_VALUE_LIST_FAIL,
   FEATURES_VALUE_LIST_REQUEST,
   FEATURES_VALUE_LIST_SUCCESS,
+  FEATURES_VALUE_UPDATE_FAIL,
+  FEATURES_VALUE_UPDATE_REQUEST,
+  FEATURES_VALUE_UPDATE_RESET,
+  FEATURES_VALUE_UPDATE_SUCCESS,
 } from "../constants/AttributesConstants";
 
 
@@ -193,6 +217,54 @@ export const attributeUpdateReducer = (state = {}, action) => {
 };
 
 
+export const attributeValueUpdateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ATTRIBUTE_VALUE_UPDATE_REQUEST:
+      return { loading: true };
+    case ATTRIBUTE_VALUE_UPDATE_SUCCESS:
+      return { loading: false, success: true };
+    case ATTRIBUTE_VALUE_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    case ATTRIBUTE_VALUE_UPDATE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+// ************************Feature section****************************
+export const feautureUpdateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case FEATURES_UPDATE_REQUEST:
+      return { loading: true };
+    case FEATURES_UPDATE_SUCCESS:
+      return { loading: false, success: true };
+    case FEATURES_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    case FEATURES_UPDATE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+
+export const feautureValueUpdateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case FEATURES_VALUE_UPDATE_REQUEST:
+      return { loading: true };
+    case FEATURES_VALUE_UPDATE_SUCCESS:
+      return { loading: false, success: true };
+    case FEATURES_VALUE_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    case FEATURES_VALUE_UPDATE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+
 // ********************Delete section************************
 export const attributeDeleteReducer = (state = {}, action) => {
   switch (action.type) {
@@ -203,6 +275,53 @@ export const attributeDeleteReducer = (state = {}, action) => {
     case ATTRIBUTE_DELETE_FAIL:
       return { loading: false, error: action.payload };
     case ATTRIBUTE_DELETE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const attributeValueDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ATTRIBUTE_VALUE_DELETE_REQUEST:
+      return { loading: true };
+    case ATTRIBUTE_VALUE_DELETE_SUCCESS:
+      return { loading: false, success: true };
+    case ATTRIBUTE_VALUE_DELETE_FAIL:
+      return { loading: false, error: action.payload };
+    case ATTRIBUTE_VALUE_DELETE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+
+// ************************Feature section****************************
+export const featureDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case FEATURES_DELETE_REQUEST:
+      return { loading: true };
+    case FEATURES_DELETE_SUCCESS:
+      return { loading: false, success: true };
+    case FEATURES_DELETE_FAIL:
+      return { loading: false, error: action.payload };
+    case FEATURES_DELETE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const featureValueDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case FEATURES_VALUE_DELETE_REQUEST:
+      return { loading: true };
+    case FEATURES_VALUE_DELETE_SUCCESS:
+      return { loading: false, success: true };
+    case FEATURES_VALUE_DELETE_FAIL:
+      return { loading: false, error: action.payload };
+    case FEATURES_VALUE_DELETE_RESET:
       return {};
     default:
       return state;
