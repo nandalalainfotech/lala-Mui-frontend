@@ -3,6 +3,9 @@ import {
   BRAND_ADDRESS_FAIL,
   BRAND_ADDRESS_REQUEST,
   BRAND_ADDRESS_SUCCESS,
+  BRAND_ADDRESS_UPDATE_FAIL,
+  BRAND_ADDRESS_UPDATE_REQUEST,
+  BRAND_ADDRESS_UPDATE_SUCCESS,
   BRAND_DELETE_FAIL,
   BRAND_DELETE_REQUEST,
   BRAND_DELETE_SUCCESS,
@@ -18,6 +21,7 @@ export const saveBrand = (brand) => async (dispatch, getState) => {
   const fd = new FormData();
   fd.append("image", brand.imageFile[0]);
   fd.append("name", brand.name);
+  fd.append("checked", brand.checked);
   fd.append("editor", brand.editor.data);
   fd.append("ckeditor", brand.ckeditor.data);
   dispatch({ type: BRAND_REQUEST });
@@ -83,10 +87,6 @@ export const deleteBrand = (brandId) => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState();
   try {
-
-    // await Axios.delete(`/api/uploads/${productId}`, {
-    //   headers: { Authorization: `Bearer ${userInfo.token}` },
-    // });
    
     await Axios.delete(`/api/brand/${brandId}`, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -133,5 +133,46 @@ export const brandAddressList = () => async (dispatch) => {
     dispatch({ type: BRAND_ADDRESS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: BRAND_ADDRESS_FAIL, payload: error.message });
+  }
+};
+
+export const updateBrandAddress = (brandAddUpdate) => async (dispatch, getState) => {
+  console.log("brandAddUpdate", brandAddUpdate);
+  dispatch({ type: BRAND_ADDRESS_UPDATE_REQUEST });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = await Axios.put(`/api/brandaddress/${brandAddUpdate.id}`,brandAddUpdate, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    dispatch({ type: BRAND_ADDRESS_UPDATE_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: BRAND_ADDRESS_UPDATE_FAIL, error: message });
+  }
+};
+
+export const deleteBrandAddress = (brandAddressId) => async (dispatch, getState) => {
+  dispatch({ type: BRAND_DELETE_REQUEST, payload: brandAddressId });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+   
+    await Axios.delete(`/api/brandaddress/${brandAddressId}`, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    
+    dispatch({ type: BRAND_DELETE_SUCCESS });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: BRAND_DELETE_FAIL, payload: message });
   }
 };

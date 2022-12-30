@@ -3,6 +3,10 @@ import {
   BRAND_ADDRESS_REQUEST,
   BRAND_ADDRESS_RESET,
   BRAND_ADDRESS_SUCCESS,
+  BRAND_ADDRESS_UPDATE_FAIL,
+  BRAND_ADDRESS_UPDATE_REQUEST,
+  BRAND_ADDRESS_UPDATE_RESET,
+  BRAND_ADDRESS_UPDATE_SUCCESS,
   BRAND_DELETE_FAIL,
   BRAND_DELETE_REQUEST,
   BRAND_DELETE_RESET,
@@ -110,6 +114,36 @@ export const brandAddressListReducer = (
       };
     case BRAND_ADDRESS_FAIL:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const brandAddressUpdateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case BRAND_ADDRESS_UPDATE_REQUEST:
+      return { loading: true };
+    case BRAND_ADDRESS_UPDATE_SUCCESS:
+      return { loading: false, success: true };
+    case BRAND_ADDRESS_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    case BRAND_ADDRESS_UPDATE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const brandAddressDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case BRAND_DELETE_REQUEST:
+      return { loading: true };
+    case BRAND_DELETE_SUCCESS:
+      return { loading: false, success: true };
+    case BRAND_DELETE_FAIL:
+      return { loading: false, error: action.payload };
+    case BRAND_DELETE_RESET:
+      return {};
     default:
       return state;
   }

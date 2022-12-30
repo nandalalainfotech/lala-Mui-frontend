@@ -9,6 +9,7 @@ import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { Switch } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import Avatar from "@mui/material/Avatar";
@@ -16,9 +17,11 @@ import {
   brandAddressList,
   brandList,
   deleteBrand,
+  deleteBrandAddress,
   saveAddress,
   saveBrand,
   updateBrand,
+  updateBrandAddress,
 } from "../actions/brandAction";
 import { DataGrid } from "@mui/x-data-grid";
 import FormControl from "@mui/material/FormControl";
@@ -29,7 +32,10 @@ import Dialog from "@mui/material/Dialog";
 import { deepPurple, red } from "@material-ui/core/colors";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { BRAND_DELETE_RESET, BRAND_UPDATE_RESET } from "../constants/brandConstant";
+import {
+  BRAND_DELETE_RESET,
+  BRAND_UPDATE_RESET,
+} from "../constants/brandConstant";
 
 function BrandScreen() {
   const {
@@ -48,14 +54,28 @@ function BrandScreen() {
   const [newImg, setNewimg] = useState();
   const [open, setOpen] = useState(false);
   const [brnadindId, setbrnadindId] = useState(0);
-
-
-  ////////---Update---/////
+  // eslint-disable-next-line no-unused-vars
+  const [checked, setchecked] = useState(true);
+  // ------Update Brand--------
   const [newname, setNewname] = useState("");
   const [newckeditor, setNewckeditor] = useState("");
   const [neweditor, setNeweditor] = useState("");
 
+  // ----Update Brand----------
+  const [brandAddId, setBrandAddId] = useState("");
 
+  const [newbrandId, setNewbrandId] = useState("");
+  const [newlastname, setNewlastname] = useState("");
+  const [newfirstname, setNewfirstname] = useState("");
+  const [newaddress, setNewaddress] = useState("");
+  const [newaddress2, setNewaddress2] = useState("");
+  const [newzip, setNewzip] = useState("");
+  const [newcity, setNewcity] = useState("");
+  const [newcountry, setNewcountry] = useState("");
+  const [newdni, setNewdni] = useState("");
+  const [newphone, setNewphone] = useState("");
+  const [newmobile, setNewmobile] = useState("");
+  const [newother, setNewother] = useState("");
 
   const handleTabChange = (event, newBrand) => {
     setBrand(newBrand);
@@ -63,6 +83,7 @@ function BrandScreen() {
     setBrandaddress(0);
     setSupplier(0);
     setbrnadindId(0);
+    setBrandAddId(0)
   };
 
   const handleClickOpen = (e) => {
@@ -78,6 +99,10 @@ function BrandScreen() {
 
   const theme = createTheme();
 
+  const switchHandler = (event) => {
+    setchecked(!event.target.checked);
+  };
+
   const submitHandler = (e) => {
     dispatch(
       saveBrand({
@@ -85,13 +110,14 @@ function BrandScreen() {
         imageFile: e.imageFile,
         editor: editor,
         ckeditor: ckeditor,
+        checked: e.checked,
       })
     );
     window.confirm("Brand Details Added SuccessFully!!");
     event.target.reset();
     setEditor("");
     setckeditor("");
-    setBranditem(0)
+    setBranditem(0);
   };
 
   const updateHandler = (e) => {
@@ -107,7 +133,6 @@ function BrandScreen() {
     window.confirm("Brand Details Updated SuccessFully!!");
     setNewname("");
     setbrnadindId(0);
-
   };
 
   const addresssubmitHandler = (e) => {
@@ -132,6 +157,28 @@ function BrandScreen() {
     setBrandId("");
   };
 
+  const addressUpdateHandler = () => {
+    dispatch(
+      updateBrandAddress({
+        id: brandAddId._id,
+        brand: newbrandId,
+        firstname: newfirstname,
+        lastname: newlastname,
+        address: newaddress,
+        address2: newaddress2,
+        zip: newzip,
+        city: newcity,
+        country: newcountry,
+        dni: newdni,
+        phone: newphone,
+        mobile: newmobile,
+        other: newother,
+      })
+    );
+    window.confirm("Brand Address Details Updated SuccessFully!!");
+    setBrandAddId(0)
+  }
+
   const brandReduce = useSelector((state) => state.brandReduce);
   const { brandLists } = brandReduce;
 
@@ -139,7 +186,7 @@ function BrandScreen() {
   const { brandAddLists } = brandAddreList;
 
   const brandUpdate = useSelector((state) => state.brandUpdate);
-  const { success: successUpdate,} = brandUpdate;
+  const { success: successUpdate } = brandUpdate;
 
   const brandDelete = useSelector((state) => state.brandDelete);
   const { success: successDelete } = brandDelete;
@@ -162,11 +209,32 @@ function BrandScreen() {
     setNeweditor(brandIndId.editor);
   };
 
+  const editAddressHandler = (brandAddId) => {
+    setBrandAddId(brandAddId);
+    setNewbrandId(brandAddId.brand);
+    setNewlastname(brandAddId.lastname);
+    setNewfirstname(brandAddId.firstname);
+    setNewaddress(brandAddId.address);
+    setNewaddress2(brandAddId.address2);
+    setNewzip(brandAddId.zip);
+    setNewcity(brandAddId.lastname);
+    setNewcountry(brandAddId.lastname);
+    setNewdni(brandAddId.dni);
+    setNewphone(brandAddId.phone);
+    setNewmobile(brandAddId.mobile);
+    setNewother(brandAddId.other);
+  };
+
   const deleteHandler = (params) => {
     if (window.confirm("Are you sure to delete?")) {
       dispatch(deleteBrand(params.row._id));
     }
-    setBranditem(0);
+  };
+
+  const deleteAddressHandler = (params) => {
+    if (window.confirm("Are you sure to delete?")) {
+      dispatch(deleteBrandAddress(params.row._id));
+    }
   };
 
   let count = 1;
@@ -215,6 +283,21 @@ function BrandScreen() {
       headerName: "Short Decription",
       flex: 1,
       headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "checked",
+      headerName: "Displayed",
+      headerClassName: "super-app-theme--header",
+      description: "This column has a value getter and is not sortable.",
+      sortable: false,
+      flex: 1,
+      renderCell: (params) => {
+        if (params.row.checked == true) {
+          return <Switch color="primary" checked />;
+        } else {
+          return <Switch />;
+        }
+      },
     },
     {
       field: "actions",
@@ -303,10 +386,10 @@ function BrandScreen() {
       headerName: "ACTIONS",
       flex: 1,
       headerClassName: "super-app-theme--header",
-      renderCell: (products) => (
+      renderCell: (params) => (
         <>
           <EditIcon
-            onClick={() => editHandler(products)}
+            onClick={() => editAddressHandler(params.row)}
             style={{
               color: deepPurple[500],
               fontSize: 15,
@@ -316,7 +399,7 @@ function BrandScreen() {
           />
 
           <DeleteIcon
-            onClick={() => deleteHandler(products)}
+            onClick={() => deleteAddressHandler(params)}
             style={{ color: red[500], fontSize: 15, cursor: "pointer" }}
           />
         </>
@@ -648,6 +731,13 @@ function BrandScreen() {
                             <span className="formError">File is required</span>
                           )}
 
+                          <Typography>Enable</Typography>
+                          <Switch
+                            color="primary"
+                            onChange={switchHandler}
+                            {...register("checked")}
+                          />
+
                           <Button
                             fullWidth
                             variant="contained"
@@ -905,113 +995,323 @@ function BrandScreen() {
                         </ThemeProvider>
                       ) : (
                         <>
-                          <Typography
-                            sx={{
-                              mt: "20px",
-                              fontSize: "18px",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            Brands
-                          </Typography>
-                          <Box
-                            sx={{
-                              height: 560,
-                              width: "100%",
-
-                              "& .super-app-theme--header": {
-                                backgroundColor: "#808080",
-                                color: "#ffffff",
-                              },
-                              "& .css-1jbbcbn-MuiDataGrid-columnHeaderTitle": {
-                                fontSize: 16,
-                              },
-                              ".css-o8hwua-MuiDataGrid-root .MuiDataGrid-cellContent":
-                                {
-                                  fontSize: 13,
-                                },
-                              ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-                                {
-                                  backgroundColor: "#330033",
-                                  color: "#ffffff",
-                                },
-                              ".css-h4y409-MuiList-root": {
-                                display: "grid",
-                              },
-                              ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer": {
-                                backgroundColor: "#808080",
-                              }
-                            }}
-                          >
-                            <DataGrid
+                          {brandAddId._id ? (
+                            <ThemeProvider theme={theme}>
+                            <Container
+                              component="main"
+                              maxWidth="sm"
                               sx={{
-                                boxShadow: 10,
-                                borderRadius: 0,
-                                m: 2,
+                                my: { xs: 5, md: 6, lg: 5 },
+                                p: { xs: 2, md: 1 },
                               }}
-                              columns={columns}
-                              rows={brandLists ? brandLists : ""}
-                              getRowId={(rows) => rows._id}
-                              VerticalAlignment="Center"
-                              rowHeight={64}
-                              pagination
-                              checkboxSelection
-                            />
-                          </Box>
+                            >
+                              <CssBaseline />
+                              <Box
+                                component="form"
+                                onSubmit={handleSubmit(addressUpdateHandler)}
+                                sx={{
+                                  display: "flex",
+                                  width: "100%",
+                                  flexDirection: "column",
+                                  alignItems: "left",
+                                  borderRadius: "2px",
+                                  p: 5,
+                                  border: "1px solid black",
+                                }}
+                              >
+                                <Typography
+                                  variant="h4"
+                                  sx={{ textAlign: "center" }}
+                                >
+                                  Brands
+                                </Typography>
+  
+                                <Typography>Brand</Typography>
+                                <FormControl fullWidth sx={{ mt: 1 }}>
+                                  <Select
+                                    id="standard-simple-select"
+                                    value={newbrandId}
+                                    onChange={(e) => setNewbrandId(e.target.value)}
+                                  >
+                                    {brandLists?.map((item, index) => (
+                                      <MenuItem key={index} value={item._id}>
+                                        {item.name}
+                                      </MenuItem>
+                                    ))}
+                                  </Select>
+                                </FormControl>
+  
+                                <Typography sx={{ mt: "10px" }}>
+                                  Last Name*
+                                </Typography>
+                                <TextField
+                                  sx={{ mt: "10px" }}
+                                  required
+                                  id="newlastname"
+                                  name="newlastname"
+                                  autoComplete="off"
+                                  value={newlastname}
+                                  onChange={(e) => setNewlastname(e.target.value)}
+                                />
+                               
+  
+                                <Typography sx={{ mt: "10px" }}>
+                                  First Name*
+                                </Typography>
+                                <TextField
+                                  sx={{ mt: "10px" }}
+                                  required
+                                  id="newfirstname"
+                                  name="newfirstname"
+                                  autoComplete="off"
+                                  value={newfirstname}
+                                  onChange={(e) => setNewfirstname(e.target.value)}
+                                />
+                               
+  
+                                <Typography sx={{ mt: "10px" }}>
+                                  Address*
+                                </Typography>
+                                <TextField
+                                  sx={{ mt: "10px" }}
+                                  required
+                                  id="newaddress"
+                                  name="newaddress"
+                                  autoComplete="off"
+                                  value={newaddress}
+                                  onChange={(e) => setNewaddress(e.target.value)}
+                                />
+                               
+  
+                                <Typography sx={{ mt: "10px" }}>
+                                  Address2
+                                </Typography>
+                                <TextField
+                                  sx={{ mt: "10px" }}
+                                  required
+                                  id="newaddress2"
+                                  name="newaddress2"
+                                  autoComplete="off"
+                                  value={newaddress2}
+                                  onChange={(e) => setNewaddress2(e.target.value)}
+                                />
+                                
+  
+                                <Typography sx={{ mt: "10px" }}>
+                                  Zip/Postal code
+                                </Typography>
+                                <TextField
+                                  sx={{ mt: "10px" }}
+                                  required
+                                  id="newzip"
+                                  name="newzip"
+                                  autoComplete="off"
+                                  value={newzip}
+                                  onChange={(e) => setNewzip(e.target.value)}
+                                />
+                                
+  
+                                <Typography sx={{ mt: "10px" }}>City*</Typography>
+                                <TextField
+                                  sx={{ mt: "10px" }}
+                                  required
+                                  id="newcity"
+                                  name="newcity"
+                                  autoComplete="off"
+                                  value={newcity}
+                                  onChange={(e) => setNewcity(e.target.value)}
+                                />
+                                
+  
+                                <Typography sx={{ mt: "10px" }}>
+                                  Country*
+                                </Typography>
+                                <TextField
+                                  sx={{ mt: "10px" }}
+                                  required
+                                  id="newcountry"
+                                  name="newcountry"
+                                  autoComplete="off"
+                                  value={newcountry}
+                                  onChange={(e) => setNewcountry(e.target.value)}
+                                />
+                               
+  
+                                <Typography sx={{ mt: "10px" }}>DNI</Typography>
+                                <TextField
+                                  sx={{ mt: "10px" }}
+                                  required
+                                  id="newdni"
+                                  name="newdni"
+                                  autoComplete="off"
+                                  value={newdni}
+                                  onChange={(e) => setNewdni(e.target.value)}
+                                />
+                               
+  
+                                <Typography sx={{ mt: "10px" }}>Phone</Typography>
+                                <TextField
+                                  sx={{ mt: "10px" }}
+                                  required
+                                  id="newphone"
+                                  name="newphone"
+                                  autoComplete="off"
+                                  value={newphone}
+                                  onChange={(e) => setNewphone(e.target.value)}
+                                />
+                               
+  
+                                <Typography sx={{ mt: "10px" }}>
+                                  Mobile phone
+                                </Typography>
+                                <TextField
+                                  sx={{ mt: "10px" }}
+                                  required
+                                  id="newmobile"
+                                  name="newmobile"
+                                  autoComplete="off"
+                                  value={newmobile}
+                                  onChange={(e) => setNewmobile(e.target.value)}
+                                />
+                               
+  
+                                <Typography sx={{ mt: "10px" }}>Other</Typography>
+                                <TextField
+                                  sx={{ mt: "10px" }}
+                                  required
+                                  id="newother"
+                                  name="newother"
+                                  autoComplete="off"
+                                  value={newother}
+                                  onChange={(e) => setNewother(e.target.value)}
+                                />
+  
+                                <Button
+                                  fullWidth
+                                  variant="contained"
+                                  sx={{ mt: 3, mb: 2 }}
+                                  type="submit"
+                                >
+                                  Save
+                                </Button>
+                              </Box>
+                            </Container>
+                          </ThemeProvider>
+                          ) : (
+                            <>
+                              <Typography
+                                sx={{
+                                  mt: "20px",
+                                  fontSize: "18px",
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                Brands
+                              </Typography>
+                              <Box
+                                sx={{
+                                  height: 560,
+                                  width: "100%",
 
-                          <Typography
-                            sx={{
-                              mt: "20px",
-                              fontSize: "18px",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            Brands Address Values
-                          </Typography>
-                          <Box
-                            sx={{
-                              height: 560,
-                              width: "100%",
+                                  "& .super-app-theme--header": {
+                                    backgroundColor: "#808080",
+                                    color: "#ffffff",
+                                  },
+                                  "& .css-1jbbcbn-MuiDataGrid-columnHeaderTitle":
+                                    {
+                                      fontSize: 16,
+                                    },
+                                  ".css-o8hwua-MuiDataGrid-root .MuiDataGrid-cellContent":
+                                    {
+                                      fontSize: 13,
+                                    },
+                                  ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
+                                    {
+                                      backgroundColor: "#330033",
+                                      color: "#ffffff",
+                                    },
+                                  ".css-h4y409-MuiList-root": {
+                                    display: "grid",
+                                  },
+                                  ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
+                                    {
+                                      backgroundColor: "#808080",
+                                    },
+                                }}
+                              >
+                                <DataGrid
+                                  sx={{
+                                    boxShadow: 10,
+                                    borderRadius: 0,
+                                    m: 2,
+                                  }}
+                                  columns={columns}
+                                  rows={brandLists ? brandLists : ""}
+                                  getRowId={(rows) => rows._id}
+                                  VerticalAlignment="Center"
+                                  rowHeight={64}
+                                  pagination
+                                  checkboxSelection
+                                />
+                              </Box>
 
-                              "& .super-app-theme--header": {
-                                backgroundColor: "#808080",
-                                color: "#ffffff",
-                              },
-                              "& .css-1jbbcbn-MuiDataGrid-columnHeaderTitle": {
-                                fontSize: 16,
-                              },
-                              ".css-o8hwua-MuiDataGrid-root .MuiDataGrid-cellContent":
-                                {
-                                  fontSize: 13,
-                                },
-                              ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-                                {
-                                  backgroundColor: "#330033",
-                                  color: "#ffffff",
-                                },
-                              ".css-h4y409-MuiList-root": {
-                                display: "grid",
-                              },
-                              ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer": {
-                                backgroundColor: "#808080",
-                              }
-                            }}
-                          >
-                            <DataGrid
-                              sx={{
-                                boxShadow: 10,
-                                borderRadius: 0,
-                                m: 2,
-                              }}
-                              columns={brandcolumns}
-                              rows={brandAddLists ? brandAddLists : ""}
-                              getRowId={(rows) => rows._id}
-                              VerticalAlignment="Center"
-                              rowHeight={64}
-                              pagination
-                              checkboxSelection
-                            />
-                          </Box>
+                              <Typography
+                                sx={{
+                                  mt: "20px",
+                                  fontSize: "18px",
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                Brands Address Values
+                              </Typography>
+                              <Box
+                                sx={{
+                                  height: 560,
+                                  width: "100%",
+
+                                  "& .super-app-theme--header": {
+                                    backgroundColor: "#808080",
+                                    color: "#ffffff",
+                                  },
+                                  "& .css-1jbbcbn-MuiDataGrid-columnHeaderTitle":
+                                    {
+                                      fontSize: 16,
+                                    },
+                                  ".css-o8hwua-MuiDataGrid-root .MuiDataGrid-cellContent":
+                                    {
+                                      fontSize: 13,
+                                    },
+                                  ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
+                                    {
+                                      backgroundColor: "#330033",
+                                      color: "#ffffff",
+                                    },
+                                  ".css-h4y409-MuiList-root": {
+                                    display: "grid",
+                                  },
+                                  ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
+                                    {
+                                      backgroundColor: "#808080",
+                                    },
+                                }}
+                              >
+                                <DataGrid
+                                  sx={{
+                                    boxShadow: 10,
+                                    borderRadius: 0,
+                                    m: 2,
+                                  }}
+                                  columns={brandcolumns}
+                                  rows={brandAddLists ? brandAddLists : ""}
+                                  getRowId={(rows) => rows._id}
+                                  VerticalAlignment="Center"
+                                  rowHeight={64}
+                                  pagination
+                                  checkboxSelection
+                                />
+                              </Box>
+                            </>
+                          )}
                         </>
                       )}
                     </>
