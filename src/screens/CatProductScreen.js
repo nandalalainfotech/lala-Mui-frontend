@@ -23,19 +23,35 @@ import Tooltip from "@mui/material/Tooltip";
 import { DataGrid } from "@mui/x-data-grid";
 import { DropzoneArea } from "material-ui-dropzone";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { saveCatologProduct } from "../actions/catProductAction";
 
 function CatProductScreen() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   const [product, setProduct] = useState(0);
-  const [modules, setModule] = useState(0);
-  const [help, setHelp] = useState(0);
+  const [feature, setFeature] = useState(0);
+  const [brand, setBrand] = useState(0);
+  const [relatProd, setRelatProduct] = useState(0);
+  const [category, setCategory] = useState(0);
+  const [dropimg, setDropimg] = useState("");
+  console.log("dropimg", dropimg);
 
-  console.log("product", product);
-  console.log("module", modules);
-  console.log("module", help);
+  const [summary, setSummary] = useState("");
+  const [description, setDescription] = useState("");
 
-  
+  console.log("summary", summary);
+
+  console.log("description", description);
 
   const [tabIndex, setTabIndex] = useState(0);
+
+  // ----Save----
 
   const handleTabChange = (event, newTabIndex) => {
     setTabIndex(newTabIndex);
@@ -114,6 +130,31 @@ Sometimes one customer can fit into multiple price rules.
  Priorities allow you to define which rules apply first.
 `;
 
+const dispatch = useDispatch();
+
+  const submitHandler = (e) => {
+    dispatch(
+      saveCatologProduct({
+        prodname: e.prodname,
+        dropimg: dropimg,
+        summary: summary,
+        description: description,
+        feature: e.feature,
+        brand: e.brand,
+        search: e.search,
+        reference: e.reference,
+        quantity: e.quantity,
+        taxexcluded: e.taxexcluded,
+        taxincluded: e.taxincluded
+      })
+    );
+    window.confirm("Product Details Saved SuccessFully!!");
+  };
+
+  const handleChange = (files) => {
+    setDropimg(files);
+  };
+
   const columns = [
     {
       field: "id",
@@ -174,19 +215,21 @@ Sometimes one customer can fit into multiple price rules.
             Add New Product
           </Button>
 
-          <Button variant="outlined" sx={{ mr: 2 }} onClick={() => setModule(2)}>
-            Recommended Modules and Services 
+          <Button variant="outlined" sx={{ mr: 2 }}>
+            Recommended Modules and Services
           </Button>
 
-          <Button variant="outlined" onClick={() => setHelp(3)}>
-            Help
-          </Button>
+          <Button variant="outlined">Help</Button>
         </Box>
       </Box>
 
       <>
-      {help === 3 ? (<h1>help</h1>) : (<>{modules === 2 ? (<h1>hii</h1>) : (<> {product === 1 ? (
-          <Box>
+        {product === 1 ? (
+          <Box
+            sx={{ mt: "40px" }}
+            component="form"
+            onSubmit={handleSubmit(submitHandler)}
+          >
             <Box>
               <Tabs value={tabIndex} onChange={handleTabChange}>
                 <Tab label="Basic Settings" />
@@ -202,14 +245,31 @@ Sometimes one customer can fit into multiple price rules.
                 <Grid container spacing={3}>
                   <Grid item xs={8}>
                     <Box>
+                      <Box>
+                        <Typography
+                          sx={{ fontSize: "17px", fontWeight: "bold" }}
+                        >
+                          Enter Your Product Name
+                        </Typography>
+                        <Typography>
+                          <TextField
+                            fullWidth
+                            id="margin-normal"
+                            margin="normal"
+                            {...register("prodname", { required: true })}
+                            error={errors.prodname}
+                          />
+                        </Typography>
+                      </Box>
                       <Box
                         sx={{
                           border: "2px solid gray",
                           width: "100%",
                           height: "250px",
+                          mt: "40px",
                         }}
                       >
-                        <DropzoneArea />
+                        <DropzoneArea onChange={handleChange.bind(this)} />
                       </Box>
 
                       <Typography
@@ -225,16 +285,9 @@ Sometimes one customer can fit into multiple price rules.
                       <Box sx={{ mt: "40px" }}>
                         <CKEditor
                           editor={ClassicEditor}
-                          data="<p>Hello from CKEditor 5!</p>"
-                          onReady={(editor) => {
-                            console.log(
-                              "CKEditor5 React Component is ready to use!",
-                              editor
-                            );
-                          }}
                           onChange={(event, editor) => {
                             const data = editor.getData();
-                            console.log({ event, editor, data });
+                            setSummary({ data });
                           }}
                         />
                       </Box>
@@ -252,16 +305,9 @@ Sometimes one customer can fit into multiple price rules.
                       <Box sx={{ mt: "40px" }}>
                         <CKEditor
                           editor={ClassicEditor}
-                          data="<p>Hello from CKEditor 5!</p>"
-                          onReady={(editor) => {
-                            console.log(
-                              "CKEditor5 React Component is ready to use!",
-                              editor
-                            );
-                          }}
                           onChange={(event, editor) => {
                             const data = editor.getData();
-                            console.log({ event, editor, data });
+                            setDescription({ data });
                           }}
                         />
                       </Box>
@@ -281,20 +327,105 @@ Sometimes one customer can fit into multiple price rules.
                           sx={{ mt: "20px" }}
                           variant="outlined"
                           startIcon={<AddCircleIcon />}
+                          onClick={() => setFeature(1)}
                         >
                           Add a feature
                         </Button>
                       </Typography>
+
+                      <>
+                        {feature === 1 ? (
+                          <>
+                            <Box sx={{ p: 2, m: 2 }}>
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  mt: "20px",
+                                  justifyContent: "space-between",
+                                }}
+                              >
+                                <Typography>Feature</Typography>
+                                <Typography>Predefined value</Typography>
+                                <Typography>OR Customized value</Typography>
+                              </Box>
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  mt: "20px",
+                                  justifyContent: "space-between",
+                                }}
+                              >
+                                <TextField
+                                  id="outlined-size-small"
+                                  {...register("feature", { required: true })}
+                                  error={errors.feature}
+                                  size="small"
+                                />
+                                <TextField
+                                  id="outlined-size-small"
+                                  defaultValue="Choose a Value"
+                                  size="small"
+                                />
+                                <TextField
+                                  id="outlined-size-small"
+                                  size="small"
+                                />
+                              </Box>
+                            </Box>
+                          </>
+                        ) : (
+                          <></>
+                        )}
+                      </>
 
                       <Typography>
                         <Button
                           sx={{ mt: "20px" }}
                           variant="outlined"
                           startIcon={<AddCircleIcon />}
+                          onClick={() => setBrand(1)}
                         >
                           Add a brand
                         </Button>
                       </Typography>
+
+                      <>
+                        {brand === 1 ? (
+                          <>
+                            <Box sx={{ p: 1, m: 1 }}>
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  mt: "10px",
+                                  justifyContent: "space-between",
+                                }}
+                              >
+                                <Typography
+                                  sx={{ fontSize: "20px", fontWeight: "700" }}
+                                >
+                                  Brand
+                                </Typography>
+                              </Box>
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  mt: "20px",
+                                  justifyContent: "space-between",
+                                }}
+                              >
+                                <TextField
+                                  id="outlined-size-small"
+                                  {...register("brand", { required: true })}
+                                  error={errors.brand}
+                                  size="small"
+                                />
+                              </Box>
+                            </Box>
+                          </>
+                        ) : (
+                          <></>
+                        )}
+                      </>
 
                       <Typography
                         sx={{
@@ -306,15 +437,39 @@ Sometimes one customer can fit into multiple price rules.
                         Related Product
                       </Typography>
 
-                      <Typography>
-                        <Button
-                          sx={{ mt: "20px" }}
-                          variant="outlined"
-                          startIcon={<AddCircleIcon />}
-                        >
-                          Add a related product
-                        </Button>
-                      </Typography>
+                      <>
+                        {relatProd === 1 ? (
+                          <Typography sx={{ m: 2 }}>
+                            <TextField
+                              sx={{ width: "60%" }}
+                              id="standard-bare"
+                              variant="outlined"
+                              {...register("search", { required: true })}
+                              error={errors.search}
+                              InputProps={{
+                                endAdornment: (
+                                  <IconButton>
+                                    <SearchOutlined />
+                                  </IconButton>
+                                ),
+                              }}
+                            />
+                          </Typography>
+                        ) : (
+                          <>
+                            <Typography>
+                              <Button
+                                sx={{ mt: "20px" }}
+                                variant="outlined"
+                                startIcon={<AddCircleIcon />}
+                                onClick={() => setRelatProduct(1)}
+                              >
+                                Add a related product
+                              </Button>
+                            </Typography>
+                          </>
+                        )}
+                      </>
                     </Box>
                   </Grid>
                   <Grid item xs={4}>
@@ -356,7 +511,13 @@ Sometimes one customer can fit into multiple price rules.
                     </Typography>
 
                     <Typography>
-                      <TextField fullWidth id="margin-normal" margin="normal" />
+                      <TextField
+                        fullWidth
+                        id="margin-normal"
+                        margin="normal"
+                        {...register("reference", { required: true })}
+                        error={errors.reference}
+                      />
                     </Typography>
 
                     <Typography
@@ -374,6 +535,8 @@ Sometimes one customer can fit into multiple price rules.
                         fullWidth
                         id="margin-normal"
                         margin="normal"
+                        {...register("quantity", { required: true })}
+                        error={errors.quantity}
                       />
                     </Typography>
 
@@ -395,6 +558,8 @@ Sometimes one customer can fit into multiple price rules.
                       <TextField
                         label="Tax excluded"
                         id="outlined-start-adornment"
+                        {...register("taxexcluded", { required: true })}
+                        error={errors.taxexcluded}
                         sx={{ m: 1 }}
                         InputProps={{
                           startAdornment: (
@@ -405,6 +570,8 @@ Sometimes one customer can fit into multiple price rules.
 
                       <TextField
                         label="Tax included"
+                        {...register("taxincluded", { required: true })}
+                        error={errors.taxincluded}
                         id="outlined-start-adornment"
                         sx={{ m: 1 }}
                         InputProps={{
@@ -484,15 +651,63 @@ Sometimes one customer can fit into multiple price rules.
                       </Tooltip>
                     </Typography>
 
-                    <Typography>
-                      <Button
-                        sx={{ mt: "20px" }}
-                        variant="outlined"
-                        startIcon={<AddCircleIcon />}
-                      >
-                        Create a Category
-                      </Button>
-                    </Typography>
+                    {category === 1 ? (
+                      <>
+                        <Box sx={{ m: 2, p: 1 }}>
+                          <Typography>New Category name</Typography>
+
+                          <Typography sx={{ mt: "20px" }}>
+                            <TextField
+                              id="outlined-size-small"
+                              defaultValue="Category name"
+                              size="small"
+                            />
+                          </Typography>
+
+                          <Typography sx={{ mt: "20px" }}>
+                            Parent of the category
+                          </Typography>
+
+                          <Typography sx={{ mt: "20px" }}>
+                            <TextField
+                              id="outlined-size-small"
+                              defaultValue="Home"
+                              size="small"
+                            />
+                          </Typography>
+
+                          <Typography sx={{ mt: "20px" }}>
+                            <Button variant="contained">Cancel</Button>
+                            <Button variant="contained" sx={{ ml: "50px" }}>
+                              Create
+                            </Button>
+                          </Typography>
+                        </Box>
+                      </>
+                    ) : (
+                      <>
+                        <Typography>
+                          <Button
+                            sx={{ mt: "20px" }}
+                            variant="outlined"
+                            startIcon={<AddCircleIcon />}
+                            onClick={() => setCategory(1)}
+                          >
+                            Create a Category
+                          </Button>
+                        </Typography>
+
+                        <Typography>
+                          <Button
+                            type="submit"
+                            sx={{ mt: "20px" }}
+                            variant="contained"
+                          >
+                            Save
+                          </Button>
+                        </Typography>
+                      </>
+                    )}
                   </Grid>
                 </Grid>
               )}
@@ -1173,9 +1388,7 @@ Sometimes one customer can fit into multiple price rules.
               checkboxSelection
             />
           </Box>
-        )}</>)} </>) }
-      
-       
+        )}
       </>
     </>
   );
