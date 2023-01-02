@@ -24,9 +24,9 @@ import { DataGrid } from "@mui/x-data-grid";
 import { DropzoneArea } from "material-ui-dropzone";
 import { useState,useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { creatQty, saveCatologProduct } from "../actions/catProductAction";
-
+import Axios from "axios";
 function CatProductScreen() {
   const {
     register,
@@ -39,15 +39,9 @@ function CatProductScreen() {
   const [brand, setBrand] = useState(0);
   const [relatProd, setRelatProduct] = useState(0);
   const [category, setCategory] = useState(0);
-  const [dropimg, setDropimg] = useState("");
-  console.log("dropimg", dropimg);
-
+  const [dropimg, setDropimg] = useState([]);
   const [summary, setSummary] = useState("");
   const [description, setDescription] = useState("");
-
-  console.log("summary", summary);
-
-  console.log("description", description);
 
   const [tabIndex, setTabIndex] = useState(0);
 
@@ -129,6 +123,11 @@ You can set specific prices for customers belonging to different groups, differe
 Sometimes one customer can fit into multiple price rules.
  Priorities allow you to define which rules apply first.
 `;
+// eslint-disable-next-line no-unused-vars
+const [errorUpload, setErrorUpload] = useState("");
+const userSignin = useSelector((state) => state.userSignin);
+const { userInfo } = userSignin;
+
 
 const dispatch = useDispatch();
 const [newQty, setNewqty ]=useState("")
@@ -165,11 +164,32 @@ const createHandler = () => {
    dispatch(creatQty())
  }, [dispatch]);
 
-  const submitHandler = (e) => {
+
+  const submitHandler = async (e) => {
+    const formData = new FormData();
+    formData.append("image", dropimg[0]);
+    for (let i = 0; i < dropimg.length; i++) {
+      formData.append("images", dropimg[i]);
+    }
+    for (var pair of formData.entries()) {
+      console.log(pair[1]);
+    }
+    try {
+      
+        const { data } = await Axios.post("/api/uploads", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${userInfo.token}`,
+            Product: `Bearer ${product}`,
+          }
+         
+        });
+        console.log("data=========>>>",data);
+      
     dispatch(
       saveCatologProduct({
         prodname: e.prodname,
-        dropimg: dropimg,
+        fileId: data.image._id,
         summary: summary,
         description: description,
         feature: e.feature,
@@ -182,6 +202,10 @@ const createHandler = () => {
       })
     );
     window.confirm("Product Details Saved SuccessFully!!");
+
+    }catch (error) {
+      setErrorUpload(error.message);
+    }
   };
 
   const handleChange = (files) => {
