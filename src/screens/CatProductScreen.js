@@ -23,10 +23,13 @@ import Tooltip from "@mui/material/Tooltip";
 import { DataGrid } from "@mui/x-data-grid";
 import Axios from "axios";
 import { DropzoneArea } from "material-ui-dropzone";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { saveCatologProduct } from "../actions/catProductAction";
+import { catProductList, saveCatologProduct } from "../actions/catProductAction";
+import Dialog from "@mui/material/Dialog";
+import Avatar from "@mui/material/Avatar";
+import CardMedia from "@mui/material/CardMedia";
 function CatProductScreen() {
   const {
     register,
@@ -44,10 +47,19 @@ function CatProductScreen() {
   const [dropimg, setDropimg] = useState([]);
   const [summary, setSummary] = useState("");
   const [description, setDescription] = useState("");
-
+  const [newImg, setNewimg] = useState();
   const [tabIndex, setTabIndex] = useState(0);
-
+  const [open, setOpen] = useState(false);
   // ----Save----
+
+  const catalogProd = useSelector((state) => state.catalogProd);
+  const { catProducts } = catalogProd;
+
+  console.log("catProducts", catProducts);
+
+  useEffect(() => {
+    dispatch(catProductList());   
+  }, []);
 
   const handleTabChange = (event, newTabIndex) => {
     setTabIndex(newTabIndex);
@@ -137,6 +149,15 @@ Not all shops sell new products.
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
 
+  const handleClickOpen = (e) => {
+    setNewimg(e.target.src);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const dispatch = useDispatch();
 
   const submitHandler = async (e) => {
@@ -197,48 +218,63 @@ Not all shops sell new products.
     setDropimg(files);
   };
 
+  function getDate(orders) {
+    return `${orders.row.createdAt.substring(0, 10) || ''}`;
+  }
+
   const columns = [
     {
-      field: "id",
-      headerName: "ID",
+      field: "prodname",
+      headerName: "Name",
       flex: 1,
       headerClassName: "super-app-theme--header",
     },
     {
-      field: "firstName",
-      headerName: "First name",
+      field: "imageId",
+      headerName: "Product Image",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+      renderCell: (params) => {
+        console.log("params", params);
+        return (
+          <Avatar
+            onClick={handleClickOpen}
+            // onMouseOut={handleClose}
+            sx={{ height: "50px", width: "50px", cursor: "pointer" }}
+            src={`/api/uploads/showCatProd/${params.row._id}`}
+            alt="avatar"
+          />
+        );
+      },
+    },
+    {
+      field: "date",
+      headerName: "Date",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+      valueGetter: getDate,
+    },
+    {
+      field: "feature",
+      headerName: "Feature",
       flex: 1,
       headerClassName: "super-app-theme--header",
     },
     {
-      field: "lastName",
-      headerName: "Last name",
+      field: "reference",
+      headerName: "Reference",
       flex: 1,
       headerClassName: "super-app-theme--header",
     },
     {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      flex: 1,
-      headerClassName: "super-app-theme--header",
-    },
-    {
-      field: "fullName",
-      headerName: "Full name",
+      field: "brand",
+      headerName: "Brand",
       flex: 1,
       headerClassName: "super-app-theme--header",
     },
   ];
 
-  const rows = [
-    { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
-    { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-    { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
-    { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
-    { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-    { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-  ];
+ 
 
   return (
     <>
@@ -1780,6 +1816,8 @@ Not all shops sell new products.
             </Box>
           </Box>
         ) : (
+
+          <>
           <Box
             sx={{
               height: 560,
@@ -1816,14 +1854,41 @@ Not all shops sell new products.
                 m: 2,
               }}
               columns={columns}
-              rows={rows}
-              //   getRowId={(rows) => rows._id}
+              rows={catProducts ? catProducts: ""}
+              getRowId={(rows) => rows._id}
               VerticalAlignment="Center"
               rowHeight={64}
               pagination
               checkboxSelection
             />
           </Box>
+
+          <Dialog
+            // fullWidth={fullWidth}
+            // maxWidth={maxWidth}
+            open={open}
+            onClick={handleClose}
+            sx={{
+              width: 700,
+              hight: 700,
+            }}
+          >
+            <Box>
+              <CardMedia
+                sx={{ 
+                  cursor: "pointer",
+                  justifycontent: "space-between",
+                }}
+                component="img"
+                // height="200"
+                image={newImg}
+                // alt={"subimgnew.filename"}
+                // onMouseOver={handleChangeimage}
+              />
+            </Box>
+          </Dialog>
+
+          </>
         )}
       </>
     </>
