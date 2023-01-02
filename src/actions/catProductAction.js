@@ -2,7 +2,7 @@ import Axios from "axios";
 import { CAT_PRODUCT_FAIL, CAT_PRODUCT_REQUEST, CAT_PRODUCT_SUCCESS, CAT_QTY_CREATE_FAIL, CAT_QTY_CREATE_REQUEST, CAT_QTY_CREATE_SUCCESS } from "../constants/catBrandConstant";
 
 export const saveCatologProduct = (catProduct) => async (dispatch, getState) => {
-  console.log("Attribute=====>>>",catProduct);
+  console.log("catProduct=====>>>",catProduct);
 
     dispatch({ type: CAT_PRODUCT_REQUEST });
     const {
