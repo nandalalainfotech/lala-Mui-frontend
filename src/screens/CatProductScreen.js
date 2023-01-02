@@ -22,10 +22,10 @@ import TextField from "@mui/material/TextField";
 import Tooltip from "@mui/material/Tooltip";
 import { DataGrid } from "@mui/x-data-grid";
 import { DropzoneArea } from "material-ui-dropzone";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { saveCatologProduct } from "../actions/catProductAction";
+import { creatQty, saveCatologProduct } from "../actions/catProductAction";
 
 function CatProductScreen() {
   const {
@@ -131,6 +131,39 @@ Sometimes one customer can fit into multiple price rules.
 `;
 
 const dispatch = useDispatch();
+const [newQty, setNewqty ]=useState("")
+const [MinQty, setMinQty ]=useState("")
+const [stockloc, setStockloc ]=useState("")
+const [lowstock, setLowstock ]=useState("")
+const [email, setEmail ]=useState("")
+const [denyorders, setDenyorders ]=useState("")
+const [alloworders, setAlloworders ]=useState("")
+const [usedefault, setUsedefault ]=useState("")
+const [stockin, setStockin ]=useState("")
+const [stockout, setStockout ]=useState("")
+const [date, setDate ]=useState("")
+
+const createHandler = () => {
+  dispatch(
+   creatQty({
+   newQty:newQty,
+   MinQty:MinQty,
+   stockloc:stockloc,
+   lowstock:lowstock,
+   email:email,
+   denyorders:denyorders,
+   alloworders:alloworders,
+   usedefault:usedefault,
+   stockin:stockin,
+   stockout:stockout,
+   date:date
+   })
+  )
+  
+ }
+ useEffect(() => {
+   dispatch(creatQty())
+ }, [dispatch]);
 
   const submitHandler = (e) => {
     dispatch(
@@ -711,175 +744,309 @@ const dispatch = useDispatch();
                   </Grid>
                 </Grid>
               )}
+              {/* ************************************************************************* */}
               {tabIndex === 1 && (
-                <Grid container>
-                  <Grid item xs={12}>
-                    <Typography sx={{ fontSize: "20px", fontWeight: "bold" }}>
-                      Quantities
-                    </Typography>
+                        <Grid container>
+                          <Grid item xs={12}>
+                            <Box
+                              component="form"
+                              onSubmit={handleSubmit(createHandler)}
+                            >
+                              <Typography
+                                sx={{ fontSize: "20px", fontWeight: "bold" }}
+                              >
+                                Quantities
+                              </Typography>
 
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        width: "100%",
-                      }}
-                    >
-                      <Typography sx={{ mt: "20px", width: "100%" }}>
-                        Quantity
-                      </Typography>
-                      <Typography sx={{ mt: "20px", width: "100%" }}>
-                        Minimum quantity for sale
-                        <Tooltip title={sale}>
-                          <InfoIcon />
-                        </Tooltip>
-                      </Typography>
-                    </Box>
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  justifyContent: "space-between",
+                                  width: "100%",
+                                }}
+                              >
+                                <Typography sx={{ mt: "20px", width: "100%" }}>
+                                  Quantity
+                                </Typography>
+                                <Typography sx={{ mt: "20px", width: "100%" }}>
+                                  Minimum quantity for sale
+                                  <Tooltip title={sale}>
+                                    <InfoIcon />
+                                  </Tooltip>
+                                </Typography>
+                              </Box>
 
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        width: "100%",
-                      }}
-                    >
-                      <Typography sx={{ mt: "20px", width: "100%" }}>
-                        <TextField size="small" defaultValue="0" />
-                      </Typography>
-                      <Typography sx={{ mt: "20px", width: "100%" }}>
-                        <TextField size="small" defaultValue="1" />
-                      </Typography>
-                    </Box>
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  justifyContent: "space-between",
+                                  width: "100%",
+                                }}
+                              >
+                                <Typography sx={{ mt: "20px", width: "100%" }}>
+                                  <TextField
+                                    size="small"
+                                    margin="normal"
+                                    id="qty"
+                                    label="Name"
+                                    name="qty"
+                                    autoComplete="off"
+                                    {...register("qty", { required: true })}
+                                    error={errors.qty}
+                                    onChange={(e)=>setNewqty(e.target.value)}
+                                  />
+                                  {errors.qty && (
+                                    <span className="formError">
+                                      qty is required
+                                    </span>
+                                  )}
+                                </Typography>
+                                <Typography sx={{ mt: "20px", width: "100%" }}>
+                                  <TextField
+                                    size="small"
+                                    margin="normal"
+                                    id="categoryTittel"
+                                    label="Name"
+                                    name="mqty"
+                                    autoComplete="off"
+                                    {...register("mqty", { required: true })}
+                                    error={errors.mqty}
+                                    onChange={(e)=>setMinQty(e.target.value)}
+                                  />
+                                  {errors.mqty && (
+                                    <span className="formError">
+                                      Minimum quantity is required
+                                    </span>
+                                  )}
+                                </Typography>
+                              </Box>
 
-                    <Typography
-                      sx={{ fontSize: "20px", fontWeight: "bold", mt: "30px" }}
-                    >
-                      Stock
-                    </Typography>
+                              <Typography
+                                sx={{
+                                  fontSize: "20px",
+                                  fontWeight: "bold",
+                                  mt: "30px",
+                                }}
+                              >
+                                Stock
+                              </Typography>
 
-                    <Box>
-                      <Typography sx={{ mt: "20px" }}>
-                        Stock Location
-                      </Typography>
-                      <Typography sx={{ mt: "20px" }}>
-                        <TextField size="small" />
-                      </Typography>
-                    </Box>
+                              <Box>
+                                <Typography sx={{ mt: "20px" }}>
+                                  Stock Location
+                                </Typography>
+                                <Typography sx={{ mt: "20px" }}>
+                                  <TextField
+                                    size="small"
+                                    margin="normal"
+                                    id="SLocation"
+                                    label="Name"
+                                    name="SLocation"
+                                    autoComplete="off"
+                                    {...register("SLocation", {
+                                      required: true,
+                                    })}
+                                    error={errors.SLocation}
+                                    onChange={(e)=>setStockloc(e.target.value)}
+                                  />
+                                  {errors.SLocation && (
+                                    <span className="formError">
+                                      SLocation is required
+                                    </span>
+                                  )}
+                                </Typography>
+                              </Box>
 
-                    <Box>
-                      <Typography sx={{ mt: "20px", width: "100%" }}>
-                        Low Stock Level
-                      </Typography>
-                    </Box>
+                              <Box>
+                                <Typography sx={{ mt: "20px", width: "100%" }}>
+                                  Low Stock Level
+                                </Typography>
+                              </Box>
 
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        flexDirection: "row",
-                        width: "100%",
-                      }}
-                    >
-                      <Typography sx={{ mt: "20px", width: "100%" }}>
-                        <TextField size="small" />
-                      </Typography>
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  justifyContent: "space-between",
+                                  flexDirection: "row",
+                                  width: "100%",
+                                }}
+                              >
+                                <Typography sx={{ mt: "20px", width: "100%" }}>
+                                  <TextField
+                                    size="small"
+                                    margin="normal"
+                                    id="SLevel"
+                                    label="SLevel"
+                                    name="SLevel"
+                                    autoComplete="off"
+                                    {...register("SLevel", { required: true })}
+                                    error={errors.SLevel}
+                                    onChange={(e)=>setLowstock(e.target.value)}
+                                  />
+                                  {errors.SLevel && (
+                                    <span className="formError">
+                                      Name is required
+                                    </span>
+                                  )}
+                                </Typography>
 
-                      <Typography
-                        sx={{
-                          mt: "20px",
-                          wordWrap: "break-word",
-                          width: "100%",
-                          fontSize: "15px",
-                        }}
-                      >
-                        <Checkbox /> Send me an email when the quantity is below
-                        or equals this level
-                        <Tooltip title={level}>
-                          <InfoIcon />
-                        </Tooltip>
-                      </Typography>
-                    </Box>
+                                <Typography
+                                  sx={{
+                                    mt: "20px",
+                                    wordWrap: "break-word",
+                                    width: "100%",
+                                    fontSize: "15px",
+                                  }}
+                                >
+                                  <Checkbox 
+                                  value="newcheck"
+                                    {...register("newcheck", { required: true })}
+                                    error={errors.newcheck}
+                                    onChange={(e)=>setEmail(e.target.value)}
+                                  /> Send me an email when the
+                                  quantity is below or equals this level
+                                  <Tooltip title={level}>
+                                    <InfoIcon />
+                                  </Tooltip>
+                                </Typography>
+                              </Box>
 
-                    <Typography
-                      sx={{ fontSize: "20px", fontWeight: "bold", mt: "30px" }}
-                    >
-                      Availability preferences
-                    </Typography>
+                              <Typography
+                                sx={{
+                                  fontSize: "20px",
+                                  fontWeight: "bold",
+                                  mt: "30px",
+                                }}
+                              >
+                                Availability preferences
+                              </Typography>
 
-                    <Typography sx={{ mt: "20px" }}>
-                      Behavior when out of stock
-                    </Typography>
+                              <Typography sx={{ mt: "20px" }}>
+                                Behavior when out of stock
+                              </Typography>
 
-                    <FormControl>
-                      <RadioGroup
-                        aria-labelledby="demo-radio-buttons-group-label"
-                        name="radio-buttons-group"
-                      >
-                        <FormControlLabel
-                          value="PayPal"
-                          control={<Radio />}
-                          label="Deny orders"
-                        />
-                        <FormControlLabel
-                          value="Stripe"
-                          control={<Radio />}
-                          type="radio"
-                          label="Allow orders"
-                        />
-                        <FormControlLabel
-                          value="rr"
-                          control={<Radio />}
-                          label="Use default behavior (Deny orders)"
-                        />
-                      </RadioGroup>
-                    </FormControl>
+                              <FormControl>
+                                <RadioGroup
+                                  aria-labelledby="demo-radio-buttons-group-label"
+                                  name="radio-buttons-group"
+                                  
+                                >
+                                  <FormControlLabel
+                                    value="Denyorders"
+                                    control={<Radio />}
+                                    label="Deny orders"
+                                    {...register("Denyorders", { required: true })}
+                                    error={errors.Denyorders}
+                                    onChange={(e)=>setDenyorders(e.target.value)}
+                                  />
+                                  <FormControlLabel
+                                    value="Alloworders"
+                                    control={<Radio />}
+                                    type="radio"
+                                    label="Allow orders"
+                                    {...register("Alloworders", { required: true })}
+                                    error={errors.Alloworders}
+                                    onChange={(e)=>setAlloworders(e.target.value)}
+                                  />
+                                  <FormControlLabel
+                                    value="Usedefault"
+                                    control={<Radio />}
+                                    label="Use default behavior (Deny orders)"
+                                    {...register("Usedefault", { required: true })}
+                                    error={errors.Usedefault}
+                                    onChange={(e)=>setUsedefault(e.target.value)}
+                                  />
+                                </RadioGroup>
+                              </FormControl>
 
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        mt: "30px",
-                      }}
-                    >
-                      <Typography sx={{ width: "100%" }}>
-                        Label when in stock
-                      </Typography>
-                      <Typography sx={{ width: "100%" }}>
-                        Label when out of stock (and back order allowed)
-                      </Typography>
-                      <Typography sx={{ width: "100%" }}>
-                        Availability date
-                      </Typography>
-                    </Box>
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  justifyContent: "space-between",
+                                  mt: "30px",
+                                }}
+                              >
+                                <Typography sx={{ width: "100%" }}>
+                                  Label when in stock
+                                </Typography>
+                                <Typography sx={{ width: "100%" }}>
+                                  Label when out of stock (and back order
+                                  allowed)
+                                </Typography>
+                                <Typography sx={{ width: "100%" }}>
+                                  Availability date
+                                </Typography>
+                              </Box>
 
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        mt: "30px",
-                      }}
-                    >
-                      <Typography sx={{ width: "100%" }}>
-                        <TextField size="small" />
-                      </Typography>
-                      <Typography sx={{ width: "100%" }}>
-                        <TextField size="small" />
-                      </Typography>
-                      <Typography sx={{ width: "100%" }}>
-                        <TextField
-                          id="date"
-                          size="small"
-                          type="date"
-                          sx={{ width: "60%" }}
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                        />
-                      </Typography>
-                    </Box>
-                  </Grid>
-                </Grid>
-              )}
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  justifyContent: "space-between",
+                                  mt: "30px",
+                                }}
+                              >
+                                <Typography sx={{ width: "100%" }}>
+                                  <TextField
+                                    size="small"
+                                    margin="normal"
+                                    id="stockin"
+                                    label="Name"
+                                    name="stockin"
+                                    autoComplete="off"
+                                    {...register("stockin", { required: true })}
+                                    error={errors.stockin}
+                                    onChange={(e)=>setStockin(e.target.value)}
+                                  />
+                                  {errors.stockin && (
+                                    <span className="formError">
+                                      stockin is required
+                                    </span>
+                                  )}
+                                </Typography>
+                                <Typography sx={{ width: "100%" }}>
+                                  <TextField
+                                    size="small"
+                                    margin="normal"
+                                    id="stockout"
+                                    label="Name"
+                                    name="stockout"
+                                    autoComplete="off"
+                                    {...register("stockout", {
+                                      required: true,
+                                    })}
+                                    error={errors.stockout}
+                                    onChange={(e)=>setStockout(e.target.value)}
+                                  />
+                                  {errors.stockout && (
+                                    <span className="formError">
+                                      stockout is required
+                                    </span>
+                                  )}
+                                </Typography>
+                                <Typography sx={{ width: "100%" }}>
+                                  <TextField
+                                    id="date"
+                                    size="small"
+                                    type="date"
+                                    sx={{ width: "60%" }}
+                                    InputLabelProps={{
+                                      shrink: true,
+                                    }}
+                                    onChange={(e)=>setDate(e.target.value)}
+                                  />
+                                </Typography>
+                              </Box>
+                              <Button
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2 }}
+                                type="submit"
+                              >
+                                Save
+                              </Button>
+                            </Box>
+                          </Grid>
+                        </Grid>
+                      )}
               {tabIndex === 2 && (
                 <Box>
                   <Grid container>

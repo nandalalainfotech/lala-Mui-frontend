@@ -19,7 +19,6 @@ import TextField from "@mui/material/TextField";
 import { event } from "jquery";
 import { ColorPicker } from "material-ui-color";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { MenuItem } from "../../node_modules/@material-ui/core/index";
 import {
@@ -44,6 +43,7 @@ import {
 import { deepPurple, red } from "@material-ui/core/colors";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import { useNavigate } from "react-router-dom";
 import SearchOffIcon from "@mui/icons-material/SearchOff";
 import {
   ATTRIBUTE_DELETE_RESET,
@@ -85,9 +85,9 @@ function AttributesScreen() {
     handleSubmit: handleSubmit4,
     // formState: { errors: errors4 },
   } = useForm();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [tabIndex, setTabIndex] = useState(0);
+  const [tabIndexback, setTabIndexBack] = useState(0);
   const [Attribute, setAttribute] = useState(0);
   const [AttributeValue, setAttributeValue] = useState(0);
   const [attributestype, setAttributestype] = useState("");
@@ -117,7 +117,9 @@ function AttributesScreen() {
   const [Featureeditvalue, setFeatureValueEdit] = useState("");
   const [FeatureeditvalueType, setFeaturestypeValueEdit] = useState("");
   const [FeaturEditvalue, setEditFeatureValue] = useState("");
+  // const [backSpace, setBackSpace] = useState("");
 
+  // console.log("tabIndex========>>>", backSpace);
   // *****************************Feature Edit Section End*******************************************
   const handleTabChange = (event, newTabIndex) => {
     setTabIndex(newTabIndex);
@@ -131,6 +133,7 @@ function AttributesScreen() {
     setAttributeeditValue(0);
     setFeatureEdit(0);
     setFeatureValueEdit(0);
+    setTabIndexBack(0);
   };
   const attributeMasterList = useSelector((state) => state.attributeMasterList);
   const { attributeMasterdetails } = attributeMasterList;
@@ -363,15 +366,15 @@ function AttributesScreen() {
     successfeautureDelete,
     successfeauturevalueUpdate,
   ]);
+  const navigate = useNavigate();
 
- const backHandeler = ()=>{
-  navigate(setAttribute(0))
- }
+  const backHandeler = () => {
+    navigate(setTabIndexBack(2));
+  };
 
   const theme = createTheme();
 
   function getsubCategoryId(attributeMasterdetails) {
-    console.log("attributeMasterdetails=======>>>", attributeMasterdetails);
     const attributeItem = attributeValuedetails
       ?.filter((item) => {
         return item.attributeVlaue === attributeMasterdetails.row._id;
@@ -385,7 +388,7 @@ function AttributesScreen() {
           filename: item.filename,
         };
       });
-    return attributeItem.length;
+    return attributeItem.length ? attributeItem.length : "";
   }
 
   var count = 1;
@@ -1050,77 +1053,34 @@ function AttributesScreen() {
         </Tabs>
       </Box>
       <Box>
-        {tabIndex === 0 ? (
+        {tabIndex === 0 && (
           <>
-            {Attributedit._id ? (
-              <Box>
-                <ThemeProvider theme={theme}>
-                  <Container
-                    component="main"
-                    maxWidth="sm"
-                    sx={{ my: { xs: 3, md: 6, lg: 10 }, p: { xs: 2, md: 1 } }}
-                  >
-                    <CssBaseline />
-
-                    <Box
-                      component="form"
-                      onSubmit={handleSubmit4(updatdHandler)}
-                      sx={{
-                        display: "flex",
-                        width: "80%",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        margin: "0px 10%",
-                        borderRadius: "5px",
-                      }}
-                    >
-                      <Typography variant="h5" sx={{ textAlign: "center" }}>
-                        {" "}
-                        Update Attributes
-                      </Typography>
-                      <TextField
-                        size="small"
-                        margin="normal"
-                        fullWidth
-                        id="categoryTittel"
-                        label="Name"
-                        name="attributupdtename"
-                        value={attributupdtename}
-                        autoComplete="off"
-                        onChange={(e) => setAttriNameupdate(e.target.value)}
-                      />
-
-                      <FormControl fullWidth sx={{ mt: 1 }}>
-                        <InputLabel>Attributes Type</InputLabel>
-                        <Select
-                          id="standard-simple-select"
-                          value={attributupdte}
-                          label="Attributes Type"
-                          onChange={(e) => setAttriupdate(e.target.value)}
-                        >
-                          {names.map((name) => (
-                            <MenuItem key={name} value={name}>
-                              {name}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-
-                      <Button
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                        type="submit"
-                      >
-                        Update
-                      </Button>
-                    </Box>
-                  </Container>
-                </ThemeProvider>
-              </Box>
+            {/* {tabIndexback === 2 ?(
+            <h1> Hi Naresh</h1>
+          ):( */}
+            {tabIndexback === 2 ? (
+              <>
+                <Box style={{ height: 560, width: "100%" }}>
+                  <DataGrid
+                    sx={{
+                      boxShadow: 10,
+                      borderRadius: 0,
+                      m: 2,
+                    }}
+                    columns={columns}
+                    rows={attributeMasterdetails ? attributeMasterdetails : ""}
+                    getRowId={(rows) => rows._id}
+                    VerticalAlignment="Center"
+                    rowHeight={64}
+                    pageSize={5}
+                    rowsPerPageOptions={[10]}
+                    checkboxSelection
+                  />
+                </Box>
+              </>
             ) : (
               <>
-                {Attribute === 1 ? (
+                {Attributedit._id ? (
                   <Box>
                     <ThemeProvider theme={theme}>
                       <Container
@@ -1135,7 +1095,7 @@ function AttributesScreen() {
 
                         <Box
                           component="form"
-                          onSubmit={handleSubmit(createHandler)}
+                          onSubmit={handleSubmit4(updatdHandler)}
                           sx={{
                             display: "flex",
                             width: "80%",
@@ -1147,7 +1107,7 @@ function AttributesScreen() {
                         >
                           <Typography variant="h5" sx={{ textAlign: "center" }}>
                             {" "}
-                            Create Attributes
+                            Update Attributes
                           </Typography>
                           <TextField
                             size="small"
@@ -1155,24 +1115,19 @@ function AttributesScreen() {
                             fullWidth
                             id="categoryTittel"
                             label="Name"
-                            name="name"
+                            name="attributupdtename"
+                            value={attributupdtename}
                             autoComplete="off"
-                            {...register("name", { required: true })}
-                            error={errors.name}
+                            onChange={(e) => setAttriNameupdate(e.target.value)}
                           />
-                          {errors.name && (
-                            <span className="formError">Name is required</span>
-                          )}
 
                           <FormControl fullWidth sx={{ mt: 1 }}>
                             <InputLabel>Attributes Type</InputLabel>
                             <Select
                               id="standard-simple-select"
-                              value={attributestype}
+                              value={attributupdte}
                               label="Attributes Type"
-                              onChange={(e) =>
-                                setAttributestype(e.target.value)
-                              }
+                              onChange={(e) => setAttriupdate(e.target.value)}
                             >
                               {names.map((name) => (
                                 <MenuItem key={name} value={name}>
@@ -1188,7 +1143,7 @@ function AttributesScreen() {
                             sx={{ mt: 3, mb: 2 }}
                             type="submit"
                           >
-                            Create
+                            Update
                           </Button>
                         </Box>
                       </Container>
@@ -1196,7 +1151,7 @@ function AttributesScreen() {
                   </Box>
                 ) : (
                   <>
-                    {Attributeditvalue.id ? (
+                    {Attribute === 1 ? (
                       <Box>
                         <ThemeProvider theme={theme}>
                           <Container
@@ -1211,15 +1166,14 @@ function AttributesScreen() {
 
                             <Box
                               component="form"
-                              onSubmit={handleSubmit1(UpdatEditValue)}
+                              onSubmit={handleSubmit(createHandler)}
                               sx={{
                                 display: "flex",
-                                width: "100%",
+                                width: "80%",
                                 flexDirection: "column",
                                 alignItems: "center",
-                                borderRadius: "0px",
-                                p: 5,
-                                border: "1px solid #000000",
+                                margin: "0px 10%",
+                                borderRadius: "5px",
                               }}
                             >
                               <Typography
@@ -1227,91 +1181,66 @@ function AttributesScreen() {
                                 sx={{ textAlign: "center" }}
                               >
                                 {" "}
-                                Create Attributes Value
+                                Create Attributes
                               </Typography>
-                              <FormControl fullWidth sx={{ mt: 1 }}>
-                                <InputLabel>Attributes Type</InputLabel>
-                                <Select
-                                  id="standard-simple-select"
-                                  value={AtteditType}
-                                  label="Attributes Type"
-                                  onChange={(e) =>
-                                    setAttValueType(e.target.value)
-                                  }
-                                >
-                                  {attributeMasterdetails.map((detail) => (
-                                    <MenuItem
-                                      key={detail._id}
-                                      value={detail._id}
-                                    >
-                                      {detail.attributename}
-                                    </MenuItem>
-                                  ))}
-                                </Select>
-                              </FormControl>
                               <TextField
                                 size="small"
                                 margin="normal"
                                 fullWidth
-                                id="value"
-                                label="Value"
-                                name="value"
+                                id="categoryTittel"
+                                label="Name"
+                                name="name"
                                 autoComplete="off"
-                                value={AttEditvalue}
-                                onChange={(e) => setEditValue(e.target.value)}
+                                {...register("name", { required: true })}
+                                error={errors.name}
                               />
+                              {errors.name && (
+                                <span className="formError">
+                                  Name is required
+                                </span>
+                              )}
 
-                              <ColorPicker
-                                defaultValue="transparent"
-                                id="ColorPic"
-                                name="ColorPic"
-                                value={color}
-                                onChange={setColor}
-                              />
-
-                              <Typography variant="h6">Texture</Typography>
-                              <TextField
-                                style={{ margin: "10px 0px" }}
-                                inputProps={{
-                                  style: { fontSize: 14 },
-                                  accept: "image/*",
-                                }}
-                                size="small"
-                                fullWidth
-                                type="file"
-                                id="imageFile"
-                                name="imageFile"
-                                autoComplete="off"
-                                // onChange={(e) => onSelectFile(e)}
-                                {...register1("imageFile", {
-                                  required: true,
-                                })}
-                                error={errors1.imageFile}
-                              />
-
-                              <CardMedia
-                                component="img"
-                                height="125"
-                                sx={{ border: "1px solid black", width: "25%" }}
-                                image={`/api/AttributeValue/view/${Attributeditvalue?.filename}`}
-                                alt={Attributeditvalue.filename}
-                              />
-
-                              <Button
-                                fullWidth
-                                variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
-                                type="submit"
-                              >
-                                Update
-                              </Button>
+                              <FormControl fullWidth sx={{ mt: 1 }}>
+                                <InputLabel>Attributes Type</InputLabel>
+                                <Select
+                                  id="standard-simple-select"
+                                  value={attributestype}
+                                  label="Attributes Type"
+                                  onChange={(e) =>
+                                    setAttributestype(e.target.value)
+                                  }
+                                >
+                                  {names.map((name) => (
+                                    <MenuItem key={name} value={name}>
+                                      {name}
+                                    </MenuItem>
+                                  ))}
+                                </Select>
+                              </FormControl>
+                              <Box sx={{ display: "flex" }}>
+                                <Button
+                                  variant="contained"
+                                  sx={{ mt: 3, mb: 2, ml: 4 }}
+                                  type="submit"
+                                >
+                                  Create
+                                </Button>
+                              </Box>
                             </Box>
+                            <Button
+                              variant="contained"
+                              sx={{ mr: 4,position:"absolute" }}
+                              type="Click"
+                              onClick={backHandeler}
+                            >
+                              Cancel
+                            </Button>
                           </Container>
                         </ThemeProvider>
                       </Box>
                     ) : (
                       <>
-                        {AttributeValue === 2 ? (
+                        {Attributeditvalue.id ? (
                           <Box>
                             <ThemeProvider theme={theme}>
                               <Container
@@ -1326,7 +1255,7 @@ function AttributesScreen() {
 
                                 <Box
                                   component="form"
-                                  onSubmit={handleSubmit1(createAttributeValue)}
+                                  onSubmit={handleSubmit1(UpdatEditValue)}
                                   sx={{
                                     display: "flex",
                                     width: "100%",
@@ -1348,10 +1277,10 @@ function AttributesScreen() {
                                     <InputLabel>Attributes Type</InputLabel>
                                     <Select
                                       id="standard-simple-select"
-                                      value={AttributeVlaue}
+                                      value={AtteditType}
                                       label="Attributes Type"
                                       onChange={(e) =>
-                                        setAttributeVlaue(e.target.value)
+                                        setAttValueType(e.target.value)
                                       }
                                     >
                                       {attributeMasterdetails.map((detail) => (
@@ -1372,14 +1301,12 @@ function AttributesScreen() {
                                     label="Value"
                                     name="value"
                                     autoComplete="off"
-                                    {...register1("value", { required: true })}
-                                    error={errors1.value}
+                                    value={AttEditvalue}
+                                    onChange={(e) =>
+                                      setEditValue(e.target.value)
+                                    }
                                   />
-                                  {errors1.value && (
-                                    <span className="formError">
-                                      value is required
-                                    </span>
-                                  )}
+
                                   <ColorPicker
                                     defaultValue="transparent"
                                     id="ColorPic"
@@ -1387,11 +1314,7 @@ function AttributesScreen() {
                                     value={color}
                                     onChange={setColor}
                                   />
-                                  {errors1.ColorPic && (
-                                    <span className="formError">
-                                      ColorPic is required
-                                    </span>
-                                  )}
+
                                   <Typography variant="h6">Texture</Typography>
                                   <TextField
                                     style={{ margin: "10px 0px" }}
@@ -1411,11 +1334,17 @@ function AttributesScreen() {
                                     })}
                                     error={errors1.imageFile}
                                   />
-                                  {errors1?.imageFile?.type === "required" && (
-                                    <span className="formError">
-                                      File is required
-                                    </span>
-                                  )}
+
+                                  <CardMedia
+                                    component="img"
+                                    height="125"
+                                    sx={{
+                                      border: "1px solid black",
+                                      width: "25%",
+                                    }}
+                                    image={`/api/AttributeValue/view/${Attributeditvalue?.filename}`}
+                                    alt={Attributeditvalue.filename}
+                                  />
 
                                   <Button
                                     fullWidth
@@ -1423,7 +1352,7 @@ function AttributesScreen() {
                                     sx={{ mt: 3, mb: 2 }}
                                     type="submit"
                                   >
-                                    Create
+                                    Update
                                   </Button>
                                 </Box>
                               </Container>
@@ -1431,53 +1360,189 @@ function AttributesScreen() {
                           </Box>
                         ) : (
                           <>
-                            {viewitem?.id ? (
-                              <Box style={{ height: 560, width: "100%" }}>
-                                <DataGrid
-                                  sx={{
-                                    boxShadow: 10,
-                                    borderRadius: 0,
-                                    m: 2,
-                                  }}
-                                  columns={valuecolumn}
-                                  rows={assemList}
-                                  getRowId={(rows) => rows.id}
-                                  pageSize={5}
-                                  rowsPerPageOptions={[5]}
-                                  checkboxSelection
-                                />
-                                 <Button
-                                  sx={{ mr: 3 }}
-                                  variant="contained"
-                                  type="Click"
-                                  onClick={backHandeler}
-                                >
-                                  Back
-                                </Button>
+                            {AttributeValue === 2 ? (
+                              <Box>
+                                <ThemeProvider theme={theme}>
+                                  <Container
+                                    component="main"
+                                    maxWidth="sm"
+                                    sx={{
+                                      my: { xs: 3, md: 6, lg: 10 },
+                                      p: { xs: 2, md: 1 },
+                                    }}
+                                  >
+                                    <CssBaseline />
+
+                                    <Box
+                                      component="form"
+                                      onSubmit={handleSubmit1(
+                                        createAttributeValue
+                                      )}
+                                      sx={{
+                                        display: "flex",
+                                        width: "100%",
+                                        flexDirection: "column",
+                                        alignItems: "center",
+                                        borderRadius: "0px",
+                                        p: 5,
+                                        border: "1px solid #000000",
+                                      }}
+                                    >
+                                      <Typography
+                                        variant="h5"
+                                        sx={{ textAlign: "center" }}
+                                      >
+                                        {" "}
+                                        Create Attributes Value
+                                      </Typography>
+                                      <FormControl fullWidth sx={{ mt: 1 }}>
+                                        <InputLabel>Attributes Type</InputLabel>
+                                        <Select
+                                          id="standard-simple-select"
+                                          value={AttributeVlaue}
+                                          label="Attributes Type"
+                                          onChange={(e) =>
+                                            setAttributeVlaue(e.target.value)
+                                          }
+                                        >
+                                          {attributeMasterdetails.map(
+                                            (detail) => (
+                                              <MenuItem
+                                                key={detail._id}
+                                                value={detail._id}
+                                              >
+                                                {detail.attributename}
+                                              </MenuItem>
+                                            )
+                                          )}
+                                        </Select>
+                                      </FormControl>
+                                      <TextField
+                                        size="small"
+                                        margin="normal"
+                                        fullWidth
+                                        id="value"
+                                        label="Value"
+                                        name="value"
+                                        autoComplete="off"
+                                        {...register1("value", {
+                                          required: true,
+                                        })}
+                                        error={errors1.value}
+                                      />
+                                      {errors1.value && (
+                                        <span className="formError">
+                                          value is required
+                                        </span>
+                                      )}
+                                      <ColorPicker
+                                        defaultValue="transparent"
+                                        id="ColorPic"
+                                        name="ColorPic"
+                                        value={color}
+                                        onChange={setColor}
+                                      />
+                                      {errors1.ColorPic && (
+                                        <span className="formError">
+                                          ColorPic is required
+                                        </span>
+                                      )}
+                                      <Typography variant="h6">
+                                        Texture
+                                      </Typography>
+                                      <TextField
+                                        style={{ margin: "10px 0px" }}
+                                        inputProps={{
+                                          style: { fontSize: 14 },
+                                          accept: "image/*",
+                                        }}
+                                        size="small"
+                                        fullWidth
+                                        type="file"
+                                        id="imageFile"
+                                        name="imageFile"
+                                        autoComplete="off"
+                                        // onChange={(e) => onSelectFile(e)}
+                                        {...register1("imageFile", {
+                                          required: true,
+                                        })}
+                                        error={errors1.imageFile}
+                                      />
+                                      {errors1?.imageFile?.type ===
+                                        "required" && (
+                                        <span className="formError">
+                                          File is required
+                                        </span>
+                                      )}
+
+                                      <Button
+                                        fullWidth
+                                        variant="contained"
+                                        sx={{ mt: 3, mb: 2 }}
+                                        type="submit"
+                                      >
+                                        Create
+                                      </Button>
+                                    </Box>
+                                  </Container>
+                                </ThemeProvider>
                               </Box>
                             ) : (
-                              <Box style={{ height: 560, width: "100%" }}>
-                                <DataGrid
-                                  sx={{
-                                    boxShadow: 10,
-                                    borderRadius: 0,
-                                    m: 2,
-                                  }}
-                                  columns={columns}
-                                  rows={
-                                    attributeMasterdetails
-                                      ? attributeMasterdetails
-                                      : ""
-                                  }
-                                  getRowId={(rows) => rows._id}
-                                  VerticalAlignment="Center"
-                                  rowHeight={64}
-                                  pageSize={5}
-                                  rowsPerPageOptions={[10]}
-                                  checkboxSelection
-                                />
-                               
-                              </Box>
+                              <>
+                                <>
+                                  {viewitem?.id ? (
+                                    <Box style={{ height: 560, width: "100%" }}>
+                                      <DataGrid
+                                        sx={{
+                                          boxShadow: 10,
+                                          borderRadius: 0,
+                                          m: 2,
+                                        }}
+                                        columns={valuecolumn}
+                                        rows={assemList}
+                                        getRowId={(rows) => rows.id}
+                                        pageSize={5}
+                                        rowsPerPageOptions={[5]}
+                                        checkboxSelection
+                                      />
+                                      <Button
+                                        sx={{ mr: 3 }}
+                                        variant="contained"
+                                        type="Click"
+                                        onClick={backHandeler}
+                                      >
+                                        Back
+                                      </Button>
+                                    </Box>
+                                  ) : (
+                                    <>
+                                      <Box
+                                        style={{ height: 560, width: "100%" }}
+                                      >
+                                        <DataGrid
+                                          sx={{
+                                            boxShadow: 10,
+                                            borderRadius: 0,
+                                            m: 2,
+                                          }}
+                                          columns={columns}
+                                          rows={
+                                            attributeMasterdetails
+                                              ? attributeMasterdetails
+                                              : ""
+                                          }
+                                          getRowId={(rows) => rows._id}
+                                          VerticalAlignment="Center"
+                                          rowHeight={64}
+                                          pageSize={5}
+                                          rowsPerPageOptions={[10]}
+                                          checkboxSelection
+                                        />
+                                      </Box>
+                                    </>
+                                  )}
+                                </>
+                              </>
                             )}
                           </>
                         )}
@@ -1488,7 +1553,11 @@ function AttributesScreen() {
               </>
             )}
           </>
-        ) : (
+        )}
+      </Box>
+
+      <Box>
+        {tabIndex === 1 && (
           <>
             {Featureedit._id ? (
               <Box>
