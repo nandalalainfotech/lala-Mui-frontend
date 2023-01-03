@@ -209,7 +209,6 @@ function BrandScreen() {
   }, [dispatch]);
 
   const editHandler = (brandIndId) => {
-    console.log("brandIndId", brandIndId);
     setbrnadindId(brandIndId);
     setNewname(brandIndId.name);
     setNewckeditor(brandIndId.ckeditor);
