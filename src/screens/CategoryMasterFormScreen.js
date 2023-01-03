@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
@@ -14,16 +14,38 @@ import MenuItem from "@mui/material/MenuItem";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import { useDispatch, useSelector } from "react-redux";
 import { FormControl, Switch, } from '@material-ui/core';
-import { createCategoryMaster, updatecategoryMaster } from '../actions/categoryMasterAction';
+import { CategoryMasterallLists, createCategoryMaster, updatecategoryMaster } from '../actions/categoryMasterAction';
 import { useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
 import CardMedia from '@mui/material/CardMedia';
+// import FormLabel from '@mui/material/FormLabel';
+import { Menu } from "@material-ui/core";
+import NestedMenuItem from "material-ui-nested-menu-item";
 
 export default function CategoryMasterFormScreen() {
-    const params = useParams();
-    const categoryMasterId = params.id;
+    const [menuPosition, setMenuPosition] = useState(null);
+
+    const handleRightClick = () => {
+        if (menuPosition) {
+            return;
+        }
+        event.preventDefault();
+        setMenuPosition({
+            top: event.pageY,
+            left: event.pageX
+        });
+    };
+
+    const handleItemClick = () => {
+        setMenuPosition(null);
+    };
+
     const CategoryMasterallList = useSelector((state) => state.CategoryMasterallList);
     const { categorymasterallList } = CategoryMasterallList;
+    console.log("categorymasterallList-------->>>", categorymasterallList)
+
+    const params = useParams();
+    const categoryMasterId = params.id;
 
     const categoryObj = categorymasterallList?.find((item) => (item._id === categoryMasterId))
     // console.log("categorymasterallList--categoryObj123----------->>>>", categoryObj);
@@ -34,7 +56,7 @@ export default function CategoryMasterFormScreen() {
     // eslint-disable-next-line no-unused-vars
     const [checked, setchecked] = useState(categoryObj?.checked);
     // eslint-disable-next-line no-unused-vars
-    const [parent, setParent] = useState('');
+    const [parent, setParent] = useState(categoryObj?.parent);
     // eslint-disable-next-line no-unused-vars
     const [description, setDescription] = useState(categoryObj?.description);
     // eslint-disable-next-line no-unused-vars
@@ -46,14 +68,16 @@ export default function CategoryMasterFormScreen() {
     // const [image, setimage] = useState('');
     const dispatch = useDispatch();
     const theme = createTheme();
+    console.log("e------------", parent)
     const createHandler = (e) => {
+        console.log("e------------", e)
         if (categoryObj) {
             dispatch(
                 updatecategoryMaster({
                     id: categoryObj?._id,
                     name: name,
                     checked: checked,
-                    parent: 'sample',
+                    parent: parent,
                     description: description,
                     coverimg: coverimg,
                     // catThumbnail: e.catThumbnail,
@@ -66,7 +90,7 @@ export default function CategoryMasterFormScreen() {
                 createCategoryMaster({
                     name: e.name,
                     checked: e.checked,
-                    parent: 'sample',
+                    parent: e.parent,
                     description: e.description,
                     coverimg: e.coverimg,
                     // catThumbnail: e.catThumbnail,
@@ -113,7 +137,10 @@ export default function CategoryMasterFormScreen() {
         },
     }));
     const classes = useStyles();
-
+    useEffect(() => {
+        dispatch(CategoryMasterallLists());
+        console.log("parent==================>>>>>>", parent)
+    }, [dispatch])
 
     return (
         <Box sx={{ backgroundColor: '#fff' }}>
@@ -169,16 +196,21 @@ export default function CategoryMasterFormScreen() {
                                     <InputLabel> Parent category</InputLabel>
                                     <Select
                                         id="standard-simple-select"
-                                        value={'men'}
-                                        label="Attributes Type"
+                                        value={parent}
+                                        label="Parent"
+                                        name="parent"
                                         onChange={(e) => setParent(e.target.value)}
                                     >
-                                        <MenuItem value={1}>Dropdown List</MenuItem>
+                                        {/* <MenuItem value={1}>Dropdown List</MenuItem>
                                         <MenuItem value={2}>Radio Button</MenuItem>
-                                        <MenuItem value={3}></MenuItem>
+                                        <MenuItem value={3}></MenuItem> */}
+                                        {categorymasterallList?.map((item, index) => (
+                                            <MenuItem key={index} value={item._id}>
+                                                {item.name}
+                                            </MenuItem>
+                                        ))}
                                     </Select>
                                 </FormControl>
-
 
                                 <InputLabel sx={{ mt: 1 }}>Description</InputLabel>
                                 <TextareaAutosize
@@ -320,15 +352,42 @@ export default function CategoryMasterFormScreen() {
                                         <InputLabel> Parent category</InputLabel>
                                         <Select
                                             id="standard-simple-select"
-                                            value={'men'}
+                                            value={parent}
                                             label="Attributes Type"
+                                            name="parent"
                                             onChange={(e) => setParent(e.target.value)}
+                                            inputProps={register("parent")}
                                         >
-                                            <MenuItem value={1}>Dropdown List</MenuItem>
-                                            <MenuItem value={2}>Radio Button</MenuItem>
-                                            <MenuItem value={3}></MenuItem>
+                                            {/* <MenuItem value={1}>Dropdown List</MenuItem>
+                                        <MenuItem value={2}>Radio Button</MenuItem>
+                                        <MenuItem value={3}></MenuItem> */}
+                                            {/* {categorymasterallList?.map((item, index) => (
+                                                console.log("categorymasterallList-------->>>", categorymasterallList),
+                                                <MenuItem key={index} value={item._id}>
+                                                    {item.name}
+                                                </MenuItem>
+                                            ))} */}
+                                            {/* <MenuItem value='home'>
+                                                Home</MenuItem> */}
+                                            {/* <Select></Select> */}
+                                            {categorymasterallList?.map((item, index) => {
+                                                return (
+                                                    <>
+                                                    <MenuItem key={index} value={item._id}>{item.name}</MenuItem>
+                                               
+                                                {
+                                                    item.children.map((child) => (
+                                                        <MenuItem sx={{ml:3}} key={child._id} value={child._id}>{child.name}</MenuItem>
+                                                    ))
+                                                }
+                                                </>
+                                                )
+
+                                            })}
+
                                         </Select>
                                     </FormControl>
+
 
                                     <InputLabel sx={{ mt: 1 }}>Description</InputLabel>
                                     {/* <TextareaAutosize
@@ -349,7 +408,6 @@ export default function CategoryMasterFormScreen() {
                                         // value={comment}    
                                         onChange={(e) => setDescription(e.target.value)}
                                         {...register("description")}
-
                                     />
 
 
@@ -412,6 +470,27 @@ export default function CategoryMasterFormScreen() {
                                     >
                                         Create
                                     </Button>
+                                    <div onContextMenu={handleRightClick}>
+                                        <Typography>Right click to open menu</Typography>
+                                        <Menu
+                                            open={!!menuPosition}
+                                            onClose={() => setMenuPosition(null)}
+                                            anchorReference="anchorPosition"
+                                            anchorPosition={menuPosition}
+                                        >
+                                            {categorymasterallList?.map((item, index) => (
+                                                <NestedMenuItem
+                                                    label={item.name}
+                                                    value={item.value}
+                                                    key={index}
+                                                    parentMenuOpen={!!menuPosition}
+                                                    onClick={handleItemClick}
+                                                >
+                                                    <MenuItem onClick={handleItemClick}></MenuItem>
+                                                </NestedMenuItem>
+                                            ))}
+                                        </Menu>
+                                    </div>
                                 </Box>
                             </Container>
                         </ThemeProvider>
