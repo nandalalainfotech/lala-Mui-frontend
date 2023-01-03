@@ -12,6 +12,7 @@ export default function Product(PropTypes) {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  console.log("product======>>",product);
 
   return (
     <Card
