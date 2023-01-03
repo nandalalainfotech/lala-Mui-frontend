@@ -19,27 +19,9 @@ import { useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
 import CardMedia from '@mui/material/CardMedia';
 // import FormLabel from '@mui/material/FormLabel';
-import { Menu } from "@material-ui/core";
-import NestedMenuItem from "material-ui-nested-menu-item";
+
 
 export default function CategoryMasterFormScreen() {
-    const [menuPosition, setMenuPosition] = useState(null);
-
-    const handleRightClick = () => {
-        if (menuPosition) {
-            return;
-        }
-        event.preventDefault();
-        setMenuPosition({
-            top: event.pageY,
-            left: event.pageX
-        });
-    };
-
-    const handleItemClick = () => {
-        setMenuPosition(null);
-    };
-
     const CategoryMasterallList = useSelector((state) => state.CategoryMasterallList);
     const { categorymasterallList } = CategoryMasterallList;
     console.log("categorymasterallList-------->>>", categorymasterallList)
@@ -470,27 +452,6 @@ export default function CategoryMasterFormScreen() {
                                     >
                                         Create
                                     </Button>
-                                    <div onContextMenu={handleRightClick}>
-                                        <Typography>Right click to open menu</Typography>
-                                        <Menu
-                                            open={!!menuPosition}
-                                            onClose={() => setMenuPosition(null)}
-                                            anchorReference="anchorPosition"
-                                            anchorPosition={menuPosition}
-                                        >
-                                            {categorymasterallList?.map((item, index) => (
-                                                <NestedMenuItem
-                                                    label={item.name}
-                                                    value={item.value}
-                                                    key={index}
-                                                    parentMenuOpen={!!menuPosition}
-                                                    onClick={handleItemClick}
-                                                >
-                                                    <MenuItem onClick={handleItemClick}></MenuItem>
-                                                </NestedMenuItem>
-                                            ))}
-                                        </Menu>
-                                    </div>
                                 </Box>
                             </Container>
                         </ThemeProvider>
