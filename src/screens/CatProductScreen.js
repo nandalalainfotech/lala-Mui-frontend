@@ -6,8 +6,11 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import InfoIcon from "@mui/icons-material/Info";
 import { Box, Tab, Tabs, Typography } from "@mui/material";
+import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+import CardMedia from "@mui/material/CardMedia";
 import Checkbox from "@mui/material/Checkbox";
+import Dialog from "@mui/material/Dialog";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
@@ -26,10 +29,9 @@ import { DropzoneArea } from "material-ui-dropzone";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import { FeaturesMasterListDetails } from "../actions/AttributeActions";
+import { brandList } from "../actions/brandAction";
 import { catProductList, saveCatologProduct } from "../actions/catProductAction";
-import Dialog from "@mui/material/Dialog";
-import Avatar from "@mui/material/Avatar";
-import CardMedia from "@mui/material/CardMedia";
 function CatProductScreen() {
   const {
     register,
@@ -51,14 +53,22 @@ function CatProductScreen() {
   const [tabIndex, setTabIndex] = useState(0);
   const [open, setOpen] = useState(false);
   // ----Save----
+  const [featurestype, setFeaturestype] = useState("");
+  const [brandId, setBrandId] = useState("");
 
   const catalogProd = useSelector((state) => state.catalogProd);
   const { catProducts } = catalogProd;
 
-  console.log("catProducts", catProducts);
+  const FeaturesList = useSelector((state) => state.FeaturesList);
+  const { Featuresdetails } = FeaturesList;
+
+  const brandReduce = useSelector((state) => state.brandReduce);
+  const { brandLists } = brandReduce;
 
   useEffect(() => {
-    dispatch(catProductList());   
+    dispatch(catProductList());
+    dispatch(FeaturesMasterListDetails());  
+    dispatch(brandList()); 
   }, []);
 
   const handleTabChange = (event, newTabIndex) => {
@@ -161,7 +171,6 @@ Not all shops sell new products.
   const dispatch = useDispatch();
 
   const submitHandler = async (e) => {
-    console.log("e", e);
     const formData = new FormData();
     formData.append("image", dropimg[0]);
     for (let i = 0; i < dropimg.length; i++) {
@@ -185,8 +194,8 @@ Not all shops sell new products.
           fileId: data.image._id,
           summary: summary,
           description: description,
-          feature: e.feature,
-          brand: e.brand,
+          featureId: featurestype,
+          brand: brandId,
           search: e.search,
           reference: e.reference,
           quantity: e.quantity,
@@ -222,6 +231,14 @@ Not all shops sell new products.
     return `${orders.row.createdAt.substring(0, 10) || ''}`;
   }
 
+  function getFeatureName(catProducts) {
+    return `${catProducts?.row?.featureId ? Featuresdetails?.find((x) => x?._id === catProducts?.row?.featureId)?.featurename : ""}`;
+  }
+
+  function getBrandName(params) {
+    return `${params?.row?.brand ? brandLists?.find((x) => x?._id === params?.row?.brand)?.name : ""}`;
+  }
+
   const columns = [
     {
       field: "prodname",
@@ -235,7 +252,6 @@ Not all shops sell new products.
       flex: 1,
       headerClassName: "super-app-theme--header",
       renderCell: (params) => {
-        console.log("params", params);
         return (
           <Avatar
             onClick={handleClickOpen}
@@ -255,10 +271,11 @@ Not all shops sell new products.
       valueGetter: getDate,
     },
     {
-      field: "feature",
+      field: "featureId",
       headerName: "Feature",
       flex: 1,
       headerClassName: "super-app-theme--header",
+      valueGetter: getFeatureName,
     },
     {
       field: "reference",
@@ -271,6 +288,7 @@ Not all shops sell new products.
       headerName: "Brand",
       flex: 1,
       headerClassName: "super-app-theme--header",
+      valueGetter: getBrandName,
     },
   ];
 
@@ -433,12 +451,24 @@ Not all shops sell new products.
                                   justifyContent: "space-between",
                                 }}
                               >
-                                <TextField
-                                  id="outlined-size-small"
-                                  {...register("feature", { required: true })}
-                                  error={errors.feature}
-                                  size="small"
-                                />
+                                <FormControl sx={{width: "30%"}}>
+                                    <Select
+                                      size="small"
+                                      value={featurestype}
+                                      onChange={(e) =>
+                                        setFeaturestype(e.target.value)
+                                      }
+                                    >
+                                      {Featuresdetails.map((Feature) => (
+                                        <MenuItem
+                                          key={Feature._id}
+                                          value={Feature._id}
+                                        >
+                                          {Feature.featurename}
+                                        </MenuItem>
+                                      ))}
+                                    </Select>
+                                  </FormControl>
                                 <TextField
                                   id="outlined-size-small"
                                   defaultValue="Choose a Value"
@@ -491,12 +521,18 @@ Not all shops sell new products.
                                   justifyContent: "space-between",
                                 }}
                               >
-                                <TextField
-                                  id="outlined-size-small"
-                                  {...register("brand", { required: true })}
-                                  error={errors.brand}
-                                  size="small"
-                                />
+                               <FormControl sx={{width: "40%"}}>
+                                <Select
+                                  value={brandId}
+                                  onChange={(e) => setBrandId(e.target.value)}
+                                >
+                                  {brandLists?.map((item, index) => (
+                                    <MenuItem key={index} value={item._id}>
+                                      {item.name}
+                                    </MenuItem>
+                                  ))}
+                                </Select>
+                              </FormControl>
                               </Box>
                             </Box>
                           </>
@@ -1853,6 +1889,7 @@ Not all shops sell new products.
                 borderRadius: 0,
                 m: 2,
               }}
+              
               columns={columns}
               rows={catProducts ? catProducts: ""}
               getRowId={(rows) => rows._id}

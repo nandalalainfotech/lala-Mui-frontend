@@ -334,8 +334,8 @@ function BrandScreen() {
   ];
 
   function getbrandId(brandAddLists) {
-    return brandAddLists.row.brand
-      ? brandLists.find((x) => x._id === brandAddLists.row.brand)?.name
+    return brandAddLists?.row?.brand
+      ? brandLists?.find((x) => x?._id === brandAddLists?.row?.brand)?.name
       : "null";
   }
 
