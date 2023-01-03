@@ -6,11 +6,8 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import InfoIcon from "@mui/icons-material/Info";
 import { Box, Tab, Tabs, Typography } from "@mui/material";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CardMedia from "@mui/material/CardMedia";
 import Checkbox from "@mui/material/Checkbox";
-import Dialog from "@mui/material/Dialog";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
@@ -25,13 +22,23 @@ import TextField from "@mui/material/TextField";
 import Tooltip from "@mui/material/Tooltip";
 import { DataGrid } from "@mui/x-data-grid";
 import Axios from "axios";
-import { DropzoneArea } from "material-ui-dropzone";
+// import { DropzoneArea } from "material-ui-dropzone";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { FeaturesMasterListDetails } from "../actions/AttributeActions";
-import { brandList } from "../actions/brandAction";
-import { catProductList, saveCatologProduct } from "../actions/catProductAction";
+import {
+  catProductList,
+  saveCatologProduct,
+} from "../actions/catProductAction";
+import Dialog from "@mui/material/Dialog";
+import Avatar from "@mui/material/Avatar";
+import CardMedia from "@mui/material/CardMedia";
+// import Card from "@mui/material/Card";
+import ClearIcon from "@mui/icons-material/Clear";
+import CardContent from "@mui/material/CardContent";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+
 function CatProductScreen() {
   const {
     register,
@@ -47,28 +54,18 @@ function CatProductScreen() {
 
   const [category, setCategory] = useState(0);
   const [dropimg, setDropimg] = useState([]);
+
   const [summary, setSummary] = useState("");
   const [description, setDescription] = useState("");
   const [newImg, setNewimg] = useState();
   const [tabIndex, setTabIndex] = useState(0);
   const [open, setOpen] = useState(false);
   // ----Save----
-  const [featurestype, setFeaturestype] = useState("");
-  const [brandId, setBrandId] = useState("");
 
   const catalogProd = useSelector((state) => state.catalogProd);
   const { catProducts } = catalogProd;
-
-  const FeaturesList = useSelector((state) => state.FeaturesList);
-  const { Featuresdetails } = FeaturesList;
-
-  const brandReduce = useSelector((state) => state.brandReduce);
-  const { brandLists } = brandReduce;
-
   useEffect(() => {
     dispatch(catProductList());
-    dispatch(FeaturesMasterListDetails());  
-    dispatch(brandList()); 
   }, []);
 
   const handleTabChange = (event, newTabIndex) => {
@@ -153,7 +150,55 @@ Not all shops sell new products.
  This option enables you to indicate the condition of the product.
  It can be required on some marketplaces.
 `;
+  const [CoverStatus, setCoverStatus] = useState("");
+  console.log("CoverStatus",CoverStatus);
+  const [dropImage, setDropZoneImage] = useState("");
+  console.log("CoverStatus======>>>", dropImage);
 
+  const [ImageSelect, setImageSelect] = useState("");
+  const [ImageSelectblob, setImageSelectblob] = useState("");
+  const [ImageDelete, setImageDelete] = useState("");
+
+  const [checked, setChecked] = useState("");
+  const handleChangeChekce = (event) => {
+    setChecked(event.target.checked);
+  };
+
+  const ImagHandleSelect = (e, index) => {
+    console.log("e",dropimg[index]);
+    setImageSelectblob(e.target.src);
+    setImageSelect(index);
+    setImageDelete(0);
+    setChecked(false);
+    setCoverStatus('')
+    setDropZoneImage(dropimg[index])
+    
+  };
+
+  const [selectedImages, setSelectedImages] = useState([]);
+  const onSelectFile = (event) => {
+    const selectedFiles = event.target.files;
+    const selectedFilesArray = Array.from(selectedFiles);
+    setDropimg(selectedFilesArray);
+    const imagesArray = selectedFilesArray.map((file) => {
+      return URL.createObjectURL(file);
+    });
+
+    setSelectedImages((previousImages) => previousImages.concat(imagesArray));
+
+    // FOR BUG IN CHROME
+    event.target.value = "";
+  };
+
+  function deleteHandler(image) {
+    setSelectedImages(selectedImages.filter((e) => e !== image));
+    URL.revokeObjectURL(image);
+  }
+  function deleteHandlerpage() {
+    setImageDelete("Delete");
+    // setSelectedImages(selectedImages.filter((e) => e !== image));
+    // URL.revokeObjectURL(image);
+  }
   // eslint-disable-next-line no-unused-vars
   const [errorUpload, setErrorUpload] = useState("");
   const userSignin = useSelector((state) => state.userSignin);
@@ -171,8 +216,10 @@ Not all shops sell new products.
   const dispatch = useDispatch();
 
   const submitHandler = async (e) => {
+    console.log("e,===============>>",e);
     const formData = new FormData();
-    formData.append("image", dropimg[0]);
+    formData.append("image", dropImage);
+    formData.append("coverstatus", CoverStatus);
     for (let i = 0; i < dropimg.length; i++) {
       formData.append("images", dropimg[i]);
     }
@@ -194,8 +241,8 @@ Not all shops sell new products.
           fileId: data.image._id,
           summary: summary,
           description: description,
-          featureId: featurestype,
-          brand: brandId,
+          feature: e.feature,
+          brand: e.brand,
           search: e.search,
           reference: e.reference,
           quantity: e.quantity,
@@ -222,21 +269,18 @@ Not all shops sell new products.
       setErrorUpload(error.message);
     }
   };
+  const [CoverImages, setCoverImages] = useState("");
 
-  const handleChange = (files) => {
-    setDropimg(files);
+  const handleChangeSaveImage = () => {
+    if (checked === true) {
+      setCoverImages(ImageSelectblob);
+      setImageSelect("");
+      setCoverStatus("coverimage");
+    }
   };
 
   function getDate(orders) {
-    return `${orders.row.createdAt.substring(0, 10) || ''}`;
-  }
-
-  function getFeatureName(catProducts) {
-    return `${catProducts?.row?.featureId ? Featuresdetails?.find((x) => x?._id === catProducts?.row?.featureId)?.featurename : ""}`;
-  }
-
-  function getBrandName(params) {
-    return `${params?.row?.brand ? brandLists?.find((x) => x?._id === params?.row?.brand)?.name : ""}`;
+    return `${orders.row.createdAt.substring(0, 10) || ""}`;
   }
 
   const columns = [
@@ -271,11 +315,10 @@ Not all shops sell new products.
       valueGetter: getDate,
     },
     {
-      field: "featureId",
+      field: "feature",
       headerName: "Feature",
       flex: 1,
       headerClassName: "super-app-theme--header",
-      valueGetter: getFeatureName,
     },
     {
       field: "reference",
@@ -288,11 +331,8 @@ Not all shops sell new products.
       headerName: "Brand",
       flex: 1,
       headerClassName: "super-app-theme--header",
-      valueGetter: getBrandName,
     },
   ];
-
- 
 
   return (
     <>
@@ -354,6 +394,7 @@ Not all shops sell new products.
                             margin="normal"
                             {...register("prodname", { required: true })}
                             error={errors.prodname}
+                            // onChange={handleChange.bind(this)}
                           />
                         </Typography>
                       </Box>
@@ -361,11 +402,149 @@ Not all shops sell new products.
                         sx={{
                           border: "2px solid gray",
                           width: "100%",
-                          height: "250px",
+                          // height: "250px",
                           mt: "40px",
                         }}
                       >
-                        <DropzoneArea onChange={handleChange.bind(this)} />
+                        {ImageDelete === "Delete" ? (
+                          <></>
+                        ) : (
+                          <>
+                            {ImageSelectblob === ImageSelectblob && (
+                              <Box>
+                                <IconButton
+                                  onClick={() => deleteHandlerpage(ImageSelect)}
+                                >
+                                  <ClearIcon sx={{ backgroundColor: "red" }} />
+                                </IconButton>
+                                <Checkbox
+                                  checked={checked}
+                                  onChange={handleChangeChekce}
+                                  inputProps={{ "aria-label": "controlled" }}
+                                />
+                                <TextField
+                                  inputProps={{ style: { fontSize: 14 } }}
+                                  size="small"
+                                  variant="outlined"
+                                  margin="normal"
+                                  fullWidth
+                                  id="countInStock"
+                                  label="CountInStock"
+                                  name="countInStock"
+                                  autoComplete="off"
+                                  // onChange={(e) => validateCountInStock(e)}
+                                />
+                                <IconButton onClick={handleChangeSaveImage}>
+                                  Save Image Setting
+                                </IconButton>
+                              </Box>
+                            )}
+                          </>
+                        )}
+                        <List>
+                          <label>
+                            + Add Images
+                            <br />
+                            <Typography>up to 10 images</Typography>
+                            <TextField
+                              style={{ margin: "10px 0px" }}
+                              inputProps={{
+                                style: { fontSize: 14 },
+                                multiple: true,
+                                accept: "image/*",
+                              }}
+                              fullWidth
+                              type="file"
+                              name="uploadedImages"
+                              multiple
+                              onChange={onSelectFile}
+                            />
+                            {/* <TextField
+                              type="file"
+                              name="images"
+                              onChange={onSelectFile}
+                              multiple
+                              accept="image/png , image/jpeg, image/webp"
+                            /> */}
+                          </label>
+                          <br />
+
+                          {/* <input type="file" multiple /> */}
+
+                          {selectedImages.length > 0 &&
+                            selectedImages.length > 10 && (
+                              <p className="error">
+                                You upload more than 10 images! <br />
+                                <span>
+                                  please delete{" "}
+                                  <b> {selectedImages.length - 10} </b> of them{" "}
+                                </span>
+                              </p>
+                            )}
+
+                          <Box
+                            sx={{
+                              width: "auto",
+                              listStyle: "none",
+                              display: "flex",
+                              flexFlow: "wrap row",
+                              flexDirection: "row",
+                              alignItems: "center",
+                              m: 2,
+                            }}
+                          >
+                            <ListItem>
+                              {selectedImages.map((image, index) => {
+                                return (
+                                  <Box key={image} className="image">
+                                    <IconButton
+                                      onClick={() => deleteHandler(image)}
+                                    >
+                                      <ClearIcon
+                                        sx={{ backgroundColor: "red" }}
+                                      />
+                                    </IconButton>
+                                    <CardMedia
+                                      sx={{
+                                        padding: 0,
+                                        margin: 0,
+                                        border:
+                                          image === ImageSelectblob
+                                            ? "2px solid red"
+                                            : "2px solid white",
+                                        height: 140,
+                                        width: 140,
+                                      }}
+                                      className="media"
+                                      component="img"
+                                      height="200"
+                                      image={image}
+                                      alt={name}
+                                      id={index}
+                                      onClick={(e) =>
+                                        ImagHandleSelect(e, index)
+                                      }
+                                    />
+                                    {image === CoverImages ? (
+                                      <CardContent
+                                        sx={{ backgroundColor: "blue" }}
+                                      >
+                                        <Typography
+                                          variant="body2"
+                                          color="#fff"
+                                        >
+                                          Cover Image
+                                        </Typography>
+                                      </CardContent>
+                                    ) : (
+                                      <></>
+                                    )}
+                                  </Box>
+                                );
+                              })}
+                            </ListItem>
+                          </Box>
+                        </List>
                       </Box>
 
                       <Typography
@@ -451,24 +630,12 @@ Not all shops sell new products.
                                   justifyContent: "space-between",
                                 }}
                               >
-                                <FormControl sx={{width: "30%"}}>
-                                    <Select
-                                      size="small"
-                                      value={featurestype}
-                                      onChange={(e) =>
-                                        setFeaturestype(e.target.value)
-                                      }
-                                    >
-                                      {Featuresdetails.map((Feature) => (
-                                        <MenuItem
-                                          key={Feature._id}
-                                          value={Feature._id}
-                                        >
-                                          {Feature.featurename}
-                                        </MenuItem>
-                                      ))}
-                                    </Select>
-                                  </FormControl>
+                                <TextField
+                                  id="outlined-size-small"
+                                  {...register("feature", { required: true })}
+                                  error={errors.feature}
+                                  size="small"
+                                />
                                 <TextField
                                   id="outlined-size-small"
                                   defaultValue="Choose a Value"
@@ -521,18 +688,12 @@ Not all shops sell new products.
                                   justifyContent: "space-between",
                                 }}
                               >
-                               <FormControl sx={{width: "40%"}}>
-                                <Select
-                                  value={brandId}
-                                  onChange={(e) => setBrandId(e.target.value)}
-                                >
-                                  {brandLists?.map((item, index) => (
-                                    <MenuItem key={index} value={item._id}>
-                                      {item.name}
-                                    </MenuItem>
-                                  ))}
-                                </Select>
-                              </FormControl>
+                                <TextField
+                                  id="outlined-size-small"
+                                  {...register("brand", { required: true })}
+                                  error={errors.brand}
+                                  size="small"
+                                />
                               </Box>
                             </Box>
                           </>
@@ -1534,18 +1695,12 @@ Not all shops sell new products.
                               display: "flex",
                               justifyContent: "space-between",
                               m: 2,
-                              width: "88%"
+                              width: "88%",
                             }}
                           >
-                            <Typography>
-                              Available From
-                            </Typography>
-                            <Typography>
-                              To
-                            </Typography>
-                            <Typography>
-                              Starting at
-                            </Typography>
+                            <Typography>Available From</Typography>
+                            <Typography>To</Typography>
+                            <Typography>Starting at</Typography>
                           </Box>
 
                           <Box
@@ -1852,79 +2007,76 @@ Not all shops sell new products.
             </Box>
           </Box>
         ) : (
-
           <>
-          <Box
-            sx={{
-              height: 560,
-              width: "100%",
+            <Box
+              sx={{
+                height: 560,
+                width: "100%",
 
-              "& .super-app-theme--header": {
-                backgroundColor: "#808080",
-                color: "#ffffff",
-              },
-              "& .css-1jbbcbn-MuiDataGrid-columnHeaderTitle": {
-                fontSize: 16,
-              },
-              ".css-o8hwua-MuiDataGrid-root .MuiDataGrid-cellContent": {
-                fontSize: 13,
-              },
-              ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-                {
-                  backgroundColor: "#330033",
+                "& .super-app-theme--header": {
+                  backgroundColor: "#808080",
                   color: "#ffffff",
                 },
-              ".css-h4y409-MuiList-root": {
-                display: "grid",
-              },
-              ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
-                {
-                  backgroundColor: "#808080",
+                "& .css-1jbbcbn-MuiDataGrid-columnHeaderTitle": {
+                  fontSize: 16,
                 },
-            }}
-          >
-            <DataGrid
-              sx={{
-                boxShadow: 10,
-                borderRadius: 0,
-                m: 2,
+                ".css-o8hwua-MuiDataGrid-root .MuiDataGrid-cellContent": {
+                  fontSize: 13,
+                },
+                ".css-bfht93-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
+                  {
+                    backgroundColor: "#330033",
+                    color: "#ffffff",
+                  },
+                ".css-h4y409-MuiList-root": {
+                  display: "grid",
+                },
+                ".css-1omg972-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer":
+                  {
+                    backgroundColor: "#808080",
+                  },
               }}
-              
-              columns={columns}
-              rows={catProducts ? catProducts: ""}
-              getRowId={(rows) => rows._id}
-              VerticalAlignment="Center"
-              rowHeight={64}
-              pagination
-              checkboxSelection
-            />
-          </Box>
-
-          <Dialog
-            // fullWidth={fullWidth}
-            // maxWidth={maxWidth}
-            open={open}
-            onClick={handleClose}
-            sx={{
-              width: 700,
-              hight: 700,
-            }}
-          >
-            <Box>
-              <CardMedia
-                sx={{ 
-                  cursor: "pointer",
-                  justifycontent: "space-between",
+            >
+              <DataGrid
+                sx={{
+                  boxShadow: 10,
+                  borderRadius: 0,
+                  m: 2,
                 }}
-                component="img"
-                // height="200"
-                image={newImg}
-                // alt={"subimgnew.filename"}
-                // onMouseOver={handleChangeimage}
+                columns={columns}
+                rows={catProducts ? catProducts : ""}
+                getRowId={(rows) => rows._id}
+                VerticalAlignment="Center"
+                rowHeight={64}
+                pagination
+                checkboxSelection
               />
             </Box>
-          </Dialog>
 
+            <Dialog
+              // fullWidth={fullWidth}
+              // maxWidth={maxWidth}
+              open={open}
+              onClick={handleClose}
+              sx={{
+                width: 700,
+                hight: 700,
+              }}
+            >
+              <Box>
+                <CardMedia
+                  sx={{
+                    cursor: "pointer",
+                    justifycontent: "space-between",
+                  }}
+                  component="img"
+                  // height="200"
+                  image={newImg}
+                  // alt={"subimgnew.filename"}
+                  // onMouseOver={handleChangeimage}
+                />
+              </Box>
+            </Dialog>
           </>
         )}
       </>
