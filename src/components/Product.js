@@ -1,10 +1,9 @@
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
-import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 // import Box from '@mui/material/Box';
 
 export default function Product(PropTypes) {
@@ -29,12 +28,14 @@ export default function Product(PropTypes) {
             transition: "transform .5s ease",
             "&:hover": {
               transform: "scale(1.1)",
+              width: "100%"
             },
           }}
           component="img"
+          
           height="200"
           image={`/api/uploads/show/${product._id}`}
-          alt={product.name}
+          alt={product.prodname}
         />
       </Link>
       <Link
@@ -47,17 +48,12 @@ export default function Product(PropTypes) {
       >
         <CardContent>
           <Typography gutterBottom variant="h6" component="div">
-            {product.name}
+            {product.prodname}
           </Typography>
-          <Rating
-            defaultValue={product.rating}
-            // numreviews={product.numReviews}
-          ></Rating>
+        
+          
           <Typography gutterBottom variant="h6" component="div">
-            {product.numReviews + "reviews"}
-          </Typography>
-          <Typography gutterBottom variant="h6" component="div">
-            ₹{product.price}
+            {product.taxexcluded}
           </Typography>
         </CardContent>
       </Link>

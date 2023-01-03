@@ -435,6 +435,18 @@ Not all shops sell new products.
       valueGetter: getBrandName,
     },
     {
+      field: "quantity",
+      headerName: "Quantity",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "taxexcluded",
+      headerName: "Price",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
+    {
       field: "actions",
       headerName: "ACTIONS",
       flex: 1,
@@ -2328,7 +2340,7 @@ Not all shops sell new products.
                                       setNewfeature(e.target.value)
                                     }
                                   >
-                                    {Featuresdetails.map((Feature) => (
+                                    {Featuresdetails?.map((Feature) => (
                                       <MenuItem
                                         key={Feature._id}
                                         value={Feature._id}
