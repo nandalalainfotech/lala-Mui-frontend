@@ -22,7 +22,11 @@ import { autoPlay } from "react-swipeable-views-utils";
 import { useNavigate } from "react-router-dom";
 import { applicatinSettingList } from "../actions/applicationAction";
 import { categoryListDetails, categoryMasterListDetails } from "../actions/categoryAction";
+import { catProductList } from "../actions/catProductAction";
 // import { CarouselPage } from "../components/CarouselPage";
+
+import Carousel from "react-elastic-carousel";
+import Product from "../components/Product";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -57,8 +61,13 @@ export default function HomeScreen() {
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
+  const catalogProd = useSelector((state) => state.catalogProd);
+  const { catProducts } = catalogProd;
+
+  console.log("catProducts",catProducts);
 
   useEffect(() => {
+    dispatch(catProductList());
     dispatch(categoryListDetails());
     dispatch(categoryMasterListDetails());
     dispatch(listProducts({}));
@@ -80,7 +89,16 @@ export default function HomeScreen() {
     navigate("/cart");
   };
 
- 
+  const breakPoints = [
+    { width: 400, itemsToShow: 1,itemsToScroll:  1 },
+    { width: 500, itemsToShow: 2,itemsToScroll: 2 },
+    { width: 600, itemsToShow: 2,itemsToScroll: 2 },
+    { width: 768, itemsToShow: 3,itemsToScroll: 3 },
+    { width: 900, itemsToShow: 5,itemsToScroll: 5 },
+    { width: 1200, itemsToShow: 5,itemsToScroll: 5 },
+    { width: 1500, itemsToShow: 7,itemsToScroll: 7 },
+    { width: 2000, itemsToShow: 9,itemsToScroll: 9 },
+  ];
 
   // const [allKidProducts, setAllKidProducts] = useState(kidProducts);
   // const [hasMore] = useState(true);
@@ -143,6 +161,21 @@ export default function HomeScreen() {
         {/* <CarouselPage ></CarouselPage> */}
 
         
+          <Carousel
+            className="new1"
+            mouseTracking
+            enableSwipe={true}
+            pagination={false}
+            breakPoints={breakPoints}
+          >
+          {catProducts?.map((product) => (
+            <Box key={product._id}>
+              <Product product={product}></Product>
+            </Box>
+          ))} 
+          </Carousel>
+          
+   
       </Box>
 
       
