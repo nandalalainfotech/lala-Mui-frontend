@@ -7,24 +7,20 @@ import {
   kidsProductList,
   listProducts,
   menProductList,
-  womenProductList,
+  womenProductList
 } from "../actions/productAction";
 import { listTopSellers } from "../actions/userAction";
 // import MessageBox from "../components/MessageBox";
-import Product from "../components/Product";
 // import InfiniteScroll from "react-infinite-scroll-component";
 
 // materieal ui******************
 import Box from "@mui/material/Box";
 import { useTheme } from "@mui/material/styles";
-import Carousel from "react-elastic-carousel";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
 // import CircularProgress from "@mui/material/CircularProgress";
-import { Link, useNavigate } from "react-router-dom";
-import Typography from "@mui/material/Typography";
+import { useNavigate } from "react-router-dom";
 import { applicatinSettingList } from "../actions/applicationAction";
-import { List } from "../../node_modules/@material-ui/core/index";
 import { categoryListDetails, categoryMasterListDetails } from "../actions/categoryAction";
 // import { CarouselPage } from "../components/CarouselPage";
 
@@ -35,8 +31,7 @@ export default function HomeScreen() {
 
   // const categoryList = useSelector((state) => state.categoryList);
   // const { categorydetails } = categoryList;
-  const productList = useSelector((state) => state.productList);
-  const { products } = productList;
+
 
   // const productMenList = useSelector((state) => state.productMenList);
   // const { menProducts } = productMenList;
@@ -60,8 +55,6 @@ export default function HomeScreen() {
   // const[newproduct,setNewProduct] = useState()
   // console.log("productdetils",newproduct);
 
-  const categoryMasterList = useSelector((state) => state.categoryMasterList);
-  const { categoryMasterdetails } = categoryMasterList;
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
 
@@ -87,16 +80,7 @@ export default function HomeScreen() {
     navigate("/cart");
   };
 
-  const breakPoints = [
-    { width: 400, itemsToShow: 1,itemsToScroll:  1 },
-    { width: 500, itemsToShow: 2,itemsToScroll: 2 },
-    { width: 600, itemsToShow: 2,itemsToScroll: 2 },
-    { width: 768, itemsToShow: 3,itemsToScroll: 3 },
-    { width: 900, itemsToShow: 5,itemsToScroll: 5 },
-    { width: 1200, itemsToShow: 5,itemsToScroll: 5 },
-    { width: 1500, itemsToShow: 7,itemsToScroll: 7 },
-    { width: 2000, itemsToShow: 9,itemsToScroll: 9 },
-  ];
+ 
 
   // const [allKidProducts, setAllKidProducts] = useState(kidProducts);
   // const [hasMore] = useState(true);
@@ -117,7 +101,7 @@ export default function HomeScreen() {
 
   return (
     <>
-   {userInfo?.isAuth ?( <Box>
+   {userInfo ? ( <Box>
       <Box className="convey">
         <h2 className="topseller">
           {" "}
@@ -158,30 +142,7 @@ export default function HomeScreen() {
       <Box>
         {/* <CarouselPage ></CarouselPage> */}
 
-        {categoryMasterdetails?.map((categoryitem,index) => (
-          <>
-          <List key={index}>
-            <Link  to="/collectionlist/men"><Typography variant="h4">{categoryitem.categorytittel}</Typography></Link>
-          </List>
-          <Carousel
-            className="new1"
-            mouseTracking
-            enableSwipe={true}
-            pagination={false}
-            breakPoints={breakPoints}
-          >
-          {products
-          ?.filter((product) => {
-            return product.categorytitle === categoryitem._id;
-          })
-          .map((product) => (
-            <Box key={product._id}>
-              <Product product={product}></Product>
-            </Box>
-          ))} 
-          </Carousel>
-          </>
-        ))}
+        
       </Box>
 
       
