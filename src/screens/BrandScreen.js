@@ -62,7 +62,6 @@ function BrandScreen() {
   const [neweditor, setNeweditor] = useState("");
   const [newchecked, setNewchecked] = useState("");
 
-  console.log("newchecked", newchecked);
 
   // ----Update Brand----------
   const [brandAddId, setBrandAddId] = useState("");

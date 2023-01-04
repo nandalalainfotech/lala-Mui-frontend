@@ -192,9 +192,7 @@ Not all shops sell new products.
  It can be required on some marketplaces.
 `;
   const [CoverStatus, setCoverStatus] = useState("");
-  console.log("CoverStatus", CoverStatus);
   const [dropImage, setDropZoneImage] = useState("");
-  console.log("CoverStatus======>>>", dropImage);
 
   const [ImageSelect, setImageSelect] = useState("");
   const [ImageSelectblob, setImageSelectblob] = useState("");
@@ -206,7 +204,6 @@ Not all shops sell new products.
   };
 
   const ImagHandleSelect = (e, index) => {
-    console.log("e", dropimg[index]);
     setImageSelectblob(e.target.src);
     setImageSelect(index);
     setImageDelete(0);
@@ -256,7 +253,6 @@ Not all shops sell new products.
   const dispatch = useDispatch();
 
   const submitHandler = async (e) => {
-    console.log("e,===============>>", e);
     const formData = new FormData();
     formData.append("image", dropImage);
     formData.append("coverstatus", CoverStatus);
@@ -334,7 +330,6 @@ Not all shops sell new products.
   };
 
   const editHandler = (catProdIndId) => {
-    console.log("catProdIndId", catProdIndId);
     setcatProdindId(catProdIndId);
     setNewProdname(catProdIndId.prodname);
     setNewsummary(catProdIndId.summary);
@@ -554,14 +549,13 @@ Not all shops sell new products.
                                 alignItems: "center",
                                 margin: "0px 10%",
                                 borderRadius: "5px",
-                                border:"1px solid black"
                               }}
                             >
                               Add Images
                               <br />
                               <Typography>up to 10 images</Typography>
                               <TextField
-                                style={{ margin: "10px 0px" }}
+                                sx={{ margin: "10px 0px",border: "none" }}
                                 inputProps={{
                                   style: { fontSize: 14 },
                                   multiple: true,
@@ -590,7 +584,6 @@ Not all shops sell new products.
                                       alignItems: "center",
                                       margin: "0px 10%",
                                       borderRadius: "5px",
-                                      border: "1px solid black",
                                     }}
                                   >
                                     <Box sx={{display:"flex"}}>
@@ -995,7 +988,6 @@ Not all shops sell new products.
                         id="margin-normal"
                         margin="normal"
                         {...register("reference", { required: true })}
-                        error={errors.reference}
                       />
                     </Typography>
 
@@ -1015,7 +1007,6 @@ Not all shops sell new products.
                         id="margin-normal"
                         margin="normal"
                         {...register("quantity", { required: true })}
-                        error={errors.quantity}
                       />
                     </Typography>
 
@@ -1038,7 +1029,6 @@ Not all shops sell new products.
                         label="Tax excluded"
                         id="outlined-start-adornment"
                         {...register("taxexcluded", { required: true })}
-                        error={errors.taxexcluded}
                         sx={{ m: 1 }}
                         InputProps={{
                           startAdornment: (
@@ -1050,7 +1040,6 @@ Not all shops sell new products.
                       <TextField
                         label="Tax included"
                         {...register("taxincluded", { required: true })}
-                        error={errors.taxincluded}
                         id="outlined-start-adornment"
                         sx={{ m: 1 }}
                         InputProps={{

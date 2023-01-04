@@ -17,7 +17,8 @@ export default function Product(PropTypes) {
     <Card
       key={product._id}
       sx={{
-        width: 225,
+        width: "100%",
+        height: 450,
         margin: 2,
       }}
     >
@@ -47,12 +48,12 @@ export default function Product(PropTypes) {
         to={`/product/${product._id}`}
       >
         <CardContent>
-          <Typography gutterBottom variant="h6" component="div">
+          <Typography gutterBottom variant="h6" component="div" sx={{m: 1,fontSize: "12px"}}>
             {product.prodname}
           </Typography>
         
           
-          <Typography gutterBottom variant="h6" component="div">
+          <Typography gutterBottom variant="h6" component="div" sx={{m: 2,fontSize: "14px"}}>
             {product.taxexcluded}
           </Typography>
         </CardContent>
