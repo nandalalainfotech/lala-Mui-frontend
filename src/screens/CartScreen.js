@@ -31,6 +31,7 @@ export default function CartScreen() {
   const theme = createTheme();
   const params = useParams();
   const productId = params.id;
+  console.log("productId", productId);
   const { search } = useLocation();
   const qtyInUrl = new URLSearchParams(search).get("qty");
   const qty = qtyInUrl ? Number(qtyInUrl) : 1;

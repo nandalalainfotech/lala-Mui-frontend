@@ -3,6 +3,9 @@ import {
   CAT_PRODUCT_DELETE_FAIL,
   CAT_PRODUCT_DELETE_REQUEST,
   CAT_PRODUCT_DELETE_SUCCESS,
+  CAT_PRODUCT_DETAILS_FAIL,
+  CAT_PRODUCT_DETAILS_REQUEST,
+  CAT_PRODUCT_DETAILS_SUCCESS,
   CAT_PRODUCT_FAIL,
   CAT_PRODUCT_REQUEST,
   CAT_PRODUCT_SAVE_FAIL,
@@ -89,5 +92,23 @@ export const deleteCatalogProd = (catProductId) => async (dispatch, getState) =>
         ? error.response.data.message
         : error.message;
     dispatch({ type: CAT_PRODUCT_DELETE_FAIL, payload: message });
+  }
+};
+
+export const catProdIndividualId = (productId) => async (dispatch) => {
+  console.log("catProdInd", productId);
+  dispatch({ type: CAT_PRODUCT_DETAILS_REQUEST, payload: productId });
+  try {
+    const { data } = await Axios.get(`/api/catProduct/${productId}`);
+    console.log("data", data);
+    dispatch({ type: CAT_PRODUCT_DETAILS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: CAT_PRODUCT_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
   }
 };

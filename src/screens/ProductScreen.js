@@ -2,9 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
-  createReview,
-  detailsProduct,
-  listProducts,
+  createReview, listProducts
 } from "../actions/productAction";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
@@ -23,41 +21,36 @@ import CardMedia from "@mui/material/CardMedia";
 import Select from "@mui/material/Select";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import Typography from "@mui/material/Typography";
-import Axios from "axios";
 import ReactImageMagnify from "@vorld/react-image-magnify";
+import Axios from "axios";
 import {
   CircularProgress,
-  DialogContent,
-  TextField,
+  DialogContent
 } from "../../node_modules/@material-ui/core/index";
 // import { CenterFocusStrong } from "../../node_modules/@mui/icons-material/index";
 import Carousel from "react-elastic-carousel";
+import { catProdIndividualId } from "../actions/catProductAction";
 import Product from "../components/Product";
-import IconButton from "@mui/material/IconButton";
 // import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
-// import AddCircleIcon from '@mui/icons-material/AddCircle';
-import AddIcon from "@material-ui/icons/Add";
-import RemoveIcon from "@material-ui/icons/Remove";
-import { catProductList } from "../actions/catProductAction";
 
 export default function ProductScreen() {
+  const productList = useSelector((state) => state.productList);
+  const { products } = productList;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const params = useParams();
+  const { id: productId } = params;
 
   const catalogProd = useSelector((state) => state.catalogProd);
   const { catProducts } = catalogProd;
 
   console.log("catProducts", catProducts);
 
-  const productList = useSelector((state) => state.productList);
-  const { products } = productList;
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const params = useParams();
-  const { id: productId } = params;
+  const catProdDetail = useSelector((state) => state.catProdDetail);
+  const { loading, error, catalogIndProd } = catProdDetail;
 
-  const [qty, setQty] = useState(1);
-  const productDetails = useSelector((state) => state.productDetails);
-  const { loading, error, product } = productDetails;
+  console.log("product", catalogIndProd);
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
@@ -80,17 +73,10 @@ export default function ProductScreen() {
     setImage(e.target.src);
   };
 
-  const handleIncrement = () => {
-    setQty((qty) => qty + 1);
-  };
 
-  const handleDecrement = () => {
-    if (qty > 0) {
-      setQty((qty) => qty - 1);
-    }
-  };
 
   useEffect(() => {
+    dispatch(catProdIndividualId(productId));
     const fetchBusinesses = async () => {
       const img = await Axios.get(`/api/uploads/show/${productId}`, {
         responseType: "blob",
@@ -120,16 +106,10 @@ export default function ProductScreen() {
       dispatch({ type: PRODUCT_REVIEW_CREATE_RESET });
     }
     dispatch(listProducts({}));
-    dispatch(catProductList());
-    dispatch(detailsProduct(productId));
   }, [dispatch, productId, successReviewCreate]);
 
   const addToCartHandler = () => {
-    if (qty > 0) {
-      navigate(`/cart/${productId}?qty=${qty}`);
-    } else {
-      window.confirm("Please Select the qty");
-    }
+      navigate(`/cart/${productId}`);
   };
 
   const addToHandler = () => {
@@ -438,17 +418,17 @@ export default function ProductScreen() {
                       gutterBottom
                       style={{ color: "#A02020", textTransform: "capitalize" }}
                     >
-                      {product.name}
+                      {catalogIndProd.prodname}
                     </Typography>
 
                     <Typography variant="body1" gutterBottom>
                       <Rating>
-                        Value={product.rating}
+                        Value={catalogIndProd.rating}
                         {/* numReviews={product.numReviews} */}
                       </Rating>
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                      {product.numReviews + "reviews"}
+                      {catalogIndProd.numReviews + "reviews"}
                     </Typography>
 
                     <Typography
@@ -456,14 +436,14 @@ export default function ProductScreen() {
                       style={{ color: "#A02020", textTransform: "capitalize" }}
                       gutterBottom
                     >
-                      <strong>Price :</strong> ₹{product.price}
+                      <strong>Price :</strong> ₹{catalogIndProd.price}
                     </Typography>
                     <Typography
                       variant="body1"
                       style={{ color: "#A02020", textTransform: "capitalize" }}
                       gutterBottom
                     >
-                      <strong>Brand :</strong> {product.brand}
+                      <strong>Brand :</strong> {catalogIndProd.brand}
                     </Typography>
                     {categoryName?.map((categoryname) => (
                       <>
@@ -485,7 +465,7 @@ export default function ProductScreen() {
                       style={{ color: "#A02020", textTransform: "capitalize" }}
                       gutterBottom
                     >
-                      <strong>Description :</strong> {product.description}
+                      <strong>Description :</strong> {catalogIndProd.description}
                     </Typography>
                     {categorygroup?.map((categroup)=>(
                       <>
@@ -504,7 +484,7 @@ export default function ProductScreen() {
                       style={{ color: "#A02020", textTransform: "capitalize" }}
                       gutterBottom
                     >
-                      <strong>Category Type :</strong> {product.categorytype}
+                      <strong>Category Type :</strong> {catalogIndProd.categorytype}
                     </Typography>
                   </Box>
                 </Card>
@@ -527,7 +507,7 @@ export default function ProductScreen() {
                       style={{ color: "#A02020" }}
                       gutterBottom
                     >
-                      <strong>Price :</strong> ₹{product.price}
+                      <strong>Price :</strong> ₹{catalogIndProd.price}
                     </Typography>
 
                     <Typography
@@ -536,14 +516,14 @@ export default function ProductScreen() {
                       gutterBottom
                     >
                       <strong>Status :</strong>{" "}
-                      {product.countInStock > 0 ? (
+                      {catalogIndProd.countInStock > 0 ? (
                         <span style={{ color: "green" }}>In Stock</span>
                       ) : (
                         <span style={{ color: "red" }}>Unavailable</span>
                       )}
                     </Typography>
 
-                    {product.countInStock > 0 && (
+                    
                       <>
                         <Typography
                           variant="body1"
@@ -575,44 +555,7 @@ export default function ProductScreen() {
                             sx={{ display: "flex", alignItems: "center" }}
                           > */}
 
-                          <IconButton
-                            onClick={handleDecrement}
-                            aria-label="minus"
-                            style={{
-                              marginTop: 15,
-                              minHeight: "40px",
-                              backgroundColor: "#8566aa",
-                              color: "#fff",
-                              borderRadius: "5%",
-                              boxShadow: "5px 5px 15px -5px rgba(0, 0, 0, 0.3)",
-                            }}
-                          >
-                            <RemoveIcon />
-                          </IconButton>
-                          <TextField
-                            value={qty}
-                            id="outlined-adornment-small-Child"
-                            variant="outlined"
-                            size="small"
-                            style={{ width: 48, height: 35, marginTop: 15 }}
-                            labelWidth={0}
-                            // disabled="false"
-                            onChange={(e) => setComment(e.target.value)}
-                          />
-                          <IconButton
-                            onClick={handleIncrement}
-                            aria-label="plus"
-                            style={{
-                              marginTop: 15,
-                              minHeight: "40px",
-                              backgroundColor: "#8566aa",
-                              color: "#fff",
-                              borderRadius: "5%",
-                              boxShadow: "5px 5px 15px -5px rgba(0, 0, 0, 0.3)",
-                            }}
-                          >
-                            <AddIcon fontSize="inherit" />
-                          </IconButton>
+                          
                           {/* </Box> */}
                         </Typography>
                         {userInfo ? (
@@ -639,7 +582,6 @@ export default function ProductScreen() {
                           </Button>
                         )}
                       </>
-                    )}
                   </Box>
                 </Card>
               </Box>
@@ -656,38 +598,10 @@ export default function ProductScreen() {
                 }}
               >
                 <Box>
-                  <Typography
-                    variant="h6"
-                    gutterBottom
-                    style={{ color: "#A02020" }}
-                  >
-                    Ratings & Reviews
-                    {product.reviews.length === 0 && (
-                      <span style={{ fontSize: 17 }}>
-                        <MessageBox>There is no review</MessageBox>
-                      </span>
-                    )}
-                  </Typography>
+                 
 
                   <div>
-                    {product.reviews.map((review) => (
-                      <Typography
-                        variant="body1"
-                        gutterBottom
-                        key={review._id}
-                        component="span"
-                      >
-                        <strong>{review.name}</strong>
-                        <p>
-                          <Rating
-                            defaultValue={review.rating}
-                            caption=" "
-                          ></Rating>
-                        </p>
-                        <p>{review.createdAt.substring(0, 10)}</p>
-                        <p>{review.comment}</p>
-                      </Typography>
-                    ))}
+                    
 
                     {userInfo ? (
                       <Box
@@ -816,8 +730,8 @@ export default function ProductScreen() {
               {products
                 ?.filter((item) => {
                   return (
-                    item?.categorygroup === product?.categorygroup &&
-                    item?._id != product?._id
+                    item?.categorygroup === catalogIndProd?.categorygroup &&
+                    item?._id != catalogIndProd?._id
                   );
                 })
                 .map((categorys) => (

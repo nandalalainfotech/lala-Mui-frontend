@@ -91,6 +91,7 @@ import OtpScreen from "./screens/OtpScreen";
 import OtpVerifyScreen from "./screens/OtpVerifyScreen";
 import RegOtpVerifyScreen from "./screens/RegOtpVerifyScreen";
 import TextEditScreen from "./screens/TextEditScreen";
+import { userCartList } from "./actions/cartAction";
 // import Image from "/image/logo.png";
 // Side bar section start*************************************
 const drawerWidth = 240;
@@ -220,7 +221,7 @@ function App() {
   const { categoryMasterdetails } = categoryMasterList;
 
   useEffect(() => {
-    // dispatch(userCartList(userInfo?._id));
+    dispatch(userCartList(userInfo?._id));
     dispatch(listProductCategories());
     dispatch(listProductCategorygroup());
     dispatch(listProductCategorytype());

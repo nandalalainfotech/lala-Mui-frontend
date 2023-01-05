@@ -14,6 +14,10 @@ import {
   CAT_PRODUCT_UPDATE_REQUEST,
   CAT_PRODUCT_UPDATE_SUCCESS,
   CAT_PRODUCT_UPDATE_RESET,
+  CAT_PRODUCT_DETAILS_REQUEST,
+  CAT_PRODUCT_DETAILS_SUCCESS,
+  CAT_PRODUCT_DETAILS_FAIL,
+  CAT_PRODUCT_DETAILS_RESET,
 } from "../constants/catBrandConstant";
 
 export const catProductReducer = (state = {}, brand) => {
@@ -75,6 +79,21 @@ export const catProddeleteReducer = (state = {}, action) => {
       return { loading: false, error: action.payload };
     case CAT_PRODUCT_DELETE_RESET:
       return {};
+    default:
+      return state;
+  }
+};
+
+export const catProdDetailReducer = (state = { loading: true }, action) => {
+  switch (action.type) {
+    case CAT_PRODUCT_DETAILS_REQUEST:
+      return { loading: true };
+    case CAT_PRODUCT_DETAILS_SUCCESS:
+      return { loading: false, catalogIndProd: action.payload };
+    case CAT_PRODUCT_DETAILS_FAIL:
+      return { loading: false, error: action.payload };
+      case CAT_PRODUCT_DETAILS_RESET:
+        return {};
     default:
       return state;
   }
