@@ -330,6 +330,7 @@ Not all shops sell new products.
   };
 
   const editHandler = (catProdIndId) => {
+    console.log("catProdIndId", catProdIndId);
     setcatProdindId(catProdIndId);
     setNewProdname(catProdIndId.prodname);
     setNewsummary(catProdIndId.summary);
@@ -2247,6 +2248,12 @@ Not all shops sell new products.
                               mt: "40px",
                             }}
                           >
+                            <CardMedia
+                                component="img"
+                                height="125"
+                                sx={{ border: "1px solid black", width: "25%",m :4 }}
+                                image={`/api/uploads/editId/${catProdindId._id}`}
+                              />
                           </Box>
 
                           <Typography
@@ -2474,7 +2481,7 @@ Not all shops sell new products.
                             name="radio-buttons-group"
                           >
                             <FormControlLabel
-                              value={newcombination}
+                              checked={newcombination}
                               onChange={(e) =>
                                 setNewcombination(e.target.value)
                               }
@@ -2482,7 +2489,7 @@ Not all shops sell new products.
                               label="Simple Product"
                             />
                             <FormControlLabel
-                              value={newcombination}
+                              checked={newcombination}
                               onChange={(e) =>
                                 setNewcombination(e.target.value)
                               }

@@ -3,6 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import { accountout, registerout, signout } from "./actions/userAction";
 // import { adminout } from "./actions/userAction";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import Collapse from "@mui/material/Collapse";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
 import PrivateRoute from "./components/PrivateRoute";
 import AccountScreen from "./screens/AccountScreen";
 import CartScreen from "./screens/CartScreen";
@@ -16,35 +21,9 @@ import ProfileScreen from "./screens/ProfileScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import ShippingAddressScreen from "./screens/ShippingAddressScreen";
 import SigninScreen from "./screens/SigninScreen";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import Collapse from "@mui/material/Collapse";
 
-import {
-  listProductCategories,
-  listProductCategorygroup,
-  listProductCategorytype,
-} from "./actions/productAction";
-import { listSareeCategories } from "./actions/sareeAction";
-import AdminRoute from "./components/AdminRoute";
-import LoadingBox from "./components/LoadingBox";
-import MessageBox from "./components/MessageBox";
-import SearchBox from "./components/SearchBox";
-import SellerRoute from "./components/SellerRoute";
-import AccountCreation from "./screens/AccountCreation";
-import AdmininScreen from "./screens/AdmininScreen";
-import DashboardScreen from "./screens/DashboardScreen";
-import MapScreen from "./screens/MapScreen";
-import OrderListScreen from "./screens/OrderListScreen";
-import ProductEditScreen from "./screens/ProductEditScreen";
-import ProductListScreen from "./screens/ProductListScreen";
-import SearchScreen from "./screens/SearchScreen";
-import SellerScreen from "./screens/SellerScreen";
-import SupportScreen from "./screens/SupportScreen";
-import UserEditScreen from "./screens/UserEditScreen";
-import UserListScreen from "./screens/UserListScreen";
+import Badge from "@material-ui/core/Badge";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -64,34 +43,55 @@ import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { styled, useTheme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { applicatinSettingList } from "./actions/applicationAction";
-import { userCartList } from "./actions/cartAction";
-import Badge from "@material-ui/core/Badge";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
-import CollectionScreen from "./screens/CollectionScreen";
-import ApplicationScreen from "./screens/ApplicationScreen";
-import Footer from "./components/Footer";
-import Paper from "@mui/material/Paper";
 import { otpList } from "./actions/otpAction";
+import {
+  listProductCategories,
+  listProductCategorygroup,
+  listProductCategorytype
+} from "./actions/productAction";
+import { listSareeCategories } from "./actions/sareeAction";
+import AdminRoute from "./components/AdminRoute";
+import Footer from "./components/Footer";
+import LoadingBox from "./components/LoadingBox";
+import MessageBox from "./components/MessageBox";
+import SearchBox from "./components/SearchBox";
+import SellerRoute from "./components/SellerRoute";
+import AccountCreation from "./screens/AccountCreation";
+import AdmininScreen from "./screens/AdmininScreen";
+import ApplicationScreen from "./screens/ApplicationScreen";
+import CollectionScreen from "./screens/CollectionScreen";
+import DashboardScreen from "./screens/DashboardScreen";
+import MapScreen from "./screens/MapScreen";
+import OrderListScreen from "./screens/OrderListScreen";
+import ProductEditScreen from "./screens/ProductEditScreen";
+import ProductListScreen from "./screens/ProductListScreen";
+import SearchScreen from "./screens/SearchScreen";
+import SellerScreen from "./screens/SellerScreen";
+import SupportScreen from "./screens/SupportScreen";
+import UserEditScreen from "./screens/UserEditScreen";
+import UserListScreen from "./screens/UserListScreen";
 
+import { AttributeMasterListDetails } from "./actions/AttributeActions";
+import { categoryMasterListDetails } from "./actions/categoryAction";
+import AttributesScreen from "./screens/AttributesScreen";
+import BrandScreen from "./screens/BrandScreen";
+import CategoryMasterFormScreen from "./screens/CategoryMasterFormScreen";
+import CategoryMasterScreen from "./screens/CategoryMasterScreen";
+import CategoryScreen from "./screens/CategoryScreen";
+import CatergorymasterScreens from "./screens/CatergorymasterScreens";
+import CatProductScreen from "./screens/CatProductScreen";
 import OtpScreen from "./screens/OtpScreen";
 import OtpVerifyScreen from "./screens/OtpVerifyScreen";
 import RegOtpVerifyScreen from "./screens/RegOtpVerifyScreen";
-import CategoryScreen from "./screens/CategoryScreen";
-import CategoryMasterScreen from "./screens/CategoryMasterScreen";
-import CatergorymasterScreens from "./screens/CatergorymasterScreens";
-import { categoryMasterListDetails } from "./actions/categoryAction";
-import CategoryMasterFormScreen from "./screens/CategoryMasterFormScreen";
-import { AttributeMasterListDetails } from "./actions/AttributeActions";
-import AttributesScreen from "./screens/AttributesScreen";
 import TextEditScreen from "./screens/TextEditScreen";
-import BrandScreen from "./screens/BrandScreen";
-import CatProductScreen from "./screens/CatProductScreen";
+import { userCartList } from "./actions/cartAction";
 // import Image from "/image/logo.png";
 // Side bar section start*************************************
 const drawerWidth = 240;
@@ -3689,7 +3689,7 @@ dispatch(AttributeMasterListDetails());
               >
                 Dashboard
               </Typography>
-              <Divider sx={{ backgroundColor: "#FFFFFF" }} showlabels="true" />
+              {userInfo?.isAdmin ? (<><Divider sx={{ backgroundColor: "#FFFFFF" }} showlabels="true" />
               <List>
                 <ListItemButton onClick={handleClick}>
                   <ListItemText sx={{ color: "#fff" }} primary="Catalog" />
@@ -3715,7 +3715,8 @@ dispatch(AttributeMasterListDetails());
                     </ListItemButton>
                   </List>
                 </Collapse>
-              </List>
+              </List></>) : (<></>)}
+              
             </Drawer>
           )}
           <Box component="main" sx={{ p: 3, flexGrow: 1, minHeight: "100vh" }}>
