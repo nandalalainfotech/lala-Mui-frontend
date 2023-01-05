@@ -38,10 +38,18 @@ import IconButton from "@mui/material/IconButton";
 // import AddCircleIcon from '@mui/icons-material/AddCircle';
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
+import { catProductList } from "../actions/catProductAction";
 
 export default function ProductScreen() {
+
+  const catalogProd = useSelector((state) => state.catalogProd);
+  const { catProducts } = catalogProd;
+
+  console.log("catProducts", catProducts);
+
   const productList = useSelector((state) => state.productList);
   const { products } = productList;
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams();
@@ -112,6 +120,7 @@ export default function ProductScreen() {
       dispatch({ type: PRODUCT_REVIEW_CREATE_RESET });
     }
     dispatch(listProducts({}));
+    dispatch(catProductList());
     dispatch(detailsProduct(productId));
   }, [dispatch, productId, successReviewCreate]);
 

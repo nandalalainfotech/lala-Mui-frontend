@@ -64,7 +64,6 @@ export default function HomeScreen() {
   const catalogProd = useSelector((state) => state.catalogProd);
   const { catProducts } = catalogProd;
 
-  console.log("catProducts",catProducts);
 
   useEffect(() => {
     dispatch(catProductList());
