@@ -92,6 +92,7 @@ import OtpVerifyScreen from "./screens/OtpVerifyScreen";
 import RegOtpVerifyScreen from "./screens/RegOtpVerifyScreen";
 import TextEditScreen from "./screens/TextEditScreen";
 import { userCartList } from "./actions/cartAction";
+import WishListScreen from "./screens/WishListScreen";
 // import Image from "/image/logo.png";
 // Side bar section start*************************************
 const drawerWidth = 240;
@@ -3730,7 +3731,8 @@ dispatch(AttributeMasterListDetails());
               <Route
                 path="/categorysmaster"
                 element={<CatergorymasterScreens />}
-              ></Route>
+              ></Route> 
+               <Route path="/Wishlist" element={<WishListScreen/>}></Route>
                <Route path="/categorymaster" element={<CategoryMasterScreen/>}></Route>
                <Route path="/categoryFormmaster" element={<CategoryMasterFormScreen/>}></Route>
                <Route path="/categorymaster/:id" element={<CategoryMasterFormScreen/>}></Route>

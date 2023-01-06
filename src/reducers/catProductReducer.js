@@ -18,6 +18,10 @@ import {
   CAT_PRODUCT_DETAILS_SUCCESS,
   CAT_PRODUCT_DETAILS_FAIL,
   CAT_PRODUCT_DETAILS_RESET,
+  WISHLIST_UPDATE_REQUEST,
+  WISHLIST_UPDATE_SUCCESS,
+  WISHLIST_UPDATE_FAIL,
+  WISHLIST_UPDATE_RESET,
 } from "../constants/catBrandConstant";
 
 export const catProductReducer = (state = {}, brand) => {
@@ -94,6 +98,21 @@ export const catProdDetailReducer = (state = { loading: true }, action) => {
       return { loading: false, error: action.payload };
       case CAT_PRODUCT_DETAILS_RESET:
         return {};
+    default:
+      return state;
+  }
+};
+
+export const wishListUpdateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case WISHLIST_UPDATE_REQUEST:
+      return { loading: true };
+    case WISHLIST_UPDATE_SUCCESS:
+      return { loading: false, success: true };
+    case WISHLIST_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    case WISHLIST_UPDATE_RESET:
+      return {};
     default:
       return state;
   }
