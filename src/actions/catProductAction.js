@@ -14,7 +14,11 @@ import {
   CAT_PRODUCT_SUCCESS,
   CAT_PRODUCT_UPDATE_FAIL,
   CAT_PRODUCT_UPDATE_REQUEST,
-  CAT_PRODUCT_UPDATE_SUCCESS
+  CAT_PRODUCT_UPDATE_SUCCESS,
+  WISHLIST_UPDATE_FAIL,
+  WISHLIST_UPDATE_REQUEST,
+  WISHLIST_UPDATE_SUCCESS,
+ 
 } from "../constants/catBrandConstant";
 
 export const saveCatologProduct =
@@ -73,6 +77,24 @@ export const updateCatProduct = (catProdUpdate) => async (dispatch, getState) =>
 };
 
 
+export const updateCatWhislist = (catProdUpdate) => async (dispatch, getState) => {
+    dispatch({ type: WISHLIST_UPDATE_REQUEST });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = await Axios.put(`/api/catProduct/wishlist/${catProdUpdate._id}`,catProdUpdate, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    dispatch({ type: WISHLIST_UPDATE_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: WISHLIST_UPDATE_FAIL, error: message });
+  }
+};
 
 export const deleteCatalogProd = (catProductId) => async (dispatch, getState) => {
   dispatch({ type: CAT_PRODUCT_DELETE_REQUEST, payload: catProductId });
@@ -96,7 +118,6 @@ export const deleteCatalogProd = (catProductId) => async (dispatch, getState) =>
 };
 
 export const catProdIndividualId = (productId) => async (dispatch) => {
-  console.log("catProdInd", productId);
   dispatch({ type: CAT_PRODUCT_DETAILS_REQUEST, payload: productId });
   try {
     const { data } = await Axios.get(`/api/catProduct/${productId}`);
@@ -112,3 +133,5 @@ export const catProdIndividualId = (productId) => async (dispatch) => {
     });
   }
 };
+
+// ****************************WhisList********************************

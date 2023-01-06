@@ -346,6 +346,7 @@ Not all shops sell new products.
   };
 
   const catProddeleteHandler = (params) => {
+   
     if (window.confirm("Are you sure to delete?")) {
       dispatch(deleteCatalogProd(params.row._id));
     }
@@ -611,9 +612,9 @@ Not all shops sell new products.
                                       variant="outlined"
                                       margin="normal"
                                       fullWidth
-                                      id="countInStock"
-                                      label="CountInStock"
-                                      name="countInStock"
+                                      id="Caption"
+                                      label="Caption"
+                                      name="Caption"
                                       autoComplete="off"
                                       // onChange={(e) => validateCountInStock(e)}
                                     />
