@@ -93,7 +93,7 @@ export default function Product(PropTypes) {
             </Button>
           </>
         ) : (
-          <h1>Hi Naresh</h1>
+          <></>
         )}
        </Box>
         
