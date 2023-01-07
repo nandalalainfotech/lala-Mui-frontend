@@ -7,10 +7,10 @@ import { useForm } from "react-hook-form";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
+// import Select from "@mui/material/Select";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
-import MenuItem from "@mui/material/MenuItem";
+// import MenuItem from "@mui/material/MenuItem";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import { useDispatch, useSelector } from "react-redux";
 import { FormControl, Switch, } from '@material-ui/core';
@@ -18,10 +18,16 @@ import { CategoryMasterallLists, createCategoryMaster, updatecategoryMaster } fr
 import { useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
 import CardMedia from '@mui/material/CardMedia';
+// import Radio from '@mui/material/Radio';
 // import FormLabel from '@mui/material/FormLabel';
-
+// import { getMuiTheme } from "../styles/Styles";
+import TreeView from '@mui/lab/TreeView';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import TreeItem from '@mui/lab/TreeItem';
 
 export default function CategoryMasterFormScreen() {
+
     const CategoryMasterallList = useSelector((state) => state.CategoryMasterallList);
     const { categorymasterallList } = CategoryMasterallList;
     console.log("categorymasterallList-------->>>", categorymasterallList)
@@ -50,7 +56,6 @@ export default function CategoryMasterFormScreen() {
     // const [image, setimage] = useState('');
     const dispatch = useDispatch();
     const theme = createTheme();
-    console.log("e------------", parent)
     const createHandler = (e) => {
         console.log("e------------", e)
         if (categoryObj) {
@@ -72,7 +77,7 @@ export default function CategoryMasterFormScreen() {
                 createCategoryMaster({
                     name: e.name,
                     checked: e.checked,
-                    parent: e.parent,
+                    parent: e.parent ? e.parent : parent,
                     description: e.description,
                     coverimg: e.coverimg,
                     // catThumbnail: e.catThumbnail,
@@ -87,9 +92,9 @@ export default function CategoryMasterFormScreen() {
     const switchHandler = (event) => {
         setchecked(!event.target.checked);
     };
+
     function handleChange(e) {
         setcoverimg(e.target.files);
-        // setimage( URL.createObjectURL(e.target.files[0]))
     }
 
     const useStyles = makeStyles(() => ({
@@ -117,13 +122,29 @@ export default function CategoryMasterFormScreen() {
                 fontSize: "14px",
             },
         },
+        selected: {
+            bgcolor: 'red',
+            color: "white"
+        }
     }));
+
     const classes = useStyles();
     useEffect(() => {
         dispatch(CategoryMasterallLists());
-        console.log("parent==================>>>>>>", parent)
+
     }, [dispatch])
 
+    const renderTree = (nodes) => (
+        <TreeItem key={nodes._id} nodeId={nodes._id} label={nodes.name} >
+            {Array.isArray(nodes.children)
+                ? nodes.children.map((node) => renderTree(node))
+                : null}
+        </TreeItem>
+    );
+    const handleSelectedItems = (event, nodeId) => {
+        console.log("treeeeeviewww======nodeId=>>>>>>", nodeId);
+        setParent(nodeId)
+    }
     return (
         <Box sx={{ backgroundColor: '#fff' }}>
             {categoryMasterId ? <>
@@ -162,8 +183,6 @@ export default function CategoryMasterFormScreen() {
                                     autoComplete="off"
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
-
-
                                 />
                                 {errors.name && (
                                     <span className="formError">
@@ -173,26 +192,25 @@ export default function CategoryMasterFormScreen() {
 
                                 <InputLabel> Displayed</InputLabel>
                                 <Switch onChange={(e) => setchecked(e.target.checked)} checked={checked} />
-
-                                <FormControl fullWidth sx={{ mt: 1 }}>
-                                    <InputLabel> Parent category</InputLabel>
-                                    <Select
-                                        id="standard-simple-select"
-                                        value={parent}
-                                        label="Parent"
-                                        name="parent"
-                                        onChange={(e) => setParent(e.target.value)}
-                                    >
-                                        {/* <MenuItem value={1}>Dropdown List</MenuItem>
-                                        <MenuItem value={2}>Radio Button</MenuItem>
-                                        <MenuItem value={3}></MenuItem> */}
-                                        {categorymasterallList?.map((item, index) => (
-                                            <MenuItem key={index} value={item._id}>
-                                                {item.name}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
+                                <InputLabel sx={{ mb: 1 }}> Parent category</InputLabel>
+                                <TreeView
+                                    aria-label="rich object"
+                                    defaultCollapseIcon={<ExpandMoreIcon />}
+                                    defaultExpanded={['root']}
+                                    defaultExpandIcon={<ChevronRightIcon />}
+                                    // onChange={(nodeId) => setParent(nodeId)}
+                                    onNodeSelect={handleSelectedItems}
+                                    sx={{
+                                        border: '1px solid black', p: 3,
+                                        ".MuiTreeItem-root": {
+                                            ".Mui-focused:not(.Mui-selected)": classes.focused,
+                                            ".Mui-selected, .Mui-focused.Mui-selected, .Mui-selected:hover":
+                                                classes.selected,
+                                        }
+                                    }}
+                                >
+                                    {categorymasterallList?.map((item) => renderTree(item))}
+                                </TreeView>
 
                                 <InputLabel sx={{ mt: 1 }}>Description</InputLabel>
                                 <TextareaAutosize
@@ -226,29 +244,6 @@ export default function CategoryMasterFormScreen() {
                                     image={`/api/categorymaster/show/${categoryObj?.coverimg}`}
                                     alt={categoryObj?.coverimg}
                                 />
-                                {/* <InputLabel >Category thumbnail</InputLabel>
-                                <TextField
-                                    style={{ margin: "10px 0px" }}
-                                    inputProps={{ style: { fontSize: 14 }, accept: "image/*" }}
-                                    size="small"
-                                    fullWidth
-                                    type="file"
-                                    id="imageFile"
-                                    name="catThumbnail"
-                                    autoComplete="off"
-                                />
-
-                                <InputLabel>Menu thumbnails</InputLabel>
-                                <TextField
-                                    style={{ margin: "10px 0px" }}
-                                    inputProps={{ style: { fontSize: 14 }, accept: "image/*" }}
-                                    size="small"
-                                    fullWidth
-                                    type="file"
-                                    id="imageFile"
-                                    name="menuThumbnail"
-                                    autoComplete="off"
-                                /> */}
 
                                 <Button
                                     fullWidth
@@ -327,60 +322,32 @@ export default function CategoryMasterFormScreen() {
 
                                     <InputLabel> Displayed</InputLabel>
                                     <Switch onChange={switchHandler} {...register("checked")} />
-                                    {/* <InputLabel> Displayed</InputLabel>
-                        <Switch name='checked' inputProps={register("checked")} onChange={switchHandler}/> */}
+                                    {/* <span >{checked===true?"yes":"No"}</span> */}
 
-                                    <FormControl fullWidth sx={{ mt: 1 }}>
-                                        <InputLabel> Parent category</InputLabel>
-                                        <Select
-                                            id="standard-simple-select"
-                                            value={parent}
-                                            label="Attributes Type"
-                                            name="parent"
-                                            onChange={(e) => setParent(e.target.value)}
-                                            inputProps={register("parent")}
-                                        >
-                                            {/* <MenuItem value={1}>Dropdown List</MenuItem>
-                                        <MenuItem value={2}>Radio Button</MenuItem>
-                                        <MenuItem value={3}></MenuItem> */}
-                                            {/* {categorymasterallList?.map((item, index) => (
-                                                console.log("categorymasterallList-------->>>", categorymasterallList),
-                                                <MenuItem key={index} value={item._id}>
-                                                    {item.name}
-                                                </MenuItem>
-                                            ))} */}
-                                            {/* <MenuItem value='home'>
-                                                Home</MenuItem> */}
-                                            {/* <Select></Select> */}
-                                            {categorymasterallList?.map((item, index) => {
-                                                return (
-                                                    <>
-                                                    <MenuItem key={index} value={item._id}>{item.name}</MenuItem>
-                                               
-                                                {
-                                                    item.children.map((child) => (
-                                                        <MenuItem sx={{ml:3}} key={child._id} value={child._id}>{child.name}</MenuItem>
-                                                    ))
-                                                }
-                                                </>
-                                                )
+                                    <InputLabel sx={{ mb: 1 }}> Parent category</InputLabel>
+                                    <TreeView
+                                        aria-label="rich object"
+                                        defaultCollapseIcon={<ExpandMoreIcon />}
+                                        defaultExpanded={['root']}
+                                        defaultExpandIcon={<ChevronRightIcon />}
+                                        // onChange={(nodeId) => setParent(nodeId)}
+                                        onNodeSelect={handleSelectedItems}
+                                        sx={{
+                                            border: '1px solid black', p: 3,
+                                            ".MuiTreeItem-root": {
+                                                ".Mui-focused:not(.Mui-selected)": classes.focused,
+                                                ".Mui-selected, .Mui-focused.Mui-selected, .Mui-selected:hover":
+                                                    classes.selected,
 
-                                            })}
-
-                                        </Select>
-                                    </FormControl>
+                                            }
+                                        }}
+                                    >
+                                        {categorymasterallList?.map((item) => renderTree(item))}
+                                    </TreeView>
 
 
                                     <InputLabel sx={{ mt: 1 }}>Description</InputLabel>
-                                    {/* <TextareaAutosize
-                            minRows={5}
-                            placeholder="Type in here..."
-                            id="comment"
-                            style={{ width: "100%" }}
-                            name="description"
-                            onChange={(e) => setDescription(e.target.value)}
-                            inputProps={register("description")}
-                        /> */}
+
                                     <TextareaAutosize
                                         minRows={5}
                                         placeholder="Type in here..."
@@ -392,20 +359,8 @@ export default function CategoryMasterFormScreen() {
                                         {...register("description")}
                                     />
 
-
                                     <InputLabel sx={{ mt: 1 }}>Category cover image</InputLabel>
-                                    {/* <TextField
-                         inputProps={{style: {fontSize: 14},accept:"image/*"}}
-                            style={{ margin: "10px 0px" }}
-                            size="small"
-                            fullWidth
-                            type="file"
-                            id="coverimg"
-                            name="coverimg"
-                            autoComplete="off"
-                            onChange={(e) => setcoverimg(e.target.value)}
-                            // inputProps={register("coverimg") }
-                        /> */}
+
                                     <TextField
                                         style={{ margin: "10px 0px" }}
                                         inputProps={{ style: { fontSize: 14 }, accept: "image/*" }}
@@ -418,32 +373,6 @@ export default function CategoryMasterFormScreen() {
                                         {...register("coverimg")}
                                     />
 
-                                    {/* <InputLabel >Category thumbnail</InputLabel>
-                                    <TextField
-                                        style={{ margin: "10px 0px" }}
-                                        inputProps={{ style: { fontSize: 14 }, accept: "image/*" }}
-                                        size="small"
-                                        fullWidth
-                                        type="file"
-                                        id="imageFile"
-                                        name="catThumbnail"
-                                        autoComplete="off"
-                                    // {...register("catThumbnail")}
-                                    />
-
-                                    <InputLabel>Menu thumbnails</InputLabel>
-                                    <TextField
-                                        style={{ margin: "10px 0px" }}
-                                        inputProps={{ style: { fontSize: 14 }, accept: "image/*" }}
-                                        size="small"
-                                        fullWidth
-                                        type="file"
-                                        id="imageFile"
-                                        name="menuThumbnail"
-                                        autoComplete="off"
-                                    // {...register("menuThumbnail")}
-                                    /> */}
-
                                     <Button
                                         fullWidth
                                         variant="contained"
@@ -455,7 +384,9 @@ export default function CategoryMasterFormScreen() {
                                 </Box>
                             </Container>
                         </ThemeProvider>
-                    </Box>    </Box>}
+                    </Box>
+                </Box>
+            }
         </Box>
 
     )

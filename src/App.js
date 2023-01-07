@@ -3700,19 +3700,19 @@ dispatch(AttributeMasterListDetails());
                   <List component="div" disablePadding>
                   <ListItemButton sx={{ pl: 4 }}>
                       
-                      <Link to='/product' style={{textDecoration:"none"}}><ListItemText sx={{ color: "#fff" }} primary="Product" /></Link>
+                      <Link to='/product' style={{textDecoration:"none"}}><ListItemText sx={{ color: "#fff" }} primary="Product" onClick={handleDrawerClose}/></Link>
                     </ListItemButton>
                     <ListItemButton sx={{ pl: 4 }}>
                       
-                      <Link to='/categorymaster' style={{textDecoration:"none"}}><ListItemText sx={{ color: "#fff" }} primary="Categories" /></Link>
+                      <Link to='/categorymaster' style={{textDecoration:"none"}}><ListItemText sx={{ color: "#fff" }} primary="Categories" onClick={handleDrawerClose}/></Link>
                     </ListItemButton>
                     <ListItemButton sx={{ pl: 4 }}>
                       
-                      <Link to='/attributes' style={{textDecoration:"none"}}><ListItemText sx={{ color: "#fff" }} primary="Attributes & Features" /></Link>
+                      <Link to='/attributes' style={{textDecoration:"none"}}><ListItemText sx={{ color: "#fff" }} primary="Attributes & Features" onClick={handleDrawerClose}/></Link>
                     </ListItemButton>
                     <ListItemButton sx={{ pl: 4 }}>
                       
-                      <Link to='/brand' style={{textDecoration:"none"}}><ListItemText sx={{ color: "#fff" }} primary="Brand & Supplier" /></Link>
+                      <Link to='/brand' style={{textDecoration:"none"}}><ListItemText sx={{ color: "#fff" }} primary="Brand & Supplier" onClick={handleDrawerClose}/></Link>
                     </ListItemButton>
                   </List>
                 </Collapse>
